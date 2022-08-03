@@ -246,6 +246,7 @@ Prosta implementacja podstawowych funkcjonalności systemu kontroli wersji. Istn
 #### Linki
 
 ### Serwer HTTP
+Serwer HTTP oczekujący dowolnego rodzaju żądań skierowanych pod URL *http://127.0.0.1:8000/*. Po odebraniu żądania skrypt wysyła odpowiedź z napisem "Witaj świecie". Bardziej zaawansowana wersja łączy serwer HTTP z dowolną bazą danych i daje użytkownikowi możliwość czytania oraz modyfikowania danych poprzez żądania HTTP.
 
 #### Linki
 

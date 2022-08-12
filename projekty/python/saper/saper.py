@@ -1,5 +1,5 @@
-import tkinter as tk
 import random
+import tkinter as tk
 
 N = 15
 M = 30
@@ -258,7 +258,7 @@ def prawyKlik(przyciski, przycisk, gorny_panel, tablica_gry, ikonki):
 
 def resetujGre(root, gorny_panel, ikonki):
     gorny_panel[1]["image"] = ikonki["buzki"][0]
-    przyciski = inicjalizacjaPlanszy(root, gorny_panel, ikonki)
+    inicjalizacjaPlanszy(root, gorny_panel, ikonki)
 
     global CZY_KONIEC_GRY
     CZY_KONIEC_GRY = False

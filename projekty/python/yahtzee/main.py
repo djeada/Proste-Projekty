@@ -5,14 +5,16 @@ Simplifications:  only allow discard and roll, only score against upper level
 
 # Used to increase the timeout, if necessary
 import codeskulptor
+
 codeskulptor.set_timeout(20)
+
 
 def gen_all_sequences(outcomes, length):
     """
     Iterative function that enumerates the set of all sequences of
     outcomes of given length.
     """
-    
+
     answer_set = set([()])
     for dummy_idx in range(length):
         temp_set = set()
@@ -32,12 +34,12 @@ def score(hand):
 
     hand: full yahtzee hand
 
-    Returns an integer score 
+    Returns an integer score
     """
     value_count = []
     for number in range(1, 7):
-        value_count.append(hand.count(number)*number)
-        
+        value_count.append(hand.count(number) * number)
+
     return max(value_count)
 
 
@@ -52,11 +54,13 @@ def expected_value(held_dice, num_die_sides, num_free_dice):
 
     Returns a floating point expected value
     """
-    possible_seq = gen_all_sequences(range(1, num_die_sides+1), num_free_dice)
+    possible_seq = gen_all_sequences(
+        range(1, num_die_sides + 1), num_free_dice)
     total = 0.0
     for seq in possible_seq:
         total += score(seq + held_dice)
-    return total/len(possible_seq)
+    return total / len(possible_seq)
+
 
 def gen_all_holds(hand):
     """
@@ -70,9 +74,8 @@ def gen_all_holds(hand):
     for item in hand:
         for subset in hold_hand:
             hold_hand = hold_hand + [tuple(subset) + (item, )]
-    
-    return set(hold_hand)
 
+    return set(hold_hand)
 
 
 def strategy(hand, num_die_sides):
@@ -90,7 +93,8 @@ def strategy(hand, num_die_sides):
     best_hold = ()
     best_value = 0
     for hold in possible_hold:
-        possible_value = expected_value(hold, num_die_sides, len(hand) - len(hold))
+        possible_value = expected_value(
+            hold, num_die_sides, len(hand) - len(hold))
         if possible_value > best_value:
             best_hold = hold
             best_value = possible_value
@@ -106,9 +110,9 @@ def run_example():
     hand_score, hold = strategy(hand, num_die_sides)
     print "Best strategy for hand", hand, "is to hold", hold, "with expected score", hand_score
 
-    
+
 run_example()
 
 
 #import poc_holds_testsuite
-#poc_holds_testsuite.run_suite(gen_all_holds)
+# poc_holds_testsuite.run_suite(gen_all_holds)

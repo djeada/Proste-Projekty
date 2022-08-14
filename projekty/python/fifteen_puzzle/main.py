@@ -276,6 +276,12 @@ class PuzzleGui:
         self.window.mainloop()
 
 
-puzzle_board = PuzzleBoard()
-gui = PuzzleGui(puzzle_board)
-gui.run()
+def main() -> None:
+    puzzle_board = PuzzleBoard()
+    gui = PuzzleGui(puzzle_board)
+    gui.run()
+
+
+if __name__ == '__main__':
+    main()
+

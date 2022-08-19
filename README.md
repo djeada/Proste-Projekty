@@ -278,6 +278,7 @@ Przykłady specyfikacji:
 * https://people.kth.se/~johanmon/dse.html
 * https://gist.github.com/MWins/41c6fec2122dd47fdfaca31924647499
 * https://www.dj4e.com/project/00_overview.md
+* https://www.ece.rutgers.edu/~marsic/books/SE/projects/
 
 Przykłady plików readme:
 

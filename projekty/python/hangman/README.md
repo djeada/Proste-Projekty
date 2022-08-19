@@ -1,2 +1,35 @@
-*  https://itch.io/t/645465/3-day-gamejam-bold-man-zombie-survival-i-usually-make-vr-games-so-this-is-my-first-2d-game-let-me-know-what-you-think-
-*  https://www.callofduty.com/blog/page?id=Dead_Ops_Arcade_is_Back&src=treyarch
+## About the Project
+
+Hangman is a single-player guessing game. The computer chooses a word at random from a predefined list. The plaer makes an attempt to guess it by suggesting letters within a certain number of guesses.
+
+## Screenshots
+
+## Requirements
+
+To run this project locally you will need:
+
+* Python 3.8+
+
+No additional libraries or packagaes are needed!
+
+## Installation
+
+## Rules of the game
+
+1. The word is chosen randomly from the list of words.
+2. The player has to guess the word.
+3. There are n squares drawn on the board, where n is the length of the word.
+4. When the player guesses a letter, the squares with the letter are revealed.
+5. If the player guesses the word, he wins.
+6. If the player guesses a letter that is not in the word, an image from a list of images is drawn.
+
+## Futures
+
+* Single player mode.
+
+## Possible imporvements
+
+There are many ways in which the game could be expanded or improved in the future. Some of the ideas include:
+
+* Add mode for two players.
+* Allow the user to upload a list of possible words.

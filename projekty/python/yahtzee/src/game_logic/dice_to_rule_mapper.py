@@ -6,42 +6,42 @@ from src.utils.utils import create_histogram
 
 
 class DiceToRulesMapper:
-    def __init__(self, dices: List[Dice]):
-        self.dices = dices
+    def __init__(self, dice_list: List[Dice]):
+        self.dice_list = dice_list
 
     def map_to_rules(self) -> List[ScoreType]:
-        for dice in self.dices:
+        for dice in self.dice_list:
             if dice.value == -1:
                 return []
 
-        def could_be_aces(dices: List[int]) -> bool:
-            return any(dice.value == 1 for dice in dices)
+        def could_be_aces(dice_list: List[int]) -> bool:
+            return any(dice.value == 1 for dice in dice_list)
 
-        def could_be_twos(dices: List[int]) -> bool:
-            return any(dice.value == 2 for dice in dices)
+        def could_be_twos(dice_list: List[int]) -> bool:
+            return any(dice.value == 2 for dice in dice_list)
 
-        def could_be_threes(dices: List[int]) -> bool:
-            return any(dice.value == 3 for dice in dices)
+        def could_be_threes(dice_list: List[int]) -> bool:
+            return any(dice.value == 3 for dice in dice_list)
 
-        def could_be_fours(dices: List[int]) -> bool:
-            return any(dice.value == 4 for dice in dices)
+        def could_be_fours(dice_list: List[int]) -> bool:
+            return any(dice.value == 4 for dice in dice_list)
 
-        def could_be_fives(dices: List[int]) -> bool:
-            return any(dice.value == 5 for dice in dices)
+        def could_be_fives(dice_list: List[int]) -> bool:
+            return any(dice.value == 5 for dice in dice_list)
 
-        def could_be_sixes(dices: List[int]) -> bool:
-            return any(dice.value == 6 for dice in dices)
+        def could_be_sixes(dice_list: List[int]) -> bool:
+            return any(dice.value == 6 for dice in dice_list)
 
-        def could_be_three_of_a_kind(dices: List[int]) -> bool:
-            histogram = create_histogram(dices)
+        def could_be_three_of_a_kind(dice_list: List[int]) -> bool:
+            histogram = create_histogram(dice_list)
             return max(histogram.values()) >= 3
 
-        def could_be_four_of_a_kind(dices: List[int]) -> bool:
-            histogram = create_histogram(dices)
+        def could_be_four_of_a_kind(dice_list: List[int]) -> bool:
+            histogram = create_histogram(dice_list)
             return max(histogram.values()) >= 4
 
-        def could_be_full_house(dices: List[int]) -> bool:
-            histogram = create_histogram(dices)
+        def could_be_full_house(dice_list: List[int]) -> bool:
+            histogram = create_histogram(dice_list)
             are_two_same = False
             are_three_same = False
             for value, count in histogram.items():
@@ -51,14 +51,14 @@ class DiceToRulesMapper:
                     are_two_same = True
             return are_two_same and are_three_same
 
-        def could_be_small_straight(dices: List[int]) -> bool:
-            histogram = create_histogram(dices)
+        def could_be_small_straight(dice_list: List[int]) -> bool:
+            histogram = create_histogram(dice_list)
             return len(histogram) >= 5 and (
                     1 in histogram and 2 in histogram and 3 in histogram and 4 in histogram
             )
 
-        def could_be_large_straight(dices: List[int]) -> bool:
-            histogram = create_histogram(dices)
+        def could_be_large_straight(dice_list: List[int]) -> bool:
+            histogram = create_histogram(dice_list)
             return len(histogram) >= 5 and (
                     2 in histogram and 3 in histogram and 4 in histogram and 5 in histogram
             )
@@ -66,8 +66,8 @@ class DiceToRulesMapper:
         def could_be_chance(_: List[int]) -> bool:
             return True
 
-        def could_be_yahtzee(dices: List[int]) -> bool:
-            histogram = create_histogram(dices)
+        def could_be_yahtzee(dice_list: List[int]) -> bool:
+            histogram = create_histogram(dice_list)
             return max(histogram.values()) >= 5
 
         all_rules = [
@@ -88,7 +88,7 @@ class DiceToRulesMapper:
         rules = []
 
         for rule in all_rules:
-            if rule(self.dices):
+            if rule(self.dice_list):
                 rules.append(self.map_to_score_type(rule))
         return rules
 

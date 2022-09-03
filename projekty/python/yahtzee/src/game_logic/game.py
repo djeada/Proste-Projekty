@@ -18,8 +18,8 @@ class Game:
     def current_player(self, player: Player) -> None:
         self._current_player_type = player.player_type
 
-    def roll_dices(self) -> None:
-        self.current_player.roll_dices()
+    def roll_dice(self) -> None:
+        self.current_player.roll_dice()
 
         if self.current_player.numbers_of_throws_left == 0:
             self.current_player.reset()
@@ -31,8 +31,8 @@ class Game:
         else:
             self.current_player = self.player_a
 
-    def put_away_dices(self, indices: List[int]) -> None:
-        self.current_player.dices_put_away = indices
+    def put_away_dice(self, dice_list: List[int]) -> None:
+        self.current_player.dice_list_put_away = dice_list
 
     def update_current_player_table(self, score_type: ScoreType) -> None:
         self.current_player.update_table(score_type)

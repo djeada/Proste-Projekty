@@ -11,9 +11,9 @@ class GameGui:
         self.master = master
         self.game = Game()
         self.table_guis = []
-        self.dices_guis = []
+        self.dice_list_guis = []
         self.possible_moves_guis = []
-        # create four frames for the table and dices and put them in a grid
+        # create four frames for the table and dice_list and put them in a grid
         # add Label for player A
         # add margin between frames and grid
         player_a_label = tk.Label(self.master, text="Player A")
@@ -22,9 +22,9 @@ class GameGui:
         self.table_a_frame = tk.Frame(self.master)
         self.table_a_frame.grid(row=1, column=0, padx=10)
 
-        self.dices_a_frame = tk.Frame(self.master,  height=300,width=330)
-        self.dices_a_frame.grid_propagate(0)
-        self.dices_a_frame.grid(row=1, column=1, padx=10)
+        self.dice_list_a_frame = tk.Frame(self.master,  height=300,width=330)
+        self.dice_list_a_frame.grid_propagate(0)
+        self.dice_list_a_frame.grid(row=1, column=1, padx=10)
 
         self.possible_moves_a_frame = tk.Frame(self.master)
         self.possible_moves_a_frame.grid(row=1, column=2, padx=10)
@@ -36,9 +36,9 @@ class GameGui:
         self.table_b_frame = tk.Frame(self.master)
         self.table_b_frame.grid(row=3, column=0, padx=10)
 
-        self.dices_b_frame = tk.Frame(self.master,  height=300,width=330)
-        self.dices_b_frame.grid_propagate(0)
-        self.dices_b_frame.grid(row=3, column=1, padx=10)
+        self.dice_list_b_frame = tk.Frame(self.master,  height=300,width=330)
+        self.dice_list_b_frame.grid_propagate(0)
+        self.dice_list_b_frame.grid(row=3, column=1, padx=10)
 
         self.possible_moves_b_frame = tk.Frame(self.master)
         self.possible_moves_b_frame.grid(row=3, column=2, padx=10)
@@ -52,17 +52,17 @@ class GameGui:
                              (self.table_b_frame, self.game.player_b.table)]:
             self.table_guis.append(TableGui(frame, table))
 
-        for frame, dices, dices_put_away in [(self.dices_a_frame, self.game.player_a.dices, self.game.player_a.dices_put_away),
-        (self.dices_b_frame, self.game.player_b.dices, self.game.player_b.dices_put_away)]:
-            self.dices_guis.append(DiceGui(frame, dices, dices_put_away, self))
+        for frame, dice_list, dice_list_put_away in [(self.dice_list_a_frame, self.game.player_a.dice_list, self.game.player_a.dice_list_put_away),
+        (self.dice_list_b_frame, self.game.player_b.dice_list, self.game.player_b.dice_list_put_away)]:
+            self.dice_list_guis.append(DiceGui(frame, dice_list, dice_list_put_away, self))
 
         for frame, player in [(self.possible_moves_a_frame, self.game.player_a), (self.possible_moves_b_frame, self.game.player_b)]:
             self.possible_moves_guis.append(PossibleMovesGui(frame, player, self.game, self))
 
     def draw(self) -> None:
-        for gui_element in self.table_guis + self.dices_guis + self.possible_moves_guis:
+        for gui_element in self.table_guis + self.dice_list_guis + self.possible_moves_guis:
             gui_element.draw()
 
-    def roll_dices(self) -> None:
-        self.game.roll_dices()
+    def roll_dice(self) -> None:
+        self.game.roll_dice()
         self.draw()

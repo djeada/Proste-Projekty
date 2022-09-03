@@ -1,9 +1,9 @@
 from typing import Dict, List
 
 
-def create_histogram(dices: List[int]) -> Dict[int, int]:
+def create_histogram(dice_list: List[int]) -> Dict[int, int]:
     histogram = {}
-    for dice in dices:
+    for dice in dice_list:
         if dice.value in histogram:
             histogram[dice.value] += 1
         else:
@@ -11,8 +11,8 @@ def create_histogram(dices: List[int]) -> Dict[int, int]:
     return histogram
 
 
-def most_common_value(dices: List[int]) -> int:
-    histogram = create_histogram(dices)
+def most_common_value(dice_list: List[int]) -> int:
+    histogram = create_histogram(dice_list)
     max_value = 0
     max_key = 0
     for key, value in histogram.items():

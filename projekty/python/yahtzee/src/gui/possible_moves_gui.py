@@ -30,7 +30,7 @@ class PossibleMovesGui:
             button.config(command=lambda score_type=score_type: self.update_table(score_type))
 
         roll_button = tk.Button(self.frame, text="Roll dice")
-        roll_button.config(command=self.parent_gui.roll_dices)
+        roll_button.config(command=self.parent_gui.roll_dice)
         roll_button.grid(row=i + 1, column=0, pady=10)
 
     def update_table(self, score_type: ScoreType) -> None:

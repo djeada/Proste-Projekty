@@ -56,23 +56,23 @@ class Table:
         )
         return upper_section_total + lower_section_total + self.bonus
 
-    def add_score(self, score_type: ScoreType, dices: List[Dice]) -> None:
+    def add_score(self, score_type: ScoreType, dice_list: List[Dice]) -> None:
         if score_type == ScoreType.ACES:
-            self.aces = sum([dice.value for dice in dices if dice.value == 1])
+            self.aces = sum([dice.value for dice in dice_list if dice.value == 1])
         elif score_type == ScoreType.TWOS:
-            self.twos = sum([dice.value for dice in dices if dice.value == 2])
+            self.twos = sum([dice.value for dice in dice_list if dice.value == 2])
         elif score_type == ScoreType.THREES:
-            self.threes = sum([dice.value for dice in dices if dice.value == 3])
+            self.threes = sum([dice.value for dice in dice_list if dice.value == 3])
         elif score_type == ScoreType.FOURS:
-            self.fours = sum([dice.value for dice in dices if dice.value == 4])
+            self.fours = sum([dice.value for dice in dice_list if dice.value == 4])
         elif score_type == ScoreType.FIVES:
-            self.fives = sum([dice.value for dice in dices if dice.value == 5])
+            self.fives = sum([dice.value for dice in dice_list if dice.value == 5])
         elif score_type == ScoreType.SIXES:
-            self.sixes = sum([dice.value for dice in dices if dice.value == 6])
+            self.sixes = sum([dice.value for dice in dice_list if dice.value == 6])
         elif score_type == ScoreType.THREE_OF_A_KIND:
-            self.three_of_a_kind += sum([dice.value for dice in dices if dice.value == most_common_value(dices)])
+            self.three_of_a_kind += sum([dice.value for dice in dice_list if dice.value == most_common_value(dice_list)])
         elif score_type == ScoreType.FOUR_OF_A_KIND:
-            self.four_of_a_kind += sum([dice.value for dice in dices if dice.value == most_common_value(dices)])
+            self.four_of_a_kind += sum([dice.value for dice in dice_list if dice.value == most_common_value(dice_list)])
         elif score_type == ScoreType.FULL_HOUSE:
             self.full_house += 25
         elif score_type == ScoreType.SMALL_STRAIGHT:
@@ -80,7 +80,7 @@ class Table:
         elif score_type == ScoreType.LARGE_STRAIGHT:
             self.large_straight += 40
         elif score_type == ScoreType.CHANCE:
-            self.chance += sum([dice.value for dice in dices])
+            self.chance += sum([dice.value for dice in dice_list])
         elif score_type == ScoreType.YAHTZEE:
             self.yahtzee += 50
 

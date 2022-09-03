@@ -15,13 +15,13 @@ class PlayerType(Enum):
 @dataclass
 class Player:
     player_type: PlayerType
-    table: Table = Table()
+    table: Table = field(default_factory=lambda:Table())
     dices: List[Dice] = field(default_factory=lambda: [Dice() for _ in range(6)])
     dices_put_away: List[int] = field(default_factory=list)
     numbers_of_throws_left: int = 3
 
     def roll_dices(self):
-        for dice in self.dices:
+        for dice in self.kept_dices():
             dice.roll()
 
         self.numbers_of_throws_left -= 1
@@ -39,8 +39,8 @@ class Player:
 
     def update_table(self, score_type: ScoreType) -> None:
         self.table.add_score(score_type, self.kept_dices())
-        self.numbers_of_throws_left = 0
         self.reset()
+        self.numbers_of_throws_left = 0
 
     def reset(self):
         for dice in self.dices:

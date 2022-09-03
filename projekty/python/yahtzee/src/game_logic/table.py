@@ -3,6 +3,7 @@ from enum import auto, Enum
 from typing import List
 
 from src.game_logic.dice import Dice
+from src.utils.utils import most_common_value
 
 
 class ScoreType(Enum):
@@ -57,28 +58,25 @@ class Table:
 
     def add_score(self, score_type: ScoreType, dices: List[Dice]) -> None:
         if score_type == ScoreType.ACES:
-            self.aces = sum([dice.value for dice in dices])
+            self.aces = sum([dice.value for dice in dices if dice.value == 1])
         elif score_type == ScoreType.TWOS:
-            self.twos = sum([dice.value for dice in dices])
+            self.twos = sum([dice.value for dice in dices if dice.value == 2])
         elif score_type == ScoreType.THREES:
-            self.trees = sum([dice.value for dice in dices])
+            self.threes = sum([dice.value for dice in dices if dice.value == 3])
         elif score_type == ScoreType.FOURS:
-            self.fours = sum([dice.value for dice in dices])
+            self.fours = sum([dice.value for dice in dices if dice.value == 4])
         elif score_type == ScoreType.FIVES:
-            self.fives = sum([dice.value for dice in dices])
+            self.fives = sum([dice.value for dice in dices if dice.value == 5])
         elif score_type == ScoreType.SIXES:
-            self.sixes = sum([dice.value for dice in dices])
+            self.sixes = sum([dice.value for dice in dices if dice.value == 6])
         elif score_type == ScoreType.THREE_OF_A_KIND:
-            self.three_of_a_kind += sum([dice.value for dice in dices])
+            self.three_of_a_kind += sum([dice.value for dice in dices if dice.value == most_common_value(dices)])
         elif score_type == ScoreType.FOUR_OF_A_KIND:
-            self.four_of_a_kind += sum([dice.value for dice in dices])
+            self.four_of_a_kind += sum([dice.value for dice in dices if dice.value == most_common_value(dices)])
         elif score_type == ScoreType.FULL_HOUSE:
-            self.full_house += sum([dice.value for dice in dices])
+            self.full_house += 25
         elif score_type == ScoreType.SMALL_STRAIGHT:
-            if len(dices) >= 5:
-                self.small_straight += 40
-            elif len(dices) >= 4:
-                self.small_straight += 30
+            self.small_straight += 30
         elif score_type == ScoreType.LARGE_STRAIGHT:
             self.large_straight += 40
         elif score_type == ScoreType.CHANCE:

@@ -8,14 +8,22 @@ class Game:
     def __init__(self):
         self.player_a = Player(PlayerType.A)
         self.player_b = Player(PlayerType.B)
-        self.current_player: Player = self.player_a
+        self._current_player_type: PlayerType = PlayerType.A
+
+    @property
+    def current_player(self) -> Player:
+        return self.player_a if self._current_player_type == PlayerType.A else self.player_b
+    
+    @current_player.setter
+    def current_player(self, player: Player) -> None:
+        self._current_player_type = player.player_type
 
     def roll_dices(self) -> None:
+        self.current_player.roll_dices()
+
         if self.current_player.numbers_of_throws_left == 0:
             self.current_player.reset()
             self.switch_player()
-
-        self.current_player.roll_dices()
 
     def switch_player(self) -> None:
         if self.current_player == self.player_a:
@@ -28,3 +36,5 @@ class Game:
 
     def update_current_player_table(self, score_type: ScoreType) -> None:
         self.current_player.update_table(score_type)
+        self.current_player.reset()
+        self.switch_player()

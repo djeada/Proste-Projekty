@@ -54,12 +54,10 @@ class GameGui:
 
         for frame, dices, dices_put_away in [(self.dices_a_frame, self.game.player_a.dices, self.game.player_a.dices_put_away),
         (self.dices_b_frame, self.game.player_b.dices, self.game.player_b.dices_put_away)]:
-            self.dices_guis.append(DiceGui(frame, dices, dices_put_away))
+            self.dices_guis.append(DiceGui(frame, dices, dices_put_away, self))
 
         for frame, player in [(self.possible_moves_a_frame, self.game.player_a), (self.possible_moves_b_frame, self.game.player_b)]:
-            self.possible_moves_guis.append(PossibleMovesGui(frame, player))
-            self.button = self.possible_moves_guis[-1].roll_button
-            self.button.config(command=self.roll_dices)
+            self.possible_moves_guis.append(PossibleMovesGui(frame, player, self.game, self))
 
     def draw(self) -> None:
         for gui_element in self.table_guis + self.dices_guis + self.possible_moves_guis:

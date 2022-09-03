@@ -45,10 +45,10 @@ class DiceToRulesMapper:
             are_two_same = False
             are_three_same = False
             for value, count in histogram.items():
-                if count >= 3:
-                    are_two_same = True
-                elif count >= 2:
+                if count >= 3 and not are_three_same:
                     are_three_same = True
+                elif count >= 2:
+                    are_two_same = True
             return are_two_same and are_three_same
 
         def could_be_small_straight(dices: List[int]) -> bool:

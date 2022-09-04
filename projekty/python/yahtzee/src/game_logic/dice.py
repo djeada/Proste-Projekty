@@ -13,7 +13,6 @@ class Dice:
         self.value = -1
         return self
 
-
     def __repr__(self):
         return self.__str__()
 

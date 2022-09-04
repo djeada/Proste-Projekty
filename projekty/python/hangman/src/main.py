@@ -15,7 +15,7 @@ import sys
 import tkinter as tk
 
 words = ["python", "java", "kotlin", "javascript"]
-paths = ["./resources/hangman_1.png", "./resources/hangman_2.png", "./resources/hangman_3.png", "./resources/hangman_4.png", "./resources/hangman_5.png", "./resources/hangman_6.png", "./resources/hangman_7.png"]
+paths = ["../resources/hangman_1.png", "../resources/hangman_2.png", "../resources/hangman_3.png", "../resources/hangman_4.png", "../resources/hangman_5.png", "../resources/hangman_6.png", "../resources/hangman_7.png"]
 
 
 class Gui:

@@ -7,6 +7,7 @@ class Gui:
 
     def __init__(self):
         root = tk.Tk()
+        root.title("Yahtzee")
         root.geometry("650x720")
         root.resizable(False, False)
         GameGui(root)

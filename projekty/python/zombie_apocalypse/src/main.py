@@ -1,6 +1,6 @@
 import pygame
 
-from src.game.game import Game
+from game.game import Game
 
 
 def main():

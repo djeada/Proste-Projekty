@@ -2,9 +2,9 @@ from random import random
 
 import pygame
 
-from src.entities.entity_base import Entity
-from src.entities.player import Player
-from src.entities.zombie import Zombie
+from entities.entity_base import Entity
+from entities.player import Player
+from entities.zombie import Zombie
 
 
 class Game:

@@ -2,6 +2,7 @@ from dataclasses import dataclass
 import random
 import tkinter as tk
 from enum import Enum, auto
+from pathlib import Path
 from typing import List
 from PIL import ImageTk, Image
 
@@ -12,7 +13,7 @@ Minesweeper game implemented using Tkinter.
 
 class Board:
     '''	
-    Holds the informations about the cells including mines positions.
+    Holds the information about the cells including mines positions.
     '''
 
     def __init__(self, height: int = 10, width: int = 10, num_mines: int = 20) -> None:
@@ -177,9 +178,9 @@ class Gui:
         '''
 
         state_to_path = {
-            GameState.default: r"resources\happy_smiley.png",
-            GameState.win: r"resources\sunglasses_smiley.png",
-            GameState.loss: r"resources\sad_smiley.png",
+            GameState.default: Path("../resources/happy_smiley.png"),
+            GameState.win:Path("../resources/sunglasses_smiley.png"),
+            GameState.loss: Path("../resources/sad_smiley.png"),
         }
 
         path = state_to_path[self.state]
@@ -219,7 +220,7 @@ class Gui:
         self.mines_label.grid(row=0, column=1)
 
         self.smiley_button = tk.Button(window, command=self.restart)
-        self.smiley_button.photo = ImageTk.PhotoImage(Image.open(r"resources\buzka1.png").resize((39, 50)))
+        self.smiley_button.photo = ImageTk.PhotoImage(Image.open(Path("../resources/happy_smiley.png")).resize((39, 50)))
         self.smiley_button.config(image=self.smiley_button.photo)
         self.smiley_button.grid(row=0, column=3, padx=100)
 
@@ -283,7 +284,7 @@ class Gui:
         button = self.buttons[x][y].widget
 
         if state == ButtonState.default:
-            button.photo = ImageTk.PhotoImage(Image.open(r"resources\flag.png").resize((39, 50)))
+            button.photo = ImageTk.PhotoImage(Image.open(Path("../resources/flag.png")).resize((39, 50)))
             button.config(image=button.photo)
             button.config(width=0, height=0)
             self.buttons[x][y].state = ButtonState.flagged
@@ -326,7 +327,7 @@ class Gui:
             button.config(command=None, relief='sunken', background='darkGray')
 
             if value != 0:
-                button.photo = ImageTk.PhotoImage(Image.open(fr"resources\{value}.png").resize((39, 50)))
+                button.photo = ImageTk.PhotoImage(Image.open(Path(f"../resources../{value}.png")).resize((39, 50)))
                 button.config(image=button.photo)
                 button.config(width=0, height=0)
 
@@ -357,7 +358,7 @@ class Gui:
             mine_button = self.buttons[mine_x][mine_y].widget
             mine_button.config(command=None, relief='sunken', background='red')
             mine_button.config(width=0, height=0)
-            mine_button.photo = ImageTk.PhotoImage(Image.open(r"resources\mine.png").resize((39, 50)))
+            mine_button.photo = ImageTk.PhotoImage(Image.open(Path("../resources/mine.png")).resize((39, 50)))
             mine_button.config(image=mine_button.photo)
 
         # remove command from buttons

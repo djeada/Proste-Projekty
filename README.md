@@ -142,6 +142,7 @@ Projekty nie zostały uporządkowane względem żadnego kryterium.
 Gra polegająca na odgadywaniu słów. Komputer losuje słowo z wcześniej przygotowanej listy słów. Na ekranie wyświetlone zostaje n kresek, gdzie n to liczba liter, z których składa się słowo. Gracz ma x żyć. W każdym ruchu gracz podaje jedną literę. Jeśli odgadł jedną z liter, z których składa się słowo, to poziome kreski odpowiadające danej litery zostają w nią zamienione. W przeciwnym razie liczba x zmniejszana jest o 1. Gracz wygrywa, jeśli odgadnie wszystkie litery przed wyzerowaniem się licznika.
 
 #### Linki
+![hangman](https://user-images.githubusercontent.com/37275728/188334893-d1b25bd0-eda8-4053-b8ff-d38a52d72461.gif)
 
 ### Szyfr Cezara
 
@@ -154,6 +155,7 @@ Głównym elementem interfejsu graficznego jest pole tekstowe, gdzie użytkownik
 Prosty interfejs graficzny, który pozwala na wykonywanie różnych operacji matematycznych.
 
 #### Linki
+![calculator](https://user-images.githubusercontent.com/37275728/188334898-ece55e10-0577-4c31-8e28-ab78739de2c4.gif)
 
 ### Lista zadań
 
@@ -190,6 +192,7 @@ Gra w kółko i krzyżyk. Dostępne są dwa tryby gry: gra dla dwóch graczy ora
 Gra polega na wybieraniu pól na planszy. Na danym polu może być ukryta mina. Jeśli wybrano pole, na którym nie ma miny, to wyświetlona zostaje liczba min, które bezpośrednio stykają się z danym polem (od zera do ośmiu). Odkrycie pola z miną oznacza przegraną. Zwyciężyć można poprzez odkrycie wszystkich bezpiecznych pól.
 
 #### Linki
+![minesweeper](https://user-images.githubusercontent.com/37275728/188334904-6544ac1c-839f-40af-a4e0-1d064a13c3f5.gif)
 
 ### 2048
 
@@ -203,17 +206,22 @@ Celem jest przetrwanie jak największej liczby fal zombie. Z każdą nową falą
 
 #### Linki
 
+![zombie_apocalypse](https://user-images.githubusercontent.com/37275728/188334905-179b94fd-eec2-44b8-a64f-fecdd6c6ea01.gif)
+
 ### Piętnastka
 
 Na planszy o wymiarach 4x4 mamy losowo ułożonych 15 kwadratów z numerami od 1 do 15 oraz jedno puste pole. Zadaniem gracza jest uporządkowanie kwadratów, tak by były ułożone w kolejności rosnącej.
 
 #### Linki
+![fifteen_puzzle](https://user-images.githubusercontent.com/37275728/188334915-1d7bd7b0-0a7e-4118-97e7-b12572b198e7.gif)
 
 ### Kości
 
 Gra turowa dla przynajmniej dwóch graczy. Wszystkie akceptowalne kombinacje kości wraz z liczbą punktów za nie przyznawanych znajdują się w tabeli gry, a każdy gracz może użyć daną kombinację dokładnie raz. W każdej turze gracz rzuca maksymalnie trzykrotnie pięcioma kośćmi. Jeśli kości utworzyły jedną z pożądanych kombinacji, to informacja o tym zostaje zapisana w tabeli gry. W przeciwnym razie gracz musi wykreślić jedną z możliwych kombinacji ze swojej tabeli. Pod koniec gry sumowana jest liczba punktów z tabeli dla każdego z graczy. Wygrywa gracz z największą liczbą punktów.
 
 #### Linki
+
+![yahtzee](https://user-images.githubusercontent.com/37275728/188334918-95a7385c-3d10-4613-ae06-f0afafd0874e.gif)
 
 ### Kurka wodna
 

@@ -1,2 +1,22 @@
-*  https://itch.io/t/645465/3-day-gamejam-bold-man-zombie-survival-i-usually-make-vr-games-so-this-is-my-first-2d-game-let-me-know-what-you-think-
-*  https://www.callofduty.com/blog/page?id=Dead_Ops_Arcade_is_Back&src=treyarch
+## About the Project
+
+## Screenshots
+
+## Requirements
+
+To run this project locally you will need:
+
+* Python 3.8+
+
+No additional libraries or packagaes are needed!
+
+## Installation
+
+## Rules of the game
+
+
+## Futures
+
+
+## Possible imporvements
+

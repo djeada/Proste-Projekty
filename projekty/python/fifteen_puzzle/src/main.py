@@ -172,7 +172,7 @@ class PuzzleBoard:
             for elem in row:
                 elem = str(elem)
                 if len(elem) == 1:
-                    elem = elem + " "
+                    elem += " "
                 result += elem + " "
 
             result += "\n"

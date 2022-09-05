@@ -3,7 +3,7 @@
 Hangman is a single-player guessing game. The computer chooses a word at random from a predefined list. The plaer makes an attempt to guess it by suggesting letters within a certain number of guesses.
 
 ## Screenshots
-
+![hangman](https://user-images.githubusercontent.com/37275728/188334893-d1b25bd0-eda8-4053-b8ff-d38a52d72461.gif)
 ## Requirements
 
 To run this project locally you will need:

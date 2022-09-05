@@ -1,6 +1,10 @@
 ## About the Project
 
+The Caesar cipher algorithm is used in the background to cipher or decipher text messages.
+
 ## Screenshots
+
+![fifteen_puzzle](https://user-images.githubusercontent.com/37275728/188334915-1d7bd7b0-0a7e-4118-97e7-b12572b198e7.gif)
 
 ## Requirements
 
@@ -12,11 +16,21 @@ No additional libraries or packagaes are needed!
 
 ## Installation
 
-## Rules of the game
+## Usage
 
+1. Enter the text to be deciphered or ciphered into the message input.
+2. Enter the offset using the key input.
+3. Select whether the algorithm should cipher or decipher the message using the mode dropdown.
+4. Press the Run button.
+5. The processed message appears in the text area. 
 
-## Futures
+## Features
 
+* The ability to define any integer key. 
+* Two modes (ciphering and decyphering).
 
-## Possible imporvements
+## Possible improvements
 
+Some of the ideas include:
+
+* Implement another alogrithm and allow the user to specify which one should be used.

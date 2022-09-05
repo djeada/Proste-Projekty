@@ -23,7 +23,7 @@ No additional libraries or packagaes are needed!
 5. If the player guesses the word, he wins.
 6. If the player guesses a letter that is not in the word, an image from a list of images is drawn.
 
-## Futures
+## Features
 
 * Single player mode.
 

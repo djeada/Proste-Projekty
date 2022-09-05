@@ -147,19 +147,26 @@ Screenshot | Technologie | Link
 ---|---|---
  <img width="2000"/>![hangman](https://user-images.githubusercontent.com/37275728/188334893-d1b25bd0-eda8-4053-b8ff-d38a52d72461.gif) | Python | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/projekty/python/hangman)**
 
-
 ### Szyfr Cezara
 
 Głównym elementem interfejsu graficznego jest pole tekstowe, gdzie użytkownik wpisuje bądź przekleja tekst. Następnie ma on do wyboru jedną z dwóch opcji, szyfrowanie bądź odszyfrowanie. Dla obu opcji należy również podać wartość klucza. Po wypełnieniu wszystkich pól wyświetlany jest zmieniony tekst. W tle używany jest algorytm szyfru Cezara.
 
 #### Linki
 
+Screenshot | Technologie | Link 
+---|---|---
+ <img width="2000"/>![hangman](https://user-images.githubusercontent.com/37275728/188334893-d1b25bd0-eda8-4053-b8ff-d38a52d72461.gif) | Python | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/projekty/python/hangman)**
+
 ### Kalkulator
 
 Prosty interfejs graficzny, który pozwala na wykonywanie różnych operacji matematycznych.
 
 #### Linki
-![calculator](https://user-images.githubusercontent.com/37275728/188334898-ece55e10-0577-4c31-8e28-ab78739de2c4.gif)
+
+Screenshot | Technologie | Link 
+---|---|---
+ <img width="2000"/>![calculator](https://user-images.githubusercontent.com/37275728/188334898-ece55e10-0577-4c31-8e28-ab78739de2c4.gif)
+ | Python | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/projekty/python/hangman)**
 
 ### Lista zadań
 
@@ -196,7 +203,11 @@ Gra w kółko i krzyżyk. Dostępne są dwa tryby gry: gra dla dwóch graczy ora
 Gra polega na wybieraniu pól na planszy. Na danym polu może być ukryta mina. Jeśli wybrano pole, na którym nie ma miny, to wyświetlona zostaje liczba min, które bezpośrednio stykają się z danym polem (od zera do ośmiu). Odkrycie pola z miną oznacza przegraną. Zwyciężyć można poprzez odkrycie wszystkich bezpiecznych pól.
 
 #### Linki
-![minesweeper](https://user-images.githubusercontent.com/37275728/188334904-6544ac1c-839f-40af-a4e0-1d064a13c3f5.gif)
+
+Screenshot | Technologie | Link 
+---|---|---
+ <img width="2000"/>![minesweeper](https://user-images.githubusercontent.com/37275728/188334904-6544ac1c-839f-40af-a4e0-1d064a13c3f5.gif)
+ | Python | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/projekty/python/hangman)**
 
 ### 2048
 
@@ -210,14 +221,21 @@ Celem jest przetrwanie jak największej liczby fal zombie. Z każdą nową falą
 
 #### Linki
 
-![zombie_apocalypse](https://user-images.githubusercontent.com/37275728/188334905-179b94fd-eec2-44b8-a64f-fecdd6c6ea01.gif)
+Screenshot | Technologie | Link 
+---|---|---
+ <img width="2000"/>![zombie_apocalypse](https://user-images.githubusercontent.com/37275728/188334905-179b94fd-eec2-44b8-a64f-fecdd6c6ea01.gif)
+ | Python | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/projekty/python/hangman)**
 
 ### Piętnastka
 
 Na planszy o wymiarach 4x4 mamy losowo ułożonych 15 kwadratów z numerami od 1 do 15 oraz jedno puste pole. Zadaniem gracza jest uporządkowanie kwadratów, tak by były ułożone w kolejności rosnącej.
 
 #### Linki
-![fifteen_puzzle](https://user-images.githubusercontent.com/37275728/188334915-1d7bd7b0-0a7e-4118-97e7-b12572b198e7.gif)
+
+Screenshot | Technologie | Link 
+---|---|---
+ <img width="2000"/>![fifteen_puzzle](https://user-images.githubusercontent.com/37275728/188334915-1d7bd7b0-0a7e-4118-97e7-b12572b198e7.gif)
+ | Python | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/projekty/python/hangman)**
 
 ### Kości
 
@@ -225,7 +243,9 @@ Gra turowa dla przynajmniej dwóch graczy. Wszystkie akceptowalne kombinacje ko�
 
 #### Linki
 
-![yahtzee](https://user-images.githubusercontent.com/37275728/188334918-95a7385c-3d10-4613-ae06-f0afafd0874e.gif)
+Screenshot | Technologie | Link 
+---|---|---
+ <img width="2000"/>![yahtzee](https://user-images.githubusercontent.com/37275728/188334918-95a7385c-3d10-4613-ae06-f0afafd0874e.gif) | Python | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/projekty/python/hangman)**
 
 ### Kurka wodna
 

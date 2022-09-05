@@ -14,6 +14,24 @@ No additional libraries or packagaes are needed!
 
 ## Installation
 
+1. Download the code from the repository:
+    
+```Bash
+git clone https://github.com/djeada/Proste-Projekty.git
+```
+
+2. Navigate to the appropriate directory:
+
+```Bash
+cd Proste-Projekty/projekty/python/yahtzee
+```
+
+3. Start the app:
+
+```Bash
+python src/main.py
+```
+
 ## Gameplay
 
 In each turn a player may throw the dice up to three times. A player doesn't have to roll all five dice on the second and third throw of a round, he may put as many dice as he wants to the side and only throw the ones that don't have the numbers he's trying to get. For example, a player throws and gets 1,3,3,4,6. He decides he want to try for the large straight, 1,2,3,4,5. So, he puts 1,3,4 to the side and only throws 3 and 6 again, hoping to get 2 and 5.

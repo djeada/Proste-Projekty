@@ -1,6 +1,7 @@
 ## About the Project
 
-The Caesar cipher algorithm is used in the background to cipher or decipher text messages.
+A simple calculator that can perform basic arithmetic operations.
+The user can enter numbers and operators, and the result will be displayed if the expression is valid.
 
 ## Screenshots
 

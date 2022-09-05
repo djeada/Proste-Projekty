@@ -142,7 +142,11 @@ Projekty nie zostały uporządkowane względem żadnego kryterium.
 Gra polegająca na odgadywaniu słów. Komputer losuje słowo z wcześniej przygotowanej listy słów. Na ekranie wyświetlone zostaje n kresek, gdzie n to liczba liter, z których składa się słowo. Gracz ma x żyć. W każdym ruchu gracz podaje jedną literę. Jeśli odgadł jedną z liter, z których składa się słowo, to poziome kreski odpowiadające danej litery zostają w nią zamienione. W przeciwnym razie liczba x zmniejszana jest o 1. Gracz wygrywa, jeśli odgadnie wszystkie litery przed wyzerowaniem się licznika.
 
 #### Linki
-![hangman](https://user-images.githubusercontent.com/37275728/188334893-d1b25bd0-eda8-4053-b8ff-d38a52d72461.gif)
+
+Screenshot | Technologie | Link 
+---|---|---
+ <img width="2000"/>![hangman](https://user-images.githubusercontent.com/37275728/188334893-d1b25bd0-eda8-4053-b8ff-d38a52d72461.gif) | Python | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/projekty/python/hangman)**
+
 
 ### Szyfr Cezara
 

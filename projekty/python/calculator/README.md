@@ -17,7 +17,7 @@ No additional libraries or packagaes are needed!
 
 ## Installation
 
-1. Download the code from the repository:
+1. Download the code repository from GitHub: 
     
 ```Bash
 git clone https://github.com/djeada/Proste-Projekty.git

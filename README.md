@@ -155,7 +155,7 @@ Głównym elementem interfejsu graficznego jest pole tekstowe, gdzie użytkownik
 
 Screenshot | Technologie | Link 
 ---|---|---
- <img width="2000"/>![hangman](https://user-images.githubusercontent.com/37275728/188334893-d1b25bd0-eda8-4053-b8ff-d38a52d72461.gif) | Python | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/projekty/python/hangman)**
+ <img width="2000"/>![caesar cipher](https://user-images.githubusercontent.com/37275728/188400957-b9590fdb-defe-4c77-a820-5bebde2f6450.gif) | Python | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/projekty/python/hangman)**
 
 ### Kalkulator
 
@@ -165,8 +165,7 @@ Prosty interfejs graficzny, który pozwala na wykonywanie różnych operacji mat
 
 Screenshot | Technologie | Link 
 ---|---|---
- <img width="2000"/>![calculator](https://user-images.githubusercontent.com/37275728/188334898-ece55e10-0577-4c31-8e28-ab78739de2c4.gif)
- | Python | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/projekty/python/hangman)**
+ <img width="2000"/>![calculator](https://user-images.githubusercontent.com/37275728/188334898-ece55e10-0577-4c31-8e28-ab78739de2c4.gif) | Python | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/projekty/python/hangman)**
 
 ### Lista zadań
 
@@ -206,8 +205,7 @@ Gra polega na wybieraniu pól na planszy. Na danym polu może być ukryta mina. 
 
 Screenshot | Technologie | Link 
 ---|---|---
- <img width="2000"/>![minesweeper](https://user-images.githubusercontent.com/37275728/188334904-6544ac1c-839f-40af-a4e0-1d064a13c3f5.gif)
- | Python | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/projekty/python/hangman)**
+ <img width="2000"/>![minesweeper](https://user-images.githubusercontent.com/37275728/188334904-6544ac1c-839f-40af-a4e0-1d064a13c3f5.gif) | Python | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/projekty/python/hangman)**
 
 ### 2048
 

@@ -1,6 +1,6 @@
 ## About the Project
 
-The Caesar cipher algorithm is used in the background to cipher or decipher text messages.
+A desktop application that uses the Caesar cipher algorithm in the background to cipher or decipher text messages.
 
 ## Screenshots
 

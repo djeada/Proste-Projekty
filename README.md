@@ -147,7 +147,7 @@ Gra polegająca na odgadywaniu słów. Komputer losuje słowo z wcześniej przyg
 
 Screenshot | Technologie | Link 
 ---|---|---
- <img width="2000"/>![hangman](https://user-images.githubusercontent.com/37275728/188334893-d1b25bd0-eda8-4053-b8ff-d38a52d72461.gif) | Python | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/projekty/python/hangman)**
+ <img width="2000"/>![hangman](https://user-images.githubusercontent.com/37275728/188334893-d1b25bd0-eda8-4053-b8ff-d38a52d72461.gif)< | ![python](https://img.icons8.com/color/344/python.png) | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/projekty/python/hangman)**
  
 </div>
 
@@ -161,7 +161,7 @@ Głównym elementem interfejsu graficznego jest pole tekstowe, gdzie użytkownik
 
 Screenshot | Technologie | Link 
 ---|---|---
- <img width="2000"/>![caesar cipher](https://user-images.githubusercontent.com/37275728/188400957-b9590fdb-defe-4c77-a820-5bebde2f6450.gif) | Python | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/projekty/python/caesar_cipher)**
+ <img width="2000"/>![caesar cipher](https://user-images.githubusercontent.com/37275728/188400957-b9590fdb-defe-4c77-a820-5bebde2f6450.gif) | ![python](https://img.icons8.com/color/344/python.png) | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/projekty/python/caesar_cipher)**
  
 </div>
 
@@ -175,7 +175,7 @@ Prosty interfejs graficzny, który pozwala na wykonywanie różnych operacji mat
  
 Screenshot | Technologie | Link 
 ---|---|---
-<img width="2000"/>![calculator](https://user-images.githubusercontent.com/37275728/188334898-ece55e10-0577-4c31-8e28-ab78739de2c4.gif) | Python | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/projekty/python/calculator)**
+<img width="2000"/>![calculator](https://user-images.githubusercontent.com/37275728/188334898-ece55e10-0577-4c31-8e28-ab78739de2c4.gif) | ![python](https://img.icons8.com/color/344/python.png) | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/projekty/python/calculator)**
  
 </div>
 
@@ -219,7 +219,7 @@ Gra polega na wybieraniu pól na planszy. Na danym polu może być ukryta mina. 
 
 Screenshot | Technologie | Link 
 ---|---|---
-<img width="2000"/>![minesweeper](https://user-images.githubusercontent.com/37275728/188334904-6544ac1c-839f-40af-a4e0-1d064a13c3f5.gif) | Python | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/projekty/python/minesweeper)**
+<img width="2000"/>![minesweeper](https://user-images.githubusercontent.com/37275728/188334904-6544ac1c-839f-40af-a4e0-1d064a13c3f5.gif) | ![python](https://img.icons8.com/color/344/python.png) | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/projekty/python/minesweeper)**
  
 </div>
 
@@ -239,7 +239,7 @@ Celem jest przetrwanie jak największej liczby fal zombie. Z każdą nową falą
 
 Screenshot | Technologie | Link 
 ---|---|---
- <img width="2000"/>![zombie_apocalypse](https://user-images.githubusercontent.com/37275728/188334905-179b94fd-eec2-44b8-a64f-fecdd6c6ea01.gif) | Python | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/projekty/python/zombie_apocalypse)**
+ <img width="2000"/>![zombie_apocalypse](https://user-images.githubusercontent.com/37275728/188334905-179b94fd-eec2-44b8-a64f-fecdd6c6ea01.gif) | ![python](https://img.icons8.com/color/344/python.png) | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/projekty/python/zombie_apocalypse)**
  
 </div>
 
@@ -253,7 +253,7 @@ Na planszy o wymiarach 4x4 mamy losowo ułożonych 15 kwadratów z numerami od 1
 
 Screenshot | Technologie | Link 
 ---|---|---
- <img width="2000"/>![fifteen_puzzle](https://user-images.githubusercontent.com/37275728/188334915-1d7bd7b0-0a7e-4118-97e7-b12572b198e7.gif) | Python | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/projekty/python/fifteen_puzzle)**
+ <img width="2000"/>![fifteen_puzzle](https://user-images.githubusercontent.com/37275728/188334915-1d7bd7b0-0a7e-4118-97e7-b12572b198e7.gif) | ![python](https://img.icons8.com/color/344/python.png) | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/projekty/python/fifteen_puzzle)**
  
 </div>
 
@@ -267,7 +267,7 @@ Gra turowa dla przynajmniej dwóch graczy. Wszystkie akceptowalne kombinacje ko�
 
 Screenshot | Technologie | Link 
 ---|---|---
- <img width="2000"/>![yahtzee](https://user-images.githubusercontent.com/37275728/188334918-95a7385c-3d10-4613-ae06-f0afafd0874e.gif) | Python | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/projekty/python/yahtzee)**
+ <img width="2000"/>![yahtzee](https://user-images.githubusercontent.com/37275728/188334918-95a7385c-3d10-4613-ae06-f0afafd0874e.gif) | ![python](https://img.icons8.com/color/344/python.png) | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/projekty/python/yahtzee)**
  
 </div>
 

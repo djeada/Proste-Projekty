@@ -221,8 +221,7 @@ Celem jest przetrwanie jak największej liczby fal zombie. Z każdą nową falą
 
 Screenshot | Technologie | Link 
 ---|---|---
- <img width="2000"/>![zombie_apocalypse](https://user-images.githubusercontent.com/37275728/188334905-179b94fd-eec2-44b8-a64f-fecdd6c6ea01.gif)
- | Python | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/projekty/python/hangman)**
+ <img width="2000"/>![zombie_apocalypse](https://user-images.githubusercontent.com/37275728/188334905-179b94fd-eec2-44b8-a64f-fecdd6c6ea01.gif) | Python | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/projekty/python/hangman)**
 
 ### Piętnastka
 
@@ -232,8 +231,7 @@ Na planszy o wymiarach 4x4 mamy losowo ułożonych 15 kwadratów z numerami od 1
 
 Screenshot | Technologie | Link 
 ---|---|---
- <img width="2000"/>![fifteen_puzzle](https://user-images.githubusercontent.com/37275728/188334915-1d7bd7b0-0a7e-4118-97e7-b12572b198e7.gif)
- | Python | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/projekty/python/hangman)**
+ <img width="2000"/>![fifteen_puzzle](https://user-images.githubusercontent.com/37275728/188334915-1d7bd7b0-0a7e-4118-97e7-b12572b198e7.gif) | Python | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/projekty/python/hangman)**
 
 ### Kości
 

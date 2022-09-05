@@ -17,6 +17,24 @@ No additional libraries or packagaes are needed!
 
 ## Installation
 
+1. Download the code from the repository:
+    
+```Bash
+git clone https://github.com/djeada/Proste-Projekty.git
+```
+
+2. Navigate to the appropriate directory:
+
+```Bash
+cd Proste-Projekty/projekty/python/calculator
+```
+
+3. Start the app:
+
+```Bash
+python src/main.py
+```
+
 ## Usage
 
 1. Enter the text to be deciphered or ciphered into the message input.

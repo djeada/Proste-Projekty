@@ -29,7 +29,7 @@ No additional libraries or packagaes are needed!
 
 * Single player mode.
 
-## Possible imporvements
+## Possible improvements
 
 There are many ways in which the game could be expanded or improved in the future. Some of the ideas include:
 

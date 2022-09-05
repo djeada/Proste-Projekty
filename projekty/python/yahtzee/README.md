@@ -2,6 +2,8 @@
 
 ## Screenshots
 
+![yahtzee](https://user-images.githubusercontent.com/37275728/188334918-95a7385c-3d10-4613-ae06-f0afafd0874e.gif)
+
 ## Requirements
 
 To run this project locally you will need:
@@ -48,5 +50,5 @@ The rules around multiple Yahtzees are a bit complex. There are a couple of diff
 ## UI elements
 
 
-## Possible imporvements
+## Possible improvements
 

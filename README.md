@@ -185,11 +185,19 @@ Aplikacja pozwala na wyświetlenie, edycję i usuwanie zadań z listy. Zadania m
 
 #### Linki
 
+Screenshot | Technologie | Link 
+---|---|---
+| - | - | - |
+
 ### Pogoda
 
 Informacje o aktualnej temperaturze, pogodzie, prędkości wiatru, ciśnieniu atmosferycznym oraz wschodzie i zachodzie słońca dla danej lokacji. 
 
 #### Linki
+
+Screenshot | Technologie | Link 
+---|---|---
+| - | - | - |
 
 ### Stoper
 
@@ -203,11 +211,19 @@ Gracz ma możliwość ustawienia swoich statków na planszy. Pozycje statków ko
 
 #### Linki
 
+Screenshot | Technologie | Link 
+---|---|---
+| - | - | - |
+
 ### Kółko i krzyżyk
 
 Gra w kółko i krzyżyk. Dostępne są dwa tryby gry: gra dla dwóch graczy oraz gra z komputerem. Zwycięża ten, kto jako ustawił w linii (poziomo, pionowo lub na ukos) trzy kółka lub trzy krzyżyki. Jeśli wszystkie pola zostały zajęte i linia nie została utworzona, to mamy remis.
 
 #### Linki
+
+Screenshot | Technologie | Link 
+---|---|---
+| - | - | - |
 
 ### Saper
 
@@ -228,6 +244,10 @@ Screenshot | Technologie | Link
 Gracz przesuwa na planszy kwadraty z numerami będącymi kolejnymi potęgami dwójki. Po każdym ruchu pojawia się nowy kwadrat z numerem 2 lub 4. Gracz może łączyć kwadraty z tym samym numerem, wynikiem jest kwadrat o numerze równym sumie numerów kwadratów składowych. Gracz zwycięża, jeśli udało mu się otrzymać kwadrat o numerze 2048.
 
 #### Linki
+
+Screenshot | Technologie | Link 
+---|---|---
+| - | - | - |
 
 ### Apokalipsa Zombie
 
@@ -277,11 +297,19 @@ Kurki wlatują z prawej strony ekranu i wylatują z lewej strony. Zadaniem gracz
 
 #### Linki
 
+Screenshot | Technologie | Link 
+---|---|---
+| - | - | - |
+
 ### Wąż
 
 Wąż zbudowany jest z n kwadratów i porusza się po prostokątnej planszy. Na planszy w równych odstępach czasowych pojawia się jedzenie. Połknięcie jedzenia przez węża zwiększa licznik punktów oraz powiększa go o jeden kwadrat. Gracz przegrywa, jeśli waz uderzy głową w część własnego ciała.
 
 #### Linki
+
+Screenshot | Technologie | Link 
+---|---|---
+| - | - | - |
 
 ### Edytor tekstowy
 
@@ -289,11 +317,19 @@ pole tekstowe z mozliwoscia edytowania tekstu z klawiatury oraz wklejania tekstu
 
 #### Linki
 
+Screenshot | Technologie | Link 
+---|---|---
+| - | - | - |
+
 ### Obróbka grafiki
 
 Program pozwala na wczytywanie oraz wyświetlanie plików graficznych w formatach PNG, oraz JPG. Dostępnych jest kilka funkcji do edycji obrazu (np. obróć, przytnij, rozciągnij). Oprócz okna z obrazem mamy również pasek z narzędziami (np. kolor, gumka, zaznacz, pędzel). Istnieje opcja eksportowania zmodyfikowanych obrazów.
 
 #### Linki
+
+Screenshot | Technologie | Link 
+---|---|---
+| - | - | - |
 
 ### Git
 
@@ -301,10 +337,18 @@ Prosta implementacja podstawowych funkcjonalności systemu kontroli wersji. Istn
 
 #### Linki
 
+Screenshot | Technologie | Link 
+---|---|---
+| - | - | - |
+
 ### Serwer HTTP
 Serwer HTTP oczekuje dowolnego rodzaju żądań skierowanych pod URL *http://127.0.0.1:8000/*. Po odebraniu żądania skrypt wysyła odpowiedź z napisem "Witaj świecie". Bardziej zaawansowana wersja łączy serwer HTTP z dowolną bazą danych i daje użytkownikowi możliwość odczytania oraz modyfikowania danych przy pomocy przygotowanego API.
 
 #### Linki
+
+Screenshot | Technologie | Link 
+---|---|---
+| - | - | - |
 
 ### Koszyk z zakupami
 
@@ -312,17 +356,29 @@ Zawartość koszyka jest w pełni edytowalna. Można do niego dodawać produkty,
 
 #### Linki
 
+Screenshot | Technologie | Link 
+---|---|---
+| - | - | - |
+
 ### Zamawianie jedzenia
 
 Głównym elementem aplikacji jest lista dostępnych dań wraz ze zdjęciami, ceną, opisem oraz tagami. Po zaznaczeniu dania musimy podać adres oraz wybrać formę płatności spośród PayPal, karta kredytowa lub gotówka przy odbiorze. Dodatkowo można zaimplementować opcję śledzenia kuriera.
 
 #### Linki
 
+Screenshot | Technologie | Link 
+---|---|---
+| - | - | - |
+
 ### Komunikator internetowy
 
 Aplikacja służąca do wysyłania tekstu między komputerami znajdującymi się w tej samej sieci LAN (w ambitniejszej wersji między dowolnymi urządzeniami z dostępem do internetu). Dodatkowo można dać możliwość tworzenia kont przez użytkowników, przesyłania plików oraz opcję wideorozmowy. 
 
 #### Linki
+
+Screenshot | Technologie | Link 
+---|---|---
+| - | - | - |
 
 ## Dodatkowe materiały
 

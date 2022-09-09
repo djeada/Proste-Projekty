@@ -205,6 +205,10 @@ Aplikacja do odmierzania czasu. Użytkownik ma możliwość włączenia oraz zat
 
 #### Linki
 
+Screenshot | Technologie | Link 
+---|---|---
+| - | - | - |
+
 ### Statki
 
 Gracz ma możliwość ustawienia swoich statków na planszy. Pozycje statków komputera są losowane. W każdej turze gracz próbuje odgadnąć pozycję komputera, a komputer wybiera losową pozycję na planszy gracza. Wygrywa ten, kto pierwszy zatopi wszystkie statki przeciwnika.

@@ -46,6 +46,9 @@ python src/main.py
 ## Features
 
 * Single player mode.
+* A display showing the total number of characters and letters that were successfully predicted. 
+* An image representing the current state of the hangman.
+* An input box in which the user can type the guessed letters. 
 
 ## Possible improvements
 

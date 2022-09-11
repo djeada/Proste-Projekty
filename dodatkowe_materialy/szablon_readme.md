@@ -1,4 +1,4 @@
-## About the Project
+## About the project
 
 A desktop application that uses the Caesar cipher algorithm in the background to cipher or decipher text messages.
 

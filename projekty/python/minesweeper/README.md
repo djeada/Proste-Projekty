@@ -1,6 +1,6 @@
 ## About the Project
 
-The Caesar cipher algorithm is used in the background to cipher or decipher text messages.
+Python implementation of the classic game of minesweeper.
 
 ## Screenshots
 
@@ -34,21 +34,23 @@ cd Proste-Projekty/projekty/python/calculator
 python src/main.py
 ```
 
-## Usage
+## Rules of the game
 
-1. Enter the text to be deciphered or ciphered into the message input.
-2. Enter the offset using the key input.
-3. Select whether the algorithm should cipher or decipher the message using the mode dropdown.
-4. Press the Run button.
-5. The processed message appears in the text area. 
+1. A 2D grid of squares is shown.
+1. The player is aware of the number of squares containing mines, but not of their location.
+1. The goal of the game is to find all of the squares that do not have a mine in them.
+1. If the player attempts to expose a mined square, the game is lost.
+1. The player wins when the last safe square is revealed. 
 
 ## Features
 
-* The ability to define any integer key. 
-* Two modes (ciphering and decyphering).
+* Timer.
+* Mines counter.
+* Option to reveal or mark a square as armed.
 
 ## Possible improvements
 
 Some of the ideas include:
 
-* Implement another alogrithm and allow the user to specify which one should be used.
+* The high scores table.
+* The option of choosing the level of difficulty. 

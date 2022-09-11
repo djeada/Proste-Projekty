@@ -396,6 +396,7 @@ Przykłady specyfikacji:
 * https://www.dj4e.com/project/00_overview.md
 * https://www.ece.rutgers.edu/~marsic/books/SE/projects/
 * http://cslibrary.stanford.edu/112/
+* https://itp.uni-frankfurt.de/~mwagner/teaching/C_WS17/projects/Minesweeper.pdf
 
 Przykłady plików readme:
 

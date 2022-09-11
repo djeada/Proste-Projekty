@@ -37,19 +37,17 @@ python src/main.py
 
 ## Usage
 
-1. Enter the text to be deciphered or ciphered into the message input.
-2. Enter the offset using the key input.
-3. Select whether the algorithm should cipher or decipher the message using the mode dropdown.
-4. Press the Run button.
-5. The processed message appears in the text area. 
+1. Enter the mathematical expression to be evaluated.
+2. Press the equals sign button.
+3. The result will be displayed if the provided expression is valid.
 
 ## Features
 
-* The ability to define any integer key. 
-* Two modes (ciphering and decyphering).
+* The ability to enter mathematical expressions via buttons or the keyboard.
+* Addition, subtraction, multiplication, division, exponentiation, square root are all supported. 
 
 ## Possible improvements
 
 Some of the ideas include:
 
-* Implement another alogrithm and allow the user to specify which one should be used.
+* Support for more advanced mathematical operations, like sine function evaluation etc.

@@ -1,6 +1,6 @@
 ## About the Project
 
-The Caesar cipher algorithm is used in the background to cipher or decipher text messages.
+Gui app for fifteen puzzle game.
 
 ## Screenshots
 
@@ -25,7 +25,7 @@ git clone https://github.com/djeada/Proste-Projekty.git
 2. Navigate to the appropriate directory:
 
 ```Bash
-cd Proste-Projekty/projekty/python/calculator
+cd Proste-Projekty/projekty/python/fifteen_puzzle
 ```
 
 3. Start the app:
@@ -33,6 +33,14 @@ cd Proste-Projekty/projekty/python/calculator
 ```Bash
 python src/main.py
 ```
+
+## Game rules
+
+* Fifteen puzzle is a game where you are given a board and you need to move all the tiles to the empty space to get the board in order.
+* At the start of the game, you are given a board with some tiles in random order.
+* There is only one empty space on the board.
+* You can move the tiles to the empty space by swapping them.
+* Once all the tiles are in order, you win the game.
 
 ## Usage
 
@@ -44,11 +52,13 @@ python src/main.py
 
 ## Features
 
-* The ability to define any integer key. 
-* Two modes (ciphering and decyphering).
+* The ability to move the titles with the arrow keys.
+* A board that displays the current state of the game.
+* Tiles that are correctly placed are highlighted. 
 
 ## Possible improvements
 
 Some of the ideas include:
 
-* Implement another alogrithm and allow the user to specify which one should be used.
+* Display a special message when the user wins the game.
+* Display the timer.

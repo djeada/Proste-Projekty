@@ -1,6 +1,6 @@
 ## About the Project
 
-Gui app for fifteen puzzle game.
+A desktop application for fifteen puzzle game.
 
 ## Screenshots
 

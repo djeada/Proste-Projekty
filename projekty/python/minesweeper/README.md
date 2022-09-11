@@ -25,7 +25,7 @@ git clone https://github.com/djeada/Proste-Projekty.git
 2. Navigate to the appropriate directory:
 
 ```Bash
-cd Proste-Projekty/projekty/python/calculator
+cd Proste-Projekty/projekty/python/minesweeper
 ```
 
 3. Start the app:

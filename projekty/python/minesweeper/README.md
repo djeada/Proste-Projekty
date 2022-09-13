@@ -53,4 +53,5 @@ python src/main.py
 Some of the ideas include:
 
 * The high scores table.
-* The option of choosing the level of difficulty. 
+* The option of choosing the level of difficulty.
+* An AI alogrithm that solves the minesweeper automatically.

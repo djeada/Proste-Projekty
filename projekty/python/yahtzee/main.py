@@ -2,7 +2,8 @@ from src.gui.gui import Gui
 
 
 def main():
-    Gui()
+    gui = Gui()
+    gui.run()
 
 
 if __name__ == "__main__":

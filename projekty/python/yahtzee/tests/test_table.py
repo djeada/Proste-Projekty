@@ -38,7 +38,7 @@ class TestTable(unittest.TestCase):
         excepted_score = 40
         result = table.get_score(score_type)
         self.assertEqual(excepted_score, result)
-    
+
     def test_add_score_full_house(self):
         table = Table()
         dice_list = [Dice(1), Dice(1), Dice(1), Dice(2), Dice(2)]
@@ -47,7 +47,7 @@ class TestTable(unittest.TestCase):
         excepted_score = 25
         result = table.get_score(score_type)
         self.assertEqual(excepted_score, result)
-    
+
     def test_add_score_yahtzee(self):
         table = Table()
         dice_list = [Dice(1), Dice(1), Dice(1), Dice(1), Dice(1)]
@@ -56,4 +56,3 @@ class TestTable(unittest.TestCase):
         excepted_score = 50
         result = table.get_score(score_type)
         self.assertEqual(excepted_score, result)
-    

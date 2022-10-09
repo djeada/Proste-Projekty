@@ -2,11 +2,15 @@ from dataclasses import dataclass
 from enum import auto, Enum
 from typing import List
 
-from src.game_logic.dice import Dice
-from src.utils.utils import most_common_value
+from projekty.python.yahtzee.src.logic.dice import Dice
+from projekty.python.yahtzee.src.utils.utils import most_common_value
 
 
 class ScoreType(Enum):
+    """
+    Possible types of scores.
+    """
+
     ACES = auto()
     TWOS = auto()
     THREES = auto()
@@ -21,8 +25,13 @@ class ScoreType(Enum):
     CHANCE = auto()
     YAHTZEE = auto()
 
+
 @dataclass
 class Table:
+    """
+    Class representing a table with scores.
+    """
+
     aces: int = 0
     twos: int = 0
     threes: int = 0
@@ -38,25 +47,40 @@ class Table:
     yahtzee: int = 0
     bonus: int = 0
 
-    def total(self):
+    def total(self) -> int:
+        """
+        Sums all scores.
+
+        :return: Total score.
+        """
         upper_section_total = (
-                self.aces + self.twos + self.threes + self.fours + self.fives + self.sixes
+            self.aces + self.twos + self.threes + self.fours + self.fives + self.sixes
         )
         if upper_section_total >= 63:
             self.bonus += 35
 
         lower_section_total = (
-                self.three_of_a_kind
-                + self.four_of_a_kind
-                + self.full_house
-                + self.small_straight
-                + self.large_straight
-                + self.chance
-                + self.yahtzee
+            self.three_of_a_kind
+            + self.four_of_a_kind
+            + self.full_house
+            + self.small_straight
+            + self.large_straight
+            + self.chance
+            + self.yahtzee
         )
         return upper_section_total + lower_section_total + self.bonus
 
     def add_score(self, score_type: ScoreType, dice_list: List[Dice]) -> None:
+        """
+        Adds a score to the table.
+
+        :param score_type: Type of score to add.
+        :param dice_list: List of dice.
+
+        :raises ValueError: If the score type is already used.
+
+        :return: None.
+        """
         if score_type == ScoreType.ACES:
             self.aces = sum([dice.value for dice in dice_list if dice.value == 1])
         elif score_type == ScoreType.TWOS:
@@ -70,9 +94,21 @@ class Table:
         elif score_type == ScoreType.SIXES:
             self.sixes = sum([dice.value for dice in dice_list if dice.value == 6])
         elif score_type == ScoreType.THREE_OF_A_KIND:
-            self.three_of_a_kind += sum([dice.value for dice in dice_list if dice.value == most_common_value(dice_list)])
+            self.three_of_a_kind += sum(
+                [
+                    dice.value
+                    for dice in dice_list
+                    if dice.value == most_common_value(dice_list)
+                ]
+            )
         elif score_type == ScoreType.FOUR_OF_A_KIND:
-            self.four_of_a_kind += sum([dice.value for dice in dice_list if dice.value == most_common_value(dice_list)])
+            self.four_of_a_kind += sum(
+                [
+                    dice.value
+                    for dice in dice_list
+                    if dice.value == most_common_value(dice_list)
+                ]
+            )
         elif score_type == ScoreType.FULL_HOUSE:
             self.full_house += 25
         elif score_type == ScoreType.SMALL_STRAIGHT:
@@ -85,9 +121,22 @@ class Table:
             self.yahtzee += 50
 
     def is_rule_already_used(self, score_type: ScoreType) -> bool:
+        """
+        Checks if the score type is already used.
+
+        :param score_type: Type of score to check.
+
+        :return: True if the score type is already used, False otherwise.
+        """
         return self.get_score(score_type) != 0
 
     def get_score(self, score_type: ScoreType) -> int:
+        """
+        Gets the score of the given score type.
+
+        :param score_type: Type of score to get.
+        :return: Score of the given score type.
+        """
         if score_type == ScoreType.ACES:
             return self.aces
         elif score_type == ScoreType.TWOS:

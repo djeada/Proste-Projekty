@@ -23,7 +23,9 @@ class Game:
             zombie.draw()
         text = self.font.render("Score: " + str(self.score), True, (255, 255, 255))
         self.screen.blit(text, (10, 10))
-        text = self.font.render("Health: " + str(self.player.health), True, (255, 255, 255))
+        text = self.font.render(
+            "Health: " + str(self.player.health), True, (255, 255, 255)
+        )
         self.screen.blit(text, (200, 10))
         pygame.display.flip()
 
@@ -54,16 +56,30 @@ class Game:
 
     def check_wall_collision(self, entity: Entity):
         if entity.rect.left < 0 or entity.rect.right > self.screen.get_width():
-            entity.position.x = entity.rect.left if entity.rect.left < 0 else self.screen.get_width() - entity.rect.width
+            entity.position.x = (
+                entity.rect.left
+                if entity.rect.left < 0
+                else self.screen.get_width() - entity.rect.width
+            )
             entity.speed.x *= -1
         if entity.rect.top < 0 or entity.rect.bottom > self.screen.get_height():
-            entity.position.y = entity.rect.top if entity.rect.top < 0 else self.screen.get_height() - entity.rect.height
+            entity.position.y = (
+                entity.rect.top
+                if entity.rect.top < 0
+                else self.screen.get_height() - entity.rect.height
+            )
             entity.speed.y *= -1
 
     def display_game_over(self):
         self.font = pygame.font.SysFont("Arial", 60)
         text = self.font.render("Game Over", True, (255, 255, 255))
-        self.screen.blit(text, (self.screen.get_width() / 2 - text.get_width() / 2, self.screen.get_height() / 2 - text.get_height() / 2))
+        self.screen.blit(
+            text,
+            (
+                self.screen.get_width() / 2 - text.get_width() / 2,
+                self.screen.get_height() / 2 - text.get_height() / 2,
+            ),
+        )
         pygame.display.flip()
         pygame.time.wait(2000)
         pygame.quit()

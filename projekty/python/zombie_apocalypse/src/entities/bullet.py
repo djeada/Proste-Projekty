@@ -9,8 +9,12 @@ from utils.utils import Point
 class Bullet(Entity):
     def __init__(self, screen, position: Point, direction: Point):
         speed = Point(direction.x * 10, direction.y * 10)
-        super().__init__(screen, position, speed, Consts.BULLET_WIDTH,  Consts.BULLET_HEIGHT)
-        self.life_counter = Consts.BULLET_RANGE //sqrt(self.speed.x**2 + self.speed.y**2)
+        super().__init__(
+            screen, position, speed, Consts.BULLET_WIDTH, Consts.BULLET_HEIGHT
+        )
+        self.life_counter = Consts.BULLET_RANGE // sqrt(
+            self.speed.x ** 2 + self.speed.y ** 2
+        )
 
     def draw(self):
         pygame.draw.rect(self.screen, (255, 0, 0), self.rect)

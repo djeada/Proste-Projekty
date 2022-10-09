@@ -41,18 +41,28 @@ class Player(Entity):
             start_y = self.position.y
             if self.direction.x == -1 and self.direction.y == 0:
                 start_x = self.position.x
-                start_y = self.position.y + self.rect.height / 2 - Consts.BULLET_HEIGHT / 2
+                start_y = (
+                    self.position.y + self.rect.height / 2 - Consts.BULLET_HEIGHT / 2
+                )
             elif self.direction.x == 1 and self.direction.y == 0:
                 start_x = self.position.x + self.rect.width - Consts.BULLET_WIDTH
-                start_y = self.position.y + self.rect.height / 2 - Consts.BULLET_HEIGHT / 2
+                start_y = (
+                    self.position.y + self.rect.height / 2 - Consts.BULLET_HEIGHT / 2
+                )
             elif self.direction.x == 0 and self.direction.y == -1:
-                start_x = self.position.x + self.rect.width / 2 - Consts.BULLET_WIDTH / 2
+                start_x = (
+                    self.position.x + self.rect.width / 2 - Consts.BULLET_WIDTH / 2
+                )
                 start_y = self.position.y
             elif self.direction.x == 0 and self.direction.y == 1:
-                start_x = self.position.x + self.rect.width / 2 - Consts.BULLET_WIDTH / 2
+                start_x = (
+                    self.position.x + self.rect.width / 2 - Consts.BULLET_WIDTH / 2
+                )
                 start_y = self.position.y + self.rect.height - Consts.BULLET_HEIGHT
 
-            self.bullets.append(Bullet(self.screen, Point(start_x, start_y), self.direction))
+            self.bullets.append(
+                Bullet(self.screen, Point(start_x, start_y), self.direction)
+            )
         self.rect.x = self.position.x
         self.rect.y = self.position.y
 

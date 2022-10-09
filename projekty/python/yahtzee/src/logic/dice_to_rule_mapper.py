@@ -1,15 +1,24 @@
 from typing import List
 
-from src.game_logic.dice import Dice
-from src.game_logic.table import ScoreType
-from src.utils.utils import create_histogram
+from projekty.python.yahtzee.src.logic.dice import Dice
+from projekty.python.yahtzee.src.logic.table import ScoreType
+from projekty.python.yahtzee.src.utils.utils import create_histogram
 
 
 class DiceToRulesMapper:
+    """
+    Defines the mapping between the dice and the rules.
+    """
+
     def __init__(self, dice_list: List[Dice]):
         self.dice_list = dice_list
 
     def map_to_rules(self) -> List[ScoreType]:
+        """
+        Checks which rules are satisfied by the dice.
+
+        :return: list of rules satisfied by the dice
+        """
         for dice in self.dice_list:
             if dice.value == -1:
                 return []
@@ -54,13 +63,13 @@ class DiceToRulesMapper:
         def could_be_small_straight(dice_list: List[int]) -> bool:
             histogram = create_histogram(dice_list)
             return len(histogram) >= 5 and (
-                    1 in histogram and 2 in histogram and 3 in histogram and 4 in histogram
+                1 in histogram and 2 in histogram and 3 in histogram and 4 in histogram
             )
 
         def could_be_large_straight(dice_list: List[int]) -> bool:
             histogram = create_histogram(dice_list)
             return len(histogram) >= 5 and (
-                    2 in histogram and 3 in histogram and 4 in histogram and 5 in histogram
+                2 in histogram and 3 in histogram and 4 in histogram and 5 in histogram
             )
 
         def could_be_chance(_: List[int]) -> bool:
@@ -93,5 +102,11 @@ class DiceToRulesMapper:
         return rules
 
     def map_to_score_type(self, rule: callable) -> ScoreType:
-        name = rule.__name__[len("could_be_"):].upper()
+        """
+        Maps the rule to the score type.
+
+        :param rule: rule to map
+        :return: score type
+        """
+        name = rule.__name__[len("could_be_") :].upper()
         return ScoreType[name]

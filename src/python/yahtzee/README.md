@@ -4,7 +4,7 @@ Desktop version of the popular dice game Yahtzee. The game is played by rolling 
 
 ## Screenshots
 
-![yahtzee](https://user-images.githubusercontent.com/37275728/188334918-95a7385c-3d10-4613-ae06-f0afafd0874e.gif)
+![yahtzee](https://user-images.githubusercontent.com/37275728/194823845-3aea219e-10d3-4d09-bc36-0832e7e0a8f8.gif)
 
 ## Requirements
 

@@ -5,7 +5,7 @@ The user can enter numbers and operators, and the result will be displayed if th
 
 ## Screenshots
 
-![calculator](https://user-images.githubusercontent.com/37275728/188334898-ece55e10-0577-4c31-8e28-ab78739de2c4.gif)
+![calculator](https://user-images.githubusercontent.com/37275728/194822287-7b84368a-2df0-4f4f-87a0-31951b91a253.gif)
 
 ## Requirements
 

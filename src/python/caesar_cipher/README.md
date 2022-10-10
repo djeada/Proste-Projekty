@@ -4,7 +4,7 @@ A desktop application that uses the Caesar cipher algorithm in the background to
 
 ## Screenshots
 
-![caesar cipher](https://user-images.githubusercontent.com/37275728/188400957-b9590fdb-defe-4c77-a820-5bebde2f6450.gif)
+![caesar cipher](https://user-images.githubusercontent.com/37275728/194821911-e403023e-c5e5-4b19-b8bb-5cfedae8f164.gif)
 
 ## Requirements
 

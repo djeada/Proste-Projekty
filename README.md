@@ -161,7 +161,7 @@ Głównym elementem interfejsu graficznego jest pole tekstowe, gdzie użytkownik
 
 Screenshot | Technologie | Link 
 ---|---|---
- <img width="2000"/>![caesar cipher](https://user-images.githubusercontent.com/37275728/188400957-b9590fdb-defe-4c77-a820-5bebde2f6450.gif) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/projekty/python/caesar_cipher)**
+ <img width="2000"/>![caesar cipher](https://user-images.githubusercontent.com/37275728/194821911-e403023e-c5e5-4b19-b8bb-5cfedae8f164.gif) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/projekty/python/caesar_cipher)**
  
 </div>
 

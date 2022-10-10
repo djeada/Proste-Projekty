@@ -4,7 +4,7 @@ Hangman is a single-player guessing game. The computer chooses a word at random 
 
 ## Screenshots
 
-![hangman](https://user-images.githubusercontent.com/37275728/188334893-d1b25bd0-eda8-4053-b8ff-d38a52d72461.gif)
+![hangman](https://user-images.githubusercontent.com/37275728/194822831-d1b117cb-ae01-4939-bac1-85ac4e58769a.gif)
 
 ## Requirements
 

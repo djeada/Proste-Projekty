@@ -4,7 +4,7 @@ A desktop application for fifteen puzzle game.
 
 ## Screenshots
 
-![fifteen_puzzle](https://user-images.githubusercontent.com/37275728/188334915-1d7bd7b0-0a7e-4118-97e7-b12572b198e7.gif)
+![fifteen_puzzle](https://user-images.githubusercontent.com/37275728/194822577-fbfa5228-3643-4f61-ad69-bc58cd80b97a.gif)
 
 ## Requirements
 

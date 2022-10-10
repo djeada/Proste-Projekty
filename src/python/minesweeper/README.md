@@ -4,7 +4,7 @@ Python implementation of the classic game of minesweeper.
 
 ## Screenshots
 
-![minesweeper](https://user-images.githubusercontent.com/37275728/188334904-6544ac1c-839f-40af-a4e0-1d064a13c3f5.gif)
+![minesweeper](https://user-images.githubusercontent.com/37275728/194823180-a96946b2-082e-4aac-85cd-e822b6cf58c4.gif)
 
 ## Requirements
 

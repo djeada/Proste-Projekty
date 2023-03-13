@@ -54,7 +54,6 @@ Oto kilka dobrych praktyk organizacyjnych, które pomogą Ci utrzymać porządek
 * Uważaj na martwy kod - nie twórz zmiennych, funkcji i klas, których nigdy nie użyjesz.
 * Nie ignoruj ostrzeżeń kompilatora.
 
-
 ### Zmienne
 
 * Nadawaj zmiennym nazwy, które mają sens. Nikt nie wie, co oznaczają zmienne o nazwach takich jak <code>a</code> lub <code>xob</code>. Nie przesadzaj jednak z długością nazw. Jeśli tworzysz zmienną <code>sumaZarobkowWszystkichPracownikowFirmy</code>, tylko po to, by użyć jej raz lub dwa razy, to może warto skrócić tę nazwę.

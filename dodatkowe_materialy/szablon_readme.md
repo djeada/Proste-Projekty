@@ -45,9 +45,10 @@ cd [project directory]
 [Provide some ideas for potential future improvements or features.]
 
 ## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
-Contributions are welcome! Please read our Contributing Guidelines for more information.
+Please make sure to update tests as appropriate.
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the <a href="https://github.com/djeada/Proste-Projekty/blob/main/LICENSE">MIT License</a>.

@@ -1,5 +1,5 @@
 # Proste-Projekty
-Kolekcja pomysłów na projekty dla początkujących programistów wraz z pełnymi specyfikacjami oraz przykładowymi implementacjami.
+Kolekcja projektów dla początkujących programistów, zawierająca pełne specyfikacje oraz przykłady implementacji.
 
 ## Spis Treści
 <!--ts-->
@@ -11,135 +11,152 @@ Kolekcja pomysłów na projekty dla początkujących programistów wraz z pełny
 
 ## Jak zacząć projekt?
 
-1. Upewnij się, że znasz podstawy wybranego języka programowania. Nie ma znaczenia, jaki język wybierzesz. Ważne jest to, byś dobrze opanował wszystkie fundamentalne koncepcje i mechanizmy (zmienne, warunki, pętle, funkcje, tablice i napisy). Korzystaj z dobrodziejstw internetu. Poszukaj materiałów, które pasują do twojego stylu uczenia się i ucz się z nich. Zadania treningowe znajdziesz pod tym <a href="https://github.com/djeada/Nauka-Programowania">linkiem</a>.
-1. Wybierz temat, który cię interesuje. Szukaj inspiracji w swoim życiu codziennym. Może potrzebujesz zautomatyzować wysyłanie e-maili. A może masz ochotę zagrać w jakąś grę, której nikt jeszcze nie stworzył. Nie ma nic złego w czerpaniu pomysłów od innych programistów (chodzi o samą ideę, przy podkradaniu kodu musisz najpierw sprawdzić licencję). Strona <a href="https://github.com">GitHub</a> to dobre miejsce do tego typu poszukiwań. Przyjrzy się projektom stworzonym przez innych początkujących programistów i zastanów się, czy coś podobnego mogłoby cię zainteresować. Nie kopiuj kodu, na razie skup się na samym pomyśle.
-1. Pamiętaj im oryginalniejszy pomysł, tym lepiej. Świat widział już milion tetrisów, więc jest okazja, by wykazać się pomysłowością. Nie przejmuj się jednak jeśli zupełnie nie przychodzi ci do głowy żaden nowatorski pomysł. Od tego masz to repozytorium, by w najgorszym wypadku powielić jeden z popularnych tematów. Nie kopiuj jednak wszystkie, dodaj kilka funkcjonalności od siebie i rozbuduj projekt, na którym bazujesz.
-1. Oceń realność ukończenia wybranego przez ciebie projektu. Czy wiesz w ogóle jak zacząć? Jeśli nie, to być może lepiej będzie jak, zdecydujesz się na coś mniej ambitnego. Jeśli wiesz mniej więcej, od czego należałoby rozpocząć kodowanie, to następnie spróbuj przygotować ogólną listę kroków, potrzebnych do ukończenia projektu. Spisz je (na papierze lub w wersji elektronicznej). To bardzo ważne.
-1. Jeśli jeszcze tego nie zrobiłeś, pobierz środowisko programistyczne odpowiednie dla wybranego przez ciebie języka. W większości przypadków <code>VS Code</code> to dobra opcja. Pełną kontrolę nad wersjami języka oraz bibliotek masz jedynie gdy kodujesz lokalnie, na swoim komputerze.
-1. Przygotuj szkielet projektu (zdefiniuj, jakie pliki będą ci potrzebne). Ten krok jest mocno uzależniony od języka programowania, jaki wybrałeś. Przykładowo jeśli tworzysz aplikację webową w czystym JavaScript to prawdopodobnie, będziesz potrzebował minimum trzy pliki: *index.html*, *index.js* i *index.css*. Być może jednak chcesz napisać skrypt w Pythonie, wtedy *main.py* oraz *requirements.txt* mogą być wszystkim, czego na początku potrzebujesz. Dla języków kompilowanych prawdopodobnie będziesz jeszcze musiał napisać skrypt z regułami budowania aplikacji (taki skrypt definiuje jakie pliki wynikowe powinny powstać w wyniku kompilacji, jak połączyć je z zewnętrznymi bibliotekami itd.). 
-1. Niezależnie od języka programowanie będziesz potrzebować dokumentacji. Na samym początku wystarczy plik *README.md*, opisz cel projektu, wszystkie zależności, które są potrzebne do zainstalowania, by uruchomić aplikację oraz krótka informacja o obsłudze interfejsu graficznego (może być również krótkie demo w formacie GIF). Na późniejszym etapie projektu mogą cię zainteresować cię generatory dokumentacji jak <a href ="https://www.sphinx-doc.org/en/master/">SPHINX</a> lub <a href="https://doxygen.nl/">Doxygen</a>.
-1. Umieść wszystkie przygotowane pliki w obrębie repozytorium Git.
-1. Jeśli dotarłeś tak daleko, to przyszedł czas na chwilę relaksu. Weź głęboki oddech i rozluźnij się. 
-1. Teraz przyszedł czas na gwóźdź programu, implementację wcześniej przygotowanej listy kroków. Zanim jednak zaczniesz pisać kod, zastanów się jeszcze czy nie można niektórych punktów rozbić na mniejsze oraz, czy nie zabrakło czegoś istotnego. Wraz z rozwojem projektu będziesz jeszcze niejednokrotnie modyfikował tę listę.
-1. Implementuj funkcjonalności jedna po drugiej. Po zaimplementowaniu każdej z nich testuj ręcznie swój program. Nie zakładaj, że wiesz, co zrobią napisane przez ciebie wiersze kodu. Programowanie lubi płatać figle i nigdy nie jest do końca tak, jakby się wydawało na początku. Poza testami ręcznymi byłoby miło pomyśleć również o testach automatycznych. Każdy język programowania ma przynajmniej kilka bibliotek/frameworków do testowania programów. Znajdź coś odpowiedniego dla ciebie. Dzięki testom automatycznym szybko sprawdzisz, czy nowe funkcjonalności nie psują działania tych, które zaimplementowałeś wcześniej. Również refaktoryzacja będzie o niebo prostsza.
-1. Każda funkcjonalność powinna być osobno zapisywana jako commit w repozytorium. Dzięki temu twój postęp będzie archiwizowany i zawsze będziesz mieć możliwość wrócenia do ostatniej działającej wersji kodu. Dodatkowo jeśli swoje repozytorium umieścisz również na zewnętrznym serwerze (jak np. GitHub) będziesz miał zawsze dostępne kopie  zapasowe twojej pracy.
-1. Gdy utkniesz, pytaj o pomoc wujka Google. Umiejętność znajdowania odpowiedzi na techniczne pytania jest niezwykle ważna dla każdego programisty. Staraj się dokładnie opisać swój problem. Jeśli nie znajdziesz rozwiązania twojego problemu, to musisz spróbować poszukać rozwiązania dla problemu ogólniejszego, a następnie przenieść je na twój problem. Choć w przypadku prostych projektów to mało prawdopodobne to są niszowe problemy, dla których nie ma rozwiązania na stronach typu <a href="https://stackoverflow.com/">Stack Overflow</a>. Trzeba będzie wtedy sięgnąć do dokumentacji i ruszyć głową.
-1. Wypuść swój projekt na światło dzienne. Upublicznij kod w serwisie <a href="https://github.com">GitHub</a>. Dla aplikacji desktopowej możesz pomyśleć o przygotowaniu instalatora. Jeśli natomiast pracowałeś nad aplikacją webową, to możesz spróbować uruchomić ją na zewnętrznym serwerze za pomocą jednego z darmowych serwisów jak <a href="https://devcenter.heroku.com/">Heroku</a>.
-1. Poinformuj mnie o swoim projekcie!
-
+1. Upewnij się, że znasz podstawy wybranego języka programowania. Nie ma znaczenia, jaki język wybierzesz. Ważne jest, abyś dobrze opanował wszystkie podstawowe koncepcje i mechanizmy, takie jak zmienne, warunki, pętle, funkcje, tablice i napisy. Skorzystaj z dostępnych źródeł w internecie, aby znaleźć materiały dopasowane do swojego stylu nauki. Aby się uczyć, wykorzystaj różne ćwiczenia treningowe, które można znaleźć pod tym <a href="https://github.com/djeada/Nauka-Programowania">linkiem</a>.
+2. Wybierz temat, który Cię interesuje. Szukaj inspiracji w swoim życiu codziennym. Na przykład możesz chcieć zautomatyzować wysyłanie e-maili lub stworzyć własną grę. Nie ma nic złego w czerpaniu pomysłów od innych programistów, ale nie kopiuj kodu. Strona <a href="https://github.com">GitHub</a> to dobre miejsce do poszukiwania inspiracji. Przyjrzyj się projektom stworzonym przez innych początkujących programistów i zastanów się, czy coś podobnego mogłoby Cię zainteresować.
+3. Pamiętaj, że im bardziej oryginalny pomysł, tym lepiej. Świat widział już milion tetrisów, więc masz okazję wykazać się pomysłowością. Jeśli jednak nie przychodzi Ci do głowy żaden nowatorski pomysł, możesz skorzystać z istniejących pomysłów jako punktu wyjścia. Nie kopiuj jednak wszystkich rozwiązań; dodaj swoje pomysły i rozbuduj projekt, na którym się wzorujesz.
+4. Oceń realność ukończenia wybranego projektu. Czy wiesz, jak zacząć? Jeśli nie, być może lepiej będzie zacząć od czegoś mniej ambitnego. Jeśli wiesz, jakie są kroki potrzebne do ukończenia projektu, spróbuj stworzyć listę i zapisz ją (na papierze lub w wersji elektronicznej).
+5. Jeśli jeszcze tego nie zrobiłeś, pobierz odpowiednie środowisko programistyczne dla wybranego języka programowania. W większości przypadków dobrej jakości środowiskiem programistycznym jest <code>VS Code</code>. Pełną kontrolę nad wersjami języka oraz bibliotekami masz tylko wtedy, gdy pracujesz lokalnie, na swoim komputerze.
+6. Na początku warto przygotować strukturę projektu, czyli określić, jakie pliki będą potrzebne do stworzenia aplikacji. Konkretny zestaw zależy od wybranego języka programowania. Na przykład, gdy tworzysz aplikację webową w czystym JavaScript, potrzebne będą minimum trzy pliki: index.html, index.js oraz index.css. Natomiast, jeśli wybrałeś Pythona, wystarczy, że utworzysz plik main.py oraz requirements.txt. Dla języków kompilowanych należy także napisać skrypt z instrukcjami budowania aplikacji. Taki skrypt określa, jakie pliki wynikowe powinny powstać w wyniku kompilacji i jak połączyć je z zewnętrznymi bibliotekami.
+7. Bez względu na wybrany język, warto pamiętać o dokumentacji. Na początku warto stworzyć plik README.md, w którym opiszemy cel projektu, wymagane zależności oraz sposób obsługi interfejsu graficznego (można dodać krótkie demo w formacie GIF). W dalszej fazie pracy warto skorzystać z narzędzi generujących dokumentację, np. <a href ="https://www.sphinx-doc.org/en/master/">SPHINX</a> lub <a href="https://doxygen.nl/">Doxygen</a>.
+8. Wszystkie przygotowane pliki warto umieścić w repozytorium Git.
+9. Po wykonaniu powyższych kroków warto zrobić sobie chwilę przerwy i odpocząć.
+10. Teraz nadszedł czas na implementację kluczowej części projektu - wcześniej przygotowanej listy kroków. Zanim jednak przystąpisz do pisania kodu, warto zastanowić się, czy niektóre punkty można podzielić na mniejsze lub czy coś nie zostało pominięte. W miarę rozwoju projektu prawdopodobnie będziesz modyfikował tę listę.
+11. Implementuj funkcjonalności jedna po drugiej, a po każdej z nich przeprowadzaj ręczne testy swojego programu. Nie zakładaj, że wiesz, co robią Twoje linie kodu. Programowanie jest zmiennym procesem, a testy ręczne są podstawą. Ponadto warto rozważyć wprowadzenie testów automatycznych - większość języków programowania ma wiele bibliotek i frameworków, które pomagają w testowaniu programów. Pozwolą one szybko zweryfikować, czy nowe funkcjonalności nie powodują problemów z już istniejącymi. Automatyczne testy znacznie ułatwią również refaktoryzację.
+12. Każda funkcjonalność powinna być zapisana jako osobny commit w repozytorium. Dzięki temu Twój postęp będzie archiwizowany, a Ty zawsze będziesz miał możliwość powrotu do ostatniej działającej wersji kodu. Umieszczenie repozytorium na zewnętrznym serwerze, takim jak GitHub, umożliwi Ci również dostęp do kopii zapasowych Twojej pracy.
+13. Jeśli utkniesz, nie wahaj się skorzystać z pomocy Google. Umiejętność znalezienia odpowiedzi na techniczne pytania jest niezwykle ważna dla każdego programisty. Staraj się dokładnie opisać swój problem. Jeśli nie znajdziesz rozwiązania dla swojego problemu, spróbuj znaleźć rozwiązanie dla problemu bardziej ogólnego, a następnie przenieść je na Twój konkretny przypadek. W przypadku niszowych problemów, dla których nie ma rozwiązania na stronach typu <a href="https://stackoverflow.com/">Stack Overflow</a>, warto sięgnąć do dokumentacji i wykorzystać własne umiejętności.
+14. Udostępnij swój projekt na platformie <a href="https://github.com">GitHub</a> lub, jeśli pracujesz nad aplikacją desktopową, przygotuj instalator. W przypadku aplikacji webowych warto rozważyć uruchomienie ich na zewnętrznym serwerze za pomocą darmowych narzędzi, takich jak <a href="https://devcenter.heroku.com/">Heroku</a>.
+15. Daj mi znać o swoim projekcie!
+    
 ## Tak zwane dobre praktyki
 
-Dobre praktyki to reguły pisania programów (niemalże) niezależne od języka programowania. 
+Dobre praktyki programowania to zestaw reguł, które mają na celu zwiększenie jakości kodu i ułatwienie jego dalszego rozwoju. Są one niezależne od konkretnego języka programowania.
 
 ### Obietnice dobrych praktyk
 
-Co takiego dają nam tak zwane dobre praktyki?
+Stosowanie dobrych praktyk programowania przynosi wiele korzyści, w tym:
 
-* Kod staje się czytelniejszy.
-* Łatwiej wprowadzać modyfikacje do kodu.
-* Minimalizujemy objętość pisanego kodu.
-* Możliwa jest praca w grupie.
-* Program jest testowalny.
+* Ulepszają czytelność kodu.
+* Ułatwiają wprowadzanie zmian w kodzie.
+* Minimalizują objętość kodu.
+* Umożliwiają pracę w grupie.
+* Ułatwiają testowanie programu.
 
 ### Organizacja projektu
 
-* Git jest twoim przyjacielem. Pracuj małymi krokami. Często zapisuj (commit) stan swojej pracy opisując przy tym naniesione zmiany. Jeśli pracujesz w grupie rozgałęzienie (<a href="https://en.wikipedia.org/wiki/Branching_(version_control)">feature branches</a>) projektu może mieć sens. Inną strategią jest regularna integracja nawet drobnych zmian z główną gałęzią (master) repozytorium (<a href="https://en.wikipedia.org/wiki/Continuous_integration">trunk-based development</a>).
-* Czytaj już napisany kod. Jeśli uważasz, że coś da radę zrobić prościej bądź lepiej to spróbuj poprawić aktualny kod. Nie bój się wprowadzać zmian. Testy jednostkowe zabezpieczą cię przed wprowadzeniem destruktywnych zmian.
-* Na bieżąco buduj dokumentacje. Dodawaj komentarze do tworzonych funkcji i klas. Gdy napotkasz trudności, zanotuj je i umieść krótkie streszczenie w *README.md*. 
-* Dbaj o schludność i czytelność kodu. 
-* Nieformatowany kod jest nieczytelny. Wybierz styl formatowania i trzymaj się go. Istnieją również setki narzędzi do automatycznego formatowania kodu. Używaj ich.
-* Dziel kod między pliki, a pliki między foldery/moduły/paczki. Nazwy plików oraz folderów powinny być proste i sugestywne.
+Oto kilka dobrych praktyk organizacyjnych, które pomogą Ci utrzymać porządek i uporządkowanie w Twoim projekcie:
+
+* Git to Twoje narzędzie do kontroli wersji - używaj go często i pracuj w małych krokach, zapisując swoją pracę za każdym razem z opisem naniesionych zmian. Jeśli pracujesz z zespołem, warto rozważyć rozgałęzienie projektu (ang. <a href="https://en.wikipedia.org/wiki/Branching_(version_control)">feature branches</a>). Inną dobrym podejściem jest regularne integrowanie drobnych zmian z główną gałęzią (ang. <a href="https://en.wikipedia.org/wiki/Continuous_integration">trunk-based development</a>).
+* Czytaj kod, który już istnieje w projekcie i nie wahaj się wprowadzać zmian, jeśli uważasz, że coś da się zrobić lepiej lub prościej. Pamiętaj, że testy jednostkowe pomogą Ci uniknąć wprowadzenia destrukcyjnych zmian.
+* Twórz dokumentację na bieżąco, dodając komentarze do tworzonych funkcji i klas. Kiedy napotkasz trudności, zapisz je i umieść krótkie streszczenie w pliku *README.md*.
+* Dbaj o schludność i czytelność kodu. Użyj narzędzi automatycznej formatowania kodu, wybierz odpowiedni styl i trzymaj się go. Dziel kod między pliki, a pliki między foldery/moduły/paczki, a ich nazwy powinny być proste i opisowe.
 * Rozdzielaj zadania między małe funkcje i klasy (jeśli programujesz w języku obiektowym).
-* Nie kopiuj żywcem kodu z internetu. Oczywiście jak najbardziej możesz, a nawet powinieneś szukać odpowiedzi na swoje pytania w internecie, gdyż wiele problemów, które napotkasz, zostało już wielokrotnie rozwiązanych. Należy jednak zaznaczyć, że fragmenty kodu, które znajdziesz, prawie nigdy nie będą idealnie pasować do twojego kodu. Za nim będziesz mógł ich użyć w swoim projekcie, będziesz musiał dopasować znaleziony kod do twojego kodu. W najlepszym wypadku niczego nie będziesz musiał przeklejać, wystarczy, że zrozumiesz zasadę działania znalezionego rozwiązania i samemu napiszesz analogiczne rozwiązanie.
-* Uważaj na martwy kod. Nie twórz zmiennych, funkcji i klas, których nigdy nie użyjesz.
+* Nie kopiuj kodu z internetu bez zrozumienia. Wiele problemów, które napotkasz, zostało już rozwiązanych, ale fragmenty kodu, które znajdziesz, nie będą idealnie pasowały do Twojego projektu. Zamiast przeklejać kod, staraj się zrozumieć jego zasadę działania i napisać analogiczne rozwiązanie, które lepiej pasuje do Twojego projektu.
+* Uważaj na martwy kod - nie twórz zmiennych, funkcji i klas, których nigdy nie użyjesz.
 * Nie ignoruj ostrzeżeń kompilatora.
+
 
 ### Zmienne
 
-* Nadawaj zmiennym nazwy, które coś znaczą. Nikt nie wie, co to jest <code>a</code> ani <code>xob</code>. Nie przesadzaj jednak. Jeśli tworzysz zmienną <code>sumaZarobkowWszystkichPracownikowFirmy</code>, tylko po to, by użyć jej raz bądź dwa razy to może wydałoby tę nazwę skrócić.
-* Trzymaj się jednej konwencji nazewnictwa. Nie mieszaj <code>snake_case</code> z <code>camelCase</code>.
-* Nie twórz zbędnych zmiennych, jeśli jakaś informacja jest już przechowywana w już istniejących zmiennych, to nie twórz dla niej nowych zmiennych.
-* Nie zmieniaj nagle znaczenia zmiennych. Jeśli zmienna <code>suma</code> przechowywała jakąś sumę, to nie wykorzystuj jej do przechowywania średniej.
-* Unikaj zmiennych globalnych. Bardzo szybko stracisz nad nimi kontrolę.
-* Deklaruj zmienne jak najbliżej miejsca ich użycia.
+* Nadawaj zmiennym nazwy, które mają sens. Nikt nie wie, co oznaczają zmienne o nazwach takich jak <code>a</code> lub <code>xob</code>. Nie przesadzaj jednak z długością nazw. Jeśli tworzysz zmienną <code>sumaZarobkowWszystkichPracownikowFirmy</code>, tylko po to, by użyć jej raz lub dwa razy, to może warto skrócić tę nazwę.
+* Trzymaj się jednej konwencji nazewnictwa. Unikaj mieszania <code>snake_case</code> z <code>camelCase</code>.
+* Unikaj tworzenia zbędnych zmiennych. Jeśli jakaś informacja jest już przechowywana w istniejących zmiennych, nie twórz dla niej nowych.
+* Nie zmieniaj nagle znaczenia zmiennych. Jeśli zmienna <code>suma</code> przechowywała jakąś sumę, nie wykorzystuj jej do przechowywania średniej.
+* Unikaj zmiennych globalnych. Szybko tracisz nad nimi kontrolę i mogą prowadzić do nieprzewidywalnego zachowania programu.
+* Deklaruj zmienne tak blisko miejsca ich użycia, jak to możliwe.
 
 ### Warunki
 
-* Nie komplikuj warunków. Jeśli chcesz jednocześnie sprawdzić kilka rzeczy i warunki łączysz przy pomocy operatorów logicznych, to lepiej wydeleguj to zadanie do osobnej funkcji.
-* Unikaj zagnieżdżania warunków. Lepiej używać klauzuli ochronnych.
-* Unikaj umieszczania wielu warunków jednego pod drugim. Lepiej rozdzielić ich zadania na osobne funkcje.
-* Nie przyrównuj wyniku wywołania funkcji zwracającej typ logiczny (prawda lub fałsz) do wartości logicznych w warunkach. 
+* Nadmiernie skomplikowane warunki są trudne do zrozumienia i utrzymania. Jeśli chcesz jednocześnie sprawdzić kilka rzeczy i łączysz je za pomocą operatorów logicznych, lepiej wydzielić to zadanie do osobnej funkcji.
+* Unikaj zagnieżdżania warunków. Lepiej użyj klauzul ochronnych (ang. guard clauses), które pozwalają uniknąć zagnieżdżania i poprawiają czytelność kodu.
+* Staraj się nie umieszczać wielu warunków jednego pod drugim. Lepiej rozdziel ich zadania na osobne funkcje, co pozwoli na łatwiejsze utrzymanie i testowanie kodu.
+* Nie porównuj wyniku wywołania funkcji zwracającej typ logiczny (prawda lub fałsz) do wartości logicznych w warunkach. Zamiast tego bezpośrednio użyj wyniku wywołania funkcji w warunku.
+* Stosuj nawiasy wokół warunków, aby uniknąć niejasności i zapewnić porządek w kodzie.
+* Unikaj negacji złożonych warunków, ponieważ mogą one być trudne do zrozumienia i prowadzić do błędów. Lepiej sformułować warunek w pozytywny sposób, gdyż zazwyczaj jest on łatwiejszy do zrozumienia.
 
 ### Funkcje
 
-* Używaj czasowników do nazywania funkcji.
-* Każda funkcja powinna mieć jasno określony cel. Dodaj testy jednostkowe, by sprawdzić, czy cel ten został zrealizowany. 
-* Nie używaj nazw, które wprowadzają czytelnika w błąd. Jeśli twoja funkcja nazywa się <code>czyPierwsza()</code>, to nie używaj jej do niczego innego poza sprawdzeniem, czy podana liczba jest liczbą pierwszą.
-* Nie powtarzaj się (zasada DRY). Jeśli zauważyłeś, że twoim kodzie powtarza się kilkukrotnie ta sama kombinacja komend to warto je przenieść do osobnej funkcji
-* Pamiętaj nierzadko im krótsza funkcja, tym lepsze. Nie rozciągaj definicji funkcji na dziesiątki wierszy. Nie ma jednak jednej liczby, która byłaby absolutnym maksimum liczby wierszy w funkcji.
-* Funkcja powinny ukrywać wszelkie detale swojej implementacji. Przykładowo, gdy naciskam na przycisk na pilocie telewizyjnym, nie mam pojęcia, jak działa elektronika, z którą wchodzę w interakcje, wiem tylko jakiego efektu powinienem się spodziewać. Tak samo działają dobre funkcje. Złe funkcje natomiast poprzez niejasność swojej nazwy bądź skomplikowaną kombinację argumentów wymaga od nas zrozumienia implementacji do poprawnego jej użycia.
-* Przy wywoływaniu funkcji przekazuj referencje do obiektów tam, gdzie niepotrzebna jest kopia. W wielu językach programowania (jak Python) jest to zachowanie domyślne, jednak mimo wszystko warto być świadomym tego faktu.    
-* Dbaj o spójne przekazywanie danych między funkcjami.
-* Pamiętaj o przypadkach granicznych. Jeśli twoja funkcja spełnia cel, do którego została stworzona to, jest to dopiero połowa sukcesu. Zastanów się, czy klient twojej funkcji ma możliwość przekazania do niej danych, dla których funkcja nie zwróci poprawnego wyniku lub gorzej, pojawi się błąd, który zatrzyma działanie całego programu. Nawet jeśli prawdopodobieństwo wystąpienia takiego przypadku jest niskie, to musisz i tak zadbać o to by funkcja umiała sobie z nim poradzić. 
-* Argumenty typu logicznego są niepożądane. Lepiej podzielić funkcję dwie mniejsze, jedna dla sytuacji, gdy wartość argumentu to prawda, a druga  dla sytuacji, gdy wartość argumentu to fałsz.
-* Nie ma ścisłego limitu na ilość argumentów funkcji, ale im więcej argumentów tym łatwiej jest się w nich pogubić. Dla funkcji potrzebujących wielu argumentów często wiele z nich ma zbliżony cel i łatwo da się je pogrupować w klasy/struktury.  
-* Najlepsze funkcje to takie, które nie mają efektów ubocznych. To znaczy, że wywołanie funkcji nie zmienia niczego w stanie programu poza samą funkcją.
+* Nadawaj funkcjom nazwy, które opisują czynność, którą wykonują.
+* Każda funkcja powinna mieć jasno określony cel. Aby upewnić się, że cel został zrealizowany, dodaj testy jednostkowe.
+* Nie stosuj nazw, które mogą wprowadzić czytelnika w błąd. Jeśli twoja funkcja nazywa się <code>czyPierwsza()</code>, to używaj jej tylko do sprawdzania, czy podana liczba jest liczbą pierwszą.
+* Zachowaj zasadę DRY (Don't Repeat Yourself). Jeśli widzisz, że w kodzie wielokrotnie powtarza się ta sama kombinacja komend, przenieś je do osobnej funkcji.
+* Im krótsza funkcja, tym lepiej. Nie rozciągaj definicji funkcji na dziesiątki wierszy. Nie ma jednak jednej liczby, która byłaby absolutnym maksimum liczby wierszy w funkcji.
+* Funkcje powinny ukrywać szczegóły swojej implementacji. Podobnie jak przy naciskaniu przycisku na pilocie telewizora, nie powinniśmy wiedzieć, jak działa elektronika, z którą wchodzimy w interakcję. Powinniśmy znać tylko oczekiwany efekt. Dobre funkcje działają w ten sposób. Złe funkcje natomiast, ze względu na niejasną nazwę lub skomplikowane argumenty, wymagają od nas zrozumienia implementacji, aby poprawnie ich użyć.
+* Podczas wywoływania funkcji przekazuj referencje do obiektów tam, gdzie niepotrzebna jest kopia. W wielu językach programowania, takich jak Python, jest to zachowanie domyślne, ale warto mieć świadomość tego faktu.
+* Dbaj o spójność przekazywanych danych między funkcjami.
+* Pamiętaj o przypadkach granicznych. Spełnienie celu stworzenia funkcji to tylko połowa sukcesu. Musisz również zastanowić się, czy klient funkcji może przekazać dane, dla których funkcja nie zwróci poprawnego wyniku lub które spowodują błąd, który zatrzyma działanie całego programu. Nawet jeśli prawdopodobieństwo wystąpienia takiego przypadku jest niskie, musisz zadbać o to, aby funkcja była w stanie sobie z nim poradzić.
+* Unikaj argumentów typu logicznego. Lepiej podzielić funkcję na dwie mniejsze: jedną dla przypadku, gdy wartość argumentu wynosi prawda, a drugą dla przypadku, gdy wartość argumentu wynosi fałsz.
+* Nie ma ścisłego limitu na ilość argumentów funkcji, ale im więcej argumentów, tym łatwiej się w nich pogubić. Dla funkcji, które wymagają wielu argumentów, najczęściej wiele z nich ma zbliżony cel, co umożliwia pogrupowanie ich w klasy/struktury.  
+* Funkcje, które nie powodują efektów ubocznych, są uważane za najlepsze. Oznacza to, że wywołanie funkcji nie wpływa na stan programu poza samą funkcją.
 
 ### Klasy
 
-* Używaj rzeczowników do nazywania klas.
-* Klasy powinny ukrywać pewną złożoność. Interfejs, zależności oraz skutki uboczne użycia klasy powinny być niewielkie w stosunku do złożoności ukrywanych przez klasę. Zła klasa to taka, której użycie jest trudniejsze niż bezpośrednia praca na danych, które przechowuje.
-* Klasy mają za zadanie ukrywać dane oraz udostępnić interfejs do operowania na tych danych. W podejściu proceduralnym funkcje nie ukrywają danych. Nie mieszaj filozofii programowania. Używaj klas do celu, do jakiego zostały stworzone.
-* Nie ulegaj pokusie łączenia wszystkich potrzebnych ci danych w jedną klasę. Grupuj dane w małe jednostki. Inaczej utrzymanie takiego kodu szybko stanie się trudniejsze niż złamanie szyfru enigmy.
-* Nie twórz klas, które nie są potrzebne, tylko po to, by mieć klasy (chyba że programujesz w języku gdzie, wszystko musi być zamknięte w klasie). Jeśli nie potrzebujesz klasy, to nie twórz jej. Czasami zwykła funkcja jest całkowicie wystarczająca.
-* Uważaj na funkcje, które zmieniają stan obiektu. 
-* Jeśli dwie funkcje w różnych klasach mają dokładnie to samo zadanie, to powinny się również tak samo nazywać. 
-* Nie twórz klas, które składają się z pól, które czasami są puste. Użyj wspólnego interfejsu dla kilku klas.
-* Nie twórz kilku różnych klas, mogących być jedną klasą, której obiekty różnią się jedynie wartością pola. Przykładowo zamiast klas: <code>CzerwonyPrzycisk</code>, <code>ZielonyPrzycisk</code> i <code>NiebieskiPrzycisk</code> lepiej mieć klasę <code>Przycisk</code> z polem kolor.
+* Nazywaj klasy rzeczownikami.
+* Ukrywaj złożoność w klasach. Interfejs, zależności i efekty uboczne powinny być niewielkie w stosunku do złożoności ukrytej przez klasę. Unikaj tworzenia klas, których użycie jest trudniejsze niż bezpośrednia praca na danych, które przechowuje funkcja proceduralna.
+* Klasa powinna ukrywać dane i udostępniać interfejs do operowania na tych danych. Nie mieszać filozofii programowania. Używaj klas do celów, dla których zostały stworzone.
+* Grupuj dane w małe jednostki. Nie próbuj łączyć wszystkich potrzebnych danych w jednej klasie. W przeciwnym razie utrzymanie takiego kodu stanie się trudniejsze niż złamanie szyfru enigmy.
+* Nie twórz klas, które nie są potrzebne, chyba że programujesz w języku, w którym wszystko musi być zamknięte w klasie. Jeśli nie potrzebujesz klasy, to nie twórz jej. Czasami zwykła funkcja jest wystarczająca.
+* Unikaj funkcji, które zmieniają stan obiektu.
+* Jeśli dwie funkcje w różnych klasach mają dokładnie to samo zadanie, to powinny mieć takie samo nazewnictwo.
+* Unikaj tworzenia klas składających się z pól, które często są puste. Zamiast tego użyj wspólnego interfejsu dla kilku klas.
+* Unikaj tworzenia kilku różnych klas, które mogą być jedną klasą, a ich obiekty różnią się jedynie wartością pola. Lepiej mieć jedną klasę z polami takimi jak kolor, niż wiele klas, takich jak <code>CzerwonyPrzycisk</code>, <code>ZielonyPrzycisk</code> i <code>NiebieskiPrzycisk</code>.
 * Klasy są po to, by pod jedną nazwą zamknąć dane oraz transformacje dostępne dla tych danych. Dla jednorazowej modyfikacji użyj funkcji.
 
 ### Komentarze 
 
-* Koniecznie umieść w kodzie komentarze służące do generowania dokumentacji publicznego API (docstrings).
-* Nie dodawaj niepotrzebnych komentarzy! Zbędne komentarze to takie, które wyjaśniają znaczenie składni języka programowania, zamiast wyjaśniać zamierzenia autora. Komentarze są po to, by pokazać innym programistom, dlaczego dana decyzja została podjęta. Kod jest po to, by pokazać, jak została zaimplementowana. Przykładowo jeśli w kodzie zwiększamy zmienną indeks o 2, aby uwzględnić przesunięcie wprowadzone przez nagłówek, to należy to objaśnić w komentarzu, zamiast pisać, że zmienna zostaje powiększona.
-* Najgorsze komentarze, to komentarze dezinformujące. Programista mógł celowo chcieć opisać jedynie część prawdy, ale niepoprawny komentarz może być też wynikiem braku aktualizacji przy wprowadzaniu zmian w kodzie.
+* Koniecznie umieszczaj w kodzie komentarze służące do generowania dokumentacji publicznego API (docstrings).
+* Unikaj dodawania niepotrzebnych komentarzy. Zbędne komentarze to takie, które wyjaśniają znaczenie składni języka programowania, zamiast wyjaśniać zamierzenia autora. Komentarze służą do pokazania innym programistom, dlaczego dana decyzja została podjęta. Kod jest po to, by pokazać, jak została zaimplementowana. Na przykład, jeśli w kodzie zwiększamy zmienną indeks o 2, aby uwzględnić przesunięcie wprowadzone przez nagłówek, to należy to objaśnić w komentarzu, zamiast pisać, że zmienna zostaje powiększona.
+* Unikaj komentarzy dezinformujących. Programista może celowo chcieć opisać jedynie część prawdy, ale niepoprawny komentarz może być również wynikiem braku aktualizacji przy wprowadzaniu zmian w kodzie.
 * Akceptowalne są komentarze TODO z listą zadań do wykonania.
+* Użyj komentarzy w celu wyjaśnienia trudnych do zrozumienia części kodu lub w celu objaśnienia algorytmów. Jednakże, stwórz kod, który jest łatwy do zrozumienia bez konieczności korzystania z komentarzy.
+* Komentarze powinny być krótkie i zwięzłe, nie powinny zajmować więcej niż kilka linii.
+* Staraj się unikać komentarzy w kodzie, który jest przeznaczony do zautomatyzowanego testowania. Testy powinny być łatwe do zrozumienia i czytania bez konieczności korzystania z komentarzy.
 
 ### Obsługa błędów
 
-* Zalecana strategia obsługi błędów jest mocno uzależnione od języka. Większość współczesnych języków posiada mechanizm wyjątków, którego nie ma w starszych językach jak C. Wyjątki oraz sytuacje, w których ich użycie jest zalecane, różnią się jednak nawet wśród języków, które je implementują.
-* Ogólnie sytuacja wyjątkowa to taka, z którą dana funkcja nie może sobie w żaden sensowny sposób poradzić. Przykładowo jeśli implementujemy funkcje zwracającą wartość elementu list dla indeksu podanego jako parametr, to nie ma możliwości zwrócenia poprawnej wartości dla indeksów mniejszych od zera lub większych równych długości listy. W takiej sytuacji możemy wyrzucić wyjątek <code>IndexOutOfBound</code>.
-* Użycie wyjątków jest generalnie preferowane nad zwracanie kodów błędu lub wartości NONE/NULL w przypadku niepowodzenia funkcji.
-* Nie nadużywaj wyjątków.
-* Przy wyrzucaniu wyjątków należy poinformować użytkownika o błędzie oraz o ile jest to możliwe wyjaśnić, dlaczego błąd się pojawił i gdzie dokładnie w kodzie jest problematyczne wywołanie funkcji.
-* Jeśli wywołujesz funkcję, która może wyrzucić wyjątek, musisz opatrzyć ją mechanizmem obsługi danego wyjątku.
-* Unikaj przekazywania do funkcji wartości NULL/NONE. Generalnie często prowadzi to do pojawienia się wyjątków jak <code>NullPointerException</code>.
+* Strategia obsługi błędów powinna być dostosowana do konkretnego języka programowania. Większość nowoczesnych języków posiada mechanizm wyjątków, który nie jest dostępny w starszych językach, takich jak C. Jednakże, sposób korzystania z wyjątków i sytuacje, w których powinny być one użyte, mogą się różnić między językami.
+* Ogólnie rzecz biorąc, sytuacja wyjątkowa występuje, gdy funkcja nie jest w stanie w sposób sensowny poradzić sobie z pewnym problemem. Na przykład, jeśli piszemy funkcję zwracającą wartość elementu listy dla indeksu podanego jako parametr, nie możemy zwrócić prawidłowej wartości dla indeksów mniejszych niż zero lub większych niż długość listy. W takim przypadku powinniśmy zgłosić wyjątek <code>IndexOutOfBound</code>.
+* Używanie wyjątków jest ogólnie preferowane nad zwracaniem kodów błędu lub wartości NULL/None w przypadku niepowodzenia funkcji.
+* Należy unikać nadużywania wyjątków.
+* Przy zgłaszaniu wyjątków należy poinformować użytkownika o wystąpieniu błędu, a jeśli to możliwe, wyjaśnić przyczynę błędu i wskazać dokładne miejsce w kodzie, gdzie wystąpił problematyczny wywołanie funkcji.
+* Jeśli wywołujemy funkcję, która może zgłosić wyjątek, należy ją opatrzyć mechanizmem obsługi danego wyjątku.
+* Należy unikać przekazywania wartości NULL/None do funkcji, ponieważ często prowadzi to do pojawiania się wyjątków, takich jak <code>NullPointerException</code>.
 
 ### Struktury danych
 
-* Dobierz odpowiednią strukturę danych do zadania.
-* W wielu przypadkach zwykła tablica (lista) jest dostateczna i nie trzeba kombinować z innymi strukturami danych.
-* Gdy chcesz użyć indeksów nie będących kolejnymi liczbami naturalnymi, użyj mapy (słownika).
-* Zbiór zapewni unikalność elementów, ale utracimy informację o ich kolejności.
+* Wybieraj odpowiednią strukturę danych do rozwiązania danego problemu. Dostępne struktury danych różnią się pod kątem szybkości dostępu, wstawiania, usuwania elementów, czy przeszukiwania, a także sposobu przechowywania danych (np. w postaci listy, tablicy, słownika).
+* W wielu przypadkach prosta lista lub tablica jest wystarczająca i nie ma potrzeby używania bardziej skomplikowanych struktur danych.
+* Jeśli potrzebujesz przechowywać elementy z dostępem poprzez klucz (np. indeksy nie są kolejnymi liczbami naturalnymi), użyj słownika (mapy).
+* Zbiór (set) pozwala na przechowywanie tylko unikalnych elementów, jednak traci się wtedy informację o kolejności elementów.
+* * W przypadku dużych zbiorów danych, w których trzeba szybko wyszukiwać i dodawać elementy, należy rozważyć użycie drzew binarnych lub tablic mieszających.
+* Kolejki są dobrym wyborem, jeśli chcemy zachować porządek dodawania elementów i usuwania ich w kolejności dodania.
+* Stosy to struktury danych, które stosujemy wtedy, gdy chcemy, aby ostatnio dodany element był pierwszy, który zostanie usunięty (Last-In-First-Out).
+* Krotki (tuple) są używane, gdy chcemy przechowywać wiele wartości, ale nie chcemy, aby były one modyfikowalne. Są one często wykorzystywane do zwracania wartości z funkcji.
+* Listy powiązane są przydatne w przypadku, gdy potrzebujemy przechowywać wiele elementów i chcemy mieć szybki dostęp do nich, ale nie wiemy, jak wiele elementów będziemy potrzebować na początku.
+* Grafy są używane do reprezentowania zależności między elementami. Mogą być skierowane lub nieskierowane i składają się z wierzchołków oraz krawędzi.
+* Kolejki priorytetowe są szczególnym rodzajem kolejek, w których elementy są ułożone w kolejności malejącej lub rosnącej wartości priorytetu.
 
 ### Testy
 
-* Dodaj testy jednostkowe dla każdej funkcji sprawdzające, czy wykonuje ona swoje zadanie.
-* Unikaj powtórzeń w testach. Jedną rzecz musisz sprawdzić tylko raz.
-* Testy są tak samo ważne jak kod produkcyjny.
-* Dbaj o czystość testów.
-* Testy jednostkowe nie powinny zajmować dużo czasu do wykonania. 
-* Testy powinny być niezależne od siebie.
-* Testy powinny być niezależne od środowiska, w którym są uruchamiane.
-* Nie używaj funkcji <code>assert</code> do sprawdzania warunków w czasie wykonywania programu.
+* Napisz testy jednostkowe dla każdej funkcji w celu sprawdzenia, czy wykonuje ona swoje zadanie zgodnie z oczekiwaniami.
+* Unikaj duplikacji testów. Każde zadanie powinno być sprawdzone tylko raz.
+* Testy są równie ważne jak kod produkcyjny.
+* Dbaj o czytelność testów i ich odpowiednią organizację.
+* Testy jednostkowe powinny mieć krótki czas wykonania.
+* Upewnij się, że testy są niezależne od siebie i niezależne od środowiska, w którym są uruchamiane.
+* Nie polegaj wyłącznie na testach jednostkowych. Warto zastanowić się także nad testami integracyjnymi i testami akceptacyjnymi.
+* Unikaj używania funkcji <code>assert</code> do sprawdzania warunków w czasie wykonywania programu.
 
 ## Lista projektów
+
+Celem tej sekcji jest zachęcenie czytelników do wypróbowania swoich sił w programowaniu i rozwijania swoich umiejętności poprzez realizację konkretnych projektów.
+
+W sekcji znajduje się kilka różnych projektów, różniących się swoją tematyką i złożonością. Każdy z projektów posiada krótki opis, który wyjaśnia, czym jest projekt i jakie wymagania musi spełniać. Opisy te mogą zawierać również przykłady zastosowań projektu oraz podstawowe informacje na temat sposobu działania.
 
 Projekty nie zostały uporządkowane względem żadnego kryterium.
 
 ### Szubienica
 
-Gra polegająca na odgadywaniu słów. Komputer losuje słowo z wcześniej przygotowanej listy słów. Na ekranie wyświetlone zostaje n kresek, gdzie n to liczba liter, z których składa się słowo. Gracz ma x żyć. W każdym ruchu gracz podaje jedną literę. Jeśli odgadł jedną z liter, z których składa się słowo, to poziome kreski odpowiadające danej litery zostają w nią zamienione. W przeciwnym razie liczba x zmniejszana jest o 1. Gracz wygrywa, jeśli odgadnie wszystkie litery przed wyzerowaniem się licznika.
+Jest to gra polegająca na odgadywaniu słów. Komputer losuje słowo z wcześniej przygotowanej listy słów. Na ekranie wyświetlane jest n kresek, gdzie n to liczba liter w wylosowanym słowie. Gracz ma x szans na odgadnięcie całego słowa. W każdej turze gracz podaje jedną literę. Jeśli odgadnie jedną z liter, które występują w wylosowanym słowie, to poziome kreseczki odpowiadające danej literze zostają zamienione na tę literę. W przeciwnym razie, liczba x jest zmniejszana o 1. Gracz wygrywa, jeśli odgadnie wszystkie litery przed wykorzystaniem się szans.
 
 #### Linki
 
@@ -153,7 +170,7 @@ Screenshot | Technologie | Link
 
 ### Szyfr Cezara
 
-Głównym elementem interfejsu graficznego jest pole tekstowe, gdzie użytkownik wpisuje bądź przekleja tekst. Następnie ma on do wyboru jedną z dwóch opcji, szyfrowanie bądź odszyfrowanie. Dla obu opcji należy również podać wartość klucza. Po wypełnieniu wszystkich pól wyświetlany jest zmieniony tekst. W tle używany jest algorytm szyfru Cezara.
+Głównym elementem interfejsu graficznego jest pole tekstowe, w którym użytkownik może wpisać lub wkleić tekst. Następnie może wybrać jedną z dwóch opcji: szyfrowanie lub deszyfrowanie. W przypadku obu opcji użytkownik powinien również podać wartość klucza. Po wypełnieniu wszystkich pól wyświetlany jest przetworzony tekst. Algorytm szyfru Cezara działa w tle i jest używany do szyfrowania i deszyfrowania tekstu.
 
 #### Linki
 
@@ -167,7 +184,9 @@ Screenshot | Technologie | Link
 
 ### Kalkulator
 
-Prosty interfejs graficzny, który pozwala na wykonywanie różnych operacji matematycznych.
+Kalkulator to aplikacja umożliwiająca wykonywanie podstawowych operacji matematycznych, takich jak dodawanie, odejmowanie, mnożenie i dzielenie. Interfejs graficzny kalkulatora jest intuicyjny i łatwy w obsłudze. Użytkownik może wprowadzać liczby za pomocą przycisków numerycznych, a następnie wybierać operację matematyczną, którą chce wykonać, korzystając z przycisków funkcyjnych.
+
+Warto zauważyć, że kalkulator obsługuje nie tylko liczby całkowite, ale także liczby zmiennoprzecinkowe. Dodatkowo, w przypadku dzielenia przez zero lub przekroczenia zakresu liczb, kalkulator wyświetla odpowiednie komunikaty ostrzegawcze.
 
 #### Linki
 
@@ -181,7 +200,7 @@ Screenshot | Technologie | Link
 
 ### Lista zadań
 
-Aplikacja pozwala na wyświetlenie, edycję i usuwanie zadań z listy. Zadania mogą być przechowywane w pliku tekstowym lub w bazie danych.
+Ta aplikacja umożliwia tworzenie, wyświetlanie, edycję i usuwanie zadań z listy. Zadania mogą być uporządkowane według priorytetów, dat wykonania lub kategorii, a użytkownik może filtrować zadania według tych kryteriów. Aplikacja umożliwia również dodawanie załączników do zadań, takich jak pliki lub zdjęcia. Zadania i ich szczegóły są przechowywane w bazie danych, co umożliwia łatwe zarządzanie nimi i wyszukiwanie ich według różnych kryteriów. Użytkownik może tworzyć nowe zadania, edytować istniejące i usuwać niepotrzebne. Aplikacja może również wysyłać powiadomienia o przypominającym terminie wykonania zadania.
 
 #### Linki
 
@@ -191,7 +210,7 @@ Screenshot | Technologie | Link
 
 ### Pogoda
 
-Informacje o aktualnej temperaturze, pogodzie, prędkości wiatru, ciśnieniu atmosferycznym oraz wschodzie i zachodzie słońca dla danej lokacji. 
+Aplikacja pozwala na sprawdzenie aktualnej pogody dla wybranej lokalizacji. Użytkownik może wprowadzić nazwę miasta lub kod pocztowy, a następnie uzyskać informacje o temperaturze, wilgotności powietrza, prędkości wiatru, ciśnieniu atmosferycznym, a także godzinach wschodu i zachodu słońca dla danej lokacji. Dodatkowo, w aplikacji można sprawdzić prognozę pogody na kolejne dni oraz wyświetlić mapę z widocznymi danymi pogodowymi dla danego regionu. Aplikacja korzysta z zewnętrznego API do pobierania danych pogodowych, a interfejs graficzny jest prosty i intuicyjny w obsłudze.
 
 #### Linki
 
@@ -201,7 +220,9 @@ Screenshot | Technologie | Link
 
 ### Stoper
 
-Aplikacja do odmierzania czasu. Użytkownik ma możliwość włączenia oraz zatrzymania stopera. Czas wyświetlany jest z dokładnością do milisekund.
+Jest to prosta aplikacja pozwalająca na odmierzanie czasu. Interfejs graficzny zawiera przyciski umożliwiające uruchomienie, zatrzymanie i resetowanie stopera oraz pole tekstowe, gdzie wyświetlany jest aktualny czas z dokładnością do milisekund.
+
+Dodatkowo, użytkownik może ustawić czas startowy, po którym stoper samoczynnie się zatrzyma. Istnieje również możliwość wyboru formatu wyświetlanego czasu (np. minuty, sekundy, milisekundy) oraz zapisu wyników do pliku tekstowego.
 
 #### Linki
 
@@ -211,7 +232,7 @@ Screenshot | Technologie | Link
 
 ### Statki
 
-Gracz ma możliwość ustawienia swoich statków na planszy. Pozycje statków komputera są losowane. W każdej turze gracz próbuje odgadnąć pozycję komputera, a komputer wybiera losową pozycję na planszy gracza. Wygrywa ten, kto pierwszy zatopi wszystkie statki przeciwnika.
+Gra polegająca na umieszczeniu floty na planszy i zatopieniu statków przeciwnika. Gracz ustawia swoje statki na planszy, a pozycje statków komputera są losowane. W każdej turze gracz wybiera jedno pole na planszy, które próbuje trafic. Komputer również wybiera losowe pola na planszy gracza, które próbuje trafic. Gra toczy się, aż jeden z graczy zatopi wszystkie statki przeciwnika. W przypadku trafienia statku, gracz kontynuuje swoją turę, w przeciwnym razie przeciwnik otrzymuje swoją kolej. Wygrywa gracz, który pierwszy zatopi wszystkie statki przeciwnika.
 
 #### Linki
 
@@ -221,7 +242,7 @@ Screenshot | Technologie | Link
 
 ### Kółko i krzyżyk
 
-Gra w kółko i krzyżyk. Dostępne są dwa tryby gry: gra dla dwóch graczy oraz gra z komputerem. Zwycięża ten, kto jako ustawił w linii (poziomo, pionowo lub na ukos) trzy kółka lub trzy krzyżyki. Jeśli wszystkie pola zostały zajęte i linia nie została utworzona, to mamy remis.
+Gra w kółko i krzyżyk polega na umieszczaniu kółek lub krzyżyków na planszy. Dostępne są dwa tryby gry: dla dwóch graczy lub z komputerem. Gracze na zmianę umieszczają swoje znaki na planszy, a zwycięzcą jest ten, kto jako pierwszy ustawił trzy swoje symbole w linii poziomej, pionowej lub na ukos. Jeśli na planszy nie ma już wolnych pól i żaden z graczy nie udał się uzyskać wymaganej linii, mamy remis. W trybie gry z komputerem, gracz rywalizuje z algorytmem sztucznej inteligencji, który stara się wygrać lub zremisować.
 
 #### Linki
 
@@ -231,7 +252,7 @@ Screenshot | Technologie | Link
 
 ### Saper
 
-Gra polega na wybieraniu pól na planszy. Na danym polu może być ukryta mina. Jeśli wybrano pole, na którym nie ma miny, to wyświetlona zostaje liczba min, które bezpośrednio stykają się z danym polem (od zera do ośmiu). Odkrycie pola z miną oznacza przegraną. Zwyciężyć można poprzez odkrycie wszystkich bezpiecznych pól.
+Saper to gra, która polega na odkrywaniu pól na planszy. Plansza jest wypełniona minami, a gracz musi uważać, aby nie odkryć pola z miną. Na planszy wyświetlane są liczby, które wskazują, ile min sąsiaduje z danym polem. Gracz może również umieścić flagę na polach, na których podejrzewa, że znajduje się mina. Jeśli gracz oznaczył wszystkie pola z minami flagami i odkrył wszystkie bezpieczne pola, wygrywa grę.
 
 #### Linki
  
@@ -245,7 +266,9 @@ Screenshot | Technologie | Link
 
 ### 2048
 
-Gracz przesuwa na planszy kwadraty z numerami będącymi kolejnymi potęgami dwójki. Po każdym ruchu pojawia się nowy kwadrat z numerem 2 lub 4. Gracz może łączyć kwadraty z tym samym numerem, wynikiem jest kwadrat o numerze równym sumie numerów kwadratów składowych. Gracz zwycięża, jeśli udało mu się otrzymać kwadrat o numerze 2048.
+2048 to gra logiczna, w której celem jest uzyskanie kwadratu o numerze 2048 na planszy 4x4, przesuwając mniejsze kwadraty z numerami, które łączą się, tworząc nowe kwadraty z wyższymi numerami. Gracz zaczyna z dwoma kwadratami o numerze 2 lub 4 i po każdym ruchu pojawia się nowy kwadrat. Gracz przesuwa kwadraty w jednym z czterech kierunków (góra, dół, lewo, prawo), a kwadraty poruszają się tak daleko, jak to możliwe, aż napotkają przeszkodę lub krawędź planszy.
+
+W grze można łączyć kwadraty z tym samym numerem, co prowadzi do powstania kwadratu o numerze równym sumie numerów kwadratów składowych. Gra kończy się, gdy plansza zostanie wypełniona i gracz nie może wykonać żadnego ruchu, lub gdy gracz uzyska kwadrat o numerze 2048. Gracz może zagrać ponownie, aby uzyskać wyższy wynik lub spróbować zdobyć większy kwadrat, np. 4096.
 
 #### Linki
 
@@ -255,7 +278,7 @@ Screenshot | Technologie | Link
 
 ### Apokalipsa Zombie
 
-Celem jest przetrwanie jak największej liczby fal zombie. Z każdą nową falą przychodzi coraz więcej i coraz silniejszych zombie. Gracz ma możliwość zbierania bonusów dających dodatkowe życie, alternatywne bronie oraz zwiększające prędkość gracza.
+Celem gry jest przetrwanie jak największej liczby fal zombie. Z każdą kolejną falą pojawia się coraz więcej i silniejszych przeciwników, co stawia przed graczem coraz większe wyzwania. Aby przetrwać, gracz musi skutecznie eliminować zombie przy użyciu różnych broni, zbierać bonusy zwiększające jego zdolności i zdobywać punkty. Oprócz standardowych broni, gracz może również korzystać z alternatywnych opcji takich jak granaty, moździerze czy miny. W grze istnieje również możliwość zdobycia dodatkowego życia oraz zwiększenia prędkości gracza. Wraz z każdą falą zombie, gra staje się coraz trudniejsza, co wymaga od gracza szybkości i skuteczności w działaniu.
 
 #### Linki
 
@@ -269,7 +292,7 @@ Screenshot | Technologie | Link
 
 ### Piętnastka
 
-Na planszy o wymiarach 4x4 mamy losowo ułożonych 15 kwadratów z numerami od 1 do 15 oraz jedno puste pole. Zadaniem gracza jest uporządkowanie kwadratów, tak by były ułożone w kolejności rosnącej.
+Gra polega na ułożeniu na planszy o wymiarach 4x4 kwadratów z numerami od 1 do 15 oraz jednym pustym polem w kolejności rosnącej. Gracz może przesuwać kwadraty znajdujące się obok pustego pola, w celu uzyskania właściwego ułożenia. Celem gry jest ułożenie kwadratów w kolejności rosnącej w jak najmniejszej liczbie ruchów.
 
 #### Linki
  
@@ -283,7 +306,7 @@ Screenshot | Technologie | Link
 
 ### Kości
 
-Gra turowa dla przynajmniej dwóch graczy. Wszystkie akceptowalne kombinacje kości wraz z liczbą punktów za nie przyznawanych znajdują się w tabeli gry, a każdy gracz może użyć daną kombinację dokładnie raz. W każdej turze gracz rzuca maksymalnie trzykrotnie pięcioma kośćmi. Jeśli kości utworzyły jedną z pożądanych kombinacji, to informacja o tym zostaje zapisana w tabeli gry. W przeciwnym razie gracz musi wykreślić jedną z możliwych kombinacji ze swojej tabeli. Pod koniec gry sumowana jest liczba punktów z tabeli dla każdego z graczy. Wygrywa gracz z największą liczbą punktów.
+Gra turowa dla co najmniej dwóch graczy, w której używane są sześciościenną kości. Wszystkie możliwe kombinacje kości, wraz z liczbą punktów, jakie można za nie zdobyć, znajdują się w tabeli gry, a każdy gracz może użyć danej kombinacji dokładnie raz. W każdej turze gracz rzuca pięcioma kośćmi, a następnie ma możliwość rzucenia ponownie maksymalnie dwóch kości. Jeśli kości utworzyły jedną z pożądanych kombinacji, informacja o tym zostaje zapisana w tabeli gry. W przeciwnym razie gracz musi wykreślić jedną z możliwych kombinacji ze swojej tabeli. Pod koniec gry sumowane są punkty z tabeli dla każdego z graczy. Wygrywa gracz z największą liczbą punktów.
 
 #### Linki
 
@@ -297,7 +320,7 @@ Screenshot | Technologie | Link
 
 ### Kurka wodna
 
-Kurki wlatują z prawej strony ekranu i wylatują z lewej strony. Zadaniem gracza jest ustrzelenie (poprzez kliknięcie myszą) każdej z kurek, zanim doleci ona na przeciwną stronę ekranu. Z każdym poziomem zmienia się tło i zwiększona zostaje liczba kurek.
+W grze Kurka wodna, gracze mają za zadanie ustrzelić każdą kurkę, która przelatuje przez ekran, klikając na nią myszką, zanim ta doleci na przeciwną stronę ekranu. Poziom trudności wzrasta z każdą kolejną falą kurek, a zmieniające się tła i animacje dodają grywalności.
 
 #### Linki
 
@@ -307,7 +330,7 @@ Screenshot | Technologie | Link
 
 ### Wąż
 
-Wąż zbudowany jest z n kwadratów i porusza się po prostokątnej planszy. Na planszy w równych odstępach czasowych pojawia się jedzenie. Połknięcie jedzenia przez węża zwiększa licznik punktów oraz powiększa go o jeden kwadrat. Gracz przegrywa, jeśli waz uderzy głową w część własnego ciała.
+W grze węża gracz kontroluje węża składającego się z n kwadratów, który porusza się po prostokątnej planszy. Na planszy w określonych odstępach czasowych pojawia się jedzenie, a zjedzenie go przez węża zwiększa punkty i powiększa go o jeden kwadrat. Gracz przegrywa, gdy wąż uderzy swoją głową w część swojego ciała.
 
 #### Linki
 
@@ -317,7 +340,7 @@ Screenshot | Technologie | Link
 
 ### Edytor tekstowy
 
-pole tekstowe z mozliwoscia edytowania tekstu z klawiatury oraz wklejania tekstu. Opcja zapisywania oraz wczytywania. Podstawowe opcje formatowania, wielkosc czcionki, rodzina, pogrubienie, kursywa, podkreslenie.
+Edytor tekstu umożliwia wprowadzenie, edycję oraz wklejanie tekstu z klawiatury. Oprócz tego, użytkownik ma możliwość zapisania i wczytania swojego tekstu. Edytor posiada także podstawowe opcje formatowania tekstu, takie jak zmiana rozmiaru i rodzaju czcionki, pogrubienie, kursywa oraz podkreślenie.
 
 #### Linki
 
@@ -327,7 +350,7 @@ Screenshot | Technologie | Link
 
 ### Obróbka grafiki
 
-Program pozwala na wczytywanie oraz wyświetlanie plików graficznych w formatach PNG, oraz JPG. Dostępnych jest kilka funkcji do edycji obrazu (np. obróć, przytnij, rozciągnij). Oprócz okna z obrazem mamy również pasek z narzędziami (np. kolor, gumka, zaznacz, pędzel). Istnieje opcja eksportowania zmodyfikowanych obrazów.
+Program umożliwia importowanie i wyświetlanie plików graficznych w formatach PNG i JPG. Posiada kilka narzędzi do edycji obrazów, takich jak rotacja, przycinanie i rozciąganie. W pasku narzędzi dostępne są różne narzędzia, w tym narzędzia do zmiany koloru, gumki, zaznaczania i pędzla. Program umożliwia eksportowanie zmodyfikowanych obrazów.
 
 #### Linki
 
@@ -335,9 +358,9 @@ Screenshot | Technologie | Link
 ---|---|---
 | - | - | - |
 
-### Git
+### System kontroli wersji
 
-Prosta implementacja podstawowych funkcjonalności systemu kontroli wersji. Istnieje możliwość zapisania aktualnego stanu projektu oraz wyświetlenia wszystkich poprzednich zapisanych stanów.
+Ten program umożliwia prostą kontrolę wersji projektu. Pozwala na zapisanie bieżącego stanu projektu oraz na wyświetlenie historii wszystkich poprzednich zapisanych stanów. Dzięki temu użytkownik może łatwo cofnąć zmiany i przywrócić wcześniejszą wersję projektu.
 
 #### Linki
 
@@ -346,7 +369,7 @@ Screenshot | Technologie | Link
 | - | - | - |
 
 ### Serwer HTTP
-Serwer HTTP oczekuje dowolnego rodzaju żądań skierowanych pod URL *http://127.0.0.1:8000/*. Po odebraniu żądania skrypt wysyła odpowiedź z napisem "Witaj świecie". Bardziej zaawansowana wersja łączy serwer HTTP z dowolną bazą danych i daje użytkownikowi możliwość odczytania oraz modyfikowania danych przy pomocy przygotowanego API.
+Serwer HTTP nasłuchuje na żądania HTTP kierowane pod adres URL http://127.0.0.1:8000/ i zwraca odpowiedzi. Może obsługiwać żądania GET, POST, PUT, DELETE i inne. W przypadku żądania GET, serwer może zwracać odpowiednie pliki, np. strony HTML, obrazy lub pliki JSON. Serwer HTTP może również działać w połączeniu z bazą danych, umożliwiając odczyt i zapis danych przy użyciu odpowiedniego API.
 
 #### Linki
 
@@ -356,7 +379,7 @@ Screenshot | Technologie | Link
 
 ### Koszyk z zakupami
 
-Zawartość koszyka jest w pełni edytowalna. Można do niego dodawać produkty, usuwać je, zmieniać ich ilość, wpisywać kody rabatowe i wrócić do kontynuowania zakupów. Produkty wyświetlane są w kolejności w jakiej zostały dodane. Każdy produkt posiada obrazek oraz informację o cenie.
+Aplikacja umożliwia dodawanie, usuwanie oraz zmianę ilości produktów w koszyku. Wprowadzenie kodów rabatowych oraz kontynuacja zakupów są także dostępne. Produkty wyświetlane są z obrazkiem oraz informacją o cenie w uporządkowany sposób.
 
 #### Linki
 
@@ -366,7 +389,7 @@ Screenshot | Technologie | Link
 
 ### Zamawianie jedzenia
 
-Głównym elementem aplikacji jest lista dostępnych dań wraz ze zdjęciami, ceną, opisem oraz tagami. Po zaznaczeniu dania musimy podać adres oraz wybrać formę płatności spośród PayPal, karta kredytowa lub gotówka przy odbiorze. Dodatkowo można zaimplementować opcję śledzenia kuriera.
+Aplikacja umożliwia przeglądanie listy dostępnych dań wraz z ich zdjęciami, cenami, opisami i tagami. Po wyborze interesującego nas dania musimy podać adres dostawy oraz wybrać formę płatności spośród PayPal, karty kredytowej lub gotówki przy odbiorze. Dodatkowo, opcjonalnie, można zaimplementować funkcję śledzenia statusu dostawy za pośrednictwem aplikacji.
 
 #### Linki
 
@@ -376,7 +399,7 @@ Screenshot | Technologie | Link
 
 ### Komunikator internetowy
 
-Aplikacja służąca do wysyłania tekstu między komputerami znajdującymi się w tej samej sieci LAN (w ambitniejszej wersji między dowolnymi urządzeniami z dostępem do internetu). Dodatkowo można dać możliwość tworzenia kont przez użytkowników, przesyłania plików oraz opcję wideorozmowy. 
+Komunikator internetowy to aplikacja umożliwiająca wysyłanie tekstu pomiędzy komputerami w tej samej sieci LAN lub między dowolnymi urządzeniami z dostępem do internetu w bardziej zaawansowanej wersji. Użytkownicy mogą tworzyć konta, przesyłać pliki oraz korzystać z opcji wideorozmowy.
 
 #### Linki
 

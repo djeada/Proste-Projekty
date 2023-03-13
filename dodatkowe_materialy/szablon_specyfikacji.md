@@ -1,56 +1,35 @@
 ## Opis projektu
 
-Opisz co takiego ma robić twój projekt. Skup się na celu projektu, a nie na szczegółach.
+W tej sekcji powinno się krótko opisać, czym jest twój projekt i jaki cel ma spełniać. Nie skupiaj się na szczegółach, ale zwróć uwagę na ogólną ideę projektu. Na przykład: "Projekt ma na celu stworzenie aplikacji internetowej, która pozwoli użytkownikom na łatwe i szybkie przeglądanie wiadomości ze źródeł w sieci."
 
 ## Technologie
 
-Wymień użyte technologie. Wypunktuj wszystkie użyte języki programowania, frameworki oraz biblioteki wraz z wersjami.
-
-## Instalacja
-
-Pokaż jakie komendy należy wykonać, aby zainstalować twoją aplikację z kodu źródłowego.
-
-Czy instalator, czy doker, czy demo w internecie.
-
-Bonus points for a link to your project running somewhere
+Wymień wszystkie technologie, których użyłeś podczas tworzenia projektu. Wypisz wszystkie języki programowania, frameworki, biblioteki, narzędzia i wersje, które były użyte. Przykładowo: "Do tworzenia aplikacji użyliśmy języka Python w wersji 3.8, frameworka Django w wersji 3.2.3, bibliotek Pandas i NumPy oraz narzędzia Docker."
 
 ## (Opcjonalne) Zasady gry
 
-Jeśli budujesz aplikację będącą grą możesz po krótce omówić zasady gry, dla niewtajemniczonych.
-
-* Jaki jest cel gry.
-* Kiedy gracz wygrywa a kiedy przegrywa.
+Jeśli tworzysz aplikację będącą grą, w tej sekcji powinieneś krótko omówić zasady gry, tak aby osoby, które nie są zaznajomione z danym typem gier, zrozumiały, o co chodzi. Podaj cel gry i warunki zwycięstwa lub przegranej.
 
 ## Interfejs graficzny aplikacji
 
-Omów interfejs graficzny aplikacji. Menu, do czego służą przyciski. 
+W tej sekcji opisz interfejs graficzny twojej aplikacji. Omów, co znajduje się w menu, jakie funkcje pełnią poszczególne przyciski i jakie opcje są dostępne dla użytkownika. Opisz, jak użytkownik będzie korzystał z twojej aplikacji i jakie akcje powinien wykonywać, aby osiągnąć swój cel.
 
 ## Kamienie milowe
 
-Quick rundown of the development process
+W tej sekcji powinieneś przedstawić krótki przegląd procesu rozwoju projektu. Opisz w jaki sposób projekt ewoluował od początku do końca. Wymień kamienie milowe wraz z opisem każdego etapu. Przykładowo:
 
-Przykład:
-
-1. Pokazanie okna.
-2. Plansza bez graczy.
-3. Pojedynczy gracz.
-
+* Wyświetlenie okna.
+* Dodanie planszy bez graczy.
+* Dodanie jednego gracza.
+    
 ## Znane bugi
 
- and any problems you encountered
-
-1. Wyjątek po przejściu na drugi level.
+Przedstaw znane błędy, z którymi spotkałeś się podczas tworzenia aplikacji. Wylicz, jakie problemy napotkałeś i jakie kroki podjąłeś, aby je rozwiązać.
 
 ## Przykład użycia
 
-Przedstaw przykład użycia aplikacji.
+Przedstaw przykład użycia swojej aplikacji. Wyjaśnij, jak uruchomić program i jakie akcje należy podjąć, aby osiągnąć cel.
 
-Jak uruchomić. Co robić dalej.
+## Planowane funkcjonalności
 
-Describe your product’s end users.
-Write a detailed description of the user’s actions and how the system should respond.
-Expand each use case with alternate user actions and system responses.
-
-## Plany
-
-A wishlist of what you want to add in future
+Przedstaw listę funkcjonalności, które chcesz dodać w przyszłości. Możesz to traktować jako swoistą "wish listę".

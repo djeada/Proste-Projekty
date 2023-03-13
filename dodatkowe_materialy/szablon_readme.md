@@ -1,54 +1,57 @@
-## General Description
+## Ogólny opis
 
-This project is a [brief description of your project's purpose or goal].
+Ten projekt jest [krótki opis celu lub celów Twojego projektu].
 
-## Screenshots
+## Zrzuty ekranu
 
-[Add relevant screenshots here, if applicable.]
+[Dodaj odpowiednie zrzuty ekranu.]
 
-## Requirements
+## Wymagania
 
-To run this project locally, you will need:
+Aby uruchomić ten projekt lokalnie, będziesz potrzebował:
 
-* [List any requirements needed to run the project, such as software, hardware, etc.]
+* [Wymień wszelkie wymagania potrzebne do uruchomienia projektu, takie jak oprogramowanie, sprzęt, itp.]
 
-## Installation
+## Instalacja
 
-1. Clone the code repository from GitHub:
-
-```Bash
-git clone [repository URL]
-```
-
-2. Navigate to the appropriate directory:
+1. Sklonuj repozytorium z GitHub:
 
 ```Bash
-cd [project directory]
+git clone [adres URL repozytorium]
 ```
 
-3. Start the app:
+2. Przejdź do odpowiedniego folderu:
 
 ```Bash
-[command to start the app]
+cd [folder projektu]
 ```
 
-## Usage
+3. Uruchom aplikację::
 
-* [Provide clear instructions on how to use the app or program, and what features it has.]
+```
+[polecenie do uruchomienia aplikacji]
+```
 
-## Features
+## Użycie
 
-* [List the key features of your project, and how they benefit the user.]
+* [Przygotuj jasne instrukcje, jak korzystać z aplikacji lub programu oraz opisz wszystkie funkcjonalności.]
+    
+## Funkcje
 
-## Possible improvements
+* [Wymień kluczowe funkcje Twojego projektu i jak korzystają z nich użytkownicy.]
 
-[Provide some ideas for potential future improvements or features.]
+## Możliwe ulepszenia
 
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+* [Podaj kilka pomysłów na potencjalne przyszłe ulepszenia lub funkcje.]
 
-Please make sure to update tests as appropriate.
+## Współpraca
 
-## License
+Jeśli chcesz przyczynić się do tego projektu, zapraszamy do współpracy! Poniżej przedstawiamy kilka sposobów, jak możesz pomóc:
 
-This project is licensed under the <a href="https://github.com/djeada/Proste-Projekty/blob/main/LICENSE">MIT License</a>.
+* [Wymień sposoby, w jakie osoby mogą pomóc w projekcie, np. poprzez testowanie, zgłaszanie błędów, pisania kodu, itp.]
+
+Jeśli chcesz przesłać swoje zmiany, prosimy o otwarcie "pull requestu". W razie konieczności możesz najpierw otworzyć zgłoszenie, aby omówić, co chcesz zmienić. Prosimy również o aktualizowanie testów oraz udzielanie odpowiedzi na pytania innych współpracowników.
+
+## Licencja
+
+Ten projekt jest licencjonowany na podstawie <a href="https://github.com/djeada/Proste-Projekty/blob/main/LICENSE">Licencji MIT</a>. Oznacza to, że możesz z niego swobodnie korzystać, kopiować, modyfikować i dystrybuować, jednakże nie gwarantujemy żadnych warunków ani gwarancji. Prosimy o przeczytanie licencji w całości przed rozpoczęciem korzystania z projektu.

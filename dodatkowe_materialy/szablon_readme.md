@@ -1,57 +1,81 @@
-## Ogólny opis
+## Ogólny Opis
 
-Ten projekt jest [krótki opis celu lub celów Twojego projektu].
+Ten projekt jest innowacyjnym rozwiązaniem [wpisz tutaj krótki opis celu lub celów Twojego projektu], mającym na celu [wpisz cel lub cele projektu]. Projekt ten ma zastosowanie w [wpisz branżę lub obszar zastosowania], oferując użytkownikom [wpisz główne korzyści dla użytkownika].
 
-## Zrzuty ekranu
+## Zrzuty Ekranu
 
-[Dodaj odpowiednie zrzuty ekranu.]
+W tej sekcji znajdziesz zrzuty ekranu prezentujące główne funkcjonalności i interfejs użytkownika naszej aplikacji. Zrzuty te pomagają zrozumieć, jak aplikacja wygląda i działa.
 
 ## Wymagania
 
-Aby uruchomić ten projekt lokalnie, będziesz potrzebował:
+Aby uruchomić ten projekt lokalnie, potrzebne będą następujące narzędzia i zasoby:
 
-* [Wymień wszelkie wymagania potrzebne do uruchomienia projektu, takie jak oprogramowanie, sprzęt, itp.]
+* [Wymień wymagania oprogramowania, np. Node.js, Python]
+* [Wymień wymagania sprzętowe, jeśli są istotne, np. minimalna ilość RAM, procesor]
+* [Wymień zależności systemowe, np. system operacyjny]
 
 ## Instalacja
 
+Wykonaj poniższe kroki, aby skonfigurować projekt w swoim środowisku:
+
 1. Sklonuj repozytorium z GitHub:
 
-```Bash
-git clone [adres URL repozytorium]
-```
+    ```bash
+    git clone [adres URL repozytorium]
+    ```
 
-2. Przejdź do odpowiedniego folderu:
+2. Przejdź do folderu projektu:
 
-```Bash
-cd [folder projektu]
-```
+    ```bash
+    cd [folder projektu]
+    ```
 
-3. Uruchom aplikację::
+3. Zainstaluj wymagane zależności:
 
-```
-[polecenie do uruchomienia aplikacji]
-```
+    ```bash
+    [polecenie do instalacji zależności, np. npm install, pip install -r requirements.txt]
+    ```
+
+4. Uruchom aplikację:
+
+    ```bash
+    [polecenie do uruchomienia aplikacji, np. npm start, python app.py]
+    ```
 
 ## Użycie
 
-* [Przygotuj jasne instrukcje, jak korzystać z aplikacji lub programu oraz opisz wszystkie funkcjonalności.]
-    
+Użytkowanie aplikacji jest proste i intuicyjne. Oto podstawowe kroki, które należy wykonać, aby skorzystać z aplikacji:
+
+* [Opis pierwszej funkcji lub kroku użytkowania]
+* [Opis drugiej funkcji lub kroku użytkowania]
+* [Opis dalszych funkcji lub kroków użytkowania]
+
 ## Funkcje
 
-* [Wymień kluczowe funkcje Twojego projektu i jak korzystają z nich użytkownicy.]
+Projekt oferuje szereg funkcji, które czynią go unikalnym i użytecznym:
 
-## Możliwe ulepszenia
+* [Opisz pierwszą kluczową funkcję]
+* [Opisz drugą kluczową funkcję]
+* [Dodaj więcej funkcji, jeśli to konieczne]
 
-* [Podaj kilka pomysłów na potencjalne przyszłe ulepszenia lub funkcje.]
+## Możliwe Ulepszenia
+
+Istnieje wiele możliwości rozwijania projektu. Oto kilka pomysłów:
+
+* [Pierwszy pomysł na ulepszenie]
+* [Drugi pomysł na ulepszenie]
+* [Dodatkowe pomysły]
 
 ## Współpraca
 
-Jeśli chcesz przyczynić się do tego projektu, zapraszamy do współpracy! Poniżej przedstawiamy kilka sposobów, jak możesz pomóc:
+Twoja współpraca jest nieoceniona dla rozwoju tego projektu! Oto kilka sposobów, w jakie możesz przyczynić się:
 
-* [Wymień sposoby, w jakie osoby mogą pomóc w projekcie, np. poprzez testowanie, zgłaszanie błędów, pisania kodu, itp.]
+* Testowanie aplikacji i zgłaszanie błędów
+* Rozwijanie nowych funkcjonalności lub ulepszanie istniejących
+* Udoskonalanie dokumentacji
 
-Jeśli chcesz przesłać swoje zmiany, prosimy o otwarcie "pull requestu". W razie konieczności możesz najpierw otworzyć zgłoszenie, aby omówić, co chcesz zmienić. Prosimy również o aktualizowanie testów oraz udzielanie odpowiedzi na pytania innych współpracowników.
+Aby przesłać swoje zmiany, otwórz "pull request". W razie pytań lub sugestii, otwórz zgłoszenie ("issue") w naszym repozytorium.
 
 ## Licencja
 
-Ten projekt jest licencjonowany na podstawie <a href="https://github.com/djeada/Proste-Projekty/blob/main/LICENSE">Licencji MIT</a>. Oznacza to, że możesz z niego swobodnie korzystać, kopiować, modyfikować i dystrybuować, jednakże nie gwarantujemy żadnych warunków ani gwarancji. Prosimy o przeczytanie licencji w całości przed rozpoczęciem korzystania z projektu.
+Ten projekt jest dostępny na podstawie [Licencji MIT](https://github.com/djeada/Proste-Projekty/blob/main/LICENSE). Możesz go używać, modyfikować, rozpowszechniać itd., ale pamiętaj, że jest dostarczany BEZ ŻADNYCH GWARANCJI. Przed użyciem prosimy o zapoznanie się z treścią licencji.

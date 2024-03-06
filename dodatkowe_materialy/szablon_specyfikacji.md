@@ -1,35 +1,53 @@
-## Opis projektu
+## Opis Projektu
 
-W tej sekcji powinno się krótko opisać, czym jest twój projekt i jaki cel ma spełniać. Nie skupiaj się na szczegółach, ale zwróć uwagę na ogólną ideę projektu. Na przykład: "Projekt ma na celu stworzenie aplikacji internetowej, która pozwoli użytkownikom na łatwe i szybkie przeglądanie wiadomości ze źródeł w sieci."
+W tej sekcji przedstawiamy krótki opis naszego projektu i jego celów. Projekt [nazwa projektu] ma na celu [opis głównego celu projektu]. Jest to [opisz rodzaj aplikacji lub systemu], który ma służyć [opisz grupę docelową i sposób, w jaki projekt ma im pomóc]. Nasze rozwiązanie skupia się na [opisz główne założenia projektu], dążąc do [opisz końcowy cel].
 
 ## Technologie
 
-Wymień wszystkie technologie, których użyłeś podczas tworzenia projektu. Wypisz wszystkie języki programowania, frameworki, biblioteki, narzędzia i wersje, które były użyte. Przykładowo: "Do tworzenia aplikacji użyliśmy języka Python w wersji 3.8, frameworka Django w wersji 3.2.3, bibliotek Pandas i NumPy oraz narzędzia Docker."
+Projekt został stworzony przy użyciu następujących technologii i narzędzi:
 
-## (Opcjonalne) Zasady gry
+* Języki programowania: [np. Python 3.8, JavaScript ES6]
+* Frameworki i biblioteki: [np. Django 3.2.3, React.js, Pandas, NumPy]
+* Narzędzia deweloperskie i środowiska: [np. Docker, Visual Studio Code, Git]
+* Bazy danych i technologie backendowe: [np. MySQL, Node.js]
+* Inne ważne narzędzia: [np. AWS, Kubernetes]
 
-Jeśli tworzysz aplikację będącą grą, w tej sekcji powinieneś krótko omówić zasady gry, tak aby osoby, które nie są zaznajomione z danym typem gier, zrozumiały, o co chodzi. Podaj cel gry i warunki zwycięstwa lub przegranej.
+## Zasady Gry (Opcjonalne)
 
-## Interfejs graficzny aplikacji
+[Jeśli projekt to gra, przedstaw tu jej zasady.] Gra [nazwa gry] polega na [opisz cel gry]. Gracze mogą [opisz działania możliwe do wykonania w grze], dążąc do [opisz warunki zwycięstwa lub porażki].
 
-W tej sekcji opisz interfejs graficzny twojej aplikacji. Omów, co znajduje się w menu, jakie funkcje pełnią poszczególne przyciski i jakie opcje są dostępne dla użytkownika. Opisz, jak użytkownik będzie korzystał z twojej aplikacji i jakie akcje powinien wykonywać, aby osiągnąć swój cel.
+## Interfejs Graficzny Aplikacji
 
-## Kamienie milowe
+Interfejs naszej aplikacji zawiera [opisz ogólny układ interfejsu]. Menu główne oferuje opcje takie jak [opisz główne opcje menu]. Użytkownik może [opisz interakcje z interfejsem], aby osiągnąć [opisz cel interakcji z interfejsem].
 
-W tej sekcji powinieneś przedstawić krótki przegląd procesu rozwoju projektu. Opisz w jaki sposób projekt ewoluował od początku do końca. Wymień kamienie milowe wraz z opisem każdego etapu. Przykładowo:
+## Kamienie Milowe
 
-* Wyświetlenie okna.
-* Dodanie planszy bez graczy.
-* Dodanie jednego gracza.
-    
-## Znane bugi
+Rozwój projektu przebiegał w następujących etapach:
 
-Przedstaw znane błędy, z którymi spotkałeś się podczas tworzenia aplikacji. Wylicz, jakie problemy napotkałeś i jakie kroki podjąłeś, aby je rozwiązać.
+1. **Faza planowania i projektowania:** [opisz, co zostało zrobione w tej fazie].
+2. **Rozwój wstępny:** [opisz pierwsze kroki w tworzeniu aplikacji, np. stworzenie szkieletu aplikacji].
+3. **Iteracyjne dodawanie funkcji:** [opisz kolejne dodane funkcje i ich znaczenie].
+4. **Testowanie i debugging:** [opisz proces testowania i naprawiania błędów].
+5. **Optymalizacja i wdrożenie:** [opisz finalne prace nad projektem].
 
-## Przykład użycia
+## Znane Błędy
 
-Przedstaw przykład użycia swojej aplikacji. Wyjaśnij, jak uruchomić program i jakie akcje należy podjąć, aby osiągnąć cel.
+Obecnie w projekcie są następujące znane błędy:
 
-## Planowane funkcjonalności
+* [Opisz błąd i jego wpływ na działanie aplikacji].
+* [Opisz kolejny błąd i ewentualne plany jego rozwiązania].
 
-Przedstaw listę funkcjonalności, które chcesz dodać w przyszłości. Możesz to traktować jako swoistą "wish listę".
+## Przykład Użycia
+
+Aby uruchomić i skorzystać z naszej aplikacji, wykonaj następujące kroki:
+
+1. [Opisz, jak uruchomić aplikację].
+2. [Opisz, jakie akcje użytkownik powinien podjąć, aby osiągnąć główny cel aplikacji].
+
+## Planowane Funkcjonalności
+
+W przyszłości planujemy dodać następujące funkcjonalności do naszego projektu:
+
+* [Opisz pierwszą planowaną funkcję].
+* [Opisz kolejną planowaną funkcję].
+* [Dodaj więcej planowanych funkcji, jeśli to konieczne].

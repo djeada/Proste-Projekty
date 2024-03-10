@@ -332,7 +332,7 @@ W grze Wąż gracz steruje wężem poruszającym się po prostokątnej planszy. 
 
 Screenshot | Technologie | Link 
 ---|---|---
-| - | - | - |
+| ![snake](https://github.com/djeada/Proste-Projekty/assets/37275728/866797cf-1472-42fd-aca5-c492a684ae44) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/snake)** |
 
 ### Edytor tekstowy
 

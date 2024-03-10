@@ -1,0 +1,6 @@
+
+# example_module.py
+
+def say_hello(name):
+    """ Function to say hello to a user """
+    return f"Hello, {name}!"

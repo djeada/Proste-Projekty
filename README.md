@@ -167,7 +167,8 @@ Projekt ten pozwala na ćwiczenie podstawowych umiejętności programowania, tak
 
 Screenshot | Technologie | Link 
 ---|---|---
- <img width="2000"/>![hangman](https://user-images.githubusercontent.com/37275728/194822831-d1b117cb-ae01-4939-bac1-85ac4e58769a.gif)< | <img src="https://img.icons8.com/color/344/python.png" height="50" />  | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/projekty/python/hangman)**
+| ![hangman](https://github.com/djeada/Proste-Projekty/assets/37275728/1ce340f4-9efc-423e-a65d-7ee9ac905a9f) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/hangman)** |
+ ![hangman](https://user-images.githubusercontent.com/37275728/194822831-d1b117cb-ae01-4939-bac1-85ac4e58769a.gif) | <img src="https://img.icons8.com/color/344/python.png" height="50" />  | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/projekty/python/hangman)**
  
 </div>
 

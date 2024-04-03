@@ -18,21 +18,19 @@ This program is a simple implementation of the Caesar Cipher encryption techniqu
 
 ## Installation
 
-### Compiling the Program
-To compile and run the program, follow these steps:
-1. Ensure you have a C compiler like GCC installed on your system.
-2. Copy the source code into a file, for example, `caesar_cipher.c`.
+### Compiling the Game
+To compile the game, follow these steps:
+1. Clone or download the repository to your local machine.
+2. Navigate to the directory containing the `main.c` file.
 3. Compile the program using GCC:
 
 ```
-gcc caesar_cipher.c -o caesar_cipher
+gcc src/main.c -o caesar_cipher
 ```
 
-4. Run the compiled program:
-
-```
-./caesar_cipher
-```
+4. Run the program:
+- On Linux or macOS: `./caesar_cipher`
+- On Windows: `caesar_cipher.exe`
 
 ## Customization
 - The shift logic can be modified to include or exclude certain characters or to handle different character sets.

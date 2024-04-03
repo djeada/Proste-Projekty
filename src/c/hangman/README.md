@@ -1,6 +1,8 @@
 # Hangman Game in C
 This is a simple implementation of the classic Hangman game in C. The player tries to guess a randomly selected word by inputting one letter at a time. The game continues until the player either guesses the word or runs out of attempts.
 
+![hangman](https://github.com/djeada/Proste-Projekty/assets/37275728/1ce340f4-9efc-423e-a65d-7ee9ac905a9f)
+
 ## How to Play
 - The game will display a series of dashes, each representing a letter in the word.
 - You will be prompted to guess one letter at a time.
@@ -17,7 +19,7 @@ To compile the game, follow these steps:
 3. Compile the program using GCC:
 
 ```
-gcc main.c -o hangman
+gcc src/main.c -o hangman
 ```
 
 4. Run the program:

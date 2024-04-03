@@ -17,21 +17,19 @@ This is a basic calculator program written in C that performs addition, subtract
 
 ## Installation
 
-### Compiling the Program
-To compile and run the program, follow these steps:
-1. Ensure you have a C compiler like GCC installed on your system.
-2. Copy the source code into a file, for example `calculator.c`.
-3. Compile the program using the following command:
+### Compiling the Game
+To compile the game, follow these steps:
+1. Clone or download the repository to your local machine.
+2. Navigate to the directory containing the `main.c` file.
+3. Compile the program using GCC:
 
-    ```
-    gcc calculator.c -o calculator
-    ```
+```
+gcc src/main.c -o calculator
+```
 
-4. Run the compiled program:
-
-    ```
-    ./calculator
-    ```
+4. Run the program:
+- On Linux or macOS: `./calculator`
+- On Windows: `calculator.exe`
 
 ## Customization
 - The program can be modified to include more complex mathematical functions.

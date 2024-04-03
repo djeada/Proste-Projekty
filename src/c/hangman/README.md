@@ -15,7 +15,7 @@ This is a simple implementation of the classic Hangman game in C. The player tri
 ### Compiling the Game
 To compile the game, follow these steps:
 1. Clone or download the repository to your local machine.
-2. Navigate to the directory containing the `hangman.c` file.
+2. Navigate to the directory containing the `main.c` file.
 3. Compile the program using GCC:
 
 ```

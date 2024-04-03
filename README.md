@@ -230,7 +230,7 @@ Stoper to prosta aplikacja do odmierzania czasu z dokładnością do milisekund.
 
 Screenshot | Technologie | Link 
 ---|---|---
-| - | - | - |
+| ![timer](https://github.com/djeada/Proste-Projekty/assets/37275728/6923c7e1-1c9e-474c-b106-6491a24f31a4) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/timer)** |
 
 ### Statki
 

@@ -1,6 +1,8 @@
 # Simple Terminal Timer in C
 This is a straightforward terminal-based timer program written in C. It displays elapsed time in HH:MM:SS format and updates the time display every second on a single line in the terminal. The program offers a simple, yet effective way of tracking time directly from your command line.
 
+![timer](https://github.com/djeada/Proste-Projekty/assets/37275728/6923c7e1-1c9e-474c-b106-6491a24f31a4)
+
 ## How to Use
 - Compile and run the program; it will start counting time immediately.
 - The timer displays the elapsed time in the format: `HH:MM:SS`.

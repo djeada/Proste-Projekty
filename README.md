@@ -182,7 +182,8 @@ Projekt Szyfru Cezara to aplikacja umożliwiająca szyfrowanie i deszyfrowanie t
 
 Screenshot | Technologie | Link 
 ---|---|---
- <img width="2000"/>![caesar cipher](https://user-images.githubusercontent.com/37275728/194821911-e403023e-c5e5-4b19-b8bb-5cfedae8f164.gif) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/projekty/python/caesar_cipher)**
+| ![cipher](https://github.com/djeada/Proste-Projekty/assets/37275728/6f0b1c2f-a948-44e1-96b0-1a1d4b279256) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/cipher)** |
+![caesar cipher](https://user-images.githubusercontent.com/37275728/194821911-e403023e-c5e5-4b19-b8bb-5cfedae8f164.gif) | <img src="https://img.icons8.com/color/344/python.png" height="50" />  | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/projekty/python/caesar_cipher)**
  
 </div>
 
@@ -196,9 +197,8 @@ Kalkulator to podstawowy projekt, który pomaga w zrozumieniu obsługi interfejs
  
 Screenshot | Technologie | Link 
 ---|---|---
-<img width="2000"/>![calculator](https://github.com/djeada/Proste-Projekty/assets/37275728/e62d057f-bb26-4409-8664-83e7323e1d86)
- | <img src="https://img.icons8.com/color/344/python.png" height="50" />  | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/calculator)**
-<img width="2000"/>![calculator](https://user-images.githubusercontent.com/37275728/194822287-7b84368a-2df0-4f4f-87a0-31951b91a253.gif) | <img src="https://img.icons8.com/color/344/python.png" height="50" />  | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/projekty/python/calculator)**
+| ![calculator](https://github.com/djeada/Proste-Projekty/assets/37275728/e62d057f-bb26-4409-8664-83e7323e1d86) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/calculator)** |
+![calculator](https://user-images.githubusercontent.com/37275728/194822287-7b84368a-2df0-4f4f-87a0-31951b91a253.gif) | <img src="https://img.icons8.com/color/344/python.png" height="50" />  | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/projekty/python/calculator)**
  
 </div>
 

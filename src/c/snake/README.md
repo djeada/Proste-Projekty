@@ -2,6 +2,8 @@
 
 This is a simple implementation of the classic Snake game in C, utilizing the ncurses library for handling input and output on the terminal. The player controls a snake, guiding it to eat food and grow in length, while avoiding colliding with the walls or itself.
 
+![snake](https://github.com/djeada/Proste-Projekty/assets/37275728/866797cf-1472-42fd-aca5-c492a684ae44)
+
 ## Prerequisites
 
 To run this game, you need to have the ncurses library installed on your system. 
@@ -33,7 +35,7 @@ brew install ncurses
 To compile the game, use the following command:
 
 ```
-gcc -o snake main.c -lncurses 
+gcc -o snake src/main.c -lncurses 
 ```
 
 This will create an executable named `snake`.

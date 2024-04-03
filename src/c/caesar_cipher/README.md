@@ -1,6 +1,8 @@
 # Caesar Cipher in C
 This program is a simple implementation of the Caesar Cipher encryption technique in C. It allows the user to either encrypt or decrypt text using a specified shift key. The Caesar Cipher is one of the oldest known encryption techniques, and it's a great example to understand the basics of cryptography.
 
+![cipher](https://github.com/djeada/Proste-Projekty/assets/37275728/6f0b1c2f-a948-44e1-96b0-1a1d4b279256)
+
 ## How to Use
 - Compile and run the program.
 - Enter the text you want to encrypt or decrypt.

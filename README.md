@@ -196,6 +196,8 @@ Kalkulator to podstawowy projekt, który pomaga w zrozumieniu obsługi interfejs
  
 Screenshot | Technologie | Link 
 ---|---|---
+<img width="2000"/>![calculator](https://github.com/djeada/Proste-Projekty/assets/37275728/e62d057f-bb26-4409-8664-83e7323e1d86)
+ | <img src="https://img.icons8.com/color/344/python.png" height="50" />  | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/calculator)**
 <img width="2000"/>![calculator](https://user-images.githubusercontent.com/37275728/194822287-7b84368a-2df0-4f4f-87a0-31951b91a253.gif) | <img src="https://img.icons8.com/color/344/python.png" height="50" />  | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/projekty/python/calculator)**
  
 </div>
@@ -233,6 +235,7 @@ Screenshot | Technologie | Link
 ### Statki
 
 Gra w statki to klasyczna gra polegająca na umieszczaniu floty na planszy i próbie zatopienia statków przeciwnika. Gracz ustawia swoje statki na planszy, podczas gdy pozycje statków komputera są losowane. Gracze na zmianę wybierają pola, które próbują trafic. Gra oferuje możliwość grania przeciwko komputerowi lub drugiemu graczowi. Projekt ten jest doskonałym ćwiczeniem w programowaniu gier, algorytmach losowania oraz obsłudze zdarzeń użytkownika.
+
 #### Linki
 
 Screenshot | Technologie | Link 

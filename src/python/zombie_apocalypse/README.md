@@ -1,6 +1,6 @@
 ## About the Project
 
-The Caesar cipher algorithm is used in the background to cipher or decipher text messages.
+This project is a zombie apocalypse survival game developed using Pygame. Players must navigate through a post-apocalyptic world filled with zombies, using the arrow keys to control their character.
 
 ## Screenshots
 
@@ -8,16 +8,17 @@ The Caesar cipher algorithm is used in the background to cipher or decipher text
 
 ## Requirements
 
-To run this project locally you will need:
+To run this project locally, you will need:
 
 * Python 3.8+
+* Pygame library
 
 No additional libraries or packagaes are needed!
 
 ## Installation
 
-1. Download the code repository from GitHub: 
-    
+1. Download the code repository from GitHub:
+
 ```Bash
 git clone https://github.com/djeada/Proste-Projekty.git
 ```
@@ -36,19 +37,20 @@ python src/main.py
 
 ## Usage
 
-1. Enter the text to be deciphered or ciphered into the message input.
-2. Enter the offset using the key input.
-3. Select whether the algorithm should cipher or decipher the message using the mode dropdown.
-4. Press the Run button.
-5. The processed message appears in the text area. 
+1. Use the arrow keys to move your character around the game world.
+2. Avoid zombies and gather resources to survive.
+3. Explore different areas to find supplies and weapons.
 
 ## Features
 
-* The ability to define any integer key. 
-* Two modes (ciphering and decyphering).
+* Responsive arrow key movement control for character navigation.
+* Score system.
+* Automatic generation of zombies.
 
 ## Possible improvements
 
 Some of the ideas include:
 
-* Implement another alogrithm and allow the user to specify which one should be used.
+* Adding more types of zombies.
+* Implementing a crafting system to create weapons and tools.
+* Introducing a day-night cycle that affects zombie behavior and player visibility.

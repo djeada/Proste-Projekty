@@ -168,7 +168,7 @@ Projekt ten pozwala na ćwiczenie podstawowych umiejętności programowania, tak
 Screenshot | Technologie | Link 
 ---|---|---
 | ![hangman](https://github.com/djeada/Proste-Projekty/assets/37275728/1ce340f4-9efc-423e-a65d-7ee9ac905a9f) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/hangman)** |
- ![hangman](https://user-images.githubusercontent.com/37275728/194822831-d1b117cb-ae01-4939-bac1-85ac4e58769a.gif) | <img src="https://img.icons8.com/color/344/python.png" height="50" />  | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/projekty/python/hangman)**
+ ![hangman](https://user-images.githubusercontent.com/37275728/194822831-d1b117cb-ae01-4939-bac1-85ac4e58769a.gif) | <img src="https://img.icons8.com/color/344/python.png" height="50" />  | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/hangman)**
  
 </div>
 
@@ -183,7 +183,7 @@ Projekt Szyfru Cezara to aplikacja umożliwiająca szyfrowanie i deszyfrowanie t
 Screenshot | Technologie | Link 
 ---|---|---
 | ![cipher](https://github.com/djeada/Proste-Projekty/assets/37275728/6f0b1c2f-a948-44e1-96b0-1a1d4b279256) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/cipher)** |
-![caesar cipher](https://user-images.githubusercontent.com/37275728/194821911-e403023e-c5e5-4b19-b8bb-5cfedae8f164.gif) | <img src="https://img.icons8.com/color/344/python.png" height="50" />  | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/projekty/python/caesar_cipher)**
+![caesar cipher](https://user-images.githubusercontent.com/37275728/194821911-e403023e-c5e5-4b19-b8bb-5cfedae8f164.gif) | <img src="https://img.icons8.com/color/344/python.png" height="50" />  | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/caesar_cipher)**
  
 </div>
 
@@ -198,7 +198,7 @@ Kalkulator to podstawowy projekt, który pomaga w zrozumieniu obsługi interfejs
 Screenshot | Technologie | Link 
 ---|---|---
 | ![calculator](https://github.com/djeada/Proste-Projekty/assets/37275728/e62d057f-bb26-4409-8664-83e7323e1d86) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/calculator)** |
-![calculator](https://user-images.githubusercontent.com/37275728/194822287-7b84368a-2df0-4f4f-87a0-31951b91a253.gif) | <img src="https://img.icons8.com/color/344/python.png" height="50" />  | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/projekty/python/calculator)**
+![calculator](https://user-images.githubusercontent.com/37275728/194822287-7b84368a-2df0-4f4f-87a0-31951b91a253.gif) | <img src="https://img.icons8.com/color/344/python.png" height="50" />  | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/calculator)**
  
 </div>
 
@@ -262,7 +262,7 @@ Saper to klasyczna gra logiczna, w której zadaniem gracza jest odkrywanie pól 
 
 Screenshot | Technologie | Link 
 ---|---|---
-<img width="2000"/>![minesweeper](https://user-images.githubusercontent.com/37275728/194823180-a96946b2-082e-4aac-85cd-e822b6cf58c4.gif) | <img src="https://img.icons8.com/color/344/python.png" height="50" />  | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/projekty/python/minesweeper)**
+<img width="2000"/>![minesweeper](https://user-images.githubusercontent.com/37275728/194823180-a96946b2-082e-4aac-85cd-e822b6cf58c4.gif) | <img src="https://img.icons8.com/color/344/python.png" height="50" />  | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/minesweeper)**
  
 </div>
 
@@ -286,7 +286,7 @@ Apokalipsa Zombie to gra akcji, w której celem gracza jest przetrwanie fal atak
 
 Screenshot | Technologie | Link 
 ---|---|---
- <img width="2000"/>![zombie_apocalypse](https://user-images.githubusercontent.com/37275728/188334905-179b94fd-eec2-44b8-a64f-fecdd6c6ea01.gif) | <img src="https://img.icons8.com/color/344/python.png" height="50" />  | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/projekty/python/zombie_apocalypse)**
+ <img width="2000"/>![zombie_apocalypse](https://user-images.githubusercontent.com/37275728/188334905-179b94fd-eec2-44b8-a64f-fecdd6c6ea01.gif) | <img src="https://img.icons8.com/color/344/python.png" height="50" />  | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/zombie_apocalypse)**
  
 </div>
 
@@ -300,7 +300,7 @@ Piętnastka to klasyczna gra logiczna, w której celem jest ułożenie 15 kwadra
 
 Screenshot | Technologie | Link 
 ---|---|---
- <img width="2000"/>![fifteen_puzzle](https://user-images.githubusercontent.com/37275728/194822577-fbfa5228-3643-4f61-ad69-bc58cd80b97a.gif) | <img src="https://img.icons8.com/color/344/python.png" height="50" />  | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/projekty/python/fifteen_puzzle)**
+ <img width="2000"/>![fifteen_puzzle](https://user-images.githubusercontent.com/37275728/194822577-fbfa5228-3643-4f61-ad69-bc58cd80b97a.gif) | <img src="https://img.icons8.com/color/344/python.png" height="50" />  | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/fifteen_puzzle)**
  
 </div>
 
@@ -314,7 +314,7 @@ Kości to gra towarzyska, w której gracze rzucają zestawem pięciu kości, sta
 
 Screenshot | Technologie | Link 
 ---|---|---
- <img width="2000"/>![yahtzee](https://user-images.githubusercontent.com/37275728/194823845-3aea219e-10d3-4d09-bc36-0832e7e0a8f8.gif) | <img src="https://img.icons8.com/color/344/python.png" height="50" />  | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/projekty/python/yahtzee)**
+ <img width="2000"/>![yahtzee](https://user-images.githubusercontent.com/37275728/194823845-3aea219e-10d3-4d09-bc36-0832e7e0a8f8.gif) | <img src="https://img.icons8.com/color/344/python.png" height="50" />  | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/yahtzee)**
  
 </div>
 

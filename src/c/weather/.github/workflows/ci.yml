@@ -1,0 +1,27 @@
+name: C/C++ CI
+
+on:
+  push:
+    paths:
+      - 'src/c/weather/**'
+  pull_request:
+    paths:
+      - 'src/c/weather/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y cmake clang-tidy clang-format curl
+      - name: Configure
+        run: cmake -S src/c/weather -B src/c/weather/build
+      - name: Build
+        run: cmake --build src/c/weather/build
+      - name: Lint
+        run: clang-tidy src/c/weather/src/*.c -- -I src/c/weather/src
+      - name: Format
+        run: clang-format -i src/c/weather/src/*.c src/c/weather/src/*.h
+      - name: Test
+        run: cd src/c/weather/build && ctest --output-on-failure

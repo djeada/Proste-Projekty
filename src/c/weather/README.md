@@ -1,35 +1,41 @@
-# Weather Fetcher in C
-This is a simple C program that fetches and displays weather information for a specified city using the wttr.in service. The program uses command line arguments to take a city name and then fetches the current weather condition for that city, displaying it along with a relevant emoji.
+# Weather (C)
 
-## How to Use
-- Run the program with a city name as the argument.
-- The program will display the current weather condition for the specified city.
-- Weather conditions are accompanied by emojis for a more visual representation.
+A simple terminal weather application written in C. Fetches weather data for a given city using wttr.in.
 
-## Installation
+## Features
+- Fetches and displays weather for a city
+- Colorful terminal output
+- Clean code structure and tests
 
-### Compiling the Program
-To compile the program, follow these steps:
-1. Clone or download the repository to your local machine.
-2. Navigate to the directory containing the `weather_fetcher.c` file.
-3. Compile the program using GCC:
+## Build & Run
 
-```
-gcc weather_fetcher.c -o weather_fetcher
-```
-
-4. Run the program with a city name:
-
-```
-./weather_fetcher [City Name]
+### Locally
+```sh
+mkdir -p build
+cd build
+cmake ..
+make
+./main London
 ```
 
-For example:
-
+### With Docker
+```sh
+docker build -t weather .
+docker run --rm -it weather
 ```
-./weather_fetcher London
+
+## Test
+```sh
+cd build
+ctest --output-on-failure
 ```
 
-## Customization
-- The program uses the wttr.in service for fetching weather data. You can modify the program to use a different API or service if desired.
-- The `printWeatherCondition` function can be customized to display different emojis or information based on the weather condition.
+## Lint
+```sh
+clang-tidy src/*.c
+```
+
+## Format
+```sh
+clang-format -i src/*.c src/*.h
+```

@@ -408,28 +408,60 @@ Screenshot | Technologie | Link
 ---|---|---
 | - | - | - |
 
+## Szablony projektów
+
+W repozytorium znajdziesz gotowe szablony projektów dla najpopularniejszych technologii:
+
+- [Szablon Vanilla JavaScript](dodatkowe_materialy/szablony_projektow/vanilla_javascript/) – frontendowy projekt w czystym JS
+- [Szablon C z CMake](dodatkowe_materialy/szablony_projektow/c_cmake/) – projekt w języku C z automatyzacją budowania i testów
+- [Szablon Python (setup.py + Nuitka)](dodatkowe_materialy/szablony_projektow/python_setup_py/) – projekt w Pythonie z wsparciem dla kompilacji binarnej
+
+Każdy szablon zawiera:
+- Opis po polsku
+- Przykładową strukturę katalogów
+- Konfigurację narzędzi do testowania, lintowania, formatowania i deploymentu
+- Przykładowe pliki konfiguracyjne i workflow CI
+
+**Uwaga:**
+- Pliki README i opisy w szablonach są po polsku, aby ułatwić start osobom początkującym.
+- Właściwe projekty dostępne w katalogu [`src/`](src/) mają dokumentację i kod po angielsku, by były bardziej dostępne dla społeczności międzynarodowej.
+
+Aby rozpocząć własny projekt, skopiuj wybrany szablon i postępuj zgodnie z instrukcjami w README danego szablonu.
+
 ## Dodatkowe materiały
 
-Przykłady specyfikacji:
+W tej sekcji znajdziesz przydatne materiały, które pomogą Ci w nauce, planowaniu i realizacji własnych projektów:
 
-* https://en.wikipedia.org/wiki/Functional_specification
-* https://web.eecs.utk.edu/~azh/blog/challengingprojects.html
-* https://www.theodinproject.com/paths/full-stack-javascript
-* https://people.kth.se/~johanmon/dse.html
-* https://gist.github.com/MWins/41c6fec2122dd47fdfaca31924647499
-* https://www.dj4e.com/project/00_overview.md
-* https://www.ece.rutgers.edu/~marsic/books/SE/projects/
-* http://cslibrary.stanford.edu/112/
-* https://itp.uni-frankfurt.de/~mwagner/teaching/C_WS17/projects/Minesweeper.pdf
+### Szablony projektów
+- [Szablon Vanilla JavaScript](dodatkowe_materialy/szablony_projektow/vanilla_javascript/) – nowoczesny frontend JS
+- [Szablon C z CMake](dodatkowe_materialy/szablony_projektow/c_cmake/) – projekt w C z automatyzacją
+- [Szablon Python (setup.py + Nuitka)](dodatkowe_materialy/szablony_projektow/python_setup_py/) – Python z kompilacją binarną
 
-Przykłady plików readme:
+### Przykłady specyfikacji projektów
+- [Functional specification – Wikipedia](https://en.wikipedia.org/wiki/Functional_specification)
+- [Challenging projects – blog](https://web.eecs.utk.edu/~azh/blog/challengingprojects.html)
+- [The Odin Project – ścieżki projektowe](https://www.theodinproject.com/paths/full-stack-javascript)
+- [KTH – projekty inżynierskie](https://people.kth.se/~johanmon/dse.html)
+- [Przykładowa specyfikacja (gist)](https://gist.github.com/MWins/41c6fec2122dd47fdfaca31924647499)
+- [DJ4E – przegląd projektów](https://www.dj4e.com/project/00_overview.md)
+- [Rutgers – projekty SE](https://www.ece.rutgers.edu/~marsic/books/SE/projects/)
+- [Stanford – projekty C](http://cslibrary.stanford.edu/112/)
+- [Minesweeper – projekt PDF](https://itp.uni-frankfurt.de/~mwagner/teaching/C_WS17/projects/Minesweeper.pdf)
 
-* https://github.com/alecortega/portfolio-template
-* https://github.com/othneildrew/Best-README-Template
+### Przykłady dobrych plików README
+- [Portfolio template](https://github.com/alecortega/portfolio-template)
+- [Best-README-Template](https://github.com/othneildrew/Best-README-Template)
 
-Przykłady pełnych implementacji programów:
+### Inspiracje i pełne implementacje projektów
+- [Python mini-projects](https://github.com/Python-World/python-mini-projects) – zbiór małych projektów w Pythonie
+- [C# Data Visualization](https://github.com/swharden/Csharp-Data-Visualization) – wizualizacje danych w C#
+- [Project-based learning](https://github.com/practical-tutorials/project-based-learning) – projekty do nauki przez praktykę
+- [50 Projects 50 Days](https://github.com/bradtraversy/50projects50days) – 50 małych projektów webowych
 
-* https://github.com/Python-World/python-mini-projects
-* https://github.com/swharden/Csharp-Data-Visualization
-* https://github.com/practical-tutorials/project-based-learning
-* https://github.com/bradtraversy/50projects50days
+### Inne przydatne zasoby
+- [Nauka programowania – repozytorium z ćwiczeniami](https://github.com/djeada/Nauka-Programowania)
+- [Stack Overflow](https://stackoverflow.com/) – pytania i odpowiedzi programistyczne
+- [VS Code](https://code.visualstudio.com/) – edytor kodu
+- [Heroku](https://devcenter.heroku.com/) – darmowy hosting aplikacji webowych
+
+Jeśli masz własne propozycje ciekawych materiałów lub chcesz podzielić się swoim projektem, otwórz issue lub pull request!

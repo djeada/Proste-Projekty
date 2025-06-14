@@ -20,6 +20,7 @@ jobs:
       - name: Run tests for all C projects
         run: |
           set -x
+          ROOT_DIR=$(pwd)
           ls -l src/c
           for proj in ${{ steps.list.outputs.projects }}; do
             echo "Testuję projekt: $proj"
@@ -27,9 +28,9 @@ jobs:
               echo "Directory src/c/$proj does not exist!"
               exit 1
             fi
-            cd src/c/$proj
+            cd "$ROOT_DIR/src/c/$proj"
             cmake -S . -B build
             cmake --build build
             cd build && ctest --output-on-failure || exit 1
-            cd ../../..
+            cd "$ROOT_DIR"
           done

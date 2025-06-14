@@ -8,7 +8,7 @@ add_executable(main src/main.c)
 install(TARGETS main DESTINATION bin)
 
 enable_testing()
-# No unit tests yet
+add_test(NAME test_http_server COMMAND bash ${CMAKE_SOURCE_DIR}/tests/test_http_server.sh)
 
 find_program(CLANG_TIDY_EXE NAMES clang-tidy)
 if(CLANG_TIDY_EXE)

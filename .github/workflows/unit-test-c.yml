@@ -14,7 +14,17 @@ jobs:
           fetch-depth: 0
       - name: Install dependencies
         run: sudo apt-get update && sudo apt-get install -y cmake clang-tidy clang-format
+      - name: Find changed C projects
+        id: changes
+        run: |
+          CHANGED=$(git diff --name-only origin/main...HEAD | grep '^src/c/' | cut -d'/' -f3 | sort | uniq | xargs)
+          echo "changed=$CHANGED" >> $GITHUB_OUTPUT
+      - name: Print info if nothing changed
+        if: steps.changes.outputs.changed == ''
+        run: echo 'Brak zmian w projektach C. Testy nie są uruchamiane.'
       - name: Make test script executable
+        if: steps.changes.outputs.changed != ''
         run: chmod +x scripts/test-all-c-projects.sh
-      - name: Run all C project tests
-        run: ./scripts/test-all-c-projects.sh
+      - name: Run C project tests for changed projects
+        if: steps.changes.outputs.changed != ''
+        run: ./scripts/test-all-c-projects.sh ${{ steps.changes.outputs.changed }}

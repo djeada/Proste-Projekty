@@ -2,7 +2,12 @@
 set -e
 set -x
 ROOT_DIR=$(pwd)
-for proj in $(ls -1 src/c); do
+if [ "$#" -eq 0 ]; then
+  PROJECTS=$(ls -1 src/c)
+else
+  PROJECTS="$@"
+fi
+for proj in $PROJECTS; do
   echo "Testing project: $proj"
   if [ ! -d src/c/$proj ]; then
     echo "Directory src/c/$proj does not exist!"

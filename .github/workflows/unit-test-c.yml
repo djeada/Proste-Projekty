@@ -1,0 +1,36 @@
+name: Unit Test C Projects
+on:
+  push:
+    branches: [ main, ulepszone_szablony ]
+  pull_request:
+    branches: [ main ]
+jobs:
+  test-c:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo (full history)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Ensure main exists locally
+        run: |
+          git fetch origin main:main || true
+      - name: Find changed C projects
+        id: changes
+        run: |
+          CHANGED=$(git diff --name-only origin/main...HEAD | grep '^src/c/' | cut -d'/' -f3 | sort | uniq | xargs)
+          echo "changed=$CHANGED" >> $GITHUB_OUTPUT
+      - name: Print info if nothing changed
+        if: steps.changes.outputs.changed == ''
+        run: echo 'Brak zmian w projektach C. Testy nie są uruchamiane.'
+      - name: Run tests for changed C projects
+        if: steps.changes.outputs.changed != ''
+        run: |
+          for proj in ${{ steps.changes.outputs.changed }}; do
+            echo "Testuję projekt: $proj"
+            cd src/c/$proj
+            cmake -S . -B build
+            cmake --build build
+            cd build && ctest --output-on-failure || exit 1
+            cd ../../..
+          done

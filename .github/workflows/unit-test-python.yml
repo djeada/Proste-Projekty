@@ -1,0 +1,35 @@
+name: Unit Test Python Projects
+on:
+  push:
+    branches: [ main, ulepszone_szablony ]
+  pull_request:
+    branches: [ main ]
+jobs:
+  test-python:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo (full history)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Ensure main exists locally
+        run: |
+          git fetch origin main:main || true
+      - name: Find changed Python projects
+        id: changes
+        run: |
+          CHANGED=$(git diff --name-only origin/main...HEAD | grep '^src/python/' | cut -d'/' -f3 | sort | uniq | xargs)
+          echo "changed=$CHANGED" >> $GITHUB_OUTPUT
+      - name: Print info if nothing changed
+        if: steps.changes.outputs.changed == ''
+        run: echo 'Brak zmian w projektach Python. Testy nie są uruchamiane.'
+      - name: Run tests for changed Python projects
+        if: steps.changes.outputs.changed != ''
+        run: |
+          for proj in ${{ steps.changes.outputs.changed }}; do
+            echo "Testuję projekt: $proj"
+            cd src/python/$proj
+            pip install -r requirements.txt
+            pytest || exit 1
+            cd ../../..
+          done

@@ -6,7 +6,9 @@
 void chooseWord(const char* list[], int listSize, char* word) {
     srand(time(NULL));
     int index = rand() % listSize;
-    strcpy(word, list[index]);
+    // Use safe copy, assuming word buffer is at least 20 bytes (as in main.c)
+    strncpy(word, list[index], 19);
+    word[19] = '\0';
 }
 
 int isLetterInWord(char letter, const char* word) {

@@ -1,0 +1,27 @@
+name: C/C++ CI
+
+on:
+  push:
+    paths:
+      - 'src/c/todo/**'
+  pull_request:
+    paths:
+      - 'src/c/todo/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y cmake clang-tidy clang-format libsqlite3-dev
+      - name: Configure
+        run: cmake -S src/c/todo -B src/c/todo/build
+      - name: Build
+        run: cmake --build src/c/todo/build
+      - name: Lint
+        run: clang-tidy src/c/todo/src/*.c -- -I src/c/todo/src
+      - name: Format
+        run: clang-format -i src/c/todo/src/*.c src/c/todo/src/*.h
+      - name: Test
+        run: cd src/c/todo/build && ctest --output-on-failure

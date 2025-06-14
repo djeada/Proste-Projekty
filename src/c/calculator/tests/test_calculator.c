@@ -4,33 +4,33 @@
 
 void test_add() {
     int error;
-    assert(calculate(2, 3, '+', &error) == 5);
+    assert(calculate('+', 2, 3, &error) == 5);
     assert(error == 0);
 }
 
 void test_subtract() {
     int error;
-    assert(calculate(5, 2, '-', &error) == 3);
+    assert(calculate('-', 5, 2, &error) == 3);
     assert(error == 0);
 }
 
 void test_multiply() {
     int error;
-    assert(calculate(2, 3, '*', &error) == 6);
+    assert(calculate('*', 2, 3, &error) == 6);
     assert(error == 0);
 }
 
 void test_divide() {
     int error;
-    assert(calculate(6, 2, '/', &error) == 3);
+    assert(calculate('/', 6, 2, &error) == 3);
     assert(error == 0);
-    calculate(1, 0, '/', &error);
+    calculate('/', 1, 0, &error);
     assert(error == 1);
 }
 
 void test_invalid_operator() {
     int error;
-    calculate(1, 2, '^', &error);
+    calculate('^', 1, 2, &error);
     assert(error == 2);
 }
 

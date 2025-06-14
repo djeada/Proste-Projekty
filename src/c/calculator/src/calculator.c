@@ -1,6 +1,6 @@
 #include "calculator.h"
 
-float calculate(float num1, float num2, char operator, int* error) {
+float calculate(char operator, float num1, float num2, int* error) {
     *error = 0;
     switch (operator) {
         case '+':

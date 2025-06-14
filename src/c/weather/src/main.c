@@ -4,6 +4,10 @@
 
 enum { MAX_CMD_LEN = 256, MAX_WEATHER_LEN = 256, MAX_CONDITION_LEN = 256 };
 
+typedef struct {
+    const char *condition;
+} WeatherCondition;
+
 void usage(const char *programName) {
     printf("Usage: %s [CITY]\n", programName);
     exit(EXIT_FAILURE);
@@ -21,14 +25,14 @@ void fetchWeatherData(const char *city, char *weatherData, size_t dataSize) {
     pclose(filePointer);
 }
 
-void printWeatherCondition(const char *weatherData, const char *condition) {
-    if (strstr(condition, "Clear")) {
+void printWeatherCondition(const char *weatherData, WeatherCondition condition) {
+    if (strstr(condition.condition, "Clear")) {
         printf("\e[93m☀️ %s\e[0m\n", weatherData);
-    } else if (strstr(condition, "Rain") || strstr(condition, "Drizzle")) {
+    } else if (strstr(condition.condition, "Rain") || strstr(condition.condition, "Drizzle")) {
         printf("\e[94m🌧️ %s\e[0m\n", weatherData);
-    } else if (strstr(condition, "Cloud")) {
+    } else if (strstr(condition.condition, "Cloud")) {
         printf("\e[37m☁️ %s\e[0m\n", weatherData);
-    } else if (strstr(condition, "Snow")) {
+    } else if (strstr(condition.condition, "Snow")) {
         printf("\e[96m❄️ %s\e[0m\n", weatherData);
     } else {
         printf("\e[95m🌀 %s\e[0m\n", weatherData); // Default case
@@ -45,8 +49,9 @@ int main(int argc, char *argv[]) {
 
     fetchWeatherData(city, weatherData, sizeof(weatherData));
 
-    char condition[MAX_CONDITION_LEN];
-    sscanf(weatherData, "%*[^:]:%255[^\n]", condition);
+    char conditionStr[MAX_CONDITION_LEN];
+    sscanf(weatherData, "%*[^:]:%255[^\n]", conditionStr);
+    WeatherCondition condition = { conditionStr };
 
     printf("\e[1m\e[95mCity: %s\e[0m\n", city);
     printf("-----------------------------------\n");

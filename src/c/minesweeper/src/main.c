@@ -14,7 +14,8 @@ int main() {
         int numRead = scanf(" %c %d %d", &cmd, &row, &col);
         if (numRead < 3) {
             printf("Invalid input!\n");
-            while (getchar() != '\n');
+            while (getchar() != '\n') {
+            }
             continue;
         }
         if (cmd == 'f') {

@@ -2,24 +2,26 @@
 #include <stdlib.h>
 #include <string.h>
 
+enum { MAX_CMD_LEN = 256, MAX_WEATHER_LEN = 256, MAX_CONDITION_LEN = 256 };
+
 void usage(const char *programName) {
     printf("Usage: %s [CITY]\n", programName);
     exit(EXIT_FAILURE);
 }
 
 void fetchWeatherData(const char *city, char *weatherData, size_t dataSize) {
-    char command[256];
+    char command[MAX_CMD_LEN];
     snprintf(command, sizeof(command), "curl -s -L \"http://wttr.in/%s?format=3\"", city);
-    FILE *fp = popen(command, "r");
-    if (fp == NULL) {
+    FILE *filePointer = popen(command, "r");
+    if (filePointer == NULL) {
         perror("Error executing curl command");
         exit(EXIT_FAILURE);
     }
-    fgets(weatherData, dataSize, fp);
-    pclose(fp);
+    fgets(weatherData, (int)dataSize, filePointer);
+    pclose(filePointer);
 }
 
-void printWeatherCondition(const char *condition, const char *weatherData) {
+void printWeatherCondition(const char *weatherData, const char *condition) {
     if (strstr(condition, "Clear")) {
         printf("\e[93m☀️ %s\e[0m\n", weatherData);
     } else if (strstr(condition, "Rain") || strstr(condition, "Drizzle")) {
@@ -39,17 +41,17 @@ int main(int argc, char *argv[]) {
     }
 
     const char *city = argv[1];
-    char weatherData[256];
+    char weatherData[MAX_WEATHER_LEN];
 
     fetchWeatherData(city, weatherData, sizeof(weatherData));
 
-    char condition[256];
+    char condition[MAX_CONDITION_LEN];
     sscanf(weatherData, "%*[^:]:%255[^\n]", condition);
 
     printf("\e[1m\e[95mCity: %s\e[0m\n", city);
     printf("-----------------------------------\n");
 
-    printWeatherCondition(condition, weatherData);
+    printWeatherCondition(weatherData, condition);
 
     printf("-----------------------------------\n");
 

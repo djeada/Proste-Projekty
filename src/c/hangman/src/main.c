@@ -1,45 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <time.h>
+#include "hangman.h"
 
 #define MAX_TRIES 10
 #define WORD_LIST_SIZE 5
 
-// List of words to choose from
 const char* wordList[WORD_LIST_SIZE] = {"apple", "banana", "cherry", "date", "elderberry"};
-
-void chooseWord(const char* list[], int listSize, char* word) {
-    srand(time(NULL)); // Seed for random number generator
-    int index = rand() % listSize;
-    strcpy(word, list[index]);
-}
-
-int isLetterInWord(char letter, const char* word) {
-    for (int i = 0; word[i] != '\0'; i++) {
-        if (word[i] == letter) {
-            return 1;
-        }
-    }
-    return 0;
-}
-
-void revealLetter(char letter, const char* word, char* display) {
-    for (int i = 0; word[i] != '\0'; i++) {
-        if (word[i] == letter) {
-            display[i] = letter;
-        }
-    }
-}
-
-int isWordGuessed(const char* display) {
-    for (int i = 0; display[i] != '\0'; i++) {
-        if (display[i] == '_') {
-            return 0;
-        }
-    }
-    return 1;
-}
 
 int main() {
     char word[20];
@@ -49,7 +16,6 @@ int main() {
 
     chooseWord(wordList, WORD_LIST_SIZE, word);
 
-    // Initialize display with dashes
     for (int i = 0; word[i] != '\0'; i++) {
         display[i] = '_';
     }

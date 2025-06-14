@@ -12,24 +12,21 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Ensure main exists locally
-        run: |
-          git fetch origin main:main || true
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
       - name: Find changed Python projects
         id: changes
         run: |
-          CHANGED=$(git diff --name-only origin/main...HEAD | grep '^src/python/' | cut -d'/' -f3 | sort | uniq | xargs)
+          CHANGED=$(git diff --name-only origin/main...HEAD | grep '^src/python/' | cut -d'/' -f1,2,3 | sort | uniq | xargs)
           echo "changed=$CHANGED" >> $GITHUB_OUTPUT
       - name: Print info if nothing changed
         if: steps.changes.outputs.changed == ''
         run: echo 'Brak zmian w projektach Python. Testy nie są uruchamiane.'
-      - name: Run tests for changed Python projects
+      - name: Make test script executable
         if: steps.changes.outputs.changed != ''
-        run: |
-          for proj in ${{ steps.changes.outputs.changed }}; do
-            echo "Testuję projekt: $proj"
-            cd src/python/$proj
-            pip install -r requirements.txt
-            pytest || exit 1
-            cd ../../..
-          done
+        run: chmod +x scripts/test-all-python-projects.sh
+      - name: Run Python project tests for changed projects
+        if: steps.changes.outputs.changed != ''
+        run: ./scripts/test-all-python-projects.sh ${{ steps.changes.outputs.changed }}

@@ -1,11 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include "calculator.h"
 
 int main() {
     float num1, num2, result;
     char operator;
     bool running = true;
+    int error;
 
     while (running) {
         printf("Enter an expression (e.g., 3.5 * 2) or 'q' to quit: ");
@@ -20,26 +22,13 @@ int main() {
             continue;
         }
 
-        switch (operator) {
-            case '+':
-                result = num1 + num2;
-                break;
-            case '-':
-                result = num1 - num2;
-                break;
-            case '*':
-                result = num1 * num2;
-                break;
-            case '/':
-                if (num2 == 0) {
-                    printf("Error: Division by zero.\n");
-                    continue;
-                }
-                result = num1 / num2;
-                break;
-            default:
-                printf("Invalid operator.\n");
-                continue;
+        result = calculate(operator, &error, num1, num2);
+        if (error == 1) {
+            printf("Error: Division by zero.\n");
+            continue;
+        } else if (error == 2) {
+            printf("Invalid operator.\n");
+            continue;
         }
 
         printf("Result: %.2f\n", result);

@@ -11,5 +11,14 @@ setup(
     install_requires=['numpy'],
     url='https://github.com/yourusername/example_package',
     author='Your Name',
-    author_email='your.email@example.com'
+    author_email='your.email@example.com',
+    extras_require={
+        "dev": ["pytest", "flake8", "black", "nuitka"]
+    },
+    entry_points={
+        "console_scripts": [
+            "example-cli=example_package.example_module:main"
+        ]
+    },
+    test_suite="tests",
 )

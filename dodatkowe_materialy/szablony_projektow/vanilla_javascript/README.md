@@ -1,113 +1,60 @@
+# Szablon projektu Vanilla JavaScript
 
-## Struktura Projektu Frontend JavaScript
+## Opis
+Ten szablon pozwala szybko rozpocząć projekt frontendowy w czystym JavaScript z automatyzacją, testami i dobrymi praktykami.
 
-- projekt_frontend_js/
-  - src/
-    - assets/
-      - style.css
-    - index.html
-    - index.js
-  - dist/ (katalog wyjściowy po budowaniu)
-  - tests/
-    - index.test.js
-  - package.json
-  - webpack.config.js (lub odpowiednik dla Parcel, Rollup itd.)
-  - README.md
-  - LICENSE
-  - .gitignore
+## Funkcje
+- Modularna struktura (`src/js`, `src/css`, `tests`)
+- Lintowanie (ESLint)
+- Formatowanie kodu (Prettier)
+- Testy jednostkowe (Jest)
+- Automatyzacja CI (GitHub Actions)
+- Deployment przez Docker
+- Spójny styl kodu (EditorConfig)
 
-## src/index.html
+## Wymagania
+- Node.js >= 18
+- npm
+- Docker (opcjonalnie)
 
-Twoja strona główna HTML. Tutaj załączasz swój wyjściowy plik JavaScript:
+## Instalacja i uruchomienie
+```sh
+npm install
+npm run lint
+npm test
+```
 
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Przykładowa Strona</title>
-</head>
-<body>
-    <h1>Witaj Świecie!</h1>
-    <script src="main.js"></script>
-</body>
-</html>
-
-## src/index.js
-
-Główny plik JavaScript Twojej aplikacji:
-
-import './assets/style.css';
-
-function sayHello() {
-    console.log('Hello, World!');
-}
-
-sayHello();
-
-## src/assets/style.css
-
-Twoje style CSS:
-
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
-}
-
-## webpack.config.js
-
-Konfiguracja Webpacka:
-
-const path = require('path');
-
-module.exports = {
-    entry: './src/index.js',
-    output: {
-        filename: 'main.js',
-        path: path.resolve(__dirname, 'dist'),
-    },
-    module: {
-        rules: [
-            {
-                test: /\.css$/,
-                use: ['style-loader', 'css-loader'],
-            },
-        ],
-    },
-};
-
-## package.json
-
-Konfiguracja zależności projektu i skryptów:
-
-{
-  "name": "projekt_frontend_js",
-  "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "build": "webpack --mode production",
-    "dev": "webpack --mode development",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "devDependencies": {
-    "css-loader": "^5.2.6",
-    "style-loader": "^2.0.0",
-    "webpack": "^5.36.2",
-    "webpack-cli": "^4.7.0"
-  }
-}
-
-## Budowanie i Uruchamianie
-
-Aby zbudować projekt:
-
+## Budowanie (jeśli dotyczy)
+```sh
 npm run build
+```
 
-Aby uruchomić w trybie deweloperskim:
+## Deployment
+Budowa i uruchomienie obrazu Docker:
+```sh
+docker build -t moj-js-app .
+docker run -p 8080:8080 moj-js-app
+```
 
-npm run dev
+## Dobre praktyki
+- Kod JavaScript w `src/js/`
+- Style w `src/css/`
+- Testy w `tests/`
+- Używaj lintera i formatowania przed commitem
+- Automatyzuj testy i lint w CI
 
-## Testowanie
-
-Dla testowania możesz dodać narzędzia takie jak Jest. Konfiguracja zależy od potrzeb Twojego projektu.
+## Struktura katalogów
+```
+projekt_frontend_js/
+├── src/
+│   ├── js/
+│   │   └── script.js
+│   ├── css/
+│   │   └── style.css
+│   └── index.html
+├── tests/
+│   └── example.test.js
+├── package.json
+├── Dockerfile
+└── README.md
+```

@@ -1,72 +1,68 @@
-## Struktura Projektu C z CMake
+# Szablon projektu w C z użyciem CMake
 
-- projekt_c/
-  - src/
-    - main.c
-    - hello.c
-    - hello.h
-  - tests/
-    - test_hello.c
-  - CMakeLists.txt
-  - README.md
-  - LICENSE
-  - .gitignore
+## Opis
+Ten szablon pozwala szybko rozpocząć projekt w języku C z użyciem CMake, testów, linterów i automatyzacji.
 
-## src/main.c
+## Funkcje
+- Budowanie przez CMake
+- Testy jednostkowe (CTest)
+- Lintowanie (clang-tidy)
+- Formatowanie kodu (clang-format)
+- Automatyzacja CI (GitHub Actions)
+- Deployment przez Docker
+- Spójny styl kodu (EditorConfig)
 
-Główny plik programu, na przykład z funkcją `main`:
+## Wymagania
+- CMake >= 3.10
+- Kompilator C (np. gcc, clang)
+- clang-tidy, clang-format (opcjonalnie)
+- Docker (opcjonalnie)
 
-#include "hello.h"
-#include <stdio.h>
-
-int main() {
-    printf("%s\n", get_hello_message());
-    return 0;
-}
-
-## src/hello.c
-
-Implementacja funkcji zdefiniowanych w hello.h:
-
-#include "hello.h"
-
-const char* get_hello_message() {
-    return "Hello, World!";
-}
-
-## src/hello.h
-
-Nagłówek dla twoich funkcji:
-
-#ifndef HELLO_H
-#define HELLO_H
-
-const char* get_hello_message();
-
-#endif // HELLO_H
-
-## CMakeLists.txt
-
-Konfiguracja budowy projektu z CMake:
-
-cmake_minimum_required(VERSION 3.10)
-project(projekt_c VERSION 1.0)
-
-add_executable(projekt_c src/main.c src/hello.c)
-
-## Budowanie Projektu
-
-Stwórz katalog `build` i przejdź do niego:
-
-mkdir build && cd build
-
-Uruchom CMake i zbuduj projekt:
-
-cmake ..
-make
+## Instalacja i budowanie
+```sh
+cmake -S . -B build
+cmake --build build
+```
 
 ## Testowanie
+```sh
+cd build
+ctest
+```
 
-Możesz użyć narzędzi takich jak CTest lub Google Test do testowania swojego projektu. Testy umieszczasz w katalogu `tests`. Oto przykładowy test z użyciem Google Test:
+## Lintowanie i formatowanie
+```sh
+clang-tidy src/*.c
+clang-format -i src/*.c
+```
+
+## Deployment
+Budowa i uruchomienie obrazu Docker:
+```sh
+docker build -t moj-projekt-c .
+docker run moj-projekt-c
+```
+
+## Dobre praktyki
+- Kod źródłowy w `src/`
+- Testy w `tests/`
+- Używaj lintera i formatowania przed commitem
+- Automatyzuj testy i lint w CI
+
+## Struktura katalogów
+```
+projekt_c/
+├── src/
+│   ├── main.c
+│   ├── hello.c
+│   └── hello.h
+├── tests/
+│   └── test_hello.c
+├── CMakeLists.txt
+├── Dockerfile
+├── .clang-tidy
+├── .clang-format
+└── README.md
+```
 
 

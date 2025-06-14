@@ -12,23 +12,16 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Ensure main exists locally
+      - name: List all C projects
+        id: list
         run: |
-          git fetch origin main:main || true
-      - name: Find changed C projects
-        id: changes
-        run: |
-          CHANGED=$(git diff --name-only origin/main...HEAD | grep '^src/c/' | cut -d'/' -f3 | sort | uniq | xargs)
-          echo "changed=$CHANGED" >> $GITHUB_OUTPUT
-      - name: Print info if nothing changed
-        if: steps.changes.outputs.changed == ''
-        run: echo 'Brak zmian w projektach C. Testy nie są uruchamiane.'
-      - name: Run tests for changed C projects
-        if: steps.changes.outputs.changed != ''
+          PROJECTS=$(ls -1 src/c | xargs)
+          echo "projects=$PROJECTS" >> $GITHUB_OUTPUT
+      - name: Run tests for all C projects
         run: |
           set -x
           ls -l src/c
-          for proj in ${{ steps.changes.outputs.changed }}; do
+          for proj in ${{ steps.list.outputs.projects }}; do
             echo "Testuję projekt: $proj"
             if [ ! -d src/c/$proj ]; then
               echo "Directory src/c/$proj does not exist!"

@@ -22,7 +22,7 @@ int main() {
             continue;
         }
 
-        result = calculate(operator, num1, num2, &error);
+        result = calculate(operator, &error, num1, num2);
         if (error == 1) {
             printf("Error: Division by zero.\n");
             continue;

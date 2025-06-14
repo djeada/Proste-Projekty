@@ -6,13 +6,16 @@ set(CMAKE_C_STANDARD 99)
 find_package(Curses REQUIRED)
 include_directories(${CURSES_INCLUDE_DIR})
 
+add_library(snake_logic src/snake.c)
+target_include_directories(snake_logic PUBLIC src)
+
 add_executable(main src/main.c)
-target_link_libraries(main ${CURSES_LIBRARIES})
+target_link_libraries(main snake_logic ${CURSES_LIBRARIES})
 
 # Enable testing
 enable_testing()
-add_executable(test_snake tests/test_snake.c src/main.c)
-target_link_libraries(test_snake ${CURSES_LIBRARIES})
+add_executable(test_snake tests/test_snake.c)
+target_link_libraries(test_snake snake_logic ${CURSES_LIBRARIES})
 target_include_directories(test_snake PRIVATE src)
 add_test(NAME test_snake COMMAND test_snake)
 

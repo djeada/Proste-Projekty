@@ -3,16 +3,19 @@ project(zombie_apocalypse C)
 
 set(CMAKE_C_STANDARD 99)
 
+find_package(Curses REQUIRED)
+
 add_library(zombie_apocalypse_logic src/zombie_apocalypse.c)
 target_include_directories(zombie_apocalypse_logic PUBLIC src)
+target_link_libraries(zombie_apocalypse_logic ${CURSES_LIBRARIES})
 
 add_executable(main src/main.c)
-target_link_libraries(main zombie_apocalypse_logic)
+target_link_libraries(main zombie_apocalypse_logic ${CURSES_LIBRARIES})
 
 # Enable testing
 enable_testing()
 add_executable(test_zombie_apocalypse tests/test_zombie_apocalypse.c)
-target_link_libraries(test_zombie_apocalypse zombie_apocalypse_logic)
+target_link_libraries(test_zombie_apocalypse zombie_apocalypse_logic ${CURSES_LIBRARIES})
 target_include_directories(test_zombie_apocalypse PRIVATE src)
 add_test(NAME test_zombie_apocalypse COMMAND test_zombie_apocalypse)
 

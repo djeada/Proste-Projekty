@@ -1,18 +1,39 @@
 #include "zombie_apocalypse.h"
+#include <stdlib.h>
+#include <time.h>
 #include <stdio.h>
+#include <ncurses.h>
 
 int main() {
-    ZombieApocalypse game;
-    zombie_apocalypse_init(&game);
-    printf("Zombie Apocalypse begins!\n");
-    while (!zombie_apocalypse_is_over(&game)) {
-        printf("Player health: %d, Zombies left: %d\n", game.player_health, game.zombie_count);
-        zombie_apocalypse_tick(&game);
+    initscr();
+    noecho();
+    curs_set(0);
+    keypad(stdscr, TRUE);
+    timeout(100);
+    srand(time(0));
+
+    int max_y, max_x;
+    getmaxyx(stdscr, max_y, max_x);
+
+    ZombieGame game;
+    zombie_game_init(&game, max_x, max_y);
+
+    while (!game.game_over) {
+        clear();
+        zombie_game_draw(&game);
+        int key = getch();
+        zombie_game_update(&game, key);
+        refresh();
     }
-    if (game.player_health > 0) {
-        printf("You survived the zombie apocalypse!\n");
+    clear();
+    zombie_game_draw(&game);
+    if (game.player.health > 0) {
+        mvprintw(max_y / 2, (max_x - 20) / 2, "You survived! Press any key.");
     } else {
-        printf("You were eaten by zombies...\n");
+        mvprintw(max_y / 2, (max_x - 20) / 2, "You died! Press any key.");
     }
+    refresh();
+    getch();
+    endwin();
     return 0;
 }

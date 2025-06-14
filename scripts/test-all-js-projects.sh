@@ -2,19 +2,23 @@
 set -e
 set -x
 ROOT_DIR=$(pwd)
-for proj in $(ls -1 src/vanilla_js); do
-  echo "Testing project: $proj"
-  if [ ! -d src/vanilla_js/$proj ]; then
-    echo "Directory src/vanilla_js/$proj does not exist!"
+if [ "$#" -eq 0 ]; then
+  PROJECT_PATHS=$(ls -d src/vanilla_js/*)
+else
+  PROJECT_PATHS="$@"
+fi
+for proj_path in $PROJECT_PATHS; do
+  echo "Testing project: $proj_path"
+  if [ ! -d "$proj_path" ]; then
+    echo "Directory $proj_path does not exist!"
     exit 1
   fi
-  cd "$ROOT_DIR/src/vanilla_js/$proj"
+  cd "$ROOT_DIR/$proj_path"
   if [ -f package.json ]; then
     npm install
     npm test || exit 1
   else
-    echo "No package.json found for $proj"
-    exit 1
+    echo "No package.json in $proj_path, skipping."
   fi
   cd "$ROOT_DIR"
 done

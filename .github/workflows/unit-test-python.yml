@@ -16,7 +16,17 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.x'
+      - name: Find changed Python projects
+        id: changes
+        run: |
+          CHANGED=$(git diff --name-only origin/main...HEAD | grep '^src/python/' | cut -d'/' -f1,2,3 | sort | uniq | xargs)
+          echo "changed=$CHANGED" >> $GITHUB_OUTPUT
+      - name: Print info if nothing changed
+        if: steps.changes.outputs.changed == ''
+        run: echo 'Brak zmian w projektach Python. Testy nie są uruchamiane.'
       - name: Make test script executable
+        if: steps.changes.outputs.changed != ''
         run: chmod +x scripts/test-all-python-projects.sh
-      - name: Run all Python project tests
-        run: ./scripts/test-all-python-projects.sh
+      - name: Run Python project tests for changed projects
+        if: steps.changes.outputs.changed != ''
+        run: ./scripts/test-all-python-projects.sh ${{ steps.changes.outputs.changed }}

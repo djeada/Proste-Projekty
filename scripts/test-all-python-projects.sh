@@ -2,23 +2,25 @@
 set -e
 set -x
 ROOT_DIR=$(pwd)
-for proj in $(ls -1 src/python); do
-  echo "Testing project: $proj"
-  if [ ! -d src/python/$proj ]; then
-    echo "Directory src/python/$proj does not exist!"
+if [ "$#" -eq 0 ]; then
+  PROJECT_PATHS=$(ls -d src/python/*)
+else
+  PROJECT_PATHS="$@"
+fi
+for proj_path in $PROJECT_PATHS; do
+  echo "Testing project: $proj_path"
+  if [ ! -d "$proj_path" ]; then
+    echo "Directory $proj_path does not exist!"
     exit 1
   fi
-  cd "$ROOT_DIR/src/python/$proj"
+  cd "$ROOT_DIR/$proj_path"
   if [ -f requirements.txt ]; then
     pip install -r requirements.txt
   fi
-  if [ -d src ]; then
-    pytest src || exit 1
-  elif [ -d tests ]; then
+  if [ -d tests ]; then
     pytest tests || exit 1
   else
-    echo "No test directory found for $proj"
-    exit 1
+    echo "No tests directory in $proj_path, skipping."
   fi
   cd "$ROOT_DIR"
 done

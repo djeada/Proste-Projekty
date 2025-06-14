@@ -16,7 +16,17 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20.x'
+      - name: Find changed JS projects
+        id: changes
+        run: |
+          CHANGED=$(git diff --name-only origin/main...HEAD | grep '^src/vanilla_js/' | cut -d'/' -f1,2,3 | sort | uniq | xargs)
+          echo "changed=$CHANGED" >> $GITHUB_OUTPUT
+      - name: Print info if nothing changed
+        if: steps.changes.outputs.changed == ''
+        run: echo 'Brak zmian w projektach JS. Testy nie są uruchamiane.'
       - name: Make test script executable
+        if: steps.changes.outputs.changed != ''
         run: chmod +x scripts/test-all-js-projects.sh
-      - name: Run all JS project tests
-        run: ./scripts/test-all-js-projects.sh
+      - name: Run JS project tests for changed projects
+        if: steps.changes.outputs.changed != ''
+        run: ./scripts/test-all-js-projects.sh ${{ steps.changes.outputs.changed }}

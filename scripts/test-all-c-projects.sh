@@ -3,17 +3,17 @@ set -e
 set -x
 ROOT_DIR=$(pwd)
 if [ "$#" -eq 0 ]; then
-  PROJECTS=$(ls -1 src/c)
+  PROJECT_PATHS=$(ls -d src/c/*)
 else
-  PROJECTS="$@"
+  PROJECT_PATHS="$@"
 fi
-for proj in $PROJECTS; do
-  echo "Testing project: $proj"
-  if [ ! -d src/c/$proj ]; then
-    echo "Directory src/c/$proj does not exist!"
+for proj_path in $PROJECT_PATHS; do
+  echo "Testing project: $proj_path"
+  if [ ! -d "$proj_path" ]; then
+    echo "Directory $proj_path does not exist!"
     exit 1
   fi
-  cd "$ROOT_DIR/src/c/$proj"
+  cd "$ROOT_DIR/$proj_path"
   cmake -S . -B build
   cmake --build build
   cd build && ctest --output-on-failure || exit 1

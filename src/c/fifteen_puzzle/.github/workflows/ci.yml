@@ -1,0 +1,27 @@
+name: C/C++ CI
+
+on:
+  push:
+    paths:
+      - 'src/c/fifteen_puzzle/**'
+  pull_request:
+    paths:
+      - 'src/c/fifteen_puzzle/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y cmake clang-tidy clang-format
+      - name: Configure
+        run: cmake -S src/c/fifteen_puzzle -B src/c/fifteen_puzzle/build
+      - name: Build
+        run: cmake --build src/c/fifteen_puzzle/build
+      - name: Lint
+        run: clang-tidy src/c/fifteen_puzzle/src/*.c -- -I src/c/fifteen_puzzle/src
+      - name: Format
+        run: clang-format -i src/c/fifteen_puzzle/src/*.c src/c/fifteen_puzzle/src/*.h
+      - name: Test
+        run: cd src/c/fifteen_puzzle/build && ctest --output-on-failure

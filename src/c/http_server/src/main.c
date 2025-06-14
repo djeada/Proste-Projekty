@@ -14,7 +14,8 @@ int main() {
     int addrlen = sizeof(address);
     char buffer[1024] = {0};
 
-    if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0) {
+    server_fd = socket(AF_INET, SOCK_STREAM, 0);
+    if (server_fd == 0) {
         perror("socket failed");
         exit(EXIT_FAILURE);
     }
@@ -33,7 +34,8 @@ int main() {
     }
     printf("Server listening on port %d...\n", PORT);
     while (1) {
-        if ((new_socket = accept(server_fd, (struct sockaddr *)&address, (socklen_t*)&addrlen)) < 0) {
+        new_socket = accept(server_fd, (struct sockaddr *)&address, (socklen_t*)&addrlen);
+        if (new_socket < 0) {
             perror("accept");
             exit(EXIT_FAILURE);
         }

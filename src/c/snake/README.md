@@ -1,63 +1,81 @@
-# Snake Game in C using ncurses
+# Snake Game in C
 
-This is a simple implementation of the classic Snake game in C, utilizing the ncurses library for handling input and output on the terminal. The player controls a snake, guiding it to eat food and grow in length, while avoiding colliding with the walls or itself.
+![Build Status](https://github.com/djeada/Proste-Projekty/actions/workflows/ci.yml/badge.svg)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 
-![snake](https://github.com/djeada/Proste-Projekty/assets/37275728/866797cf-1472-42fd-aca5-c492a684ae44)
+## Overview
+A simple implementation of the classic Snake game in C, using the ncurses library for terminal input/output. The player controls a snake, eating food to grow and avoiding collisions with walls or itself.
 
-## Prerequisites
+## Requirements
+- CMake >= 3.10
+- C compiler (e.g., gcc, clang)
+- ncurses library
+- clang-tidy, clang-format (optional)
+- Docker (optional)
 
-To run this game, you need to have the ncurses library installed on your system. 
-
-### Installing ncurses on Linux
-
-You can install ncurses on a Debian-based system (like Ubuntu) using:
-
-```
-sudo apt-get install libncurses5-dev libncursesw5-dev
-```
-
-On Red Hat-based systems (like Fedora), use:
-
-```
-sudo yum install ncurses-devel
-```
-
-### Installing ncurses on macOS
-
-If you are using macOS and have Homebrew installed, you can install ncurses with the following command:
-
-```
-brew install ncurses
+## Installation
+Clone the repository and build the project:
+```sh
+git clone https://github.com/djeada/Proste-Projekty.git
+cd Proste-Projekty/src/c/snake
+cmake -S . -B build
+cmake --build build
 ```
 
-## Compilation
-
-To compile the game, use the following command:
-
+## Usage
+Run the program:
+```sh
+./build/main
 ```
-gcc -o snake src/main.c -lncurses 
-```
-
-This will create an executable named `snake`.
-
-## Running the Game
-
-Run the game by executing the compiled binary:
-
-```
-./snake
-```
-
-## Game Controls
-
-- Use the arrow keys to control the direction of the snake.
-- The game will end if the snake collides with the wall or itself.
-- Every time the snake eats the food, it grows in length.
 
 ## Features
+- Classic snake gameplay
+- Terminal-based interface using ncurses
+- Random food placement
+- Game over on collision with self or wall
 
-- Simple and intuitive gameplay.
-- Dynamic snake growth upon eating food.
-- Collision detection with walls and self.
+## Testing
+Run unit tests using CTest:
+```sh
+cd build
+ctest
+```
+Or run the test binary directly:
+```sh
+./build/test_snake
+```
 
-Enjoy the game!
+## Linting and Formatting
+Check code quality and formatting:
+```sh
+clang-tidy src/*.c
+clang-format -i src/*.c
+```
+
+## Deployment
+Build and run the project in Docker:
+```sh
+docker build -t snake .
+docker run snake
+```
+
+## Project Structure
+```
+snake/
+├── src/
+│   └── main.c
+├── tests/
+│   └── test_snake.c
+├── CMakeLists.txt
+├── Dockerfile
+├── .clang-tidy
+├── .clang-format
+├── .editorconfig
+├── .github/
+│   └── workflows/
+│       └── ci.yml
+└── README.md
+```
+
+## License
+This project is licensed under the [MIT License](https://github.com/djeada/Proste-Projekty/blob/main/LICENSE).

@@ -12,25 +12,9 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: List all C projects
-        id: list
-        run: |
-          PROJECTS=$(ls -1 src/c | xargs)
-          echo "projects=$PROJECTS" >> $GITHUB_OUTPUT
-      - name: Run tests for all C projects
-        run: |
-          set -x
-          ROOT_DIR=$(pwd)
-          ls -l src/c
-          for proj in ${{ steps.list.outputs.projects }}; do
-            echo "Testuję projekt: $proj"
-            if [ ! -d src/c/$proj ]; then
-              echo "Directory src/c/$proj does not exist!"
-              exit 1
-            fi
-            cd "$ROOT_DIR/src/c/$proj"
-            cmake -S . -B build
-            cmake --build build
-            cd build && ctest --output-on-failure || exit 1
-            cd "$ROOT_DIR"
-          done
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y cmake clang-tidy clang-format
+      - name: Make test script executable
+        run: chmod +x scripts/test-all-c-projects.sh
+      - name: Run all C project tests
+        run: ./scripts/test-all-c-projects.sh

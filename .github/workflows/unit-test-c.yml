@@ -26,8 +26,14 @@ jobs:
       - name: Run tests for changed C projects
         if: steps.changes.outputs.changed != ''
         run: |
+          set -x
+          ls -l src/c
           for proj in ${{ steps.changes.outputs.changed }}; do
             echo "Testuję projekt: $proj"
+            if [ ! -d src/c/$proj ]; then
+              echo "Directory src/c/$proj does not exist!"
+              exit 1
+            fi
             cd src/c/$proj
             cmake -S . -B build
             cmake --build build

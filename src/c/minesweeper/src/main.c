@@ -8,19 +8,28 @@ int main() {
     while (!game.game_over && !game.win) {
         game_print(&game);
         char cmd;
-        int r, c;
+        int row;
+        int col;
         printf("Move: ");
-        int n = scanf(" %c %d %d", &cmd, &r, &c);
-        if (n < 3) {
+        int numRead = scanf(" %c %d %d", &cmd, &row, &col);
+        if (numRead < 3) {
             printf("Invalid input!\n");
-            while (getchar() != '\n');
+            while (getchar() != '\n') {
+                continue;
+            }
             continue;
         }
-        if (cmd == 'f') game_flag(&game, r, c);
-        else game_reveal(&game, r, c);
+        if (cmd == 'f') {
+            game_flag(&game, row, col);
+        } else {
+            game_reveal(&game, row, col);
+        }
     }
     game_print(&game);
-    if (game.win) printf("Congratulations! You won!\n");
-    else printf("Game over!\n");
+    if (game.win) {
+        printf("Congratulations! You won!\n");
+    } else {
+        printf("Game over!\n");
+    }
     return 0;
 }

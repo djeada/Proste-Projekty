@@ -1,0 +1,27 @@
+name: C/C++ CI
+
+on:
+  push:
+    paths:
+      - 'src/c/timer/**'
+  pull_request:
+    paths:
+      - 'src/c/timer/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y cmake clang-tidy clang-format
+      - name: Configure
+        run: cmake -S src/c/timer -B src/c/timer/build
+      - name: Build
+        run: cmake --build src/c/timer/build
+      - name: Lint
+        run: clang-tidy src/c/timer/src/*.c -- -I src/c/timer/src
+      - name: Format
+        run: clang-format -i src/c/timer/src/*.c src/c/timer/src/*.h
+      - name: Test
+        run: cd src/c/timer/build && ctest --output-on-failure

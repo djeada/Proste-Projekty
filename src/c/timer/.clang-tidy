@@ -1,0 +1,2 @@
+Checks: '-*,bugprone-*,performance-*,readability-*,portability-*,modernize-*'
+WarningsAsErrors: '*'

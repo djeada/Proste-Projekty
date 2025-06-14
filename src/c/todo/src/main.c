@@ -2,8 +2,7 @@
 #include <stdlib.h>
 #include <sqlite3.h>
 
-#define MAX_TASK_LEN 256
-#define MAX_SQL_LEN 512
+enum { MAX_TASK_LEN = 256, MAX_SQL_LEN = 512 };
 
 void initializeDatabase(sqlite3 **database);
 void addTask(sqlite3 *database);

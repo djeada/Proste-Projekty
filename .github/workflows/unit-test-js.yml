@@ -8,12 +8,16 @@ jobs:
   test-js:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
+      - name: Checkout repo (full history)
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Ensure main exists locally
+        run: |
+          git fetch origin main:main || true
       - name: Find changed JS projects
         id: changes
         run: |
-          git fetch origin main
           CHANGED=$(git diff --name-only origin/main...HEAD | grep '^src/vanilla_js/' | cut -d'/' -f3 | sort | uniq | xargs)
           echo "changed=$CHANGED" >> $GITHUB_OUTPUT
       - name: Print info if nothing changed

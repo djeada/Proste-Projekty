@@ -3,11 +3,13 @@ project(calculator C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(main src/main.c src/calculator.c)
+add_executable(main src/main.c src/calculator.c src/parser.c src/repl.c)
+target_link_libraries(main m)
 
 enable_testing()
-add_executable(test_calculator tests/test_calculator.c src/calculator.c)
+add_executable(test_calculator tests/test_calculator.c src/calculator.c src/parser.c src/repl.c)
 target_include_directories(test_calculator PRIVATE src)
+target_link_libraries(test_calculator m)
 add_test(NAME test_calculator COMMAND test_calculator)
 
 install(TARGETS main DESTINATION bin)

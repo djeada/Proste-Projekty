@@ -1,3 +1,5 @@
+# Fifteen Puzzle
+
 ## About the Project
 
 A desktop application for fifteen puzzle game.
@@ -62,3 +64,83 @@ Some of the ideas include:
 
 * Display a special message when the user wins the game.
 * Display the timer.
+
+## Development
+
+For development, testing, and deployment, the following tools and libraries are used:
+
+- `pytest` for testing
+- `flake8` for linting
+- `black` for code formatting
+- `Docker` for containerization
+
+### Installation and Testing
+
+To install the necessary dependencies and run tests, use the following commands:
+
+```sh
+pip install .[dev]
+flake8 src/ tests/
+black --check src/ tests/
+pytest
+```
+
+### Building the Binary
+
+To build a standalone binary of the application, use Nuitka with the following command:
+
+```sh
+nuitka --standalone --onefile src/fifteen_puzzle/main.py -o app.bin
+```
+
+### Deployment
+
+To deploy the application using Docker, build and run the Docker image with these commands:
+
+```sh
+docker build -t fifteen-puzzle-app .
+docker run fifteen-puzzle-app
+```
+
+## Best Practices
+
+This project follows certain best practices for Python development:
+
+- Source code is in the `src/` directory.
+- Tests are in the `tests/` directory.
+- Use a linter and code formatter before committing code.
+- Automate testing and linting in CI/CD pipelines.
+
+## Directory Structure
+
+The project has the following directory structure:
+
+```
+fifteen_puzzle/
+├── src/
+│   └── fifteen_puzzle/
+│       ├── main.py
+│       ├── logic/
+│       └── gui/
+├── tests/
+│   └── test_puzzle_board.py
+├── setup.py
+├── Dockerfile
+└── README.md
+```
+
+## Sample Code
+
+Here is some sample code from the project:
+
+### src/fifteen_puzzle/logic/puzzle_board.py
+
+```python
+# ...existing game board code...
+```
+
+### tests/test_puzzle_board.py
+
+```python
+# ...existing test code...
+```

@@ -1,6 +1,5 @@
 import random
-
-from src.python.fifteen_puzzle.src.logic.utils import Position
+from utils import Position
 
 
 class PuzzleBoard:

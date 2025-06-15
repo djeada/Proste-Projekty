@@ -1,6 +1,6 @@
 import unittest
-from ..src.entities.player import Player
-from ..src.utils.utils import Point
+from src.entities.player import Player
+from src.utils.utils import Point
 
 class DummyScreen:
     def __init__(self):

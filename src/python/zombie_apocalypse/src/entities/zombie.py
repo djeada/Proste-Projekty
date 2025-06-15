@@ -1,8 +1,8 @@
 from random import randint
 import pygame
 
-from entities.entity_base import Entity
-from utils.utils import Point
+from src.entities.entity_base import Entity
+from src.utils.utils import Point
 
 
 class Zombie(Entity):

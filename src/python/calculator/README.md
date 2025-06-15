@@ -1,3 +1,5 @@
+# Calculator
+
 ## About the Project
 
 A simple calculator that can perform basic arithmetic operations.
@@ -51,3 +53,74 @@ python src/main.py
 Some of the ideas include:
 
 * Support for more advanced mathematical operations, like sine function evaluation etc.
+
+## Development
+
+For those who want to contribute or modify the project, here are some development details:
+
+### Prerequisites
+
+- Python >= 3.10
+- pip
+- Docker (optional)
+
+### Installation and Testing
+
+```sh
+pip install .[dev]
+flake8 src/ tests/
+black --check src/ tests/
+pytest
+```
+
+### Building the Binary
+
+```sh
+nuitka --standalone --onefile src/calculator/main.py -o app.bin
+```
+
+### Deployment
+
+To build and run the Docker image:
+
+```sh
+docker build -t calculator-app .
+docker run calculator-app
+```
+
+## Best Practices
+
+- Keep source code in `src/`
+- Keep tests in `tests/`
+- Use a linter and formatter before committing code
+- Automate tests and linting in CI
+
+## Directory Structure
+
+```
+calculator/
+├── src/
+│   └── calculator/
+│       ├── main.py
+│       ├── logic/
+│       └── gui/
+├── tests/
+│   └── test_calculator.py
+├── setup.py
+├── Dockerfile
+└── README.md
+```
+
+## Sample Code
+
+### src/calculator/logic/calculator.py
+
+```python
+# ...existing calculator code...
+```
+
+### tests/test_calculator.py
+
+```python
+# ...existing test code...
+```

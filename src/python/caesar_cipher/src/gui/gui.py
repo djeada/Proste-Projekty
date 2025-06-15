@@ -2,8 +2,8 @@ import tkinter as tk
 from enum import Enum, auto
 from tkinter import ttk
 
-from src.python.caesar_cipher.src.gui.sytled_window import StyledWindow
-from src.python.caesar_cipher.src.logic.caesar_cipher import CeasarCipher
+from src.gui.sytled_window import StyledWindow
+from src.logic.caesar_cipher import caesar_encrypt, caesar_decrypt
 
 
 class CipherMode(Enum):
@@ -135,7 +135,7 @@ class Gui:
         """
         self.message = self.message_entry.get()
         self.key = int(self.key_entry.get())
-        self.cipher_message = CeasarCipher(self.message, self.key).cipher()
+        self.cipher_message = caesar_encrypt(self.message, self.key)
         self.text_area.delete(1.0, tk.END)
         self.text_area.insert(tk.END, self.cipher_message)
 
@@ -145,6 +145,6 @@ class Gui:
         """
         self.message = self.message_entry.get()
         self.key = int(self.key_entry.get())
-        self.decipher_message = CeasarCipher(self.message, self.key).decipher()
+        self.decipher_message = caesar_decrypt(self.message, self.key)
         self.text_area.delete(1.0, tk.END)
         self.text_area.insert(tk.END, self.decipher_message)

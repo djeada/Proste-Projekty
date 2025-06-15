@@ -1,8 +1,11 @@
 import unittest
-
-from src.game_logic.dice import Dice
-from src.game_logic.dice_to_rule_mapper import DiceToRulesMapper
-from src.game_logic.table import ScoreType
+import sys
+import os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src/logic')))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src/utils')))
+from dice import Dice
+from dice_to_rule_mapper import DiceToRulesMapper
+from table import ScoreType
 
 
 class TestDiceToRulesMapper(unittest.TestCase):

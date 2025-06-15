@@ -1,9 +1,8 @@
 from dataclasses import dataclass
 from enum import auto, Enum
 from typing import List
-
-from src.python.yahtzee.src.logic.dice import Dice
-from src.python.yahtzee.src.utils.utils import most_common_value
+from dice import Dice
+from utils import most_common_value
 
 
 class ScoreType(Enum):

@@ -1,3 +1,6 @@
+import re
+
+
 class Calculator:
     """
     Defines various methods for the calculator.
@@ -12,6 +15,9 @@ class Calculator:
         Validates the calculation string.
         Return: True if the calculation string is valid, False otherwise.
         """
+        # Odrzucenie podwójnych operatorów (np. 2++2, 2--2, 2**+2)
+        if re.search(r'[+\-*/]{2,}', self.calculation_string.replace('**', '')):
+            return False
         try:
             eval(self.calculation_string)
             return True

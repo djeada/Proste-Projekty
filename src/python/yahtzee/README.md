@@ -1,3 +1,5 @@
+# Yahtzee
+
 ## About the Project
 
 Desktop version of the popular dice game Yahtzee. The game is played by rolling five dice and scoring the roll in one of thirteen categories. The player with the highest score wins.
@@ -40,7 +42,7 @@ python src/main.py
 * The game is based on turns. Each turn consists of maximum 3 rolls of the dice.
 * The player can choose which dice to roll again and which to keep.
 * If the dice fit the category, the player can choose to score the roll in that category.
-* If the dice doesn't fit any category, the player can cross out one of the categories.
+* If the dice don't fit any category, the player can cross out one of the categories.
 * The game ends when all categories are scored or crossed out.
 * The player with the highest score wins.
 

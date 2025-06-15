@@ -1,8 +1,8 @@
 from typing import List
 
-from src.python.yahtzee.src.logic.dice import Dice
-from src.python.yahtzee.src.logic.table import ScoreType
-from src.python.yahtzee.src.utils.utils import create_histogram
+from dice import Dice
+from table import ScoreType
+from utils import create_histogram
 
 
 class DiceToRulesMapper:

@@ -2,6 +2,10 @@ import dataclasses
 from pathlib import Path
 from typing import Tuple
 
+WORDS = [
+    "python", "hangman", "programming", "challenge", "wisielec", "komputer"
+]
+
 
 @dataclasses.dataclass
 class Config:

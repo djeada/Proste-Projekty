@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 import pygame
 
-from utils.utils import Point
+from src.utils.utils import Point
 
 
 class Entity(ABC):

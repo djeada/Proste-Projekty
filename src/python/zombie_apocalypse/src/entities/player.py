@@ -1,9 +1,9 @@
 import pygame
 
-from entities.bullet import Bullet
-from entities.entity_base import Entity
-from settings.consts import Consts
-from utils.utils import Point
+from src.entities.bullet import Bullet
+from src.entities.entity_base import Entity
+from src.settings.consts import Consts
+from src.utils.utils import Point
 
 
 class Player(Entity):

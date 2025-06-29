@@ -4,12 +4,12 @@ project(calculator C)
 set(CMAKE_C_STANDARD 99)
 
 # Main calculator executable with both simple and advanced modes
-add_executable(calculator src/main.c src/calculator.c src/parser.c src/repl.c)
+add_executable(calculator src/main.c src/parser.c src/repl.c)
 target_link_libraries(calculator m)
 
 # Test executable
 enable_testing()
-add_executable(test_calculator tests/test_calculator.c src/calculator.c src/parser.c src/repl.c)
+add_executable(test_calculator tests/test_calculator.c src/parser.c src/repl.c)
 target_include_directories(test_calculator PRIVATE src)
 target_link_libraries(test_calculator m)
 add_test(NAME test_calculator COMMAND test_calculator)

@@ -7,9 +7,12 @@
 
 void calculator_repl(void) {
     char input[INPUT_SIZE];
-    printf("Advanced Calculator Mode\n");
-    printf("Supports complex expressions with parentheses, exponentiation (^), etc.\n");
-    printf("Examples: 2+3*4, (2+3)*4, 2^3, -5+2\n");
+    printf("C Calculator\n");
+    printf("Enter mathematical expressions. Examples:\n");
+    printf("  3.5 * 2\n");
+    printf("  (2+3)*4\n");
+    printf("  2^3\n");
+    printf("  -5+2\n");
     printf("Type 'exit' or 'quit' to exit.\n\n");
     
     while (1) {

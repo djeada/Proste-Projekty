@@ -1,39 +1,35 @@
 #include <assert.h>
 #include <stdio.h>
 #include <math.h>
-#include "../src/calculator.h"
 #include "../src/parser.h"
 
 void test_add() {
     int error;
-    assert(calculate('+', &error, 2, 3) == 5);
-    assert(error == 0);
+    assert(fabs(parse_and_eval("2+3", &error) - 5.0) < 1e-6 && error == 0);
 }
 
 void test_subtract() {
     int error;
-    assert(calculate('-', &error, 5, 2) == 3);
-    assert(error == 0);
+    assert(fabs(parse_and_eval("5-2", &error) - 3.0) < 1e-6 && error == 0);
 }
 
 void test_multiply() {
     int error;
-    assert(calculate('*', &error, 2, 3) == 6);
-    assert(error == 0);
+    assert(fabs(parse_and_eval("2*3", &error) - 6.0) < 1e-6 && error == 0);
 }
 
 void test_divide() {
     int error;
-    assert(calculate('/', &error, 6, 2) == 3);
-    assert(error == 0);
-    calculate('/', &error, 1, 0);
-    assert(error == 1);
+    assert(fabs(parse_and_eval("6/2", &error) - 3.0) < 1e-6 && error == 0);
+    parse_and_eval("1/0", &error);
+    assert(error == 2); // Division by zero error
 }
 
 void test_invalid_operator() {
     int error;
-    calculate('^', &error, 1, 2);
-    assert(error == 2);
+    // Test invalid characters/expressions
+    parse_and_eval("2@3", &error);
+    assert(error != 0);
 }
 
 void test_parser_basic() {

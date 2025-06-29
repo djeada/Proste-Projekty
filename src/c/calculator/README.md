@@ -19,7 +19,7 @@
 - [License](#license)
 
 ## Project Overview
-This is a calculator program written in C that provides both simple and advanced mathematical calculation capabilities. The program offers two modes: a simple mode for basic arithmetic operations and an advanced mode that supports complex expressions with parentheses, exponentiation, and operator precedence.
+This is a calculator program written in C that evaluates mathematical expressions. It supports basic arithmetic, parentheses, exponentiation, and follows proper operator precedence. The calculator can handle both simple expressions like `3.5 * 2` and complex ones like `(2+3)*4^2`.
 
 ## Screenshots
 ![calculator](https://github.com/djeada/Proste-Projekty/assets/37275728/e62d057f-bb26-4409-8664-83e7323e1d86)
@@ -41,45 +41,30 @@ cmake --build build
 
 ## Usage
 
-The calculator supports two modes:
-
-### Advanced Mode (Default)
+Run the calculator:
 ```sh
 ./build/calculator
-# or explicitly:
-./build/calculator advanced
 ```
-Supports complex expressions like:
-- `2+3*4` (follows operator precedence)
-- `(2+3)*4` (parentheses)
-- `2^3` (exponentiation)
-- `-5+2` (unary operators)
 
-### Simple Mode
-```sh
-./build/calculator simple
-```
-Basic mode for simple expressions like `3.5 * 2`
+The calculator accepts any mathematical expression:
+- Simple: `3.5 * 2`, `10 + 5`
+- Complex: `(2+3)*4`, `2^3`, `-5+2`
+- Advanced: `2*3+4/2`, `(1+2)*(3+4)`
 
-### Help
+For help:
 ```sh
 ./build/calculator --help
 ```
 
 ## Features
 
-### Simple Mode
-- Basic arithmetic: addition, subtraction, multiplication, division
-- Floating point and integer support
-- Error handling for division by zero and invalid operators
-
-### Advanced Mode
-- All simple mode features plus:
-- Complex expression parsing with proper operator precedence
-- Parentheses support for grouping
-- Exponentiation operator (^)
+- Mathematical expression parsing with proper operator precedence
+- Support for basic arithmetic: `+`, `-`, `*`, `/`
+- Exponentiation: `^`
+- Parentheses for grouping expressions
 - Unary minus operator
-- Comprehensive error reporting
+- Floating point calculations
+- Comprehensive error reporting for invalid expressions and division by zero
 - Handles floating point and integer calculations
 - Input validation and error handling (division by zero, invalid operator)
 - Continuous operation until the user decides to exit
@@ -113,21 +98,23 @@ docker run calculator
 ```
 calculator/
 ├── src/
-│   ├── main.c          # Main entry point with mode selection
-│   ├── calculator.c    # Core arithmetic functions
-│   ├── calculator.h    # Calculator function declarations
-│   ├── parser.c        # Advanced expression parser
+│   ├── main.c          # Main program entry point
+│   ├── parser.c        # Mathematical expression parser
 │   ├── parser.h        # Parser function declarations
-│   ├── repl.c          # Read-Eval-Print-Loop for advanced mode
+│   ├── repl.c          # Interactive calculator shell
 │   └── repl.h          # REPL function declarations
 ├── tests/
-│   └── test_calculator.c  # Unit tests for both modes
+│   └── test_calculator.c  # Unit tests
 ├── CMakeLists.txt      # Build configuration
 ├── Dockerfile          # Container build configuration
 ├── .clang-tidy         # Static analysis configuration
 ├── .clang-format       # Code formatting configuration
 ├── .editorconfig       # Editor configuration
 ├── .github/
+│   └── workflows/
+│       └── ci.yml      # CI/CD pipeline
+└── README.md
+```
 │   └── workflows/
 │       └── ci.yml      # CI/CD pipeline
 └── README.md

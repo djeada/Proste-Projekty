@@ -7,17 +7,39 @@
 
 void calculator_repl(void) {
     char input[INPUT_SIZE];
-    printf("Welcome to the advanced C calculator!\nType an expression or 'exit' to quit.\n");
+    printf("Advanced Calculator Mode\n");
+    printf("Supports complex expressions with parentheses, exponentiation (^), etc.\n");
+    printf("Examples: 2+3*4, (2+3)*4, 2^3, -5+2\n");
+    printf("Type 'exit' or 'quit' to exit.\n\n");
+    
     while (1) {
         printf("> ");
         if (!fgets(input, sizeof(input), stdin)) break;
-        if (strncmp(input, "exit", 4) == 0) break;
+        
+        // Remove newline if present
+        input[strcspn(input, "\n")] = 0;
+        
+        if (strcmp(input, "exit") == 0 || strcmp(input, "quit") == 0) {
+            break;
+        }
+        
+        if (strlen(input) == 0) continue; // Skip empty lines
+        
         int error = 0;
         double result = parse_and_eval(input, &error);
         if (error == 0) {
             printf("= %g\n", result);
         } else {
-            printf("Error: invalid expression (code %d)\n", error);
+            const char* error_msg;
+            switch(error) {
+                case 1: error_msg = "Syntax error or unexpected end of expression"; break;
+                case 2: error_msg = "Division by zero"; break;
+                case 3: error_msg = "Mismatched parentheses"; break;
+                case 4: error_msg = "Invalid number or unexpected character"; break;
+                default: error_msg = "Unknown error"; break;
+            }
+            printf("Error: %s\n", error_msg);
         }
     }
+    printf("Calculator exited.\n");
 }

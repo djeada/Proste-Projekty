@@ -1,4 +1,4 @@
-# Simple Calculator in C
+# Calculator in C
 
 ![Build Status](https://github.com/djeada/Proste-Projekty/actions/workflows/ci.yml/badge.svg)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
@@ -19,7 +19,7 @@
 - [License](#license)
 
 ## Project Overview
-This is a basic calculator program written in C that performs addition, subtraction, multiplication, and division. The program operates in a loop, continuously prompting the user to enter a mathematical expression or to quit. It can handle floating point and integer numbers, providing a simple and interactive command-line interface for basic arithmetic operations.
+This is a calculator program written in C that provides both simple and advanced mathematical calculation capabilities. The program offers two modes: a simple mode for basic arithmetic operations and an advanced mode that supports complex expressions with parentheses, exponentiation, and operator precedence.
 
 ## Screenshots
 ![calculator](https://github.com/djeada/Proste-Projekty/assets/37275728/e62d057f-bb26-4409-8664-83e7323e1d86)
@@ -40,14 +40,46 @@ cmake --build build
 ```
 
 ## Usage
-Run the program:
+
+The calculator supports two modes:
+
+### Advanced Mode (Default)
 ```sh
-./build/main
+./build/calculator
+# or explicitly:
+./build/calculator advanced
 ```
-You will be prompted to enter an expression (e.g., `3.5 * 2`) or 'q' to quit.
+Supports complex expressions like:
+- `2+3*4` (follows operator precedence)
+- `(2+3)*4` (parentheses)
+- `2^3` (exponentiation)
+- `-5+2` (unary operators)
+
+### Simple Mode
+```sh
+./build/calculator simple
+```
+Basic mode for simple expressions like `3.5 * 2`
+
+### Help
+```sh
+./build/calculator --help
+```
 
 ## Features
-- Supports addition, subtraction, multiplication, and division
+
+### Simple Mode
+- Basic arithmetic: addition, subtraction, multiplication, division
+- Floating point and integer support
+- Error handling for division by zero and invalid operators
+
+### Advanced Mode
+- All simple mode features plus:
+- Complex expression parsing with proper operator precedence
+- Parentheses support for grouping
+- Exponentiation operator (^)
+- Unary minus operator
+- Comprehensive error reporting
 - Handles floating point and integer calculations
 - Input validation and error handling (division by zero, invalid operator)
 - Continuous operation until the user decides to exit
@@ -81,27 +113,42 @@ docker run calculator
 ```
 calculator/
 ├── src/
-│   ├── main.c
-│   ├── calculator.c
-│   └── calculator.h
+│   ├── main.c          # Main entry point with mode selection
+│   ├── calculator.c    # Core arithmetic functions
+│   ├── calculator.h    # Calculator function declarations
+│   ├── parser.c        # Advanced expression parser
+│   ├── parser.h        # Parser function declarations
+│   ├── repl.c          # Read-Eval-Print-Loop for advanced mode
+│   └── repl.h          # REPL function declarations
 ├── tests/
-│   └── test_calculator.c
-├── CMakeLists.txt
-├── Dockerfile
-├── .clang-tidy
-├── .clang-format
-├── .editorconfig
+│   └── test_calculator.c  # Unit tests for both modes
+├── CMakeLists.txt      # Build configuration
+├── Dockerfile          # Container build configuration
+├── .clang-tidy         # Static analysis configuration
+├── .clang-format       # Code formatting configuration
+├── .editorconfig       # Editor configuration
 ├── .github/
 │   └── workflows/
-│       └── ci.yml
+│       └── ci.yml      # CI/CD pipeline
 └── README.md
 ```
 
+### Architecture Overview
+
+The calculator is designed with a modular architecture:
+
+- **calculator.c/h**: Core arithmetic functions for basic operations (+, -, *, /)
+- **parser.c/h**: Recursive descent parser for complex expressions with operator precedence
+- **repl.c/h**: Interactive shell for advanced calculator mode
+- **main.c**: Command-line interface that orchestrates both simple and advanced modes
+
 ## Possible Improvements
-- Add support for more complex mathematical functions
-- Add more unit tests
+- Add support for mathematical functions (sin, cos, log, etc.)
+- Add variables and memory functions
+- Add history and recall functionality
 - Provide a library interface for external use
-- Enhance the user interface
+- Add configuration file support
+- Enhance error messages with position indicators
 
 ## Contributing
 Contributions are welcome! Please open issues or pull requests for improvements, bug fixes, or new features.

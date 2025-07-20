@@ -123,16 +123,3 @@ minesweeper/
 └── README.md
 ```
 
-## Sample code
-
-### src/minesweeper/logic/board.py
-
-```python
-# ...existing game board code...
-```
-
-### tests/test_board.py
-
-```python
-# ...existing test code...
-```

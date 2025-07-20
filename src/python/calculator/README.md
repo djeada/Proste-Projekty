@@ -111,16 +111,3 @@ calculator/
 └── README.md
 ```
 
-## Sample Code
-
-### src/calculator/logic/calculator.py
-
-```python
-# ...existing calculator code...
-```
-
-### tests/test_calculator.py
-
-```python
-# ...existing test code...
-```

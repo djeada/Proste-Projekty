@@ -29,10 +29,10 @@ static int compute_category_score(int catIndex, const int dice[DICE_COUNT]) {
         case 7: return score_four_of_a_kind(dice);
         case 8: return score_full_house(dice);
         case 9: return score_small_straight(dice);
-        case 10:return score_large_straight(dice);
-        case 11:return score_yahtzee(dice);
-        case 12:return score_chance(dice);
-        default:return 0;
+        case 10: return score_large_straight(dice);
+        case 11: return score_yahtzee(dice);
+        case 12: return score_chance(dice);
+        default: return 0;
     }
 }
 

@@ -122,7 +122,7 @@ Aby efektywnie zarządzać projektem, warto stosować się do następujących za
 * *Krotki* pozwalają przechowywać niemodyfikowalne zestawy wartości, a brak takiej struktury zmusza do używania bardziej rozbudowanych typów; przykładem jest krotka `(x, y)` reprezentująca współrzędne punktu.
 * *Listy powiązane* ułatwiają dynamiczne modyfikowanie dużych zbiorów, a brak ich użycia zmusza do kosztownego przesuwania elementów w tablicach; przykładem jest implementacja edytora tekstu przechowującego linie w liście powiązanej.
 * Reprezentacja zależności poprzez *grafy* umożliwia analizę złożonych relacji, a brak tej struktury utrudnia modelowanie sieci; przykładem jest graf opisujący połączenia między użytkownikami w mediach społecznościowych.
-* *Kolejki priorytetowe* pozwalają na obsługę elementów według określonej wagi, a korzystanie ze zwykłej kolejki wymaga dodatkowego sortowania; przykładem jest system planowania zadań w systemie operacyjnym.
+* *Kolejki priorytetowe* pozwalają na obsługę elementów według określonej wagi, a korzystanie ze zwykłej kolejki wymaga dodatkowego sortowania; przykładem jest planowanie zadań w systemie operacyjnym.
 
 ### Testy
 

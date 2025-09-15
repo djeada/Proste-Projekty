@@ -3,37 +3,21 @@ Zbiór porad i zasobów dla początkujących programistów, zawierający szczeg�
 
 ## Jak efektywnie rozpocząć swój pierwszy projekt?
 
-1. **Znajomość podstaw**: Zacznij od solidnego opanowania podstaw wybranego języka programowania. Bez względu na wybór języka, kluczowe jest zrozumienie fundamentalnych koncepcji takich jak zmienne, instrukcje warunkowe, pętle, funkcje, tablice i napisy. Poszukaj materiałów edukacyjnych dostosowanych do Twojego stylu uczenia się, korzystając z różnorodnych zasobów online, w tym praktycznych ćwiczeń, które można znaleźć [tutaj](https://github.com/djeada/Nauka-Programowania).
-
-2. **Wybór tematu**: Zainspiruj się swoim codziennym życiem lub pomysłami innych programistów, ale pamiętaj o tworzeniu oryginalnego kodu. Strona [GitHub](https://github.com) może być świetnym źródłem inspiracji. Zastanów się nad projektem, który Cię interesuje, czy to automatyzacja procesów, tworzenie gier, czy coś zupełnie innego.
-
-3. **Oryginalność i innowacja**: Dąż do unikalności projektu. Świat widział już wiele klasycznych aplikacji, więc jest to szansa na wykazanie się kreatywnością. Jeśli jednak brakuje Ci pomysłów, możesz modyfikować i rozwijać istniejące koncepcje, wprowadzając swoje innowacje.
-
-4. **Realność projektu**: Ocen, czy posiadasz wystarczającą wiedzę i umiejętności do realizacji zamierzonego projektu. Jeśli jesteś na etapie początkowym, zacznij od mniejszych i prostszych zadań.
-
-5. **Środowisko programistyczne**: Pobierz i zainstaluj odpowiednie środowisko programistyczne, jak np. [VS Code](https://code.visualstudio.com/), które jest wszechstronne i dobrze wspiera wiele języków programowania.
-
-6. **Struktura projektu**: Przygotuj podstawową strukturę projektu, określając niezbędne pliki i foldery w zależności od wybranego języka programowania.
-
-7. **Dokumentacja**: Rozpocznij od stworzenia pliku README.md, opisując cel i zasady działania projektu. Z czasem wykorzystaj narzędzia do generowania dokumentacji, takie jak [SPHINX](https://www.sphinx-doc.org/en/master/) lub [Doxygen](https://doxygen.nl/).
-
-8. **Użycie Git**: Zarządzaj kodem za pomocą systemu kontroli wersji Git, tworząc repozytorium dla swojego projektu.
-
-9. **Przerwa i refleksja**: Zrób sobie krótką przerwę, aby następnie spojrzeć na projekt świeżym okiem.
-
-10. **Rozwój projektu**: Implementuj funkcjonalności zgodnie z wcześniej przygotowaną listą zadań, dokonując ewentualnych modyfikacji i rozbudowy tej listy w miarę postępów pracy.
-
-11. **Testowanie**: Regularnie testuj swój kod, zarówno ręcznie, jak i przy użyciu automatycznych narzędzi testujących. Jest to kluczowe dla utrzymania jakości i stabilności projektu.
-
-12. **Zapisywanie postępów**: Dokumentuj swoje postępy za pomocą commitów w Git, co pozwoli na łatwe śledzenie zmian i powrót do poprzednich wersji kodu.
-
-13. **Szukanie pomocy**: W przypadku problemów nie wahaj się korzystać z zasobów internetowych, takich jak [Stack Overflow](https://stackoverflow.com/), oraz oficjalnych dokumentacji.
-
-14. **Udostępnianie projektu**: Po zakończeniu, udostępnij swój projekt na platformie [GitHub](https://github.com) i rozważ publikację aplikacji webowej na serwerze zewnętrznym, korzystając z narzędzi takich jak [Heroku](https://devcenter.heroku.com/).
-
-15. **Podziel się swoimi osiągnięciami**: Nie zapomnij opowiedzieć mi o swoim projekcie!
-
-Przystąp do tworzenia, rozwijaj swoje umiejętności i ciesz się każdym krokiem procesu programowania!
+* Kiedy rozpoczynamy naukę programowania, opanowanie *podstaw* pozwala zrozumieć takie elementy jak zmienne czy pętle, a ich brak prowadzi do trudności w rozwiązywaniu nawet prostych zadań; przykładem jest sytuacja, gdy nieznajomość instrukcji warunkowych uniemożliwia stworzenie kalkulatora.
+* Inspiracja codziennymi problemami ułatwia wybór *tematu* projektu, podczas gdy brak kierunku skutkuje odkładaniem pracy; prostym przykładem może być stworzenie programu do zarządzania listą zakupów.
+* Tworzenie unikalnych rozwiązań rozwija *oryginalność*, natomiast kopiowanie cudzych projektów ogranicza kreatywność; dobrym przykładem jest modyfikacja istniejącej gry, aby dodać nowe zasady lub tryby.
+* Ocena własnych możliwości wspiera *realność* projektu, a jej brak prowadzi do frustracji i porzucenia pracy; przykładem może być wybór prostego kalkulatora zamiast od razu budowania pełnej aplikacji społecznościowej.
+* Pobranie i konfiguracja *środowiska programistycznego* umożliwia sprawną pracę, a jego brak utrudnia pisanie i uruchamianie kodu; przykładem jest użycie VS Code zamiast edytora tekstowego bez wsparcia dla języka.
+* Przygotowanie logicznej *struktury projektu* ułatwia zarządzanie plikami, a jej brak prowadzi do chaosu w kodzie; przykładem jest podział aplikacji na foldery „src”, „tests” i „docs”.
+* Rozpoczęcie pracy nad *dokumentacją* wspiera czytelność projektu, a jej brak utrudnia innym zrozumienie jego działania; prostym przykładem jest dodanie pliku README.md z instrukcją uruchomienia.
+* Wdrożenie *Git* zapewnia kontrolę wersji kodu, a jego brak utrudnia cofnięcie się do stabilnych rozwiązań; przykładem jest zapisanie każdej nowej funkcji w osobnym commicie.
+* Krótka przerwa sprzyja *refleksji*, podczas gdy jej brak powoduje utratę świeżego spojrzenia; przykładem jest zauważenie prostego błędu po godzinnej przerwie od kodowania.
+* Stopniowe dodawanie *funkcjonalności* zgodnie z listą zadań zapewnia systematyczny rozwój projektu, a brak planu prowadzi do chaotycznego kodu; przykładem jest implementacja logowania przed dodaniem panelu użytkownika.
+* Regularne *testowanie* pozwala wykrywać błędy na wczesnym etapie, a jego brak skutkuje awariami podczas użycia; przykładem jest napisanie testów jednostkowych dla funkcji obliczającej podatek.
+* Dokumentowanie zmian poprzez *commity* w Git ułatwia śledzenie postępów, a brak zapisów uniemożliwia powrót do starszej wersji; przykładem jest cofnięcie się do stabilnej wersji aplikacji sprzed wprowadzenia błędu.
+* Korzystanie z internetowych *źródeł pomocy* przyspiesza rozwiązywanie problemów, a izolacja wydłuża proces nauki; przykładem jest znalezienie rozwiązania błędu składni na Stack Overflow.
+* Udostępnienie *projektu* innym zwiększa jego użyteczność, a brak publikacji ogranicza zasięg; przykładem jest opublikowanie aplikacji na GitHub i uruchomienie jej na Heroku.
+* Dzielenie się własnymi *osiągnięciami* buduje motywację, a brak prezentacji prowadzi do utraty satysfakcji; przykładem jest opowiedzenie znajomym o aplikacji ułatwiającej planowanie treningów.
 
 ## Tak zwane dobre praktyki programowania
 
@@ -43,113 +27,113 @@ Dobre praktyki programowania to zestaw wytycznych mających na celu poprawę jak
 
 Stosowanie tych praktyk przynosi szereg korzyści, takich jak:
 
-- **Poprawa czytelności kodu**: Ułatwia zrozumienie i utrzymanie kodu.
-- **Łatwość wprowadzania zmian**: Uproszczenie procesu modyfikacji i aktualizacji kodu.
-- **Zmniejszenie objętości kodu**: Skuteczniejsze i zwięzłe rozwiązania.
-- **Praca zespołowa**: Ułatwienie współpracy i dzielenia się kodem.
-- **Uproszczenie testowania**: Lepsza testowalność i szybsze wykrywanie błędów.
+* Pisanie w sposób ułatwiający *czytelność* sprawia, że inni programiści mogą szybko zrozumieć kod, a jego brak prowadzi do długiego analizowania prostych fragmentów; przykładem jest stosowanie opisowych nazw funkcji zamiast jednoliterowych.
+* Gdy kod jest napisany z myślą o łatwej *modyfikacji*, wprowadzanie zmian przebiega sprawnie, podczas gdy brak takiego podejścia wydłuża aktualizacje; przykładem jest możliwość szybkiego dodania nowej opcji do formularza dzięki modularnej strukturze.
+* Zwięzła forma kodu wspiera *zmniejszenie objętości*, a jej brak powoduje powielanie tych samych rozwiązań w wielu miejscach; przykładem jest wykorzystanie funkcji pomocniczej zamiast kopiowania tego samego fragmentu kodu.
+* W pracy zespołowej jasna *organizacja* kodu pozwala wielu osobom na wspólne rozwijanie projektu, a jej brak prowadzi do nieporozumień; przykładem jest przestrzeganie ustalonego stylu kodowania w repozytorium grupowym.
+* Struktura wspierająca *testowanie* umożliwia szybkie wykrywanie błędów, a jej brak utrudnia sprawdzanie poprawności działania; przykładem jest łatwość napisania testów jednostkowych dla funkcji, gdy kod jest podzielony na małe moduły.
 
 ### Organizacja projektu
 
 Aby efektywnie zarządzać projektem, warto stosować się do następujących zasad:
 
-- **Kontrola wersji z Git**: Regularnie zapisuj postępy i opisuj zmiany. Przy pracy zespołowej rozważ wykorzystanie [feature branches](https://en.wikipedia.org/wiki/Branching_(version_control)) lub [trunk-based development](https://en.wikipedia.org/wiki/Continuous_integration).
-- **Analiza i optymalizacja istniejącego kodu**: Czytaj i poprawiaj istniejący kod, korzystając z testów jednostkowych, aby uniknąć wprowadzania błędów.
-- **Dokumentacja**: Dokumentuj kod w trakcie tworzenia, komentując funkcje i klasy. Zapisuj napotkane trudności i dołączaj streszczenia w README.md.
-- **Czytelność i schludność kodu**: Używaj narzędzi do formatowania kodu i trzymaj się wybranego stylu. Rozdzielaj kod na pliki, foldery, moduły lub pakiety o prostej i opisowej nazwie.
-- **Podział na funkcje i klasy**: W językach obiektowych dziel zadania na małe, jednoznaczne funkcje i klasy.
-- **Rozumienie zewnętrznego kodu**: Nie kopiuj kodu z internetu bez zrozumienia jego działania. Zamiast tego, staraj się zrozumieć zasadę działania i dostosować rozwiązanie do swojego projektu.
-- **Unikanie martwego kodu**: Nie twórz zbędnych zmiennych, funkcji czy klas.
-- **Uwaga na ostrzeżenia kompilatora**: Nie ignoruj ostrzeżeń, mogą one wskazywać na potencjalne problemy w kodzie.
+* Regularne korzystanie z *kontroli wersji* umożliwia śledzenie zmian i łatwe cofanie się do wcześniejszych etapów, a jej brak prowadzi do utraty postępów; przykładem jest użycie gałęzi „feature branch” do testowania nowej funkcji bez ryzyka uszkodzenia głównego kodu.
+* Systematyczna *analiza* i poprawa istniejącego kodu pozwala zwiększyć wydajność i stabilność, podczas gdy brak przeglądu skutkuje nagromadzeniem błędów; przykładem jest refaktoryzacja funkcji na podstawie wyników testów jednostkowych.
+* Tworzenie bieżącej *dokumentacji* ułatwia zrozumienie kodu w przyszłości, a jej brak powoduje konieczność czasochłonnej analizy; przykładem jest zapisanie instrukcji konfiguracji środowiska w pliku README.md.
+* Dbałość o *czytelność* i spójny styl kodu ułatwia jego utrzymanie, a brak formatowania utrudnia współpracę; przykładem jest użycie narzędzia Black w Pythonie do automatycznego formatowania.
+* Podział programu na *funkcje* i klasy upraszcza jego strukturę i wspiera ponowne wykorzystanie, podczas gdy brak modularności prowadzi do trudnego w utrzymaniu monolitu; przykładem jest osobna klasa do obsługi logowania w aplikacji.
+* Świadome korzystanie z *zewnętrznego kodu* pozwala na jego bezpieczne dostosowanie, a kopiowanie bez zrozumienia prowadzi do błędów trudnych do naprawienia; przykładem jest adaptacja algorytmu z internetu do własnej bazy danych zamiast bezpośredniego wklejenia.
+* Usuwanie *martwego kodu* zmniejsza ryzyko niepotrzebnego obciążenia i niejasności, a jego pozostawienie utrudnia analizę; przykładem jest eliminacja nieużywanych zmiennych po refaktoryzacji.
+* Reagowanie na *ostrzeżenia kompilatora* pozwala wcześnie wykrywać problemy, a ich ignorowanie prowadzi do trudnych do znalezienia błędów; przykładem jest poprawienie ostrzeżenia o możliwej dereferencji pustego wskaźnika w C++.
 
 ### Zmienne
 
-- **Nazwy zmiennych**: Nazwy zmiennych powinny być znaczące i opisowe. Unikaj krótkich i niejasnych nazw, takich jak `a` lub `xob`, ale także nie przesadzaj z długością. Na przykład, zamiast `sumaZarobkowWszystkichPracownikowFirmy`, wybierz coś bardziej zwięzłego.
-- **Konwencja nazewnictwa**: Bądź konsekwentny w stosowaniu konwencji nazewnictwa, np. `snake_case` lub `camelCase`, i unikaj ich mieszania.
-- **Zbędne zmienne**: Unikaj tworzenia zmiennych, które nie są konieczne lub są nadmiarowe.
-- **Stałość znaczenia**: Zachowaj spójność w znaczeniu zmiennej; np. jeśli `suma` służy do przechowywania sumy, nie używaj jej do innych celów.
-- **Unikanie zmiennych globalnych**: Staraj się unikać zmiennych globalnych, które mogą prowadzić do problemów z zarządzaniem stanem i nieprzewidywalnym zachowaniem programu.
-- **Deklaracja w odpowiednim miejscu**: Deklaruj zmienne jak najbliżej miejsca ich pierwszego użycia.
+* Nadawanie opisowych *nazw zmiennym* sprawia, że kod staje się łatwiejszy do zrozumienia, a brak jasności prowadzi do pomyłek podczas dalszej pracy; przykładem jest użycie `total_salary` zamiast `x`.
+* Konsekwentne stosowanie wybranej *konwencji nazewnictwa* zapewnia spójność projektu, a jej mieszanie utrudnia czytanie kodu; przykładem jest użycie `snake_case` we wszystkich funkcjach w Pythonie zamiast łączenia go z `camelCase`.
+* Eliminowanie *zbędnych zmiennych* pozwala uprościć kod, podczas gdy ich nadmiar wprowadza chaos; przykładem jest zapisanie wyniku obliczenia bezpośrednio w instrukcji warunkowej zamiast tworzenia niepotrzebnej zmiennej pośredniej.
+* Zachowanie *stałości znaczenia* zmiennej ułatwia śledzenie logiki, a zmiana jej przeznaczenia powoduje błędy trudne do wykrycia; przykładem jest niewykorzystywanie `suma` raz do sumy, a innym razem do liczby elementów.
+* Ograniczenie *zmiennych globalnych* zmniejsza ryzyko nieoczekiwanych efektów ubocznych, a ich nadużycie utrudnia debugowanie; przykładem jest przekazywanie danych do funkcji przez argumenty zamiast odwoływania się do globalnego stanu.
+* Deklarowanie *zmiennych* w miejscu ich pierwszego użycia poprawia czytelność i zmniejsza ryzyko błędów, a przedwczesne deklaracje mogą prowadzić do niepotrzebnego zajmowania pamięci; przykładem jest stworzenie zmiennej licznikowej dopiero wewnątrz pętli, w której jest używana.
 
 ### Warunki
 
-- **Prostota warunków**: Unikaj zbyt skomplikowanych warunków; rozważ ich podzielenie na prostsze funkcje.
-- **Unikanie zagnieżdżenia**: Zamiast zagnieżdżać warunki, użyj klauzul ochronnych, które poprawiają czytelność i strukturę kodu.
-- **Rozdział zadań**: Nie stosuj wielu warunków bezpośrednio jeden po drugim; lepiej je rozdzielić na oddzielne funkcje.
-- **Bezpośrednie używanie wartości logicznych**: W przypadku funkcji zwracających wartości logiczne, używaj ich wyników bezpośrednio w warunkach.
-- **Stosowanie nawiasów**: Używaj nawiasów wokół warunków dla uniknięcia niejasności.
-- **Unikanie negacji skomplikowanych warunków**: Staraj się formułować warunki pozytywnie, ponieważ negacja złożonych warunków może być myląca.
+* Pisanie warunków w sposób *prosty* poprawia ich czytelność, a nadmierna złożoność utrudnia zrozumienie logiki programu; przykładem jest podział długiego wyrażenia logicznego na dwie mniejsze funkcje pomocnicze.
+* Zamiast głębokiego *zagnieżdżenia* instrukcji warunkowych lepiej stosować klauzule ochronne, ponieważ pozwalają one szybciej zakończyć funkcję, a brak takiego podejścia prowadzi do trudnych w śledzeniu bloków kodu; przykładem jest użycie `if not user: return` zamiast wielokrotnego `else`.
+* Rozdzielenie *zadań* na osobne funkcje sprawia, że kod staje się modularny, podczas gdy wiele warunków pod rząd obniża przejrzystość; przykładem jest przeniesienie logiki walidacji formularza do osobnej funkcji.
+* Wykorzystanie wyników *wartości logicznych* bezpośrednio w warunkach upraszcza kod, a ich dodatkowe porównywanie wydłuża zapis; przykładem jest zapis `if is_valid:` zamiast `if is_valid == True:`.
+* Dodawanie *nawiasów* wokół warunków eliminuje wątpliwości co do kolejności działań, a ich brak może prowadzić do błędnej interpretacji; przykładem jest zapis `(a and b) or c` zamiast `a and b or c`.
+* Formułowanie warunków w sposób *pozytywny* poprawia czytelność, podczas gdy złożone negacje wprowadzają zamieszanie; przykładem jest `if has_access:` zamiast `if not no_access:`.
 
 ### Funkcje
 
-- **Nazewnictwo**: Funkcje powinny mieć nazwy wyraźnie wskazujące na ich działanie.
-- **Jednoznaczny cel**: Każda funkcja powinna mieć wyraźnie określony i ograniczony zakres działania, wspierany testami jednostkowymi.
-- **Unikanie mylących nazw**: Nazwy funkcji powinny odzwierciedlać ich rzeczywiste działanie.
-- **Zasada DRY**: Unikaj powtarzania kodu; wydziel powtarzające się fragmenty do osobnych funkcji.
-- **Krótkość funkcji**: Dążyj do tworzenia krótkich funkcji, unikając nadmiernie długich definicji.
-- **Ukrywanie implementacji**: Funkcje powinny ukrywać szczegóły swojej implementacji, eksponując tylko oczekiwany efekt.
-- **Optymalne przekazywanie argumentów**: Przekazuj referencje zamiast kopii, gdzie to możliwe i sensowne.
-- **Spójność danych**: Zachowaj spójność danych przekazywanych pomiędzy funkcjami.
-- **Uwzględnianie przypadków brzegowych**: Projektuj funkcje tak, aby radziły sobie z nieoczekiwanymi lub nietypowymi danymi.
-- **Unikanie logicznych argumentów**: Rozważ podział funkcji na dwie osobne, jeśli używają one argumentów logicznych do sterowania zachowaniem.
-- **Ograniczenie liczby argumentów**: Im mniej argumentów, tym lepsza czytelność i łatwiejsze zarządzanie funkcją.
-- **Funkcje bez efektów ubocznych**: Dążyj do tworzenia funkcji, które nie wprowadzają zmian w stanie globalnym programu.
+* Nadawanie funkcjom jasnych *nazw* pozwala od razu zrozumieć ich działanie, a brak tego prowadzi do mylącej interpretacji; przykładem jest `calculate_tax()` zamiast `processData()`.
+* Funkcja o *jednoznacznym celu* jest łatwa do przetestowania i utrzymania, podczas gdy funkcja realizująca wiele zadań staje się trudna do analizy; przykładem jest oddzielenie walidacji danych od ich zapisu do bazy.
+* Unikanie *mylących nazw* zapobiega błędnym oczekiwaniom, a nieadekwatne nazwy utrudniają debugowanie; przykładem jest niewłaściwe nazwanie funkcji `delete_user()` jako `update_user()`.
+* Stosowanie zasady *DRY* ogranicza powtarzalność kodu, a jej brak prowadzi do nadmiarowych fragmentów trudnych w utrzymaniu; przykładem jest wydzielenie wspólnej walidacji formularza do jednej funkcji używanej w wielu modułach.
+* Krótkie *funkcje* zwiększają czytelność i łatwość testowania, a długie definicje komplikują pracę; przykładem jest funkcja licząca średnią w kilku linijkach zamiast w kilkudziesięciu.
+* Ukrywanie *implementacji* sprawia, że użytkownik funkcji widzi tylko jej efekt, a brak enkapsulacji zmusza do analizy wewnętrznej logiki; przykładem jest użycie publicznej funkcji `sort()` bez znajomości algorytmu sortowania.
+* Optymalne *przekazywanie argumentów* przez referencję zwiększa wydajność, a kopiowanie dużych struktur danych spowalnia działanie programu; przykładem jest przekazanie listy do funkcji w Pythonie bez jej duplikowania.
+* Zachowanie *spójności danych* między funkcjami minimalizuje ryzyko błędów, a brak tego prowadzi do niespójnych wyników; przykładem jest zapewnienie, że każda funkcja otrzymuje datę w tym samym formacie.
+* Uwzględnianie *przypadków brzegowych* zwiększa odporność funkcji, a ich pominięcie prowadzi do awarii w nietypowych sytuacjach; przykładem jest obsługa pustej listy w funkcji obliczającej średnią.
+* Unikanie *argumentów logicznych* poprawia przejrzystość, a ich stosowanie komplikuje logikę; przykładem jest zastąpienie funkcji `generateReport(isPDF)` dwiema funkcjami: `generatePdfReport()` i `generateHtmlReport()`.
+* Ograniczenie liczby *argumentów* ułatwia zrozumienie funkcji, a ich nadmiar wymaga śledzenia wielu zależności; przykładem jest przekazanie obiektu konfiguracyjnego zamiast pięciu oddzielnych parametrów.
+* Tworzenie *funkcji bez efektów ubocznych* poprawia przewidywalność programu, a modyfikowanie stanu globalnego prowadzi do trudnych do wykrycia błędów; przykładem jest zwracanie nowej listy zamiast zmiany istniejącej globalnej zmiennej.
 
 ### Klasy
 
-- **Nazewnictwo**: Klasy nazywaj rzeczownikami. Nazwa powinna odzwierciedlać funkcję lub rolę klasy.
-- **Ukrywanie złożoności**: Klasy powinny ukrywać swoją wewnętrzną złożoność, udostępniając prosty interfejs do interakcji. Unikaj tworzenia klas, które są bardziej skomplikowane w użyciu niż bezpośrednia praca na danych.
-- **Enkapsulacja**: Klasa powinna ukrywać swoje dane i oferować interfejs do ich manipulacji, nie mieszając różnych stylów programowania.
-- **Grupowanie danych**: Dane w klasach powinny być uporządkowane i skupione na określonych funkcjach lub cechach, unikając tworzenia "klas-monolitów".
-- **Niepotrzebne klasy**: Nie twórz klas, które nie są potrzebne. W niektórych przypadkach funkcje mogą wystarczyć.
-- **Stan obiektu**: Unikaj funkcji w klasach, które zmieniają stan obiektu w nieprzewidywalny sposób.
-- **Spójność nazewnictwa funkcji**: Utrzymuj konsekwentne nazewnictwo funkcji o podobnym zadaniu w różnych klasach.
-- **Minimalizacja pustych pól**: Unikaj tworzenia klas z polami, które często są nieużywane. Rozważ użycie wspólnego interfejsu dla różnych klas.
-- **Unikanie redundancji**: Zamiast tworzenia wielu podobnych klas z różnymi wartościami pola, stwórz jedną klasę z odpowiednimi polami.
+* Nadawanie klasom jasnych *nazw* w formie rzeczowników poprawia ich czytelność, a brak tego wprowadza niejasność co do roli; przykładem jest `User` zamiast `ProcessData`.
+* Tworzenie prostego interfejsu i *ukrywanie złożoności* sprawia, że klasa jest łatwa w użyciu, a brak tego czyni pracę z nią bardziej skomplikowaną niż manipulowanie danymi bezpośrednio; przykładem jest klasa `Database` oferująca metody `connect()` i `query()` zamiast ujawniania pełnych procedur połączenia.
+* Stosowanie *enkapsulacji* chroni dane przed niepożądanymi zmianami, a jej brak prowadzi do naruszania logiki wewnętrznej obiektu; przykładem jest prywatne pole `balance` z metodami `deposit()` i `withdraw()` zamiast bezpośredniego dostępu.
+* Odpowiednie *grupowanie danych* w klasie zwiększa spójność, a tworzenie klas-monolitów powoduje trudności w utrzymaniu; przykładem jest rozdzielenie `Order` i `Customer` zamiast łączenia wszystkich danych w jednej klasie.
+* Unikanie *niepotrzebnych klas* pozwala zachować prostotę, a ich nadmiar prowadzi do przeintelektualizowanego projektu; przykładem jest użycie zwykłej funkcji do konwersji walut zamiast tworzenia pełnej klasy.
+* Kontrolowanie *stanu obiektu* sprawia, że jego zachowanie jest przewidywalne, a brak tego utrudnia debugowanie; przykładem jest metoda `set_status("active")` działająca w sposób powtarzalny zamiast zmieniająca różne pola w tle.
+* Zachowanie *spójności nazewnictwa funkcji* ułatwia rozumienie projektu, a brak jednolitości prowadzi do nieporozumień; przykładem jest używanie `to_json()` we wszystkich klasach zamiast raz `export()` a raz `convertToJson()`.
+* Minimalizowanie *pustych pól* poprawia przejrzystość klas, a ich obecność zwiększa ryzyko błędów; przykładem jest rozdzielenie klas `Car` i `Bike` zamiast jednej klasy z wieloma nieużywanymi polami.
+* Unikanie *redundancji* zmniejsza powtarzalność, a tworzenie wielu podobnych klas utrudnia utrzymanie; przykładem jest jedna klasa `Product` z polem `category` zamiast osobnych klas `BookProduct`, `FoodProduct` i `TechProduct`.
 
 ### Komentarze
 
-- **Komentarze do dokumentacji**: Umieszczaj komentarze docstrings w celu generowania dokumentacji API.
-- **Unikanie zbędnych komentarzy**: Komentarze powinny wyjaśniać "dlaczego" zamiast "jak". Unikaj komentarzy tłumaczących składnię języka.
-- **Ostrzeżenie przed dezinformacją**: Uważaj, aby komentarze nie wprowadzały w błąd; aktualizuj je wraz ze zmianami w kodzie.
-- **Akceptacja komentarzy TODO**: Lista zadań do wykonania w formie komentarzy TODO jest akceptowalna.
-- **Wyjaśnianie skomplikowanego kodu**: Używaj komentarzy do wyjaśnienia trudnych części kodu lub algorytmów.
-- **Krótkie i zwięzłe komentarze**: Komentarze powinny być skoncentrowane i nie zajmować zbyt wiele miejsca.
-- **Unikanie komentarzy w testach**: Testy powinny być na tyle jasne, że nie wymagają dodatkowych komentarzy.
+* Umieszczanie komentarzy w formie *docstrings* pozwala generować dokumentację API, a ich brak utrudnia użytkownikom zrozumienie sposobu korzystania z funkcji; przykładem jest opis parametrów i zwracanej wartości w Pythonie.
+* Pisanie komentarzy wyjaśniających *dlaczego* ułatwia zrozumienie decyzji projektowych, a nadmiar komentarzy tłumaczących składnię nie wnosi wartości; przykładem jest komentarz „// użycie algorytmu sortowania szybkiego ze względu na wydajność” zamiast „// pętla for iteruje po elementach”.
+* Aktualizowanie komentarzy zapobiega *dezinformacji*, a ich zaniedbanie prowadzi do niezgodności między kodem a opisem; przykładem jest zmiana nazwy funkcji bez poprawienia komentarza, co może zmylić kolejnego programistę.
+* Stosowanie komentarzy *TODO* pomaga śledzić zadania do wykonania, a ich brak utrudnia planowanie rozwoju; przykładem jest „// TODO: dodać walidację danych wejściowych”.
+* Wyjaśnianie *skomplikowanego kodu* komentarzami ułatwia zrozumienie trudnych fragmentów, a ich brak zmusza do szczegółowej analizy algorytmu; przykładem jest opisanie działania algorytmu dynamicznego programowania w komentarzu nad funkcją.
+* Tworzenie *krótkich i zwięzłych* komentarzy poprawia przejrzystość, a nadmiar tekstu utrudnia szybkie przyswajanie informacji; przykładem jest jednozdaniowy opis logiki zamiast wieloakapitu tłumaczenia.
+* Pisanie testów w sposób samoopisujący eliminuje potrzebę *komentarzy* w ich treści, a dodatkowe wyjaśnienia sygnalizują słabą czytelność testu; przykładem jest test nazwany `test_calculate_discount_for_senior_customers` zamiast dodawania komentarza „// sprawdza rabat dla seniorów”.
 
 ### Obsługa błędów
 
-- **Strategia zależna od języka**: Sposób obsługi błędów powinien być dostosowany do specyfiki danego języka programowania.
-- **Wyjątki vs. kody błędów**: Preferuj użycie wyjątków zamiast zwracania kodów błędu lub wartości NULL/None.
-- **Ograniczone stosowanie wyjątków**: Używaj wyjątków tylko w sytuacjach, gdy funkcja nie może sensownie zakończyć zadania.
-- **Informowanie o błędach**: Wyjątki powinny dostarczać jasnych informacji o rodzaju i przyczynie błędu.
-- **Obsługa wyjątków**: Gdy wywołujesz funkcję, która może zgłosić wyjątek, upewnij się, że jest on odpowiednio obsłużony.
-- **Unikanie NULL/None**: Unikaj przekazywania wartości NULL/None do funkcji, aby zmniejszyć ryzyko wyjątków typu `NullPointerException`.
+* Dostosowanie *strategii obsługi błędów* do konkretnego języka zapewnia spójność z jego paradygmatami, a brak tego prowadzi do nieefektywnych lub nietypowych rozwiązań; przykładem jest używanie wyjątków w Javie zamiast konwencji kodów błędów znanych z C.
+* Stosowanie *wyjątków* zamiast kodów błędów lub wartości `NULL/None` poprawia czytelność i upraszcza logikę programu, podczas gdy zwracanie kodów wymaga dodatkowej obsługi w każdym wywołaniu; przykładem jest `raise FileNotFoundError` zamiast zwracania `-1`.
+* Ograniczenie stosowania *wyjątków* do sytuacji, w których funkcja nie może zakończyć się w przewidywalny sposób, zwiększa przejrzystość kodu, a nadużywanie ich jako kontroli przepływu spowalnia program i utrudnia zrozumienie; przykładem jest zgłaszanie wyjątku przy braku pliku zamiast przy zwykłej iteracji po pustej liście.
+* Wyjątki zawierające jasne *informacje* o rodzaju i przyczynie błędu ułatwiają diagnozowanie problemów, a ogólne komunikaty utrudniają debugowanie; przykładem jest `ValueError("Wiek musi być liczbą dodatnią")` zamiast `ValueError("Błąd")`.
+* Odpowiednia *obsługa wyjątków* podczas wywoływania funkcji zapobiega awariom, a jej brak prowadzi do nieprzewidzianego zakończenia programu; przykładem jest użycie `try...except` przy otwieraniu pliku, który może nie istnieć.
+* Unikanie przekazywania *NULL/None* do funkcji zmniejsza ryzyko błędów wykonania, a poleganie na takich wartościach często prowadzi do `NullPointerException`; przykładem jest stosowanie obiektów opcjonalnych (`Optional` w Javie czy `Option` w Scali) zamiast surowych `null`.
 
 ### Struktury danych
 
-- **Dobór struktury danych**: Wybierz strukturę danych, która najlepiej odpowiada potrzebom danego problemu. Różne struktury danych mają różne właściwości i zastosowania, np. listy, tablice, słowniki, zbiory, drzewa binarne, tablice mieszające (hasztablice).
-- **Proste struktury**: W wielu przypadkach wystarczające mogą być proste listy lub tablice.
-- **Słowniki/Mapy**: Jeżeli potrzebujesz szybkiego dostępu do elementów za pomocą kluczy, użyj słownika lub mapy.
-- **Zbiory**: Zbiory (sety) są używane do przechowywania unikalnych elementów, ale nie zachowują kolejności.
-- **Drzewa binarne/Tablice mieszające**: W dużych zbiorach danych, gdzie kluczowe jest szybkie wyszukiwanie, rozważ użycie drzew binarnych lub tablic mieszających.
-- **Kolejki**: Wykorzystuj kolejki, gdy chcesz zachować kolejność dodawania i usuwania elementów.
-- **Stosy**: Stosy są idealne do zastosowań typu Last-In-First-Out.
-- **Krotki**: Używaj krotek do przechowywania niemodyfikowalnych zbiorów wartości.
-- **Listy powiązane**: Idealne do przechowywania dużych ilości elementów z możliwością łatwej modyfikacji.
-- **Grafy**: Do reprezentowania złożonych zależności i relacji między elementami.
-- **Kolejki priorytetowe**: Do zarządzania elementami z określonym priorytetem.
+* Wybór odpowiedniej *struktury danych* umożliwia efektywne rozwiązanie problemu, a jej nieprzemyślany dobór prowadzi do spadku wydajności; przykładem jest użycie tablicy mieszającej do wyszukiwania elementów zamiast przeszukiwania listy liniowej.
+* Korzystanie z *prostych struktur* takich jak listy lub tablice sprawdza się w wielu przypadkach, a ich nadmierne komplikowanie niepotrzebnie zwiększa złożoność; przykładem jest lista przechowująca wyniki pomiarów zamiast drzewa binarnego.
+* Użycie *słowników* lub map pozwala na szybki dostęp do danych za pomocą kluczy, a brak takiego rozwiązania wymaga przeszukiwania całej kolekcji; przykładem jest słownik z numerami telefonów przypisanymi do nazwisk.
+* Zastosowanie *zbiorów* eliminuje duplikaty i ułatwia sprawdzanie przynależności, a korzystanie z listy w tym celu prowadzi do nadmiarowych danych; przykładem jest zbiór adresów e-mail zapisanych unikalnie.
+* W dużych kolekcjach danych *drzewa binarne* lub tablice mieszające przyspieszają wyszukiwanie, a brak ich użycia powoduje znaczny wzrost czasu operacji; przykładem jest drzewo binarne do sortowania elementów w czasie rzeczywistym.
+* Stosowanie *kolejek* zapewnia zachowanie kolejności operacji, a ich brak utrudnia przetwarzanie danych w systemach kolejkowych; przykładem jest kolejka zadań w systemie drukowania dokumentów.
+* Wykorzystanie *stosów* pozwala na obsługę w modelu LIFO, a użycie innej struktury wymaga dodatkowej logiki; przykładem jest stos do śledzenia wywołań funkcji w czasie działania programu.
+* *Krotki* pozwalają przechowywać niemodyfikowalne zestawy wartości, a brak takiej struktury zmusza do używania bardziej rozbudowanych typów; przykładem jest krotka `(x, y)` reprezentująca współrzędne punktu.
+* *Listy powiązane* ułatwiają dynamiczne modyfikowanie dużych zbiorów, a brak ich użycia zmusza do kosztownego przesuwania elementów w tablicach; przykładem jest implementacja edytora tekstu przechowującego linie w liście powiązanej.
+* Reprezentacja zależności poprzez *grafy* umożliwia analizę złożonych relacji, a brak tej struktury utrudnia modelowanie sieci; przykładem jest graf opisujący połączenia między użytkownikami w mediach społecznościowych.
+* *Kolejki priorytetowe* pozwalają na obsługę elementów według określonej wagi, a korzystanie ze zwykłej kolejki wymaga dodatkowego sortowania; przykładem jest planowanie zadań w systemie operacyjnym.
 
 ### Testy
 
-- **Testy jednostkowe**: Pisząc testy jednostkowe, upewnij się, że sprawdzają one poszczególne funkcje pod kątem spełniania ich zamierzonych celów.
-- **Unikaj duplikacji testów**: Każdy scenariusz testowy powinien być sprawdzony tylko raz.
-- **Ważność testów**: Testy są równie ważne jak kod produkcyjny.
-- **Czytelność i organizacja testów**: Utrzymuj testy w czytelnej i dobrze zorganizowanej formie.
-- **Szybkość wykonania testów jednostkowych**: Testy jednostkowe powinny charakteryzować się krótkim czasem wykonania.
-- **Niezależność testów**: Testy powinny być niezależne od siebie i od środowiska, w którym są uruchamiane.
-- **Oprócz testów jednostkowych**: Rozważ wykorzystanie testów integracyjnych i akceptacyjnych.
-- **Unikaj assert w kodzie produkcyjnym**: Funkcje `assert` nie powinny być używane do sprawdzania warunków w czasie działania programu.
+* Pisanie *testów jednostkowych* pozwala sprawdzić, czy poszczególne funkcje spełniają swoje cele, a ich brak zwiększa ryzyko ukrytych błędów; przykładem jest test dla funkcji obliczającej podatek od ceny.
+* Eliminowanie *duplikacji testów* zapobiega nadmiarowemu sprawdzaniu tego samego scenariusza, a jej brak prowadzi do niepotrzebnie długiego procesu testowania; przykładem jest pojedynczy test sprawdzający poprawność logowania zamiast kilku niemal identycznych przypadków.
+* Traktowanie *testów* jako równorzędnych kodowi produkcyjnemu zapewnia wysoką jakość projektu, a ich marginalizowanie skutkuje trudnościami w utrzymaniu; przykładem jest systematyczne aktualizowanie testów wraz ze zmianami w funkcjach.
+* Dbanie o *czytelność i organizację* testów ułatwia ich rozumienie i rozwój, a brak struktury powoduje chaos; przykładem jest grupowanie testów w oddzielnych modułach odpowiadających komponentom aplikacji.
+* Zapewnienie *szybkości wykonania* testów jednostkowych pozwala na częste ich uruchamianie, a długie testy spowalniają procesy CI/CD; przykładem jest testowanie pojedynczych metod zamiast pełnych procesów biznesowych.
+* Tworzenie *niezależnych testów* sprawia, że każdy można uruchomić osobno, a ich zależność prowadzi do trudnych w diagnozie błędów; przykładem jest test bazy danych działający na izolowanym zbiorze danych zamiast współdzielonej instancji.
+* Oprócz testów jednostkowych warto stosować *testy integracyjne i akceptacyjne*, które sprawdzają współdziałanie modułów i zgodność z wymaganiami; przykładem jest test pełnego procesu rejestracji użytkownika w aplikacji webowej.
+* Unikanie użycia *assert* w kodzie produkcyjnym zmniejsza ryzyko niepożądanego przerwania działania programu, a ich stosowanie poza testami prowadzi do niekontrolowanych awarii; przykładem jest zastąpienie `assert balance >= 0` walidacją z obsługą wyjątku.
 
 ## Lista projektów programistycznych
 

@@ -3,7 +3,7 @@ Zbiór porad i zasobów dla początkujących programistów, zawierający szczeg�
 
 ## Jak efektywnie rozpocząć swój pierwszy projekt?
 
-* Kiedy rozpoczyna się naukę programowania, opanowanie *podstaw* pozwala zrozumieć takie elementy jak zmienne czy pętle, a ich brak prowadzi do trudności w rozwiązywaniu nawet prostych zadań; przykładem jest sytuacja, gdy nieznajomość instrukcji warunkowych uniemożliwia stworzenie kalkulatora.
+* Kiedy rozpoczynamy naukę programowania, opanowanie *podstaw* pozwala zrozumieć takie elementy jak zmienne czy pętle, a ich brak prowadzi do trudności w rozwiązywaniu nawet prostych zadań; przykładem jest sytuacja, gdy nieznajomość instrukcji warunkowych uniemożliwia stworzenie kalkulatora.
 * Inspiracja codziennymi problemami ułatwia wybór *tematu* projektu, podczas gdy brak kierunku skutkuje odkładaniem pracy; prostym przykładem może być stworzenie programu do zarządzania listą zakupów.
 * Tworzenie unikalnych rozwiązań rozwija *oryginalność*, natomiast kopiowanie cudzych projektów ogranicza kreatywność; dobrym przykładem jest modyfikacja istniejącej gry, aby dodać nowe zasady lub tryby.
 * Ocena własnych możliwości wspiera *realność* projektu, a jej brak prowadzi do frustracji i porzucenia pracy; przykładem może być wybór prostego kalkulatora zamiast od razu budowania pełnej aplikacji społecznościowej.

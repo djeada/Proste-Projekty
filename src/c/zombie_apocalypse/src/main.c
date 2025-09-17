@@ -27,14 +27,14 @@ int main() {
         int key = getch();
         zombie_game_update(&game, key);
         refresh();
+        if (game.wave_cleared) {
+            // Show centered message as well as HUD hint
+            mvprintw(max_y / 2, (max_x - MESSAGE_WIDTH) / 2, "Wave cleared! 'n' for next");
+        }
     }
     clear();
     zombie_game_draw(&game);
-    if (game.player.health > 0) {
-        mvprintw(max_y / 2, (max_x - MESSAGE_WIDTH) / 2, "You survived! Press any key.");
-    } else {
-        mvprintw(max_y / 2, (max_x - MESSAGE_WIDTH) / 2, "You died! Press any key.");
-    }
+    mvprintw(max_y / 2, (max_x - MESSAGE_WIDTH) / 2, "You died! Press any key.");
     refresh();
     getch();
     endwin();

@@ -9,12 +9,13 @@ void test_init() {
     assert(game.player.x == 20);
     assert(game.player.y == 10);
     assert(game.player.health == PLAYER_START_HEALTH);
-    assert(game.zombie_count == MAX_ZOMBIES);
+    assert(game.level == 1);
+    assert(game.zombie_count == BASE_ZOMBIES);
     int zombies_alive = 0;
     for (int i = 0; i < MAX_ZOMBIES; ++i) {
         if (game.zombies[i].alive) zombies_alive++;
     }
-    assert(zombies_alive == MAX_ZOMBIES);
+    assert(zombies_alive == BASE_ZOMBIES);
 }
 
 void test_player_move() {

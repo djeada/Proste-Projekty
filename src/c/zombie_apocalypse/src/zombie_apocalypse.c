@@ -22,13 +22,13 @@ void zombie_game_init(ZombieGame *game, int max_x, int max_y) {
     game->player.x = max_x / 2;
     game->player.y = max_y / 2;
     game->player.health = PLAYER_START_HEALTH;
+    game->level = 1;
     spawn_zombies(game);
     for (int i = 0; i < MAX_BULLETS; ++i) {
         game->bullets[i].active = 0;
     }
     game->game_over = 0;
     game->wave_cleared = 0;
-    game->level = 1;
     game->score = 0;
     game->tick = 0;
     game->zombie_move_period = 3; // zombies move every 3 ticks initially

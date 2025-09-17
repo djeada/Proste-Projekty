@@ -206,7 +206,11 @@ void zombie_game_draw(const ZombieGame *game) {
     }
 
     // HUD
-    int alive = 0; for (int i = 0; i < MAX_ZOMBIES; ++i) if (game->zombies[i].alive) alive++;
+    int alive = 0;
+    for (int i = 0; i < MAX_ZOMBIES; ++i) {
+        if (game->zombies[i].alive)
+            alive++;
+    }
     mvprintw(0, 0, "HP:%d  Lvl:%d  Score:%d  Zombies:%d/%d  Speed:%d",
              game->player.health, game->level, game->score, alive, game->zombie_count, game->zombie_move_period);
     mvprintw(1, 0, "Move: WASD/Arrows  Shoot: Space  Pause: p  Restart: r");

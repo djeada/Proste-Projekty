@@ -59,7 +59,7 @@ Aby efektywnie zarządzać projektem, warto stosować się do następujących za
 
 * Pisanie warunków w sposób *prosty* poprawia ich czytelność, a nadmierna złożoność utrudnia zrozumienie logiki programu; przykładem jest podział długiego wyrażenia logicznego na dwie mniejsze funkcje pomocnicze.
 * Zamiast głębokiego *zagnieżdżenia* instrukcji warunkowych lepiej stosować klauzule ochronne, ponieważ pozwalają one szybciej zakończyć funkcję, a brak takiego podejścia prowadzi do trudnych w śledzeniu bloków kodu; przykładem jest użycie `if not user: return` zamiast wielokrotnego `else`.
-* Rozdzielenie *zadań* na osobne funkcje sprawia, że kod staje się modularny, podczas gdy wiele warunków pod rząd obniża przejrzystość; przykładem jest przeniesienie logiki walidacji formularza do osobnej funkcji.
+* Rozdzielenie *zadań* na osobne funkcje sprawia, że kod staje się modularny, podczas gdy wiele warunków pod rząd obniża przejrzystość; przykładem jest przeniesienie logiki weryfikacji formularza do osobnej funkcji.
 * Wykorzystanie wyników *wartości logicznych* bezpośrednio w warunkach upraszcza kod, a ich dodatkowe porównywanie wydłuża zapis; przykładem jest zapis `if is_valid:` zamiast `if is_valid == True:`.
 * Dodawanie *nawiasów* wokół warunków eliminuje wątpliwości co do kolejności działań, a ich brak może prowadzić do błędnej interpretacji; przykładem jest zapis `(a and b) or c` zamiast `a and b or c`.
 * Formułowanie warunków w sposób *pozytywny* poprawia czytelność, podczas gdy złożone negacje wprowadzają zamieszanie; przykładem jest `if has_access:` zamiast `if not no_access:`.
@@ -67,9 +67,9 @@ Aby efektywnie zarządzać projektem, warto stosować się do następujących za
 ### Funkcje
 
 * Nadawanie funkcjom jasnych *nazw* pozwala od razu zrozumieć ich działanie, a brak tego prowadzi do mylącej interpretacji; przykładem jest `calculate_tax()` zamiast `processData()`.
-* Funkcja o *jednoznacznym celu* jest łatwa do przetestowania i utrzymania, podczas gdy funkcja realizująca wiele zadań staje się trudna do analizy; przykładem jest oddzielenie walidacji danych od ich zapisu do bazy.
+* Funkcja o *jednoznacznym celu* jest łatwa do przetestowania i utrzymania, podczas gdy funkcja realizująca wiele zadań staje się trudna do analizy; przykładem jest oddzielenie weryfikacji danych od ich zapisu do bazy.
 * Unikanie *mylących nazw* zapobiega błędnym oczekiwaniom, a nieadekwatne nazwy utrudniają debugowanie; przykładem jest niewłaściwe nazwanie funkcji `delete_user()` jako `update_user()`.
-* Stosowanie zasady *DRY* ogranicza powtarzalność kodu, a jej brak prowadzi do nadmiarowych fragmentów trudnych w utrzymaniu; przykładem jest wydzielenie wspólnej walidacji formularza do jednej funkcji używanej w wielu modułach.
+* Stosowanie zasady *DRY* ogranicza powtarzalność kodu, a jej brak prowadzi do nadmiarowych fragmentów trudnych w utrzymaniu; przykładem jest wydzielenie wspólnej weryfikacji formularza do jednej funkcji używanej w wielu modułach.
 * Krótkie *funkcje* zwiększają czytelność i łatwość testowania, a długie definicje komplikują pracę; przykładem jest funkcja licząca średnią w kilku linijkach zamiast w kilkudziesięciu.
 * Ukrywanie *implementacji* sprawia, że użytkownik funkcji widzi tylko jej efekt, a brak enkapsulacji zmusza do analizy wewnętrznej logiki; przykładem jest użycie publicznej funkcji `sort()` bez znajomości algorytmu sortowania.
 * Optymalne *przekazywanie argumentów* przez referencję zwiększa wydajność, a kopiowanie dużych struktur danych spowalnia działanie programu; przykładem jest przekazanie listy do funkcji w Pythonie bez jej duplikowania.
@@ -96,7 +96,7 @@ Aby efektywnie zarządzać projektem, warto stosować się do następujących za
 * Umieszczanie komentarzy w formie *docstrings* pozwala generować dokumentację API, a ich brak utrudnia użytkownikom zrozumienie sposobu korzystania z funkcji; przykładem jest opis parametrów i zwracanej wartości w Pythonie.
 * Pisanie komentarzy wyjaśniających *dlaczego* ułatwia zrozumienie decyzji projektowych, a nadmiar komentarzy tłumaczących składnię nie wnosi wartości; przykładem jest komentarz „// użycie algorytmu sortowania szybkiego ze względu na wydajność” zamiast „// pętla for iteruje po elementach”.
 * Aktualizowanie komentarzy zapobiega *dezinformacji*, a ich zaniedbanie prowadzi do niezgodności między kodem a opisem; przykładem jest zmiana nazwy funkcji bez poprawienia komentarza, co może zmylić kolejnego programistę.
-* Stosowanie komentarzy *TODO* pomaga śledzić zadania do wykonania, a ich brak utrudnia planowanie rozwoju; przykładem jest „// TODO: dodać walidację danych wejściowych”.
+* Stosowanie komentarzy *TODO* pomaga śledzić zadania do wykonania, a ich brak utrudnia planowanie rozwoju; przykładem jest „// TODO: dodać weryfikację danych wejściowych”.
 * Wyjaśnianie *skomplikowanego kodu* komentarzami ułatwia zrozumienie trudnych fragmentów, a ich brak zmusza do szczegółowej analizy algorytmu; przykładem jest opisanie działania algorytmu dynamicznego programowania w komentarzu nad funkcją.
 * Tworzenie *krótkich i zwięzłych* komentarzy poprawia przejrzystość, a nadmiar tekstu utrudnia szybkie przyswajanie informacji; przykładem jest jednozdaniowy opis logiki zamiast wieloakapitu tłumaczenia.
 * Pisanie testów w sposób samoopisujący eliminuje potrzebę *komentarzy* w ich treści, a dodatkowe wyjaśnienia sygnalizują słabą czytelność testu; przykładem jest test nazwany `test_calculate_discount_for_senior_customers` zamiast dodawania komentarza „// sprawdza rabat dla seniorów”.

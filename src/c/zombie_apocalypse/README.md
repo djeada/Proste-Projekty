@@ -31,7 +31,7 @@ cmake --build . --target main
 - Shoot: Space (fires in your last move direction)
 - Next wave: 'n' (after clearing all zombies)
 - Restart: 'r'
- - Pause: 'p'
+- Pause: 'p'
 
 ## HUD
 

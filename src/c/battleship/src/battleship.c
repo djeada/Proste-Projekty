@@ -44,7 +44,7 @@ int place_ship(Board *board, int ship_index, int x, int y, int horizontal) {
 
 int fire_at(Board *board, int x, int y) {
     if (x < 0 || x >= BOARD_SIZE || y < 0 || y >= BOARD_SIZE) return 0;
-    if (board->grid[y][x].hit) return 0;
+    if (board->grid[y][x].hit) return 1; // treat repeat shots as valid no-ops
     board->grid[y][x].hit = 1;
     if (!board->grid[y][x].has_ship) return 1; // valid miss
     // Mark hit on corresponding ship

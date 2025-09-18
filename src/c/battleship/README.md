@@ -24,8 +24,8 @@ ctest --output-on-failure
 - Rotate ship (placement): r
 - Place ship: Enter
 - Fire (battle): Enter
-- Toggle phase (after placement in single-player demo): n
-- Restart: q
+<!-- - Toggle phase (after placement in single-player demo): n -->
+- Quit: q
 
 ## Notes
 

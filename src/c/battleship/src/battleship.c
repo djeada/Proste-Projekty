@@ -89,6 +89,15 @@ static void random_place(Board *board) {
     }
 }
 
+static int ships_remaining(const Board *board) {
+    int remain = 0;
+    for (int i = 0; i < MAX_SHIPS; ++i) {
+        const Ship *s = &board->ships[i];
+        if (s->placed && s->hits < s->length) remain++;
+    }
+    return remain;
+}
+
 void battleship_update(BattleGame *game, int key) {
     if (key == 'q') { game->phase = PHASE_BATTLE; game->player_ships_remaining = 0; game->enemy_ships_remaining = 0; return; }
 
@@ -115,10 +124,17 @@ void battleship_update(BattleGame *game, int key) {
         else if (key == 'd') { if (game->cursor_x < BOARD_SIZE - 1) game->cursor_x++; }
     } else { // PHASE_BATTLE
         if (key == '\n') {
-            int was_hit = fire_at(&game->enemy, game->cursor_x, game->cursor_y);
-            snprintf(game->status, sizeof(game->status), was_hit ? "Hit!" : "Miss.");
-            if (is_defeated(&game->enemy)) {
-                snprintf(game->status, sizeof(game->status), "You win! Press q to quit.");
+            if (game->cursor_x < 0 || game->cursor_x >= BOARD_SIZE || game->cursor_y < 0 || game->cursor_y >= BOARD_SIZE) {
+                snprintf(game->status, sizeof(game->status), "Out of bounds.");
+            } else if (game->enemy.grid[game->cursor_y][game->cursor_x].hit) {
+                snprintf(game->status, sizeof(game->status), "Already targeted (%d,%d).", game->cursor_x, game->cursor_y);
+            } else {
+                int was_hit = fire_at(&game->enemy, game->cursor_x, game->cursor_y);
+                int rem = ships_remaining(&game->enemy);
+                snprintf(game->status, sizeof(game->status), "%s at (%d,%d). Enemy ships left: %d", was_hit ? "Hit" : "Miss", game->cursor_x, game->cursor_y, rem);
+                if (is_defeated(&game->enemy)) {
+                    snprintf(game->status, sizeof(game->status), "You win! Press q to quit.");
+                }
             }
         } else if (key == 'w') { if (game->cursor_y > 0) game->cursor_y--; }
         else if (key == 's') { if (game->cursor_y < BOARD_SIZE - 1) game->cursor_y++; }
@@ -155,11 +171,35 @@ void battleship_draw_text(const BattleGame *game, FILE *out) {
     } else {
         fprintf(out, "Battleship - Battle\n");
         fprintf(out, "Controls: WASD move, Enter fire, q quit\n\n");
-        // Show player board (left) and enemy board (right) by printing one then the other with spacing
-        fprintf(out, "Your Board:\n");
-        draw_board_text(&game->player, out, 1, -1, -1);
-        fprintf(out, "\nEnemy Board:\n");
-        draw_board_text(&game->enemy, out, 0, game->cursor_x, game->cursor_y);
+        // Composite view: player and enemy boards printed in one view top-to-bottom
+        // Headers
+        fprintf(out, "Your Board%*sEnemy Board\n", 3 + BOARD_SIZE*2 + 5, "");
+        // X indices header line for both
+        fprintf(out, "   "); for (int x = 0; x < BOARD_SIZE; ++x) fprintf(out, "%d ", x);
+        fprintf(out, "%*s", 5, "");
+        fprintf(out, "   "); for (int x = 0; x < BOARD_SIZE; ++x) fprintf(out, "%d ", x);
+        fprintf(out, "\n");
+        for (int y = 0; y < BOARD_SIZE; ++y) {
+            // Player row
+            fprintf(out, "%2d ", y);
+            for (int x = 0; x < BOARD_SIZE; ++x) {
+                char c = '.';
+                if (game->player.grid[y][x].hit) c = game->player.grid[y][x].has_ship ? 'X' : 'o';
+                else if (game->player.grid[y][x].has_ship) c = '#';
+                fprintf(out, "%c ", c);
+            }
+            fprintf(out, "%*s", 5, "");
+            // Enemy row (no ship reveal)
+            fprintf(out, "%2d ", y);
+            for (int x = 0; x < BOARD_SIZE; ++x) {
+                char c = '.';
+                if (game->enemy.grid[y][x].hit) c = game->enemy.grid[y][x].has_ship ? 'X' : 'o';
+                // Indicate cursor by surrounding space markers via '>' after cell when x==cursor
+                fprintf(out, "%c ", c);
+            }
+            fprintf(out, "\n");
+        }
+        fprintf(out, "\nTarget: (%d,%d)\n", game->cursor_x, game->cursor_y);
     }
     if (game->status[0]) fprintf(out, "\n%s\n", game->status);
 }

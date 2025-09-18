@@ -46,7 +46,7 @@ int fire_at(Board *board, int x, int y) {
     if (x < 0 || x >= BOARD_SIZE || y < 0 || y >= BOARD_SIZE) return 0;
     if (board->grid[y][x].hit) return 0;
     board->grid[y][x].hit = 1;
-    if (!board->grid[y][x].has_ship) return 0;
+    if (!board->grid[y][x].has_ship) return 1; // valid miss
     // Mark hit on corresponding ship
     for (int s = 0; s < MAX_SHIPS; ++s) {
         Ship *ship = &board->ships[s];
@@ -56,7 +56,7 @@ int fire_at(Board *board, int x, int y) {
             int sy = ship->pos.y + (ship->horizontal ? 0 : i);
             if (sx == x && sy == y) {
                 ship->hits++;
-                return 1;
+                break;
             }
         }
     }
@@ -141,8 +141,9 @@ void battleship_update(BattleGame *game, int key) {
             } else if (game->enemy.grid[game->cursor_y][game->cursor_x].hit) {
                 snprintf(game->status, sizeof(game->status), "Already targeted (%d,%d).", game->cursor_x, game->cursor_y);
             } else {
-                int was_hit = fire_at(&game->enemy, game->cursor_x, game->cursor_y);
+                if (!fire_at(&game->enemy, game->cursor_x, game->cursor_y)) return; // shouldn't happen
                 int rem = ships_remaining(&game->enemy);
+                int was_hit = game->enemy.grid[game->cursor_y][game->cursor_x].has_ship;
                 snprintf(game->status, sizeof(game->status), "%s at (%d,%d). Enemy ships left: %d", was_hit ? "Hit" : "Miss", game->cursor_x, game->cursor_y, rem);
                 if (is_defeated(&game->enemy)) {
                     game->phase = PHASE_GAMEOVER;

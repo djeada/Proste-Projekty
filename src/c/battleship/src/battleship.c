@@ -22,6 +22,7 @@ void battleship_init(BattleGame *game, int max_x, int max_y) {
     game->phase = PHASE_PLACEMENT;
     game->cursor_x = 0; game->cursor_y = 0; game->current_ship = 0;
     game->player_ships_remaining = MAX_SHIPS; game->enemy_ships_remaining = MAX_SHIPS;
+    snprintf(game->status, sizeof(game->status), "Place ships: WASD move, r rotate, Enter place");
 }
 
 int place_ship(Board *board, int ship_index, int x, int y, int horizontal) {
@@ -103,7 +104,10 @@ void battleship_update(BattleGame *game, int key) {
                     // Auto-place enemy and switch to battle
                     random_place(&game->enemy);
                     game->phase = PHASE_BATTLE;
+                    snprintf(game->status, sizeof(game->status), "Battle! Enter to fire. q to quit.");
                 }
+            } else {
+                snprintf(game->status, sizeof(game->status), "Invalid placement. Try another spot.");
             }
         } else if (key == 'w') { if (game->cursor_y > 0) game->cursor_y--; }
         else if (key == 's') { if (game->cursor_y < BOARD_SIZE - 1) game->cursor_y++; }
@@ -111,7 +115,11 @@ void battleship_update(BattleGame *game, int key) {
         else if (key == 'd') { if (game->cursor_x < BOARD_SIZE - 1) game->cursor_x++; }
     } else { // PHASE_BATTLE
         if (key == '\n') {
-            fire_at(&game->enemy, game->cursor_x, game->cursor_y);
+            int was_hit = fire_at(&game->enemy, game->cursor_x, game->cursor_y);
+            snprintf(game->status, sizeof(game->status), was_hit ? "Hit!" : "Miss.");
+            if (is_defeated(&game->enemy)) {
+                snprintf(game->status, sizeof(game->status), "You win! Press q to quit.");
+            }
         } else if (key == 'w') { if (game->cursor_y > 0) game->cursor_y--; }
         else if (key == 's') { if (game->cursor_y < BOARD_SIZE - 1) game->cursor_y++; }
         else if (key == 'a') { if (game->cursor_x > 0) game->cursor_x--; }
@@ -137,13 +145,21 @@ static void draw_board_text(const Board *b, FILE *out, int show_ships, int curso
 }
 
 void battleship_draw_text(const BattleGame *game, FILE *out) {
+    // Clear screen (basic ANSI) for a cleaner experience
+    fprintf(out, "\033[2J\033[H");
     if (game->phase == PHASE_PLACEMENT) {
         fprintf(out, "Battleship - Placement\n");
-        fprintf(out, "Ship %d/%d length %d - Rotate: r, Place: Enter\n", game->current_ship+1, MAX_SHIPS, game->player.ships[game->current_ship].length);
+        fprintf(out, "Ship %d/%d length %d\n", game->current_ship+1, MAX_SHIPS, game->player.ships[game->current_ship].length);
+        fprintf(out, "Controls: WASD move, r rotate, Enter place, q quit\n\n");
         draw_board_text(&game->player, out, 1, game->cursor_x, game->cursor_y);
     } else {
         fprintf(out, "Battleship - Battle\n");
-        fprintf(out, "Fire: Enter | Move: WASD | Quit: q\n");
+        fprintf(out, "Controls: WASD move, Enter fire, q quit\n\n");
+        // Show player board (left) and enemy board (right) by printing one then the other with spacing
+        fprintf(out, "Your Board:\n");
+        draw_board_text(&game->player, out, 1, -1, -1);
+        fprintf(out, "\nEnemy Board:\n");
         draw_board_text(&game->enemy, out, 0, game->cursor_x, game->cursor_y);
     }
+    if (game->status[0]) fprintf(out, "\n%s\n", game->status);
 }

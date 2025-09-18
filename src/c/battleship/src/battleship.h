@@ -37,6 +37,7 @@ typedef struct {
     int enemy_ships_remaining;
     int player_ships_remaining;
     int max_x, max_y;
+    char status[128];
 } BattleGame;
 
 void battleship_init(BattleGame *game, int max_x, int max_y);

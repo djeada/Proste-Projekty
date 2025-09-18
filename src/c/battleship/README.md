@@ -1,6 +1,6 @@
-# Battleship (C + ncurses)
+# Battleship (C, standard terminal)
 
-Classic Battleship in the terminal using ncurses. Place ships on your board, then take turns firing at the opponent grid.
+Classic Battleship in the terminal (no ncurses). Place ships on your board, then take turns firing at the opponent grid.
 
 ## Build & Run
 
@@ -20,11 +20,10 @@ ctest --output-on-failure
 
 ## Controls
 
-- Move cursor: WASD or Arrow keys
+- Move cursor: WASD
 - Rotate ship (placement): r
 - Place ship: Enter
 - Fire (battle): Enter
-<!-- - Toggle phase (after placement in single-player demo): n -->
 - Quit: q
 
 ## Notes

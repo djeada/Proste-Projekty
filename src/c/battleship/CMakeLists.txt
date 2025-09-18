@@ -3,19 +3,16 @@ project(battleship C)
 
 set(CMAKE_C_STANDARD 99)
 
-find_package(Curses REQUIRED)
-
 add_library(battleship_logic src/battleship.c)
 target_include_directories(battleship_logic PUBLIC src)
-target_link_libraries(battleship_logic ${CURSES_LIBRARIES})
 
 add_executable(main src/main.c)
-target_link_libraries(main battleship_logic ${CURSES_LIBRARIES})
+target_link_libraries(main battleship_logic)
 
 # Enable testing
 enable_testing()
 add_executable(test_battleship tests/test_battleship.c)
-target_link_libraries(test_battleship battleship_logic ${CURSES_LIBRARIES})
+target_link_libraries(test_battleship battleship_logic)
 target_include_directories(test_battleship PRIVATE src)
 add_test(NAME test_battleship COMMAND test_battleship)
 

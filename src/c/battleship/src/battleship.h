@@ -1,7 +1,7 @@
 #ifndef BATTLESHIP_H
 #define BATTLESHIP_H
 
-#include <ncurses.h>
+#include <stdio.h>
 
 #define BOARD_SIZE 10
 #define MAX_SHIPS 5
@@ -45,6 +45,6 @@ int fire_at(Board *board, int x, int y);
 int all_ships_placed(const Board *board);
 int is_defeated(const Board *board);
 void battleship_update(BattleGame *game, int key);
-void battleship_draw(const BattleGame *game);
+void battleship_draw_text(const BattleGame *game, FILE *out);
 
 #endif // BATTLESHIP_H

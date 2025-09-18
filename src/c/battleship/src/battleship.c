@@ -95,7 +95,7 @@ void battleship_update(BattleGame *game, int key) {
         if (key == 'r') {
             Ship *s = &game->player.ships[game->current_ship];
             s->horizontal = !s->horizontal;
-        } else if (key == '\n' || key == KEY_ENTER) {
+        } else if (key == '\n') {
             Ship *s = &game->player.ships[game->current_ship];
             if (place_ship(&game->player, game->current_ship, game->cursor_x, game->cursor_y, s->horizontal)) {
                 game->current_ship++;
@@ -105,41 +105,45 @@ void battleship_update(BattleGame *game, int key) {
                     game->phase = PHASE_BATTLE;
                 }
             }
-        } else if (key == KEY_UP || key == 'w') { if (game->cursor_y > 0) game->cursor_y--; }
-        else if (key == KEY_DOWN || key == 's') { if (game->cursor_y < BOARD_SIZE - 1) game->cursor_y++; }
-        else if (key == KEY_LEFT || key == 'a') { if (game->cursor_x > 0) game->cursor_x--; }
-        else if (key == KEY_RIGHT || key == 'd') { if (game->cursor_x < BOARD_SIZE - 1) game->cursor_x++; }
+        } else if (key == 'w') { if (game->cursor_y > 0) game->cursor_y--; }
+        else if (key == 's') { if (game->cursor_y < BOARD_SIZE - 1) game->cursor_y++; }
+        else if (key == 'a') { if (game->cursor_x > 0) game->cursor_x--; }
+        else if (key == 'd') { if (game->cursor_x < BOARD_SIZE - 1) game->cursor_x++; }
     } else { // PHASE_BATTLE
-        if (key == '\n' || key == KEY_ENTER) {
+        if (key == '\n') {
             fire_at(&game->enemy, game->cursor_x, game->cursor_y);
-        } else if (key == KEY_UP || key == 'w') { if (game->cursor_y > 0) game->cursor_y--; }
-        else if (key == KEY_DOWN || key == 's') { if (game->cursor_y < BOARD_SIZE - 1) game->cursor_y++; }
-        else if (key == KEY_LEFT || key == 'a') { if (game->cursor_x > 0) game->cursor_x--; }
-        else if (key == KEY_RIGHT || key == 'd') { if (game->cursor_x < BOARD_SIZE - 1) game->cursor_x++; }
+        } else if (key == 'w') { if (game->cursor_y > 0) game->cursor_y--; }
+        else if (key == 's') { if (game->cursor_y < BOARD_SIZE - 1) game->cursor_y++; }
+        else if (key == 'a') { if (game->cursor_x > 0) game->cursor_x--; }
+        else if (key == 'd') { if (game->cursor_x < BOARD_SIZE - 1) game->cursor_x++; }
     }
 }
 
-static void draw_board(const Board *b, int offset_y, int offset_x, int show_ships) {
+static void draw_board_text(const Board *b, FILE *out, int show_ships, int cursor_x, int cursor_y) {
+    fprintf(out, "   ");
+    for (int x = 0; x < BOARD_SIZE; ++x) fprintf(out, "%d ", x);
+    fprintf(out, "\n");
     for (int y = 0; y < BOARD_SIZE; ++y) {
+        fprintf(out, "%2d ", y);
         for (int x = 0; x < BOARD_SIZE; ++x) {
             char c = '.';
             if (b->grid[y][x].hit) c = b->grid[y][x].has_ship ? 'X' : 'o';
             else if (show_ships && b->grid[y][x].has_ship) c = '#';
-            mvprintw(offset_y + y, offset_x + x*2, "%c", c);
+            if (x == cursor_x && y == cursor_y) fprintf(out, "[%c]", c);
+            else fprintf(out, "%c ", c);
         }
+        fprintf(out, "\n");
     }
 }
 
-void battleship_draw(const BattleGame *game) {
+void battleship_draw_text(const BattleGame *game, FILE *out) {
     if (game->phase == PHASE_PLACEMENT) {
-        mvprintw(0, 0, "Battleship - Placement");
-        mvprintw(1, 0, "Ship %d/%d length %d - Rotate: r, Place: Enter", game->current_ship+1, MAX_SHIPS, game->player.ships[game->current_ship].length);
-        draw_board(&game->player, 3, 2, 1);
-        mvprintw(3 + game->cursor_y, 2 + game->cursor_x*2, "[]");
+        fprintf(out, "Battleship - Placement\n");
+        fprintf(out, "Ship %d/%d length %d - Rotate: r, Place: Enter\n", game->current_ship+1, MAX_SHIPS, game->player.ships[game->current_ship].length);
+        draw_board_text(&game->player, out, 1, game->cursor_x, game->cursor_y);
     } else {
-        mvprintw(0, 0, "Battleship - Battle");
-        mvprintw(1, 0, "Fire: Enter | Move: WASD/Arrows | Quit: q");
-        draw_board(&game->enemy, 3, 2, 0);
-        mvprintw(3 + game->cursor_y, 2 + game->cursor_x*2, "[]");
+        fprintf(out, "Battleship - Battle\n");
+        fprintf(out, "Fire: Enter | Move: WASD | Quit: q\n");
+        draw_board_text(&game->enemy, out, 0, game->cursor_x, game->cursor_y);
     }
 }

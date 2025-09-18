@@ -99,7 +99,7 @@ static int ships_remaining(const Board *board) {
 }
 
 void battleship_update(BattleGame *game, int key) {
-    if (key == 'q') { game->phase = PHASE_BATTLE; game->player_ships_remaining = 0; game->enemy_ships_remaining = 0; return; }
+    if (key == 'q') { game->phase = PHASE_QUIT; return; }
 
     if (game->phase == PHASE_PLACEMENT) {
         if (key == 'r') {

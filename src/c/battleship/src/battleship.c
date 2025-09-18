@@ -98,6 +98,18 @@ static int ships_remaining(const Board *board) {
     return remain;
 }
 
+static void enemy_random_turn(BattleGame *game) {
+    // pick random untargeted cell on player board
+    for (int tries = 0; tries < 200; ++tries) {
+        int x = rand() % BOARD_SIZE;
+        int y = rand() % BOARD_SIZE;
+        if (game->player.grid[y][x].hit) continue;
+        int hit = fire_at(&game->player, x, y);
+        snprintf(game->status, sizeof(game->status), "Enemy %s at (%d,%d)", hit ? "hit" : "miss", x, y);
+        return;
+    }
+}
+
 void battleship_update(BattleGame *game, int key) {
     if (key == 'q') { game->phase = PHASE_QUIT; return; }
 
@@ -122,7 +134,7 @@ void battleship_update(BattleGame *game, int key) {
         else if (key == 's') { if (game->cursor_y < BOARD_SIZE - 1) game->cursor_y++; }
         else if (key == 'a') { if (game->cursor_x > 0) game->cursor_x--; }
         else if (key == 'd') { if (game->cursor_x < BOARD_SIZE - 1) game->cursor_x++; }
-    } else { // PHASE_BATTLE
+    } else if (game->phase == PHASE_BATTLE) {
         if (key == '\n') {
             if (game->cursor_x < 0 || game->cursor_x >= BOARD_SIZE || game->cursor_y < 0 || game->cursor_y >= BOARD_SIZE) {
                 snprintf(game->status, sizeof(game->status), "Out of bounds.");
@@ -133,13 +145,26 @@ void battleship_update(BattleGame *game, int key) {
                 int rem = ships_remaining(&game->enemy);
                 snprintf(game->status, sizeof(game->status), "%s at (%d,%d). Enemy ships left: %d", was_hit ? "Hit" : "Miss", game->cursor_x, game->cursor_y, rem);
                 if (is_defeated(&game->enemy)) {
-                    snprintf(game->status, sizeof(game->status), "You win! Press q to quit.");
+                    game->phase = PHASE_GAMEOVER;
+                    snprintf(game->status, sizeof(game->status), "You win! Press r to restart or q to quit.");
+                    return;
+                }
+                // Enemy responds
+                enemy_random_turn(game);
+                if (is_defeated(&game->player)) {
+                    game->phase = PHASE_GAMEOVER;
+                    snprintf(game->status, sizeof(game->status), "You lose! Press r to restart or q to quit.");
+                    return;
                 }
             }
         } else if (key == 'w') { if (game->cursor_y > 0) game->cursor_y--; }
         else if (key == 's') { if (game->cursor_y < BOARD_SIZE - 1) game->cursor_y++; }
         else if (key == 'a') { if (game->cursor_x > 0) game->cursor_x--; }
         else if (key == 'd') { if (game->cursor_x < BOARD_SIZE - 1) game->cursor_x++; }
+    } else if (game->phase == PHASE_GAMEOVER) {
+        if (key == 'r') {
+            battleship_init(game, game->max_x, game->max_y);
+        }
     }
 }
 
@@ -168,7 +193,7 @@ void battleship_draw_text(const BattleGame *game, FILE *out) {
         fprintf(out, "Ship %d/%d length %d\n", game->current_ship+1, MAX_SHIPS, game->player.ships[game->current_ship].length);
         fprintf(out, "Controls: WASD move, r rotate, Enter place, q quit\n\n");
         draw_board_text(&game->player, out, 1, game->cursor_x, game->cursor_y);
-    } else {
+    } else if (game->phase == PHASE_BATTLE) {
         fprintf(out, "Battleship - Battle\n");
         fprintf(out, "Controls: WASD move, Enter fire, q quit\n\n");
         // Composite view: player and enemy boards printed in one view top-to-bottom
@@ -200,6 +225,14 @@ void battleship_draw_text(const BattleGame *game, FILE *out) {
             fprintf(out, "\n");
         }
         fprintf(out, "\nTarget: (%d,%d)\n", game->cursor_x, game->cursor_y);
+    } else if (game->phase == PHASE_GAMEOVER) {
+        fprintf(out, "Battleship - Game Over\n\n");
+        // final boards
+        fprintf(out, "Your Board\n");
+        draw_board_text(&game->player, out, 1, -1, -1);
+        fprintf(out, "\nEnemy Board (revealed)\n");
+        draw_board_text(&game->enemy, out, 1, -1, -1);
+        fprintf(out, "\n%s\n", game->status[0] ? game->status : "Press r to restart or q to quit.");
     }
-    if (game->status[0]) fprintf(out, "\n%s\n", game->status);
+    if (game->status[0] && game->phase != PHASE_GAMEOVER) fprintf(out, "\n%s\n", game->status);
 }

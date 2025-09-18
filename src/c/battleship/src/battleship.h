@@ -6,7 +6,7 @@
 #define BOARD_SIZE 10
 #define MAX_SHIPS 5
 
-typedef enum { PHASE_PLACEMENT, PHASE_BATTLE } Phase;
+typedef enum { PHASE_PLACEMENT, PHASE_BATTLE, PHASE_GAMEOVER, PHASE_QUIT } Phase;
 
 typedef struct { int x, y; } Point;
 

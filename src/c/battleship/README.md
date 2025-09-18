@@ -24,9 +24,11 @@ ctest --output-on-failure
 - Rotate ship (placement): r
 - Place ship: Enter
 - Fire (battle): Enter
+- Restart (on Game Over): r
 - Quit: q
 
 ## Notes
 
-- This version includes a simple single-player demo vs random AI for testing.
+- Single-player vs a simple random-shot AI. The AI fires after your shot.
+- Explicit Game Over screen shows both boards; press `r` to restart or `q` to quit.
 - Board: 10x10, ships of standard lengths: 5, 4, 3, 3, 2.

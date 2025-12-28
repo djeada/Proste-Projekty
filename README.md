@@ -1,29 +1,268 @@
-# Proste Projekty
-Zbiór porad i zasobów dla początkujących programistów, zawierający szczegółowe wytyczne oraz przykłady realizacji projektów.
+<div align="center">
 
-## Jak efektywnie rozpocząć swój pierwszy projekt?
+# 🚀 Proste Projekty
 
-* Kiedy rozpoczynamy naukę programowania, opanowanie *podstaw* pozwala zrozumieć takie elementy jak zmienne czy pętle, a ich brak prowadzi do trudności w rozwiązywaniu nawet prostych zadań; przykładem jest sytuacja, gdy nieznajomość instrukcji warunkowych uniemożliwia stworzenie kalkulatora.
-* Inspiracja codziennymi problemami ułatwia wybór *tematu* projektu, podczas gdy brak kierunku skutkuje odkładaniem pracy; prostym przykładem może być stworzenie programu do zarządzania listą zakupów.
-* Tworzenie unikalnych rozwiązań rozwija *oryginalność*, natomiast kopiowanie cudzych projektów ogranicza kreatywność; dobrym przykładem jest modyfikacja istniejącej gry, aby dodać nowe zasady lub tryby.
-* Ocena własnych możliwości wspiera *realność* projektu, a jej brak prowadzi do frustracji i porzucenia pracy; przykładem może być wybór prostego kalkulatora zamiast od razu budowania pełnej aplikacji społecznościowej.
-* Pobranie i konfiguracja *środowiska programistycznego* umożliwia sprawną pracę, a jego brak utrudnia pisanie i uruchamianie kodu; przykładem jest użycie VS Code zamiast edytora tekstowego bez wsparcia dla języka.
-* Przygotowanie logicznej *struktury projektu* ułatwia zarządzanie plikami, a jej brak prowadzi do chaosu w kodzie; przykładem jest podział aplikacji na foldery „src”, „tests” i „docs”.
-* Rozpoczęcie pracy nad *dokumentacją* wspiera czytelność projektu, a jej brak utrudnia innym zrozumienie jego działania; prostym przykładem jest dodanie pliku README.md z instrukcją uruchomienia.
-* Wdrożenie *Git* zapewnia kontrolę wersji kodu, a jego brak utrudnia cofnięcie się do stabilnych rozwiązań; przykładem jest zapisanie każdej nowej funkcji w osobnym commicie.
-* Krótka przerwa sprzyja *refleksji*, podczas gdy jej brak powoduje utratę świeżego spojrzenia; przykładem jest zauważenie prostego błędu po godzinnej przerwie od kodowania.
-* Stopniowe dodawanie *funkcjonalności* zgodnie z listą zadań zapewnia systematyczny rozwój projektu, a brak planu prowadzi do chaotycznego kodu; przykładem jest implementacja logowania przed dodaniem panelu użytkownika.
-* Regularne *testowanie* pozwala wykrywać błędy na wczesnym etapie, a jego brak skutkuje awariami podczas użycia; przykładem jest napisanie testów jednostkowych dla funkcji obliczającej podatek.
-* Dokumentowanie zmian poprzez *commity* w Git ułatwia śledzenie postępów, a brak zapisów uniemożliwia powrót do starszej wersji; przykładem jest cofnięcie się do stabilnej wersji aplikacji sprzed wprowadzenia błędu.
-* Korzystanie z internetowych *źródeł pomocy* przyspiesza rozwiązywanie problemów, a izolacja wydłuża proces nauki; przykładem jest znalezienie rozwiązania błędu składni na Stack Overflow.
-* Udostępnienie *projektu* innym zwiększa jego użyteczność, a brak publikacji ogranicza zasięg; przykładem jest opublikowanie aplikacji na GitHub i uruchomienie jej na Heroku.
-* Dzielenie się własnymi *osiągnięciami* buduje motywację, a brak prezentacji prowadzi do utraty satysfakcji; przykładem jest opowiedzenie znajomym o aplikacji ułatwiającej planowanie treningów.
+### *Twój przewodnik po świecie programowania*
 
-## Tak zwane dobre praktyki programowania
+[![GitHub stars](https://img.shields.io/github/stars/djeada/Proste-Projekty?style=social)](https://github.com/djeada/Proste-Projekty/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/djeada/Proste-Projekty?style=social)](https://github.com/djeada/Proste-Projekty/network/members)
+[![GitHub issues](https://img.shields.io/github/issues/djeada/Proste-Projekty)](https://github.com/djeada/Proste-Projekty/issues)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
+
+**Kompleksowy zbiór porad, zasobów i gotowych projektów dla początkujących programistów**
+
+*Zawiera szczegółowe wytyczne, przykłady realizacji projektów oraz szablony startowe w najpopularniejszych technologiach*
+
+[🎯 Rozpocznij naukę](#-jak-efektywnie-rozpocząć-swój-pierwszy-projekt) • [📚 Dobre praktyki](#-tak-zwane-dobre-praktyki-programowania) • [🎮 Projekty](#-lista-projektów-programistycznych) • [📦 Szablony](#-szablony-projektów) • [🔗 Zasoby](#-dodatkowe-materiały)
+
+---
+
+</div>
+
+## 📋 Spis Treści
+
+- [🎯 Jak efektywnie rozpocząć swój pierwszy projekt?](#-jak-efektywnie-rozpocząć-swój-pierwszy-projekt)
+- [✨ Tak zwane dobre praktyki programowania](#-tak-zwane-dobre-praktyki-programowania)
+  - [🎁 Korzyści z dobrych praktyk](#-korzyści-z-dobrych-praktyk)
+  - [📂 Organizacja projektu](#-organizacja-projektu)
+  - [🔤 Zmienne](#-zmienne)
+  - [🔀 Warunki](#-warunki)
+  - [⚙️ Funkcje](#️-funkcje)
+  - [📦 Klasy](#-klasy-1)
+  - [💬 Komentarze](#-komentarze)
+  - [🛡️ Obsługa błędów](#️-obsługa-błędów)
+  - [🗂️ Struktury danych](#️-struktury-danych)
+  - [🧪 Testy](#-testy)
+- [🎮 Lista projektów programistycznych](#-lista-projektów-programistycznych)
+- [📦 Szablony projektów](#-szablony-projektów)
+- [📚 Dodatkowe materiały](#-dodatkowe-materiały)
+- [🤝 Jak możesz pomóc?](#-jak-możesz-pomóc)
+- [📜 Licencja](#-licencja)
+
+---
+
+## 🎯 Jak efektywnie rozpocząć swój pierwszy projekt?
+
+<div align="center">
+
+*Przewodnik krok po kroku dla początkujących programistów*
+
+</div>
+
+<table>
+<tr>
+<td width="60"><div align="center">📚</div></td>
+<td>
+<b>Opanuj podstawy</b><br/>
+Kiedy rozpoczynamy naukę programowania, opanowanie <i>podstaw</i> pozwala zrozumieć takie elementy jak zmienne czy pętle, a ich brak prowadzi do trudności w rozwiązywaniu nawet prostych zadań.
+<br/><br/>
+<details>
+<summary>💡 Przykład</summary>
+Nieznajomość instrukcji warunkowych uniemożliwia stworzenie prostego kalkulatora, który reaguje różnie w zależności od wybranej operacji.
+</details>
+</td>
+</tr>
+
+<tr>
+<td width="60"><div align="center">💡</div></td>
+<td>
+<b>Znajdź inspirację</b><br/>
+Inspiracja codziennymi problemami ułatwia wybór <i>tematu</i> projektu, podczas gdy brak kierunku skutkuje odkładaniem pracy.
+<br/><br/>
+<details>
+<summary>💡 Przykład</summary>
+Prostym przykładem może być stworzenie programu do zarządzania listą zakupów lub organizowania codziennych zadań.
+</details>
+</td>
+</tr>
+
+<tr>
+<td width="60"><div align="center">🎨</div></td>
+<td>
+<b>Bądź oryginalny</b><br/>
+Tworzenie unikalnych rozwiązań rozwija <i>oryginalność</i>, natomiast kopiowanie cudzych projektów ogranicza kreatywność.
+<br/><br/>
+<details>
+<summary>💡 Przykład</summary>
+Dobrym przykładem jest modyfikacja istniejącej gry, aby dodać nowe zasady, tryby gry lub własne grafiki.
+</details>
+</td>
+</tr>
+
+<tr>
+<td width="60"><div align="center">🎯</div></td>
+<td>
+<b>Oceń możliwości</b><br/>
+Ocena własnych możliwości wspiera <i>realność</i> projektu, a jej brak prowadzi do frustracji i porzucenia pracy.
+<br/><br/>
+<details>
+<summary>💡 Przykład</summary>
+Lepiej zacząć od prostego kalkulatora zamiast od razu budować pełną aplikację społecznościową z bazą danych i autoryzacją.
+</details>
+</td>
+</tr>
+
+<tr>
+<td width="60"><div align="center">💻</div></td>
+<td>
+<b>Skonfiguruj środowisko</b><br/>
+Pobranie i konfiguracja <i>środowiska programistycznego</i> umożliwia sprawną pracę, a jego brak utrudnia pisanie i uruchamianie kodu.
+<br/><br/>
+<details>
+<summary>💡 Przykład</summary>
+Użycie VS Code z rozszerzeniami dla danego języka zamiast zwykłego edytora tekstowego znacznie przyspiesza rozwój projektu.
+</details>
+</td>
+</tr>
+
+<tr>
+<td width="60"><div align="center">📁</div></td>
+<td>
+<b>Uporządkuj strukturę</b><br/>
+Przygotowanie logicznej <i>struktury projektu</i> ułatwia zarządzanie plikami, a jej brak prowadzi do chaosu w kodzie.
+<br/><br/>
+<details>
+<summary>💡 Przykład</summary>
+Podział aplikacji na foldery „src" (kod źródłowy), „tests" (testy), „docs" (dokumentacja) i „assets" (zasoby graficzne).
+</details>
+</td>
+</tr>
+
+<tr>
+<td width="60"><div align="center">📝</div></td>
+<td>
+<b>Zacznij dokumentację</b><br/>
+Rozpoczęcie pracy nad <i>dokumentacją</i> wspiera czytelność projektu, a jej brak utrudnia innym zrozumienie jego działania.
+<br/><br/>
+<details>
+<summary>💡 Przykład</summary>
+Dodanie pliku README.md z opisem projektu, instrukcją instalacji i przykładami użycia już na początku pracy.
+</details>
+</td>
+</tr>
+
+<tr>
+<td width="60"><div align="center">🔄</div></td>
+<td>
+<b>Używaj Git</b><br/>
+Wdrożenie <i>Git</i> zapewnia kontrolę wersji kodu, a jego brak utrudnia cofnięcie się do stabilnych rozwiązań.
+<br/><br/>
+<details>
+<summary>💡 Przykład</summary>
+Zapisanie każdej nowej funkcji w osobnym commicie pozwala łatwo cofnąć zmiany, które wprowadzają błędy.
+</details>
+</td>
+</tr>
+
+<tr>
+<td width="60"><div align="center">☕</div></td>
+<td>
+<b>Rób przerwy</b><br/>
+Krótka przerwa sprzyja <i>refleksji</i>, podczas gdy jej brak powoduje utratę świeżego spojrzenia.
+<br/><br/>
+<details>
+<summary>💡 Przykład</summary>
+Po godzinie kodowania zrób 15-minutową przerwę – często wtedy zauważysz proste błędy, których wcześniej nie widziałeś.
+</details>
+</td>
+</tr>
+
+<tr>
+<td width="60"><div align="center">➕</div></td>
+<td>
+<b>Rozwijaj stopniowo</b><br/>
+Stopniowe dodawanie <i>funkcjonalności</i> zgodnie z listą zadań zapewnia systematyczny rozwój projektu, a brak planu prowadzi do chaotycznego kodu.
+<br/><br/>
+<details>
+<summary>💡 Przykład</summary>
+Zaimplementuj najpierw logowanie użytkownika, potem panel zarządzania kontem, a dopiero na końcu zaawansowane funkcje.
+</details>
+</td>
+</tr>
+
+<tr>
+<td width="60"><div align="center">🧪</div></td>
+<td>
+<b>Testuj regularnie</b><br/>
+Regularne <i>testowanie</i> pozwala wykrywać błędy na wczesnym etapie, a jego brak skutkuje awariami podczas użycia.
+<br/><br/>
+<details>
+<summary>💡 Przykład</summary>
+Napisz testy jednostkowe dla funkcji obliczającej podatek – sprawdź przypadki brzegowe jak ujemne wartości czy zero.
+</details>
+</td>
+</tr>
+
+<tr>
+<td width="60"><div align="center">📌</div></td>
+<td>
+<b>Dokumentuj zmiany</b><br/>
+Dokumentowanie zmian poprzez <i>commity</i> w Git ułatwia śledzenie postępów, a brak zapisów uniemożliwia powrót do starszej wersji.
+<br/><br/>
+<details>
+<summary>💡 Przykład</summary>
+Używaj opisowych komunikatów commitów jak „Dodaj walidację formularza kontaktowego" zamiast „fix" czy „update".
+</details>
+</td>
+</tr>
+
+<tr>
+<td width="60"><div align="center">🌐</div></td>
+<td>
+<b>Szukaj pomocy</b><br/>
+Korzystanie z internetowych <i>źródeł pomocy</i> przyspiesza rozwiązywanie problemów, a izolacja wydłuża proces nauki.
+<br/><br/>
+<details>
+<summary>�� Przykład</summary>
+Stack Overflow, dokumentacja oficjalna i fora dyskusyjne to świetne miejsca do znajdowania rozwiązań typowych problemów.
+</details>
+</td>
+</tr>
+
+<tr>
+<td width="60"><div align="center">🚀</div></td>
+<td>
+<b>Publikuj projekt</b><br/>
+Udostępnienie <i>projektu</i> innym zwiększa jego użyteczność, a brak publikacji ogranicza zasięg.
+<br/><br/>
+<details>
+<summary>�� Przykład</summary>
+Opublikuj aplikację na GitHub, uruchom ją na platformie Heroku lub Netlify i podziel się linkiem ze znajomymi.
+</details>
+</td>
+</tr>
+
+<tr>
+<td width="60"><div align="center">🏆</div></td>
+<td>
+<b>Dziel się sukcesami</b><br/>
+Dzielenie się własnymi <i>osiągnięciami</i> buduje motywację, a brak prezentacji prowadzi do utraty satysfakcji.
+<br/><br/>
+<details>
+<summary>💡 Przykład</summary>
+Pokaż znajomym swoją aplikację do planowania treningów lub napisz o niej wpis na blogu czy w mediach społecznościowych.
+</details>
+</td>
+</tr>
+
+</table>
+
+---
+
+## ✨ Tak zwane dobre praktyki programowania
+
+<div align="center">
+
+**Zestaw uniwersalnych wytycznych mających na celu poprawę jakości kodu i ułatwienie jego rozwoju**
+
+*Bez względu na język programowania – te zasady działają wszędzie*
+
+</div>
 
 Dobre praktyki programowania to zestaw wytycznych mających na celu poprawę jakości kodu i ułatwienie jego rozwoju, bez względu na język programowania. 
 
-### Korzyści z dobrych praktyk
+### 🎁 Korzyści z dobrych praktyk
 
 Stosowanie tych praktyk przynosi szereg korzyści, takich jak:
 
@@ -33,7 +272,7 @@ Stosowanie tych praktyk przynosi szereg korzyści, takich jak:
 * W pracy zespołowej jasna *organizacja* kodu pozwala wielu osobom na wspólne rozwijanie projektu, a jej brak prowadzi do nieporozumień; przykładem jest przestrzeganie ustalonego stylu kodowania w repozytorium grupowym.
 * Struktura wspierająca *testowanie* umożliwia szybkie wykrywanie błędów, a jej brak utrudnia sprawdzanie poprawności działania; przykładem jest łatwość napisania testów jednostkowych dla funkcji, gdy kod jest podzielony na małe moduły.
 
-### Organizacja projektu
+### 📂 Organizacja projektu
 
 Aby efektywnie zarządzać projektem, warto stosować się do następujących zasad:
 
@@ -46,7 +285,7 @@ Aby efektywnie zarządzać projektem, warto stosować się do następujących za
 * Usuwanie *martwego kodu* zmniejsza ryzyko niepotrzebnego obciążenia i niejasności, a jego pozostawienie utrudnia analizę; przykładem jest eliminacja nieużywanych zmiennych po refaktoryzacji.
 * Reagowanie na *ostrzeżenia kompilatora* pozwala wcześnie wykrywać problemy, a ich ignorowanie prowadzi do trudnych do znalezienia błędów; przykładem jest poprawienie ostrzeżenia o możliwej dereferencji pustego wskaźnika w C++.
 
-### Zmienne
+### 🔤 Zmienne
 
 * Nadawanie opisowych *nazw zmiennym* sprawia, że kod staje się łatwiejszy do zrozumienia, a brak jasności prowadzi do pomyłek podczas dalszej pracy; przykładem jest użycie `total_salary` zamiast `x`.
 * Konsekwentne stosowanie wybranej *konwencji nazewnictwa* zapewnia spójność projektu, a jej mieszanie utrudnia czytanie kodu; przykładem jest użycie `snake_case` we wszystkich funkcjach w Pythonie zamiast łączenia go z `camelCase`.
@@ -55,7 +294,7 @@ Aby efektywnie zarządzać projektem, warto stosować się do następujących za
 * Ograniczenie *zmiennych globalnych* zmniejsza ryzyko nieoczekiwanych efektów ubocznych, a ich nadużycie utrudnia debugowanie; przykładem jest przekazywanie danych do funkcji przez argumenty zamiast odwoływania się do globalnego stanu.
 * Deklarowanie *zmiennych* w miejscu ich pierwszego użycia poprawia czytelność i zmniejsza ryzyko błędów, a przedwczesne deklaracje mogą prowadzić do niepotrzebnego zajmowania pamięci; przykładem jest stworzenie zmiennej licznikowej dopiero wewnątrz pętli, w której jest używana.
 
-### Warunki
+### 🔀 Warunki
 
 * Pisanie warunków w sposób *prosty* poprawia ich czytelność, a nadmierna złożoność utrudnia zrozumienie logiki programu; przykładem jest podział długiego wyrażenia logicznego na dwie mniejsze funkcje pomocnicze.
 * Zamiast głębokiego *zagnieżdżenia* instrukcji warunkowych lepiej stosować klauzule ochronne, ponieważ pozwalają one szybciej zakończyć funkcję, a brak takiego podejścia prowadzi do trudnych w śledzeniu bloków kodu; przykładem jest użycie `if not user: return` zamiast wielokrotnego `else`.
@@ -64,7 +303,7 @@ Aby efektywnie zarządzać projektem, warto stosować się do następujących za
 * Dodawanie *nawiasów* wokół warunków eliminuje wątpliwości co do kolejności działań, a ich brak może prowadzić do błędnej interpretacji; przykładem jest zapis `(a and b) or c` zamiast `a and b or c`.
 * Formułowanie warunków w sposób *pozytywny* poprawia czytelność, podczas gdy złożone negacje wprowadzają zamieszanie; przykładem jest `if has_access:` zamiast `if not no_access:`.
 
-### Funkcje
+### ⚙️ Funkcje
 
 * Nadawanie funkcjom jasnych *nazw* pozwala od razu zrozumieć ich działanie, a brak tego prowadzi do mylącej interpretacji; przykładem jest `calculate_tax()` zamiast `processData()`.
 * Funkcja o *jednoznacznym celu* jest łatwa do przetestowania i utrzymania, podczas gdy funkcja realizująca wiele zadań staje się trudna do analizy; przykładem jest oddzielenie weryfikacji danych od ich zapisu do bazy.
@@ -79,7 +318,7 @@ Aby efektywnie zarządzać projektem, warto stosować się do następujących za
 * Ograniczenie liczby *argumentów* ułatwia zrozumienie funkcji, a ich nadmiar wymaga śledzenia wielu zależności; przykładem jest przekazanie obiektu konfiguracyjnego zamiast pięciu oddzielnych parametrów.
 * Tworzenie *funkcji bez efektów ubocznych* poprawia przewidywalność programu, a modyfikowanie stanu globalnego prowadzi do trudnych do wykrycia błędów; przykładem jest zwracanie nowej listy zamiast zmiany istniejącej globalnej zmiennej.
 
-### Klasy
+### 📦 Klasy
 
 * Nadawanie klasom jasnych *nazw* w formie rzeczowników poprawia ich czytelność, a brak tego wprowadza niejasność co do roli; przykładem jest `User` zamiast `ProcessData`.
 * Tworzenie prostego interfejsu i *ukrywanie złożoności* sprawia, że klasa jest łatwa w użyciu, a brak tego czyni pracę z nią bardziej skomplikowaną niż manipulowanie danymi bezpośrednio; przykładem jest klasa `Database` oferująca metody `connect()` i `query()` zamiast ujawniania pełnych procedur połączenia.
@@ -91,7 +330,7 @@ Aby efektywnie zarządzać projektem, warto stosować się do następujących za
 * Minimalizowanie *pustych pól* poprawia przejrzystość klas, a ich obecność zwiększa ryzyko błędów; przykładem jest rozdzielenie klas `Car` i `Bike` zamiast jednej klasy z wieloma nieużywanymi polami.
 * Unikanie *redundancji* zmniejsza powtarzalność, a tworzenie wielu podobnych klas utrudnia utrzymanie; przykładem jest jedna klasa `Product` z polem `category` zamiast osobnych klas `BookProduct`, `FoodProduct` i `TechProduct`.
 
-### Komentarze
+### 💬 Komentarze
 
 * Umieszczanie komentarzy w formie *docstrings* pozwala generować dokumentację API, a ich brak utrudnia użytkownikom zrozumienie sposobu korzystania z funkcji; przykładem jest opis parametrów i zwracanej wartości w Pythonie.
 * Pisanie komentarzy wyjaśniających *dlaczego* ułatwia zrozumienie decyzji projektowych, a nadmiar komentarzy tłumaczących składnię nie wnosi wartości; przykładem jest komentarz „// użycie algorytmu sortowania szybkiego ze względu na wydajność” zamiast „// pętla for iteruje po elementach”.
@@ -101,7 +340,7 @@ Aby efektywnie zarządzać projektem, warto stosować się do następujących za
 * Tworzenie *krótkich i zwięzłych* komentarzy poprawia przejrzystość, a nadmiar tekstu utrudnia szybkie przyswajanie informacji; przykładem jest jednozdaniowy opis logiki zamiast wieloakapitu tłumaczenia.
 * Pisanie testów w sposób samoopisujący eliminuje potrzebę *komentarzy* w ich treści, a dodatkowe wyjaśnienia sygnalizują słabą czytelność testu; przykładem jest test nazwany `test_calculate_discount_for_senior_customers` zamiast dodawania komentarza „// sprawdza rabat dla seniorów”.
 
-### Obsługa błędów
+### 🛡️ Obsługa błędów
 
 * Dostosowanie *strategii obsługi błędów* do konkretnego języka zapewnia spójność z jego paradygmatami, a brak tego prowadzi do nieefektywnych lub nietypowych rozwiązań; przykładem jest używanie wyjątków w Javie zamiast konwencji kodów błędów znanych z C.
 * Stosowanie *wyjątków* zamiast kodów błędów lub wartości `NULL/None` poprawia czytelność i upraszcza logikę programu, podczas gdy zwracanie kodów wymaga dodatkowej obsługi w każdym wywołaniu; przykładem jest `raise FileNotFoundError` zamiast zwracania `-1`.
@@ -110,7 +349,7 @@ Aby efektywnie zarządzać projektem, warto stosować się do następujących za
 * Odpowiednia *obsługa wyjątków* podczas wywoływania funkcji zapobiega awariom, a jej brak prowadzi do nieprzewidzianego zakończenia programu; przykładem jest użycie `try...except` przy otwieraniu pliku, który może nie istnieć.
 * Unikanie przekazywania *NULL/None* do funkcji zmniejsza ryzyko błędów wykonania, a poleganie na takich wartościach często prowadzi do `NullPointerException`; przykładem jest stosowanie obiektów opcjonalnych (`Optional` w Javie czy `Option` w Scali) zamiast surowych `null`.
 
-### Struktury danych
+### 🗂️ Struktury danych
 
 * Wybór odpowiedniej *struktury danych* umożliwia efektywne rozwiązanie problemu, a jej nieprzemyślany dobór prowadzi do spadku wydajności; przykładem jest użycie tablicy mieszającej do wyszukiwania elementów zamiast przeszukiwania listy liniowej.
 * Korzystanie z *prostych struktur* takich jak listy lub tablice sprawdza się w wielu przypadkach, a ich nadmierne komplikowanie niepotrzebnie zwiększa złożoność; przykładem jest lista przechowująca wyniki pomiarów zamiast drzewa binarnego.
@@ -124,7 +363,7 @@ Aby efektywnie zarządzać projektem, warto stosować się do następujących za
 * Reprezentacja zależności poprzez *grafy* umożliwia analizę złożonych relacji, a brak tej struktury utrudnia modelowanie sieci; przykładem jest graf opisujący połączenia między użytkownikami w mediach społecznościowych.
 * *Kolejki priorytetowe* pozwalają na obsługę elementów według określonej wagi, a korzystanie ze zwykłej kolejki wymaga dodatkowego sortowania; przykładem jest planowanie zadań w systemie operacyjnym.
 
-### Testy
+### 🧪 Testy
 
 * Pisanie *testów jednostkowych* pozwala sprawdzić, czy poszczególne funkcje spełniają swoje cele, a ich brak zwiększa ryzyko ukrytych błędów; przykładem jest test dla funkcji obliczającej podatek od ceny.
 * Eliminowanie *duplikacji testów* zapobiega nadmiarowemu sprawdzaniu tego samego scenariusza, a jej brak prowadzi do niepotrzebnie długiego procesu testowania; przykładem jest pojedynczy test sprawdzający poprawność logowania zamiast kilku niemal identycznych przypadków.
@@ -135,7 +374,15 @@ Aby efektywnie zarządzać projektem, warto stosować się do następujących za
 * Oprócz testów jednostkowych warto stosować *testy integracyjne i akceptacyjne*, które sprawdzają współdziałanie modułów i zgodność z wymaganiami; przykładem jest test pełnego procesu rejestracji użytkownika w aplikacji webowej.
 * Unikanie użycia *assert* w kodzie produkcyjnym zmniejsza ryzyko niepożądanego przerwania działania programu, a ich stosowanie poza testami prowadzi do niekontrolowanych awarii; przykładem jest zastąpienie `assert balance >= 0` walidacją z obsługą wyjątku.
 
-## Lista projektów programistycznych
+## 🎮 Lista projektów programistycznych
+
+<div align="center">
+
+**Różnorodne projekty o różnym stopniu trudności – od podstawowych do zaawansowanych**
+
+*Każdy projekt zawiera opis, przykładowe screenshoty i linki do implementacji*
+
+</div>
 
 Celem tej sekcji jest zainspirowanie i motywowanie czytelników do aktywnego uczestnictwa w nauce programowania poprzez praktyczne realizowanie różnorodnych projektów. Projekty te różnią się tematyką i stopniem trudności, co pozwala każdemu znaleźć coś dla siebie.
 
@@ -392,7 +639,13 @@ Screenshot | Technologie | Link
 ---|---|---
 | - | - | - |
 
-## Szablony projektów
+## 📦 Szablony projektów
+
+<div align="center">
+
+**Gotowe szablony do szybkiego startu w najpopularniejszych technologiach**
+
+</div>
 
 W repozytorium znajdziesz gotowe szablony projektów dla najpopularniejszych technologii:
 
@@ -412,11 +665,23 @@ Każdy szablon zawiera:
 
 Aby rozpocząć własny projekt, skopiuj wybrany szablon i postępuj zgodnie z instrukcjami w README danego szablonu.
 
-## Dodatkowe materiały
+## 📚 Dodatkowe materiały
+
+<div align="center">
+
+**Starannie wyselekcjonowane zasoby, które pomogą Ci w nauce i rozwoju**
+
+</div>
 
 W tej sekcji znajdziesz przydatne materiały, które pomogą Ci w nauce, planowaniu i realizacji własnych projektów:
 
-### Szablony projektów
+### 📦 Szablony projektów
+
+<div align="center">
+
+**Gotowe szablony do szybkiego startu w najpopularniejszych technologiach**
+
+</div>
 - [Szablon Vanilla JavaScript](dodatkowe_materialy/szablony_projektow/vanilla_javascript/) – nowoczesny frontend JS
 - [Szablon C z CMake](dodatkowe_materialy/szablony_projektow/c_cmake/) – projekt w C z automatyzacją
 - [Szablon Python (setup.py + Nuitka)](dodatkowe_materialy/szablony_projektow/python_setup_py/) – Python z kompilacją binarną
@@ -449,3 +714,61 @@ W tej sekcji znajdziesz przydatne materiały, które pomogą Ci w nauce, planowa
 - [Heroku](https://devcenter.heroku.com/) – darmowy hosting aplikacji webowych
 
 Jeśli masz własne propozycje ciekawych materiałów lub chcesz podzielić się swoim projektem, otwórz issue lub pull request!
+
+
+---
+
+## 🤝 Jak możesz pomóc?
+
+Twój wkład jest mile widziany! Oto kilka sposobów, jak możesz pomóc:
+
+<table>
+<tr>
+<td width="60"><div align="center">⭐</div></td>
+<td><b>Gwiazdka</b><br/>Jeśli projekt Ci się podoba, zostaw gwiazdkę na GitHub!</td>
+</tr>
+
+<tr>
+<td width="60"><div align="center">🐛</div></td>
+<td><b>Zgłoś błąd</b><br/>Znalazłeś błąd? Otwórz issue i opisz problem.</td>
+</tr>
+
+<tr>
+<td width="60"><div align="center">💡</div></td>
+<td><b>Zaproponuj projekt</b><br/>Masz pomysł na ciekawy projekt? Podziel się nim!</td>
+</tr>
+
+<tr>
+<td width="60"><div align="center">📝</div></td>
+<td><b>Popraw dokumentację</b><br/>Widzisz literówkę lub niejasny opis? Wyślij pull request!</td>
+</tr>
+
+<tr>
+<td width="60"><div align="center">💻</div></td>
+<td><b>Dodaj implementację</b><br/>Zaimplementowałeś projekt w innym języku? Dodaj go do repozytorium!</td>
+</tr>
+
+<tr>
+<td width="60"><div align="center">🌍</div></td>
+<td><b>Udostępnij projekt</b><br/>Pomóż innym odkryć ten zasób – podziel się linkiem!</td>
+</tr>
+
+</table>
+
+---
+
+## 📜 Licencja
+
+Ten projekt jest udostępniony na licencji [GNU General Public License v3.0](LICENSE).
+
+---
+
+<div align="center">
+
+**Wykonane z ❤️ dla społeczności programistów**
+
+⭐ Zostaw gwiazdkę jeśli projekt Ci się podoba! ⭐
+
+[⬆ Powrót do góry](#-proste-projekty)
+
+</div>

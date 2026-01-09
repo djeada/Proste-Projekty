@@ -1,0 +1,7 @@
+FROM python:3.12-slim
+WORKDIR /app
+COPY . .
+RUN pip install --upgrade pip && pip install . nuitka
+RUN nuitka --standalone --onefile src/main.py -o app.bin
+EXPOSE 8888
+CMD ["./app.bin"]

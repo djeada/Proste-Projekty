@@ -469,9 +469,13 @@ Gra w statki to klasyczna gra polegająca na umieszczaniu floty na planszy i pr�
 
 #### Linki
 
-Screenshot | Technologie | Link 
+<div align="center">
+
+Screenshot | Technologie | Link
 ---|---|---
-| - | - | - |
+| - | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/battleship)** |
+
+</div>
 
 ### Kółko i krzyżyk
 
@@ -479,9 +483,13 @@ Kółko i krzyżyk to klasyczna gra, która może być realizowana w trybie dwó
 
 #### Linki
 
-Screenshot | Technologie | Link 
+<div align="center">
+
+Screenshot | Technologie | Link
 ---|---|---
-| - | - | - |
+| - | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/tic_tac_toe)** |
+
+</div>
 
 ### Saper
 
@@ -503,9 +511,13 @@ Screenshot | Technologie | Link
 
 #### Linki
 
-Screenshot | Technologie | Link 
+<div align="center">
+
+Screenshot | Technologie | Link
 ---|---|---
-| - | - | - |
+| - | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/2048)** |
+
+</div>
 
 ### Apokalipsa Zombie
 
@@ -555,9 +567,13 @@ Kurka wodna to dynamiczna gra, w której gracze muszą "ustrzelić" kurki pojawi
 
 #### Linki
 
-Screenshot | Technologie | Link 
+<div align="center">
+
+Screenshot | Technologie | Link
 ---|---|---
-| - | - | - |
+| - | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/shooting_ducks)** |
+
+</div>
 
 ### Wąż
 
@@ -575,9 +591,13 @@ Projekt edytora tekstu oferuje możliwość tworzenia, edytowania i zapisywania 
 
 #### Linki
 
-Screenshot | Technologie | Link 
+<div align="center">
+
+Screenshot | Technologie | Link
 ---|---|---
-| - | - | - |
+| - | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/text_editor)** |
+
+</div>
 
 ### Obróbka grafiki
 
@@ -615,9 +635,13 @@ Projekt koszyka z zakupami to aplikacja e-commerce, która umożliwia użytkowni
 
 #### Linki
 
-Screenshot | Technologie | Link 
+<div align="center">
+
+Screenshot | Technologie | Link
 ---|---|---
-| - | - | - |
+| - | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/shopping_cart)** |
+
+</div>
 
 ### Zamawianie jedzenia
 
@@ -635,9 +659,13 @@ Komunikator internetowy to aplikacja umożliwiająca komunikację tekstową, prz
 
 #### Linki
 
-Screenshot | Technologie | Link 
+<div align="center">
+
+Screenshot | Technologie | Link
 ---|---|---
-| - | - | - |
+| - | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/messenger)** |
+
+</div>
 
 ## 📦 Szablony projektów
 

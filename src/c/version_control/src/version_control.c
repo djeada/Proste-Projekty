@@ -248,7 +248,9 @@ int repo_diff(const Repository *repo, int commit_id1, int commit_id2) {
         if (!f1) {
             printf("[+] Added: %s\n", f2->path);
         } else if (f1->size != f2->size ||
-                   (f1->content && f2->content && strcmp(f1->content, f2->content) != 0)) {
+                   (f1->content != f2->content &&
+                    (!f1->content || !f2->content ||
+                     strcmp(f1->content, f2->content) != 0))) {
             printf("[M] Modified: %s\n", f2->path);
         }
     }

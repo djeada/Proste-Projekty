@@ -39,6 +39,8 @@ int buffer_load(TextBuffer *buf, const char *filename) {
         }
         buf->lines[buf->num_lines] = strdup(line);
         if (!buf->lines[buf->num_lines]) {
+            // Clean up partial state on allocation failure
+            buffer_free(buf);
             fclose(file);
             return 0;
         }

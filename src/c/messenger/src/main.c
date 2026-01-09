@@ -88,6 +88,9 @@ void run_client(const char *host, int port, const char *username) {
 }
 
 void run_server(int port) {
+    // Note: This is a simple single-threaded server that handles one client
+    // at a time. For production use, consider using threads or async I/O
+    // (select/poll/epoll) to handle multiple clients concurrently.
     printf("Starting server on port %d...\n", port);
 
     int server_fd = start_server(port);

@@ -1,0 +1,2 @@
+Checks: 'clang-analyzer-*,bugprone-*,-bugprone-easily-swappable-parameters,-bugprone-misplaced-widening-cast,-bugprone-narrowing-conversions,performance-*,portability-*'
+WarningsAsErrors: '*'

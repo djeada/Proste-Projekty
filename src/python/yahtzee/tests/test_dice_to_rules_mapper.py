@@ -70,3 +70,51 @@ class TestDiceToRulesMapper(unittest.TestCase):
         excepted_rules = [ScoreType.THREES, ScoreType.THREE_OF_A_KIND, ScoreType.CHANCE]
         result = mapper.map_to_rules()
         self.assertSetEqual(set(excepted_rules), set(result))
+
+    def test_small_straight_1234(self):
+        """Test small straight with 1-2-3-4 pattern"""
+        dice_list = [Dice(1), Dice(2), Dice(3), Dice(4), Dice(6)]
+        mapper = DiceToRulesMapper(dice_list)
+        result = mapper.map_to_rules()
+        self.assertIn(ScoreType.SMALL_STRAIGHT, result)
+        self.assertNotIn(ScoreType.LARGE_STRAIGHT, result)
+
+    def test_small_straight_2345(self):
+        """Test small straight with 2-3-4-5 pattern"""
+        dice_list = [Dice(2), Dice(3), Dice(4), Dice(5), Dice(2)]
+        mapper = DiceToRulesMapper(dice_list)
+        result = mapper.map_to_rules()
+        self.assertIn(ScoreType.SMALL_STRAIGHT, result)
+        self.assertNotIn(ScoreType.LARGE_STRAIGHT, result)
+
+    def test_small_straight_3456(self):
+        """Test small straight with 3-4-5-6 pattern"""
+        dice_list = [Dice(3), Dice(4), Dice(5), Dice(6), Dice(3)]
+        mapper = DiceToRulesMapper(dice_list)
+        result = mapper.map_to_rules()
+        self.assertIn(ScoreType.SMALL_STRAIGHT, result)
+        self.assertNotIn(ScoreType.LARGE_STRAIGHT, result)
+
+    def test_large_straight_12345(self):
+        """Test large straight with 1-2-3-4-5 pattern"""
+        dice_list = [Dice(1), Dice(2), Dice(3), Dice(4), Dice(5)]
+        mapper = DiceToRulesMapper(dice_list)
+        result = mapper.map_to_rules()
+        self.assertIn(ScoreType.SMALL_STRAIGHT, result)
+        self.assertIn(ScoreType.LARGE_STRAIGHT, result)
+
+    def test_large_straight_23456(self):
+        """Test large straight with 2-3-4-5-6 pattern"""
+        dice_list = [Dice(2), Dice(3), Dice(4), Dice(5), Dice(6)]
+        mapper = DiceToRulesMapper(dice_list)
+        result = mapper.map_to_rules()
+        self.assertIn(ScoreType.SMALL_STRAIGHT, result)
+        self.assertIn(ScoreType.LARGE_STRAIGHT, result)
+
+    def test_no_straight(self):
+        """Test that non-sequential dice don't match straights"""
+        dice_list = [Dice(1), Dice(1), Dice(3), Dice(5), Dice(6)]
+        mapper = DiceToRulesMapper(dice_list)
+        result = mapper.map_to_rules()
+        self.assertNotIn(ScoreType.SMALL_STRAIGHT, result)
+        self.assertNotIn(ScoreType.LARGE_STRAIGHT, result)

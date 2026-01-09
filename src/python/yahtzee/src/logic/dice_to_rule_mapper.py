@@ -91,7 +91,8 @@ class DiceToRulesMapper:
 
         def could_be_yahtzee(dice_list: List[Dice]) -> bool:
             histogram = create_histogram(dice_list)
-            return max(histogram.values()) >= 5
+            # Yahtzee requires 5 or more dice of the same value
+            return len(dice_list) >= 5 and max(histogram.values()) >= 5
 
         all_rules = [
             could_be_aces,

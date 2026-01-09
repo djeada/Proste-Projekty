@@ -2,15 +2,20 @@
 
 ## About the Project
 
-Python implementation of the classic Snake game with a tkinter GUI.
+Python implementation of the classic Snake game with a pygame GUI.
 
 ## Requirements
 
 To run this project locally you will need:
 
 * Python 3.8+
+* pygame
 
-No additional libraries or packages are needed!
+Install dependencies:
+
+```Bash
+pip install -r requirements.txt
+```
 
 ## Installation
 

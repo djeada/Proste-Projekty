@@ -1,7 +1,10 @@
 import tkinter as tk
 from tkinter import ttk
 
-from src.python.yahtzee.src.logic.table import ScoreType, Table
+try:
+    from logic.table import ScoreType, Table
+except ImportError:
+    from src.logic.table import ScoreType, Table
 
 
 class TableGui:

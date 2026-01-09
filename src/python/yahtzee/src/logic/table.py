@@ -1,8 +1,16 @@
+from __future__ import annotations
+
 from dataclasses import dataclass
 from enum import auto, Enum
-from typing import List
-from dice import Dice
-from utils import most_common_value
+from typing import List, TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from src.logic.dice import Dice
+
+try:
+    from utils import most_common_value
+except ImportError:
+    from src.utils.utils import most_common_value
 
 
 class ScoreType(Enum):

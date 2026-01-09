@@ -1,9 +1,14 @@
 import tkinter as tk
 from tkinter import ttk
 
-from src.python.yahtzee.src.logic.game import Game
-from src.python.yahtzee.src.logic.player import Player
-from src.python.yahtzee.src.logic.table import ScoreType
+try:
+    from logic.game import Game
+    from logic.player import Player
+    from logic.table import ScoreType
+except ImportError:
+    from src.logic.game import Game
+    from src.logic.player import Player
+    from src.logic.table import ScoreType
 
 
 class PossibleMovesGui:

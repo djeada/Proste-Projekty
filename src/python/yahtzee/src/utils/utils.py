@@ -1,14 +1,17 @@
-from typing import Dict, List
+from typing import Dict, List, TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from src.logic.dice import Dice
 
 
-def create_histogram(dice_list: List[int]) -> Dict[int, int]:
+def create_histogram(dice_list: "List[Dice]") -> Dict[int, int]:
     """
     Creates a histogram of the dice list.
 
     :param dice_list: list of dice
     :return: histogram of the dice list
     """
-    histogram = {}
+    histogram: Dict[int, int] = {}
     for dice in dice_list:
         if dice.value in histogram:
             histogram[dice.value] += 1
@@ -17,7 +20,7 @@ def create_histogram(dice_list: List[int]) -> Dict[int, int]:
     return histogram
 
 
-def most_common_value(dice_list: List[int]) -> int:
+def most_common_value(dice_list: "List[Dice]") -> int:
     """
     Finds the most common value in the dice list.
 

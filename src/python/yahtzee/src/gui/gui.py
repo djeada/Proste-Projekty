@@ -1,10 +1,17 @@
 from tkinter import ttk
 
-from src.python.yahtzee.src.gui.dice_gui import DiceGui
-from src.python.yahtzee.src.gui.possible_moves_gui import PossibleMovesGui
-from src.python.yahtzee.src.gui.sytled_window import StyledWindow
-from src.python.yahtzee.src.gui.table_gui import TableGui
-from src.python.yahtzee.src.logic.game import Game
+try:
+    from gui.dice_gui import DiceGui
+    from gui.possible_moves_gui import PossibleMovesGui
+    from gui.styled_window import StyledWindow
+    from gui.table_gui import TableGui
+    from logic.game import Game
+except ImportError:
+    from src.gui.dice_gui import DiceGui
+    from src.gui.possible_moves_gui import PossibleMovesGui
+    from src.gui.styled_window import StyledWindow
+    from src.gui.table_gui import TableGui
+    from src.logic.game import Game
 
 
 class Gui:

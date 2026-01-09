@@ -2,7 +2,10 @@ import tkinter as tk
 from tkinter import ttk
 from typing import List
 
-from src.python.yahtzee.src.logic.dice import Dice
+try:
+    from logic.dice import Dice
+except ImportError:
+    from src.logic.dice import Dice
 
 
 class DiceGui:

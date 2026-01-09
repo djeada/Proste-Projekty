@@ -1,13 +1,6 @@
 """
 Python implementation of a weather information application.
 """
-import sys
-import os
-
-sys.path.insert(
-    0, os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-)
-
 from src.python.weather.src.logic.weather import WeatherService
 
 

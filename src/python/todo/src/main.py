@@ -7,13 +7,6 @@ Commands:
 - list: Show all tasks
 - quit: Exit the application
 """
-import sys
-import os
-
-sys.path.insert(
-    0, os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-)
-
 from src.python.todo.src.logic.todo_list import TodoList
 
 

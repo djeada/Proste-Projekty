@@ -1,13 +1,6 @@
 """
 Python implementation of a simple version control system.
 """
-import sys
-import os
-
-sys.path.insert(
-    0, os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-)
-
 from src.python.version_control.src.logic.repository import Repository
 
 

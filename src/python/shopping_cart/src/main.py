@@ -1,13 +1,6 @@
 """
 Python implementation of a shopping cart system.
 """
-import sys
-import os
-
-sys.path.insert(
-    0, os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-)
-
 from src.python.shopping_cart.src.logic.cart import Store, Cart
 
 

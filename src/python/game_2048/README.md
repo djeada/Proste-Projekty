@@ -23,7 +23,7 @@ git clone https://github.com/djeada/Proste-Projekty.git
 2. Navigate to the appropriate directory:
 
 ```Bash
-cd Proste-Projekty/src/python/2048
+cd Proste-Projekty/src/python/game_2048
 ```
 
 3. Start the app:

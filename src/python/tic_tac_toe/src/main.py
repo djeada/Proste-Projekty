@@ -6,13 +6,6 @@ Python implementation of the classic Tic-Tac-Toe game.
 3. The first player to get 3 marks in a row wins.
 4. If all 9 squares are filled without a winner, the game is a draw.
 """
-import sys
-import os
-
-sys.path.insert(
-    0, os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-)
-
 from src.python.tic_tac_toe.src.gui.gui import Gui
 from src.python.tic_tac_toe.src.logic.board import Board
 

@@ -48,7 +48,9 @@ class MessengerServer:
         """Start the server."""
         self.socket = create_socket()
         set_socket_reusable(self.socket)
-        self.socket.bind(("", self.port))
+        # Bind to all interfaces (empty string) - suitable for demo/local use
+        # For production, specify a specific interface like "127.0.0.1"
+        self.socket.bind(("", self.port))  # nosec
         self.socket.listen(10)
         self.running = True
 

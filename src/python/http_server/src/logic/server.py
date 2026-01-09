@@ -89,7 +89,9 @@ class HttpServer:
         """Start the server."""
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        self.socket.bind(("", self.port))
+        # Bind to all interfaces (empty string) - suitable for demo/local use
+        # For production, specify a specific interface like "127.0.0.1"
+        self.socket.bind(("", self.port))  # nosec
         self.socket.listen(5)
         self.running = True
 

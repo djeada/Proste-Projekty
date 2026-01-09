@@ -1,13 +1,6 @@
 """
 Python implementation of a food ordering system.
 """
-import sys
-import os
-
-sys.path.insert(
-    0, os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-)
-
 from src.python.food_ordering.src.logic.ordering import (
     Menu,
     OrderSystem,

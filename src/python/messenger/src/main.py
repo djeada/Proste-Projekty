@@ -2,11 +2,6 @@
 Python implementation of a simple messenger client/server.
 """
 import sys
-import os
-
-sys.path.insert(
-    0, os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-)
 
 from src.python.messenger.src.logic.messenger import (
     MessengerServer,

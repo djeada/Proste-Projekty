@@ -1,0 +1,2 @@
+Checks: 'clang-analyzer-*,bugprone-*,-bugprone-easily-swappable-parameters,performance-*,portability-*'
+WarningsAsErrors: '*'

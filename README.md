@@ -615,9 +615,13 @@ Projekt systemu kontroli wersji oferuje podstawową funkcjonalność zarządzani
 
 #### Linki
 
-Screenshot | Technologie | Link 
+<div align="center">
+
+Screenshot | Technologie | Link
 ---|---|---
-| - | - | - |
+| - | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/version_control)** |
+
+</div>
 
 ### Serwer HTTP
 

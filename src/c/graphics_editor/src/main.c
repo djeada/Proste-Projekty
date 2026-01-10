@@ -109,7 +109,6 @@ static void render(AppState *app);
 static void update_canvas_texture(AppState *app);
 static void draw_toolbar(AppState *app);
 static void draw_button(AppState *app, Button *btn);
-static void draw_text(AppState *app, const char *text, int x, int y, SDL_Color color);
 static int point_in_rect(int x, int y, SDL_Rect *rect);
 static void handle_canvas_click(AppState *app, int x, int y);
 static void handle_canvas_drag(AppState *app, int x, int y);
@@ -518,7 +517,10 @@ static void clear_canvas(AppState *app) {
 }
 
 /**
- * Save image to file (simple filename for now)
+ * Save image to file.
+ * Note: Currently uses hardcoded filename for simplicity.
+ * A proper file dialog would require platform-specific code or additional libraries.
+ * TODO: Consider using tinyfiledialogs or similar for cross-platform file dialogs.
  */
 static void save_image_dialog(AppState *app) {
     const char *filename = "output.ppm";
@@ -530,7 +532,10 @@ static void save_image_dialog(AppState *app) {
 }
 
 /**
- * Load image from file (simple filename for now)
+ * Load image from file.
+ * Note: Currently uses hardcoded filename for simplicity.
+ * A proper file dialog would require platform-specific code or additional libraries.
+ * TODO: Consider using tinyfiledialogs or similar for cross-platform file dialogs.
  */
 static void load_image_dialog(AppState *app) {
     const char *filename = "output.ppm";
@@ -590,18 +595,6 @@ static void draw_button(AppState *app, Button *btn) {
     /* Draw border */
     SDL_SetRenderDrawColor(app->renderer, 50, 50, 50, 255);
     SDL_RenderDrawRect(app->renderer, &btn->rect);
-}
-
-/**
- * Simple text rendering using rectangles (no SDL_ttf dependency)
- */
-static void draw_text(AppState *app, const char *text, int x, int y, SDL_Color color) {
-    (void)app;
-    (void)text;
-    (void)x;
-    (void)y;
-    (void)color;
-    /* Text rendering would require SDL_ttf - for now we use visual buttons only */
 }
 
 /**

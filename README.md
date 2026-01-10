@@ -398,7 +398,7 @@ Projekt ten pozwala na ćwiczenie podstawowych umiejętności programowania, tak
 
 Screenshot | Technologie | Link
 ---|---|---
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/hangman)** |
+| ![screenshot](https://github.com/djeada/Proste-Projekty/assets/37275728/1ce340f4-9efc-423e-a65d-7ee9ac905a9f) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/hangman)** |
 | ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/hangman)** |
 | ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/hangman)** |
  
@@ -414,7 +414,7 @@ Projekt Szyfru Cezara to aplikacja umożliwiająca szyfrowanie i deszyfrowanie t
 
 Screenshot | Technologie | Link
 ---|---|---
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/caesar_cipher)** |
+| ![screenshot](https://github.com/djeada/Proste-Projekty/assets/37275728/6f0b1c2f-a948-44e1-96b0-1a1d4b279256) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/caesar_cipher)** |
 | ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/caesar_cipher)** |
 | ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/caesar_cipher)** |
  
@@ -430,7 +430,7 @@ Kalkulator to podstawowy projekt, który pomaga w zrozumieniu obsługi interfejs
  
 Screenshot | Technologie | Link
 ---|---|---
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/calculator)** |
+| ![screenshot](https://github.com/djeada/Proste-Projekty/assets/37275728/e62d057f-bb26-4409-8664-83e7323e1d86) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/calculator)** |
 | ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/calculator)** |
 | ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/calculator)** |
  

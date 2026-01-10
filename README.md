@@ -396,10 +396,10 @@ Projekt ten pozwala na ćwiczenie podstawowych umiejętności programowania, tak
 
 <div align="center">
 
-Screenshot | Technologie | Link 
+Screenshot | Technologie | Link
 ---|---|---
-| ![hangman](https://github.com/djeada/Proste-Projekty/assets/37275728/1ce340f4-9efc-423e-a65d-7ee9ac905a9f) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/hangman)** |
- ![hangman](https://user-images.githubusercontent.com/37275728/194822831-d1b117cb-ae01-4939-bac1-85ac4e58769a.gif) | <img src="https://img.icons8.com/color/344/python.png" height="50" />  | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/hangman)**
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/hangman)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/hangman)** |
  
 </div>
 
@@ -411,10 +411,10 @@ Projekt Szyfru Cezara to aplikacja umożliwiająca szyfrowanie i deszyfrowanie t
 
 <div align="center">
 
-Screenshot | Technologie | Link 
+Screenshot | Technologie | Link
 ---|---|---
-| ![cipher](https://github.com/djeada/Proste-Projekty/assets/37275728/6f0b1c2f-a948-44e1-96b0-1a1d4b279256) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/cipher)** |
-![caesar cipher](https://user-images.githubusercontent.com/37275728/194821911-e403023e-c5e5-4b19-b8bb-5cfedae8f164.gif) | <img src="https://img.icons8.com/color/344/python.png" height="50" />  | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/caesar_cipher)**
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/caesar_cipher)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/caesar_cipher)** |
  
 </div>
 
@@ -426,10 +426,11 @@ Kalkulator to podstawowy projekt, który pomaga w zrozumieniu obsługi interfejs
 
 <div align="center">
  
-Screenshot | Technologie | Link 
+Screenshot | Technologie | Link
 ---|---|---
-| ![calculator](https://github.com/djeada/Proste-Projekty/assets/37275728/e62d057f-bb26-4409-8664-83e7323e1d86) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/calculator)** |
-![calculator](https://user-images.githubusercontent.com/37275728/194822287-7b84368a-2df0-4f4f-87a0-31951b91a253.gif) | <img src="https://img.icons8.com/color/344/python.png" height="50" />  | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/calculator)**
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/calculator)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/calculator)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/calculator)** |
  
 </div>
 
@@ -439,9 +440,15 @@ Projekt listy zadań to aplikacja do zarządzania zadaniami, która umożliwia u
 
 #### Linki
 
-Screenshot | Technologie | Link 
+<div align="center">
+
+Screenshot | Technologie | Link
 ---|---|---
-| - | - | - |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/todo)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/todo)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/todo_list)** |
+
+</div>
 
 ### Pogoda
 
@@ -449,9 +456,14 @@ Projekt aplikacji pogodowej umożliwia użytkownikom sprawdzanie aktualnej pogod
 
 #### Linki
 
-Screenshot | Technologie | Link 
+<div align="center">
+
+Screenshot | Technologie | Link
 ---|---|---
-| - | - | - |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/weather)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/weather)** |
+
+</div>
 
 ### Stoper
 
@@ -459,9 +471,14 @@ Stoper to prosta aplikacja do odmierzania czasu z dokładnością do milisekund.
 
 #### Linki
 
-Screenshot | Technologie | Link 
+<div align="center">
+
+Screenshot | Technologie | Link
 ---|---|---
-| ![timer](https://github.com/djeada/Proste-Projekty/assets/37275728/6923c7e1-1c9e-474c-b106-6491a24f31a4) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/timer)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/timer)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/timer)** |
+
+</div>
 
 ### Statki
 
@@ -473,7 +490,8 @@ Gra w statki to klasyczna gra polegająca na umieszczaniu floty na planszy i pr�
 
 Screenshot | Technologie | Link
 ---|---|---
-| - | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/battleship)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/battleship)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/battleship)** |
 
 </div>
 
@@ -487,7 +505,8 @@ Kółko i krzyżyk to klasyczna gra, która może być realizowana w trybie dwó
 
 Screenshot | Technologie | Link
 ---|---|---
-| - | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/tic_tac_toe)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/tic_tac_toe)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/tic_tac_toe)** |
 
 </div>
 
@@ -499,10 +518,11 @@ Saper to klasyczna gra logiczna, w której zadaniem gracza jest odkrywanie pól 
  
 <div align="center">
 
-Screenshot | Technologie | Link 
+Screenshot | Technologie | Link
 ---|---|---
-<img width="2000"/>![minesweeper](https://user-images.githubusercontent.com/37275728/194823180-a96946b2-082e-4aac-85cd-e822b6cf58c4.gif) | <img src="https://img.icons8.com/color/344/python.png" height="50" />  | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/minesweeper)**
- 
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/minesweeper)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/minesweeper)** |
+
 </div>
 
 ### 2048
@@ -515,7 +535,8 @@ Screenshot | Technologie | Link
 
 Screenshot | Technologie | Link
 ---|---|---
-| - | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/2048)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/2048)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/game_2048)** |
 
 </div>
 
@@ -527,10 +548,11 @@ Apokalipsa Zombie to gra akcji, w której celem gracza jest przetrwanie fal atak
 
 <div align="center">
 
-Screenshot | Technologie | Link 
+Screenshot | Technologie | Link
 ---|---|---
- <img width="2000"/>![zombie_apocalypse](https://user-images.githubusercontent.com/37275728/188334905-179b94fd-eec2-44b8-a64f-fecdd6c6ea01.gif) | <img src="https://img.icons8.com/color/344/python.png" height="50" />  | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/zombie_apocalypse)**
- 
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/zombie_apocalypse)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/zombie_apocalypse)** |
+
 </div>
 
 ### Piętnastka
@@ -541,10 +563,11 @@ Piętnastka to klasyczna gra logiczna, w której celem jest ułożenie 15 kwadra
  
 <div align="center">
 
-Screenshot | Technologie | Link 
+Screenshot | Technologie | Link
 ---|---|---
- <img width="2000"/>![fifteen_puzzle](https://user-images.githubusercontent.com/37275728/194822577-fbfa5228-3643-4f61-ad69-bc58cd80b97a.gif) | <img src="https://img.icons8.com/color/344/python.png" height="50" />  | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/fifteen_puzzle)**
- 
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/fifteen_puzzle)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/fifteen_puzzle)** |
+
 </div>
 
 ### Kości
@@ -555,10 +578,11 @@ Kości to gra towarzyska, w której gracze rzucają zestawem pięciu kości, sta
 
 <div align="center">
 
-Screenshot | Technologie | Link 
+Screenshot | Technologie | Link
 ---|---|---
- <img width="2000"/>![yahtzee](https://user-images.githubusercontent.com/37275728/194823845-3aea219e-10d3-4d09-bc36-0832e7e0a8f8.gif) | <img src="https://img.icons8.com/color/344/python.png" height="50" />  | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/yahtzee)**
- 
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/yahtzee)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/yahtzee)** |
+
 </div>
 
 ### Kurka wodna
@@ -571,7 +595,8 @@ Kurka wodna to dynamiczna gra, w której gracze muszą "ustrzelić" kurki pojawi
 
 Screenshot | Technologie | Link
 ---|---|---
-| - | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/shooting_ducks)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/shooting_ducks)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/shooting_ducks)** |
 
 </div>
 
@@ -581,9 +606,15 @@ W grze Wąż gracz steruje wężem poruszającym się po prostokątnej planszy. 
 
 #### Linki
 
-Screenshot | Technologie | Link 
+<div align="center">
+
+Screenshot | Technologie | Link
 ---|---|---
-| ![snake](https://github.com/djeada/Proste-Projekty/assets/37275728/866797cf-1472-42fd-aca5-c492a684ae44) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/snake)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/snake)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/snake)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/snake)** |
+
+</div>
 
 ### Edytor tekstowy
 
@@ -595,7 +626,8 @@ Projekt edytora tekstu oferuje możliwość tworzenia, edytowania i zapisywania 
 
 Screenshot | Technologie | Link
 ---|---|---
-| - | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/text_editor)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/text_editor)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/text_editor)** |
 
 </div>
 
@@ -609,7 +641,8 @@ Program do obróbki grafiki umożliwia importowanie, wyświetlanie oraz edycję 
 
 Screenshot | Technologie | Link
 ---|---|---
-| - | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/graphics_editor)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/graphics_editor)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/graphics_editor)** |
 
 </div>
 
@@ -623,7 +656,8 @@ Projekt systemu kontroli wersji oferuje podstawową funkcjonalność zarządzani
 
 Screenshot | Technologie | Link
 ---|---|---
-| - | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/version_control)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/version_control)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/version_control)** |
 
 </div>
 
@@ -633,9 +667,14 @@ Projekt serwera HTTP polega na stworzeniu serwera, który nasłuchuje na żądan
 
 #### Linki
 
-Screenshot | Technologie | Link 
+<div align="center">
+
+Screenshot | Technologie | Link
 ---|---|---
-| - | - | - |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/http_server)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/http_server)** |
+
+</div>
 
 ### Koszyk z zakupami
 
@@ -647,7 +686,8 @@ Projekt koszyka z zakupami to aplikacja e-commerce, która umożliwia użytkowni
 
 Screenshot | Technologie | Link
 ---|---|---
-| - | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/shopping_cart)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/shopping_cart)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/shopping_cart)** |
 
 </div>
 
@@ -661,7 +701,8 @@ Aplikacja do zamawiania jedzenia pozwala użytkownikom przeglądać menu z dost�
 
 Screenshot | Technologie | Link
 ---|---|---
-| - | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/food_ordering)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/food_ordering)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/food_ordering)** |
 
 </div>
 
@@ -675,7 +716,8 @@ Komunikator internetowy to aplikacja umożliwiająca komunikację tekstową, prz
 
 Screenshot | Technologie | Link
 ---|---|---
-| - | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/messenger)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/messenger)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/messenger)** |
 
 </div>
 

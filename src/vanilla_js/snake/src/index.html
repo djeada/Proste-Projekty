@@ -1,15 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<title> Snake </title>
-		<meta charset="utf-8">
-		<link rel="stylesheet" type="text/css" href="style.css">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta http-equiv="X-UA-Compatible" content="ie-edge" />	
-	</head>
-	<body>
-		<canvas id="canvas" width="800" height="640"></canvas>
-				<script src="app.js"></script>
-
-	</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Snake</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Snake</h1>
+      <div class="info-bar">
+        <div class="score-display">Score: <span id="score">0</span></div>
+        <button id="new-game" class="new-game-btn">New Game</button>
+      </div>
+      <canvas id="canvas" width="400" height="400"></canvas>
+      <div id="message" class="message"></div>
+      <p class="instructions">Use arrow keys to move the snake</p>
+    </div>
+    <script src="app.js"></script>
+  </body>
 </html>

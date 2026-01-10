@@ -4,31 +4,27 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-
     <title>Todo List</title>
-
     <link rel="stylesheet" href="style.css" />
   </head>
-
   <body>
-    
-
     <div class="container">
-      <div class="header">
-        <h1>Todo List</h1>
+      <h1>Todo List</h1>
+      <form class="todo-form">
+        <input type="text" id="todo-input" placeholder="Add a new task..." />
+        <button type="submit" class="add-btn">Add</button>
+      </form>
+      <div class="filters">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="active">Active</button>
+        <button class="filter-btn" data-filter="completed">Completed</button>
       </div>
-      <div class="content">
-        <div class="todo-form">
-          <form>
-            <input type="text" placeholder="Add new todo"/>
-            <button type="submit">Add</button>
-          </form>
-          <div class="todo-list">
-          
-          </div>
-        </div>
+      <ul class="todo-list" id="todo-list"></ul>
+      <div class="stats">
+        <span id="task-count">0 tasks</span>
+        <button id="clear-completed" class="clear-btn">Clear Completed</button>
       </div>
-
+    </div>
     <script src="app.js"></script>
   </body>
 </html>

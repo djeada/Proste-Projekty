@@ -2,9 +2,14 @@ from dataclasses import field, dataclass
 from enum import Enum, auto
 from typing import List
 
-from src.python.yahtzee.src.logic.dice import Dice
-from src.python.yahtzee.src.logic.dice_to_rule_mapper import DiceToRulesMapper
-from src.python.yahtzee.src.logic.table import Table, ScoreType
+try:
+    from dice import Dice
+    from dice_to_rule_mapper import DiceToRulesMapper
+    from table import Table, ScoreType
+except ImportError:
+    from src.logic.dice import Dice
+    from src.logic.dice_to_rule_mapper import DiceToRulesMapper
+    from src.logic.table import Table, ScoreType
 
 
 class PlayerType(Enum):
@@ -24,7 +29,7 @@ class Player:
 
     player_type: PlayerType
     table: Table = field(default_factory=lambda: Table())
-    dice_list: List[Dice] = field(default_factory=lambda: [Dice() for _ in range(6)])
+    dice_list: List[Dice] = field(default_factory=lambda: [Dice() for _ in range(5)])
     dice_list_put_away: List[int] = field(default_factory=list)
     numbers_of_throws_left: int = 3
 

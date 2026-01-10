@@ -2,7 +2,22 @@ import tkinter as tk
 from tkinter import ttk
 from typing import List
 
-from src.python.yahtzee.src.logic.dice import Dice
+try:
+    from logic.dice import Dice
+except ImportError:
+    from src.logic.dice import Dice
+
+
+# Dice face representations using Unicode
+DICE_FACES = {
+    -1: "?",
+    1: "⚀",
+    2: "⚁",
+    3: "⚂",
+    4: "⚃",
+    5: "⚄",
+    6: "⚅",
+}
 
 
 class DiceGui:
@@ -38,30 +53,102 @@ class DiceGui:
         self.upper_row_dice_list = [
             dice for dice in self.dice_list if dice not in self.lower_row_dice_list
         ]
-        # remove every child of self.frame
+
+        # Clear existing widgets
         for child in self.frame.winfo_children():
             child.destroy()
         self.buttons.clear()
-        # draw each dice as a button with text of value
-        label = ttk.Label(self.frame, text="Rolled:")
-        label.grid(row=0, column=0, pady=10)
+
+        # Header
+        header = ttk.Label(
+            self.frame,
+            text="🎲 Dice",
+            style="SubHeader.TLabel"
+        )
+        header.grid(row=0, column=0, columnspan=6, pady=(0, 15), sticky="w")
+
+        # Active dice section
+        active_label = ttk.Label(
+            self.frame,
+            text="🔄 Roll again:",
+            style="DiceLabel.TLabel"
+        )
+        active_label.grid(row=1, column=0, pady=(0, 5), sticky="w")
+
+        # Active dice buttons (dice to be rolled)
+        active_frame = ttk.Frame(self.frame)
+        active_frame.grid(row=2, column=0, columnspan=6, pady=(0, 15), sticky="w")
+
         for i, dice in enumerate(self.upper_row_dice_list):
-            button = ttk.Button(self.frame, text=dice.value)
-            button.grid(row=1, column=1 + i, padx=10)
-            button.config(command=lambda dice=dice: self.move_dice_down(dice))
+            dice_face = DICE_FACES.get(dice.value, "?")
+            button = tk.Button(
+                active_frame,
+                text=dice_face,
+                font=("Helvetica", 28),
+                width=2,
+                height=1,
+                bg="#ffffff",
+                fg="#2196F3",
+                activebackground="#e3f2fd",
+                activeforeground="#1976D2",
+                relief="solid",
+                borderwidth=2,
+                cursor="hand2",
+                command=lambda d=dice: self.move_dice_down(d)
+            )
+            button.pack(side="left", padx=5)
             self.buttons.append(button)
 
-        label = ttk.Label(self.frame, text="Put down:")
-        label.grid(row=2, column=0, pady=10)
+        # Separator
+        if self.upper_row_dice_list or self.lower_row_dice_list:
+            ttk.Separator(self.frame, orient="horizontal").grid(
+                row=3, column=0, columnspan=6, sticky="ew", pady=10
+            )
+
+        # Kept dice section
+        kept_label = ttk.Label(
+            self.frame,
+            text="✓ Keep these:",
+            style="DiceLabel.TLabel"
+        )
+        kept_label.grid(row=4, column=0, pady=(0, 5), sticky="w")
+
+        kept_frame = ttk.Frame(self.frame)
+        kept_frame.grid(row=5, column=0, columnspan=6, pady=(0, 10), sticky="w")
+
         for i, dice in enumerate(self.lower_row_dice_list):
-            button = ttk.Button(self.frame, text=dice.value)
-            button.grid(row=3, column=1 + i, padx=10)
-            button.config(command=lambda dice=dice: self.move_dice_up(dice))
+            dice_face = DICE_FACES.get(dice.value, "?")
+            button = tk.Button(
+                kept_frame,
+                text=dice_face,
+                font=("Helvetica", 28),
+                width=2,
+                height=1,
+                bg="#e8f5e9",
+                fg="#4CAF50",
+                activebackground="#c8e6c9",
+                activeforeground="#388E3C",
+                relief="solid",
+                borderwidth=2,
+                cursor="hand2",
+                command=lambda d=dice: self.move_dice_up(d)
+            )
+            button.pack(side="left", padx=5)
             self.buttons.append(button)
+
+        # Instructions
+        if self.upper_row_dice_list or self.lower_row_dice_list:
+            hint = ttk.Label(
+                self.frame,
+                text="💡 Click dice to move between sections",
+                font=("Helvetica", 9, "italic"),
+                foreground="#9e9e9e"
+            )
+            hint.grid(row=6, column=0, columnspan=6, pady=(10, 0), sticky="w")
 
     def move_dice_down(self, dice: Dice) -> None:
         """
-        Moves dice from upper row to lower row.
+        Moves dice from upper row to lower row (keep this dice).
 
         :param dice: Dice to move.
         """
@@ -71,15 +158,15 @@ class DiceGui:
         self.dice_put_away.extend(
             [
                 i
-                for i, dice in enumerate(self.dice_list)
-                if dice in self.lower_row_dice_list
+                for i, d in enumerate(self.dice_list)
+                if d in self.lower_row_dice_list
             ]
         )
         self.parent_gui.draw()
 
     def move_dice_up(self, dice: Dice) -> None:
         """
-        Moves dice from lower row to upper row.
+        Moves dice from lower row to upper row (roll this dice again).
 
         :param dice: Dice to move.
         """
@@ -89,8 +176,8 @@ class DiceGui:
         self.dice_put_away.extend(
             [
                 i
-                for i, dice in enumerate(self.dice_list)
-                if dice in self.lower_row_dice_list
+                for i, d in enumerate(self.dice_list)
+                if d in self.lower_row_dice_list
             ]
         )
         self.parent_gui.draw()

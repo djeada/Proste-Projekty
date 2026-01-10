@@ -1,7 +1,11 @@
 from typing import List
 
-from src.python.yahtzee.src.logic.player import PlayerType, Player
-from src.python.yahtzee.src.logic.table import ScoreType
+try:
+    from player import PlayerType, Player
+    from table import ScoreType
+except ImportError:
+    from src.logic.player import PlayerType, Player
+    from src.logic.table import ScoreType
 
 
 class Game:

@@ -1,2 +1,2 @@
-ttkthemes==3.2.2
+ttkthemes
 pytest

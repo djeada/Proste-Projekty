@@ -10,6 +10,7 @@ import os
 sys.path.insert(
     0, os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 )
+from gui.styled_window import StyledWindow
 from logic.game import Game2048, Move, GRID_SIZE
 
 
@@ -54,7 +55,7 @@ class Gui:
     CELL_PAD = 10
 
     def __init__(self, game: Game2048) -> None:
-        self.root = tk.Tk()
+        self.root = StyledWindow()
         self.root.title("2048")
         self.root.resizable(False, False)
         self.game = game

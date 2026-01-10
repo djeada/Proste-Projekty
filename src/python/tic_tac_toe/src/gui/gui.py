@@ -11,6 +11,7 @@ import os
 sys.path.insert(
     0, os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 )
+from gui.styled_window import StyledWindow
 from logic.board import Board, PLAYER_X, PLAYER_O, BOARD_SIZE
 
 
@@ -20,7 +21,7 @@ class Gui:
     """
 
     def __init__(self, board: Board, vs_ai: bool = True) -> None:
-        self.root = tk.Tk()
+        self.root = StyledWindow()
         self.root.title("Tic-Tac-Toe")
         self.root.resizable(False, False)
         self.board = board

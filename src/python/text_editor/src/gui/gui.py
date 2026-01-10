@@ -10,6 +10,7 @@ import os
 sys.path.insert(
     0, os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 )
+from gui.styled_window import StyledWindow
 from logic.buffer import TextBuffer
 
 
@@ -19,7 +20,7 @@ class Gui:
     """
 
     def __init__(self, buffer: TextBuffer) -> None:
-        self.root = tk.Tk()
+        self.root = StyledWindow()
         self.root.title("Text Editor")
         self.root.geometry("800x600")
         self.buffer = buffer

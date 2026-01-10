@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Minesweeper</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Minesweeper</h1>
+      
+      <div class="info-bar">
+        <div class="mines-count">💣 <span id="mines-left">10</span></div>
+        <button id="new-game" class="new-game-btn">🙂</button>
+        <div class="timer">⏱️ <span id="timer">0</span></div>
+      </div>
+      
+      <div id="board" class="board"></div>
+      
+      <div id="message" class="message"></div>
+      
+      <div class="settings">
+        <div class="setting">
+          <label for="rows">Rows:</label>
+          <input type="number" id="rows" value="10" min="5" max="20" />
+        </div>
+        <div class="setting">
+          <label for="cols">Columns:</label>
+          <input type="number" id="cols" value="10" min="5" max="30" />
+        </div>
+        <div class="setting">
+          <label for="mines">Mines:</label>
+          <input type="number" id="mines" value="10" min="1" max="99" />
+        </div>
+      </div>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>

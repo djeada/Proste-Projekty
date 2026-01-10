@@ -1,0 +1,136 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1c1c1c 0%, #2d2d2d 100%);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.container {
+  text-align: center;
+  padding: 40px;
+  background: #1c1c1c;
+  border-radius: 20px;
+  box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.5);
+  max-width: 400px;
+  width: 90%;
+}
+
+h1 {
+  color: rgb(0, 157, 193);
+  margin-bottom: 30px;
+  font-size: 2em;
+}
+
+.display {
+  font-size: 3em;
+  color: white;
+  background: #2d2d2d;
+  padding: 20px;
+  border-radius: 10px;
+  border: 2px solid rgb(0, 157, 193);
+  margin-bottom: 30px;
+  font-family: 'Courier New', monospace;
+}
+
+.display.running {
+  border-color: #4CAF50;
+  box-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.btn {
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+  min-width: 80px;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.start-btn {
+  background: #4CAF50;
+  color: white;
+}
+
+.start-btn:hover:not(:disabled) {
+  background: #45a049;
+}
+
+.stop-btn {
+  background: #f44336;
+  color: white;
+}
+
+.stop-btn:hover:not(:disabled) {
+  background: #d32f2f;
+}
+
+.reset-btn {
+  background: #ff9800;
+  color: white;
+}
+
+.reset-btn:hover:not(:disabled) {
+  background: #f57c00;
+}
+
+.lap-btn {
+  background: rgb(0, 157, 193);
+  color: white;
+}
+
+.lap-btn:hover:not(:disabled) {
+  background: #00b8d4;
+}
+
+.laps {
+  text-align: left;
+}
+
+.laps h3 {
+  color: rgb(0, 157, 193);
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.laps ul {
+  list-style: none;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.laps li {
+  color: white;
+  padding: 8px 12px;
+  background: #2d2d2d;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.laps li span:first-child {
+  color: rgb(0, 157, 193);
+}

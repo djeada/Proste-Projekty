@@ -1,0 +1,131 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1c1c1c 0%, #2d2d2d 100%);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.container {
+  text-align: center;
+  padding: 40px;
+  background: #1c1c1c;
+  border-radius: 20px;
+  box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.5);
+  max-width: 600px;
+  width: 90%;
+}
+
+h1 {
+  color: rgb(0, 157, 193);
+  margin-bottom: 30px;
+  font-size: 2.5em;
+}
+
+.word-display {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  min-height: 60px;
+}
+
+.letter-box {
+  width: 40px;
+  height: 50px;
+  border-bottom: 3px solid rgb(0, 157, 193);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  color: white;
+  text-transform: uppercase;
+}
+
+.message {
+  color: white;
+  font-size: 1.2em;
+  margin-bottom: 20px;
+  min-height: 30px;
+}
+
+.message.win {
+  color: #4CAF50;
+}
+
+.message.lose {
+  color: #f44336;
+}
+
+.attempts {
+  color: rgb(0, 157, 193);
+  font-size: 1.1em;
+  margin-bottom: 20px;
+}
+
+.keyboard {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.key-btn {
+  width: 40px;
+  height: 40px;
+  font-size: 16px;
+  font-weight: bold;
+  background: transparent;
+  color: rgb(0, 157, 193);
+  border: 2px solid rgb(0, 157, 193);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.key-btn:hover:not(:disabled) {
+  background: rgb(0, 157, 193);
+  color: #1c1c1c;
+}
+
+.key-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.key-btn.correct {
+  background: #4CAF50;
+  border-color: #4CAF50;
+  color: white;
+}
+
+.key-btn.wrong {
+  background: #f44336;
+  border-color: #f44336;
+  color: white;
+}
+
+.new-game-btn {
+  padding: 12px 30px;
+  font-size: 16px;
+  font-weight: bold;
+  background: rgb(0, 157, 193);
+  color: #1c1c1c;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.new-game-btn:hover {
+  background: #00b8d4;
+  transform: scale(1.05);
+}

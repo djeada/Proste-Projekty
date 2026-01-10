@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Yahtzee</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Yahtzee</h1>
+      
+      <div class="dice-area">
+        <div id="dice" class="dice"></div>
+        <div class="roll-info">
+          <span>Rolls left: <span id="rolls-left">3</span></span>
+        </div>
+        <button id="roll" class="roll-btn">Roll Dice</button>
+      </div>
+      
+      <div class="scorecard">
+        <h3>Scorecard</h3>
+        <div class="scores-grid">
+          <div class="score-section">
+            <h4>Upper Section</h4>
+            <div class="score-row" data-category="ones"><span>Ones</span><span id="score-ones" class="score-value">-</span></div>
+            <div class="score-row" data-category="twos"><span>Twos</span><span id="score-twos" class="score-value">-</span></div>
+            <div class="score-row" data-category="threes"><span>Threes</span><span id="score-threes" class="score-value">-</span></div>
+            <div class="score-row" data-category="fours"><span>Fours</span><span id="score-fours" class="score-value">-</span></div>
+            <div class="score-row" data-category="fives"><span>Fives</span><span id="score-fives" class="score-value">-</span></div>
+            <div class="score-row" data-category="sixes"><span>Sixes</span><span id="score-sixes" class="score-value">-</span></div>
+            <div class="score-row total"><span>Upper Bonus (63+)</span><span id="upper-bonus">0</span></div>
+          </div>
+          <div class="score-section">
+            <h4>Lower Section</h4>
+            <div class="score-row" data-category="threeOfKind"><span>Three of a Kind</span><span id="score-threeOfKind" class="score-value">-</span></div>
+            <div class="score-row" data-category="fourOfKind"><span>Four of a Kind</span><span id="score-fourOfKind" class="score-value">-</span></div>
+            <div class="score-row" data-category="fullHouse"><span>Full House</span><span id="score-fullHouse" class="score-value">-</span></div>
+            <div class="score-row" data-category="smallStraight"><span>Small Straight</span><span id="score-smallStraight" class="score-value">-</span></div>
+            <div class="score-row" data-category="largeStraight"><span>Large Straight</span><span id="score-largeStraight" class="score-value">-</span></div>
+            <div class="score-row" data-category="yahtzee"><span>Yahtzee</span><span id="score-yahtzee" class="score-value">-</span></div>
+            <div class="score-row" data-category="chance"><span>Chance</span><span id="score-chance" class="score-value">-</span></div>
+          </div>
+        </div>
+        <div class="total-score">Total: <span id="total-score">0</span></div>
+      </div>
+      
+      <button id="new-game" class="new-game-btn">New Game</button>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>

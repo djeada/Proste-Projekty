@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Timer</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Stopwatch</h1>
+      <div id="display" class="display">00:00:00.000</div>
+      <div class="controls">
+        <button id="start" class="btn start-btn">Start</button>
+        <button id="stop" class="btn stop-btn" disabled>Stop</button>
+        <button id="reset" class="btn reset-btn">Reset</button>
+        <button id="lap" class="btn lap-btn" disabled>Lap</button>
+      </div>
+      <div id="laps" class="laps">
+        <h3>Lap Times</h3>
+        <ul id="lap-list"></ul>
+      </div>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>

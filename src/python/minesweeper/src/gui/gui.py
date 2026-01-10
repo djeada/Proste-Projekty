@@ -5,7 +5,7 @@ from tkinter import ttk
 
 from PIL import ImageTk, Image
 
-from src.python.minesweeper.src.gui.sytled_window import StyledWindow
+from src.python.minesweeper.src.gui.styled_window import StyledWindow
 from src.python.minesweeper.src.logic.board import Board
 from src.python.minesweeper.src.utils.consts import Consts
 from src.python.minesweeper.src.utils.utils import (

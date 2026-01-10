@@ -3,7 +3,7 @@ import sys
 import tkinter as tk
 from tkinter import ttk
 
-from src.python.hangman.src.gui.sytled_window import StyledWindow
+from src.python.hangman.src.gui.styled_window import StyledWindow
 from src.python.hangman.src.logic.config import Config
 
 

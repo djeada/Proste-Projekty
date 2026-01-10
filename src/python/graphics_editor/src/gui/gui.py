@@ -11,6 +11,7 @@ import os
 sys.path.insert(
     0, os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 )
+from gui.styled_window import StyledWindow
 from logic.image import Image, Pixel
 
 
@@ -30,7 +31,7 @@ class Gui:
     """
 
     def __init__(self, image: Image) -> None:
-        self.root = tk.Tk()
+        self.root = StyledWindow()
         self.root.title("Graphics Editor")
         self.image = image
         self.current_color = Pixel(0, 0, 0)

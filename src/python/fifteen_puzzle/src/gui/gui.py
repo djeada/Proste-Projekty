@@ -1,6 +1,6 @@
 import tkinter as tk
 
-from src.python.fifteen_puzzle.src.gui.sytled_window import StyledWindow
+from src.python.fifteen_puzzle.src.gui.styled_window import StyledWindow
 from src.python.fifteen_puzzle.src.logic.puzzle_board import PuzzleBoard
 from src.python.fifteen_puzzle.src.logic.utils import Position
 

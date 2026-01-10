@@ -2,8 +2,11 @@ import tkinter as tk
 from enum import Enum, auto
 from tkinter import ttk
 
-from src.gui.sytled_window import StyledWindow
-from src.logic.caesar_cipher import caesar_encrypt, caesar_decrypt
+from src.python.caesar_cipher.src.gui.styled_window import StyledWindow
+from src.python.caesar_cipher.src.logic.caesar_cipher import (
+    caesar_encrypt,
+    caesar_decrypt,
+)
 
 
 class CipherMode(Enum):

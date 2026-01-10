@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 
-from src.python.calculator.src.gui.sytled_window import StyledWindow
+from src.python.calculator.src.gui.styled_window import StyledWindow
 from src.python.calculator.src.logic.calculator import Calculator
 
 

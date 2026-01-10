@@ -10,6 +10,7 @@ import os
 sys.path.insert(
     0, os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 )
+from gui.styled_window import StyledWindow
 from logic.timer import Timer
 
 
@@ -19,7 +20,7 @@ class Gui:
     """
 
     def __init__(self, timer: Timer) -> None:
-        self.root = tk.Tk()
+        self.root = StyledWindow()
         self.root.title("Timer")
         self.root.resizable(False, False)
         self.timer = timer

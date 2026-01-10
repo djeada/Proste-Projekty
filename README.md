@@ -400,6 +400,7 @@ Screenshot | Technologie | Link
 ---|---|---
 | ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/hangman)** |
 | ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/hangman)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/hangman)** |
  
 </div>
 
@@ -415,6 +416,7 @@ Screenshot | Technologie | Link
 ---|---|---
 | ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/caesar_cipher)** |
 | ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/caesar_cipher)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/caesar_cipher)** |
  
 </div>
 
@@ -462,6 +464,7 @@ Screenshot | Technologie | Link
 ---|---|---
 | ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/weather)** |
 | ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/weather)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/weather)** |
 
 </div>
 
@@ -477,6 +480,7 @@ Screenshot | Technologie | Link
 ---|---|---
 | ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/timer)** |
 | ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/timer)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/timer)** |
 
 </div>
 
@@ -492,6 +496,7 @@ Screenshot | Technologie | Link
 ---|---|---
 | ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/battleship)** |
 | ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/battleship)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/battleship)** |
 
 </div>
 
@@ -507,6 +512,7 @@ Screenshot | Technologie | Link
 ---|---|---
 | ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/tic_tac_toe)** |
 | ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/tic_tac_toe)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/tic_tac_toe)** |
 
 </div>
 
@@ -522,6 +528,7 @@ Screenshot | Technologie | Link
 ---|---|---
 | ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/minesweeper)** |
 | ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/minesweeper)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/minesweeper)** |
 
 </div>
 
@@ -537,6 +544,7 @@ Screenshot | Technologie | Link
 ---|---|---
 | ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/2048)** |
 | ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/game_2048)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/2048)** |
 
 </div>
 
@@ -552,6 +560,7 @@ Screenshot | Technologie | Link
 ---|---|---
 | ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/zombie_apocalypse)** |
 | ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/zombie_apocalypse)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/zombie_apocalypse)** |
 
 </div>
 
@@ -567,6 +576,7 @@ Screenshot | Technologie | Link
 ---|---|---
 | ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/fifteen_puzzle)** |
 | ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/fifteen_puzzle)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/fifteen_puzzle)** |
 
 </div>
 
@@ -582,6 +592,7 @@ Screenshot | Technologie | Link
 ---|---|---
 | ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/yahtzee)** |
 | ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/yahtzee)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/yahtzee)** |
 
 </div>
 
@@ -597,6 +608,7 @@ Screenshot | Technologie | Link
 ---|---|---
 | ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/shooting_ducks)** |
 | ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/shooting_ducks)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/shooting_ducks)** |
 
 </div>
 
@@ -628,6 +640,7 @@ Screenshot | Technologie | Link
 ---|---|---
 | ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/text_editor)** |
 | ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/text_editor)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/text_editor)** |
 
 </div>
 
@@ -643,6 +656,7 @@ Screenshot | Technologie | Link
 ---|---|---
 | ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/graphics_editor)** |
 | ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/graphics_editor)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/graphics_editor)** |
 
 </div>
 
@@ -658,6 +672,7 @@ Screenshot | Technologie | Link
 ---|---|---
 | ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/version_control)** |
 | ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/version_control)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/version_control)** |
 
 </div>
 
@@ -673,6 +688,7 @@ Screenshot | Technologie | Link
 ---|---|---
 | ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/http_server)** |
 | ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/http_server)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/http_server)** |
 
 </div>
 
@@ -688,6 +704,7 @@ Screenshot | Technologie | Link
 ---|---|---
 | ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/shopping_cart)** |
 | ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/shopping_cart)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/shopping_cart)** |
 
 </div>
 
@@ -703,6 +720,7 @@ Screenshot | Technologie | Link
 ---|---|---
 | ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/food_ordering)** |
 | ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/food_ordering)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/food_ordering)** |
 
 </div>
 
@@ -718,6 +736,7 @@ Screenshot | Technologie | Link
 ---|---|---
 | ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/messenger)** |
 | ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/messenger)** |
+| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/messenger)** |
 
 </div>
 
@@ -729,23 +748,32 @@ Screenshot | Technologie | Link
 
 </div>
 
-W repozytorium znajdziesz gotowe szablony projektów dla najpopularniejszych technologii:
+Poniżej znajdziesz gotowe szablony z sensowną strukturą, konfiguracją narzędzi i krótkim README po polsku:
 
-- [Szablon Vanilla JavaScript](dodatkowe_materialy/szablony_projektow/vanilla_javascript/) – frontendowy projekt w czystym JS
-- [Szablon C z CMake](dodatkowe_materialy/szablony_projektow/c_cmake/) – projekt w języku C z automatyzacją budowania i testów
-- [Szablon Python (setup.py + Nuitka)](dodatkowe_materialy/szablony_projektow/python_setup_py/) – projekt w Pythonie z wsparciem dla kompilacji binarnej
+<div align="center">
+
+Szablon | Technologia | Zastosowanie | Link
+---|---|---|---
+Vanilla JavaScript | Frontend | Proste aplikacje webowe bez frameworka | [Link](dodatkowe_materialy/szablony_projektow/vanilla_javascript/)
+C z CMake | C | Projekty z testami i automatyzacją builda | [Link](dodatkowe_materialy/szablony_projektow/c_cmake/)
+Python (setup.py + Nuitka) | Python | Aplikacje CLI z opcją kompilacji binarnej | [Link](dodatkowe_materialy/szablony_projektow/python_setup_py/)
+
+</div>
 
 Każdy szablon zawiera:
-- Opis po polsku
+- Opis po polsku i minimalny README startowy
 - Przykładową strukturę katalogów
 - Konfigurację narzędzi do testowania, lintowania, formatowania i deploymentu
-- Przykładowe pliki konfiguracyjne i workflow CI
+- Przykładowe pliki konfiguracyjne oraz workflow CI
+
+Szybki start:
+1. Skopiuj katalog szablonu do nowego repozytorium lub folderu projektu.
+2. Zmień nazwę projektu w README oraz plikach konfiguracyjnych.
+3. Zainstaluj zależności i uruchom testy zgodnie z instrukcją w README szablonu.
 
 **Uwaga:**
-- Pliki README i opisy w szablonach są po polsku, aby ułatwić start osobom początkującym.
-- Właściwe projekty dostępne w katalogu [`src/`](src/) mają dokumentację i kod po angielsku, by były bardziej dostępne dla społeczności międzynarodowej.
-
-Aby rozpocząć własny projekt, skopiuj wybrany szablon i postępuj zgodnie z instrukcjami w README danego szablonu.
+- README w szablonach jest po polsku, aby ułatwić start osobom początkującym.
+- Właściwe projekty w katalogu [`src/`](src/) mają dokumentację i kod po angielsku, by były bardziej dostępne globalnie.
 
 ## 📚 Dodatkowe materiały
 
@@ -759,14 +787,7 @@ W tej sekcji znajdziesz przydatne materiały, które pomogą Ci w nauce, planowa
 
 ### 📦 Szablony projektów
 
-<div align="center">
-
-**Gotowe szablony do szybkiego startu w najpopularniejszych technologiach**
-
-</div>
-- [Szablon Vanilla JavaScript](dodatkowe_materialy/szablony_projektow/vanilla_javascript/) – nowoczesny frontend JS
-- [Szablon C z CMake](dodatkowe_materialy/szablony_projektow/c_cmake/) – projekt w C z automatyzacją
-- [Szablon Python (setup.py + Nuitka)](dodatkowe_materialy/szablony_projektow/python_setup_py/) – Python z kompilacją binarną
+Szablony znajdziesz w sekcji [📦 Szablony projektów](#-szablony-projektów).
 
 ### Przykłady specyfikacji projektów
 - [Functional specification – Wikipedia](https://en.wikipedia.org/wiki/Functional_specification)

@@ -1,6 +1,14 @@
 # 2048 (C, standard terminal)
 
-A simple 2048 clone for the terminal. No ncurses required.
+A feature-rich 2048 clone for the terminal with colorful tiles and Unicode box-drawing.
+
+## Features
+
+- **Colorful Tiles**: Each tile value (2, 4, 8, 16, ..., 2048+) has a unique color
+- **Unicode Box Drawing**: Beautiful grid with Unicode borders
+- **Arrow Key Support**: Use arrow keys or WASD to move tiles
+- **Score Tracking**: Live score display during gameplay
+- **Clean UI**: Attractive header with instructions, game over screen
 
 ## Build & Run
 
@@ -20,11 +28,13 @@ ctest --output-on-failure
 
 ## Controls
 
-- Move tiles: WASD
-- Restart (on Game Over): r
-- Quit: q
+- **Move tiles**: W/A/S/D or Arrow Keys (↑↓←→)
+- **Restart** (on Game Over): R
+- **Quit**: Q
 
 ## Notes
 
-- Board: 4x4, spawns 2 (90%) or 4 (10%).
-- Score increases by the value of merged tiles.
+- Board: 4x4 grid
+- New tiles: 2 (90% chance) or 4 (10% chance)
+- Score increases by the value of merged tiles
+- Requires a terminal with ANSI color and Unicode support

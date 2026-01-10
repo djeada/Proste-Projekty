@@ -108,16 +108,77 @@ int g2048_can_move(const G2048 *g) {
     return 0;
 }
 
+static const char *get_tile_color(int val) {
+    switch (val) {
+        case 2:    return "\033[48;5;230m\033[38;5;236m";  /* Light cream bg, dark text */
+        case 4:    return "\033[48;5;223m\033[38;5;236m";  /* Tan bg, dark text */
+        case 8:    return "\033[48;5;209m\033[38;5;231m";  /* Orange bg, white text */
+        case 16:   return "\033[48;5;203m\033[38;5;231m";  /* Light red bg, white text */
+        case 32:   return "\033[48;5;196m\033[38;5;231m";  /* Red bg, white text */
+        case 64:   return "\033[48;5;160m\033[38;5;231m";  /* Dark red bg, white text */
+        case 128:  return "\033[48;5;226m\033[38;5;236m";  /* Yellow bg, dark text */
+        case 256:  return "\033[48;5;220m\033[38;5;236m";  /* Gold bg, dark text */
+        case 512:  return "\033[48;5;214m\033[38;5;231m";  /* Orange-gold bg, white text */
+        case 1024: return "\033[48;5;208m\033[38;5;231m";  /* Deep orange bg, white text */
+        case 2048: return "\033[48;5;202m\033[38;5;231m";  /* Bright orange bg, white text */
+        default:   return "\033[48;5;198m\033[38;5;231m";  /* Pink bg for >2048, white text */
+    }
+}
+
+static void print_tile(FILE *out, int val) {
+    if (val == 0) {
+        fprintf(out, "\033[48;5;250m\033[38;5;250m");  /* Gray background for empty */
+        fprintf(out, "  .   ");
+    } else {
+        fprintf(out, "%s", get_tile_color(val));
+        fprintf(out, "%6d", val);
+    }
+    fprintf(out, "\033[0m");  /* Reset colors */
+}
+
 void g2048_draw_text(const G2048 *g, FILE *out) {
-    fprintf(out, "\033[2J\033[H");
-    fprintf(out, "2048 - WASD move, q quit\n\n");
-    fprintf(out, "Score: %d\n\n", g->score);
+    fprintf(out, "\033[2J\033[H");  /* Clear screen, move cursor to top */
+    
+    /* Header */
+    fprintf(out, "\033[1;36m");  /* Bold cyan */
+    fprintf(out, "╔════════════════════════════════════╗\n");
+    fprintf(out, "║             \033[1;33m2 0 4 8\033[1;36m               ║\n");
+    fprintf(out, "╠════════════════════════════════════╣\n");
+    fprintf(out, "║  \033[0;37mControls: W/A/S/D or Arrow Keys\033[1;36m   ║\n");
+    fprintf(out, "║  \033[0;37mQuit: Q  |  Restart: R\033[1;36m            ║\n");
+    fprintf(out, "╠════════════════════════════════════╣\n");
+    fprintf(out, "║  \033[1;32mScore: %-10d\033[1;36m                ║\n", g->score);
+    fprintf(out, "╚════════════════════════════════════╝\033[0m\n\n");
+    
+    /* Top border of grid */
+    fprintf(out, "\033[1;35m┌────────┬────────┬────────┬────────┐\033[0m\n");
+    
+    /* Grid rows */
     for (int r = 0; r < G2048_SIZE; ++r) {
+        fprintf(out, "\033[1;35m│\033[0m");
         for (int c = 0; c < G2048_SIZE; ++c) {
-            if (g->cells[r][c] == 0) fprintf(out, ".   ");
-            else fprintf(out, "%4d", g->cells[r][c]);
+            fprintf(out, " ");
+            print_tile(out, g->cells[r][c]);
+            fprintf(out, " \033[1;35m│\033[0m");
         }
         fprintf(out, "\n");
+        
+        /* Row separator or bottom border */
+        if (r < G2048_SIZE - 1) {
+            fprintf(out, "\033[1;35m├────────┼────────┼────────┼────────┤\033[0m\n");
+        } else {
+            fprintf(out, "\033[1;35m└────────┴────────┴────────┴────────┘\033[0m\n");
+        }
     }
-    if (g->game_over) fprintf(out, "\nGame Over! Press r to restart or q to quit.\n");
+    
+    /* Game over message */
+    if (g->game_over) {
+        fprintf(out, "\n\033[1;31m");  /* Bold red */
+        fprintf(out, "╔════════════════════════════════════╗\n");
+        fprintf(out, "║           \033[5mGAME OVER!\033[0;1;31m              ║\n");
+        fprintf(out, "║   Press R to restart or Q to quit  ║\n");
+        fprintf(out, "╚════════════════════════════════════╝\033[0m\n");
+    }
+    
+    fflush(out);
 }

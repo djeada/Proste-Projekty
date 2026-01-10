@@ -127,4 +127,4 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-.idea
+.idea_codeql_detected_source_root

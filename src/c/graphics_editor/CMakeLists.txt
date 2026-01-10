@@ -3,9 +3,17 @@ project(graphics_editor C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(main src/main.c src/graphics_editor.c)
-target_link_libraries(main m)
+# Find SDL2
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(SDL2 REQUIRED sdl2)
 
+# Main executable with SDL2 GUI
+add_executable(main src/main.c src/graphics_editor.c)
+target_include_directories(main PRIVATE ${SDL2_INCLUDE_DIRS})
+target_link_libraries(main ${SDL2_LIBRARIES} m)
+target_compile_options(main PRIVATE ${SDL2_CFLAGS_OTHER})
+
+# Unit tests (no SDL2 dependency - tests image logic only)
 enable_testing()
 add_executable(test_graphics_editor tests/test_graphics_editor.c src/graphics_editor.c)
 target_include_directories(test_graphics_editor PRIVATE src)

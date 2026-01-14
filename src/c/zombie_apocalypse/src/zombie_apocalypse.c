@@ -86,23 +86,26 @@ static void spawn_zombies(ZombieGame *game) {
     for (int i = 0; i < MAX_ZOMBIES; ++i) {
         if (i < target) {
             // Spawn zombies away from player (at edges)
+            // Guard against zero dimensions
+            int w = (game->game_area_w > 0) ? game->game_area_w : 1;
+            int h = (game->game_area_h > 0) ? game->game_area_h : 1;
             int edge = rand() % 4;
             switch (edge) {
                 case 0: // top
-                    game->zombies[i].x = min_x + rand() % game->game_area_w;
+                    game->zombies[i].x = min_x + rand() % w;
                     game->zombies[i].y = min_y;
                     break;
                 case 1: // bottom
-                    game->zombies[i].x = min_x + rand() % game->game_area_w;
+                    game->zombies[i].x = min_x + rand() % w;
                     game->zombies[i].y = max_y - 1;
                     break;
                 case 2: // left
                     game->zombies[i].x = min_x;
-                    game->zombies[i].y = min_y + rand() % game->game_area_h;
+                    game->zombies[i].y = min_y + rand() % h;
                     break;
                 case 3: // right
                     game->zombies[i].x = max_x - 1;
-                    game->zombies[i].y = min_y + rand() % game->game_area_h;
+                    game->zombies[i].y = min_y + rand() % h;
                     break;
             }
             game->zombies[i].alive = 1;
@@ -608,10 +611,14 @@ void zombie_game_draw(const ZombieGame *game) {
         mvprintw(msg_y - 2, msg_x - 14, "+-----------------------------+");
         mvprintw(msg_y - 1, msg_x - 14, "|        GAME OVER!           |");
         mvprintw(msg_y,     msg_x - 14, "|     Final Score: %-5d      |", game->score);
-        if (game->score >= game->high_score && game->high_score > 0) {
+        // Show NEW HIGH SCORE only if score equals the updated high_score
+        // (meaning this score beat the previous record)
+        if (game->score == game->high_score && game->score > 0) {
             mvprintw(msg_y + 1, msg_x - 14, "|      NEW HIGH SCORE!        |");
-        } else {
+        } else if (game->high_score > 0) {
             mvprintw(msg_y + 1, msg_x - 14, "|     High Score: %-5d       |", game->high_score);
+        } else {
+            mvprintw(msg_y + 1, msg_x - 14, "|                             |");
         }
         mvprintw(msg_y + 2, msg_x - 14, "|    Press 'R' to restart     |");
         mvprintw(msg_y + 3, msg_x - 14, "+-----------------------------+");

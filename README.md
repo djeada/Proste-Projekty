@@ -740,9 +740,9 @@ Screenshot | Technologie | Link
 
 </div>
 
-### Efekty terminalowe
+### Efekty wizualne
 
-Zbiór jedenastu krótkich programów w C, które zamieniają terminal w płótno: obracający się torus 3D, przybliżanie zbioru Mandelbrota, Gra w życie Conwaya, cyfrowy deszcz z Matrixa, ogień z gry Doom, obracający się sześcian, efekt plazmy, wizualizacja sortowania szybkiego, generowanie i rozwiązywanie labiryntu, prosty ray tracer oraz gwiezdne pole w prędkości warp. Każdy efekt mieści się w jednym pliku i korzysta wyłącznie z biblioteki standardowej oraz sekwencji ANSI.
+Zbiór jedenastu krótkich programów, które zamieniają ekran w płótno: obracający się torus 3D, przybliżanie zbioru Mandelbrota, Gra w życie Conwaya, cyfrowy deszcz z Matrixa, ogień z gry Doom, obracający się sześcian, efekt plazmy, wizualizacja sortowania szybkiego, generowanie i rozwiązywanie labiryntu, prosty ray tracer oraz gwiezdne pole w prędkości warp. Każdy efekt mieści się w jednym pliku. Wersje w C i Pythonie działają w terminalu i korzystają wyłącznie z biblioteki standardowej oraz sekwencji ANSI, a wersja w JavaScripcie rysuje te same efekty na elemencie `<canvas>` w przeglądarce, w pełnej rozdzielczości.
 
 Projekt ten pozwala w praktyce poznać grafikę 3D (obroty, rzutowanie perspektywiczne, bufor głębokości), podstawy oświetlenia, automaty komórkowe, algorytmy przeszukiwania grafów i sortowania, a także sterowanie terminalem za pomocą kolorów i kodów ucieczki. Każdy z programów można łatwo rozbudować, np. o obsługę klawiatury, zmianę rozmiaru okna czy nowe efekty.
 
@@ -753,6 +753,8 @@ Projekt ten pozwala w praktyce poznać grafikę 3D (obroty, rzutowanie perspekty
 Screenshot | Technologie | Link
 ---|---|---
 | <img src="src/c/terminal_effects/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/terminal_effects)** |
+| <img src="src/python/terminal_effects/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/terminal_effects)** |
+| <img src="src/vanilla_js/canvas_effects/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/canvas_effects)** |
 
 </div>
 

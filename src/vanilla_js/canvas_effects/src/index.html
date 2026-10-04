@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Canvas Effects</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 40px 16px; min-height: 100vh;
+    background: #08080c; color: #ddd; font: 16px/1.5 system-ui, sans-serif;
+  }
+  main { max-width: 1040px; margin: 0 auto; }
+  h1 { margin: 0; font: bold 34px monospace; color: #3f3; }
+  p.intro { margin: 8px 0 32px; color: #999; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 16px; }
+  a {
+    display: block; overflow: hidden; border: 1px solid #222; border-radius: 10px;
+    background: #111; color: inherit; text-decoration: none; transition: transform 0.15s, border-color 0.15s;
+  }
+  a:hover, a:focus-visible { transform: translateY(-3px); border-color: #555; }
+  .art { height: 120px; background: #000; }
+  a h2 { margin: 12px 14px 2px; font: bold 17px monospace; color: #fff; }
+  a p { margin: 0 14px 14px; font-size: 14px; color: #999; }
+  .donut { background: radial-gradient(circle, #000 17%, #9f9 19%, #0c0 27%, #030 36%, #000 37%); }
+  .mandelbrot { background: radial-gradient(circle at 70% 50%, #000 20%, #f0f 22%, #f80 28%, #ff0 34%, #fff 40%, #0ff 55%, #00f 80%); }
+  .life { background: radial-gradient(#fff 35%, transparent 40%) 0 0 / 12px 12px, linear-gradient(135deg, #0ff, #00d); }
+  .matrix { background: repeating-linear-gradient(90deg, #000 0 10px, transparent 10px 16px), linear-gradient(#000, #0a0 70%, #dfd); }
+  .fire { background: linear-gradient(to top, #fff, #ff0 15%, #f80 35%, #a00 60%, #200 85%, #000); }
+  .cube { background: conic-gradient(from 30deg at 50% 50%, #f33 0 120deg, #3f3 0 240deg, #39f 0); clip-path: polygon(50% 5%, 75% 25%, 75% 75%, 50% 95%, 25% 75%, 25% 25%); }
+  .plasma { background: radial-gradient(circle at 25% 30%, #f0f, transparent 45%), radial-gradient(circle at 75% 70%, #0ff, transparent 45%), linear-gradient(45deg, #f80, #8f0, #00f); }
+  .quicksort { background: repeating-linear-gradient(90deg, transparent 0 9px, #000 9px 12px), linear-gradient(to bottom right, #000 50%, transparent 50%), linear-gradient(90deg, #f00, #ff0, #0f0, #0ff, #00f, #80f); }
+  .maze { background: repeating-linear-gradient(90deg, #444 0 6px, transparent 6px 16px), repeating-linear-gradient(#444 0 6px, transparent 6px 16px), linear-gradient(90deg, #0ff, #00f, #f0f, #ff0); }
+  .ray { background: radial-gradient(circle at 46% 48%, #fff 2%, #e04070 8%, #501020 20%, transparent 21%), linear-gradient(#13358a, #0a1530 60%, #aaa 60%, #222); }
+  .warp { background: radial-gradient(circle, #000 8%, transparent 50%), repeating-conic-gradient(#000 0 7deg, #cdf 7deg 8deg); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Canvas Effects</h1>
+  <p class="intro">Eleven classic terminal effects, redrawn on a &lt;canvas&gt; with plain JavaScript. One file each, no libraries.</p>
+  <div class="grid">
+    <a href="donut.html"><div class="art donut"></div><h2>Donut</h2><p>A spinning 3D torus, shaded face by face</p></a>
+    <a href="mandelbrot_zoom.html"><div class="art mandelbrot"></div><h2>Mandelbrot Zoom</h2><p>A nearly 60,000× dive into seahorse valley</p></a>
+    <a href="game_of_life.html"><div class="art life"></div><h2>Game of Life</h2><p>Conway's cellular automaton, colored by age</p></a>
+    <a href="matrix_rain.html"><div class="art matrix"></div><h2>Matrix Rain</h2><p>Digital rain, then a message for Neo</p></a>
+    <a href="doom_fire.html"><div class="art fire"></div><h2>Doom Fire</h2><p>The PSX Doom fire, lit and put out</p></a>
+    <a href="spinning_cube.html"><div class="art cube"></div><h2>Spinning Cube</h2><p>Six glowing faces tumbling in 3D</p></a>
+    <a href="plasma.html"><div class="art plasma"></div><h2>Plasma</h2><p>Demoscene plasma from four sine waves</p></a>
+    <a href="quicksort_visualizer.html"><div class="art quicksort"></div><h2>Quicksort</h2><p>Lomuto quicksort, one frame per swap</p></a>
+    <a href="maze_solver.html"><div class="art maze"></div><h2>Maze Solver</h2><p>Carved with DFS, solved with BFS</p></a>
+    <a href="ray_tracer.html"><div class="art ray"></div><h2>Ray Tracer</h2><p>A shiny sphere, shadows and reflections</p></a>
+    <a href="warp_starfield.html"><div class="art warp"></div><h2>Warp Starfield</h2><p>Stars stretching into warp speed</p></a>
+  </div>
+</main>
+</body>
+</html>

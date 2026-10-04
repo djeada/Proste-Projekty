@@ -1,12 +1,12 @@
-# Terminal Effects (C)
+# Terminal Effects (Python)
 
-Eleven small, self-contained C programs that turn the terminal into a canvas: 3D graphics, fractals, simulations and algorithm visualizations, using only the standard library and ANSI escape codes.
+Eleven small, self-contained Python scripts that turn the terminal into a canvas: 3D graphics, fractals, simulations and algorithm visualizations, using only the standard library and ANSI escape codes. They are ports of the [C versions](../../c/terminal_effects).
 
 ![Screenshot](screenshot.png)
 
 ## Effects
 
-| Program | What it shows | Ideas inside |
+| Script | What it shows | Ideas inside |
 |---|---|---|
 | `donut` | A spinning 3D torus drawn with ASCII shading | Rotation matrices, perspective projection, z-buffer, surface normals |
 | `mandelbrot_zoom` | A nearly 19,000× zoom into the Mandelbrot set's "seahorse valley" | Complex numbers, escape-time algorithm, color cycling |
@@ -20,37 +20,42 @@ Eleven small, self-contained C programs that turn the terminal into a canvas: 3D
 | `ray_tracer` | A reflective sphere on a checkered floor with an orbiting light | Ray-sphere and ray-plane intersection, diffuse/specular light, shadows, reflections |
 | `warp_starfield` | A 3D starfield accelerating to warp speed | Perspective projection, depth sorting, motion streaks |
 
-Each program is a single file in `src/`, short enough to read in one sitting.
+Each script is a single file in `src/`, short enough to read in one sitting. Every animation runs for 5 to 15 seconds and then exits.
 
 ## Requirements
-- A C compiler (gcc or clang) and CMake >= 3.10
+- Python 3.8+ (no third-party packages; `pytest` is only needed for the tests)
 - A terminal with UTF-8, 256 colors and truecolor support (most modern terminals), at least 50×28 characters
 
-## Build & Run
+## Run
 
 ### Locally
 ```sh
-cmake -S . -B build
-cmake --build build
-./build/donut
-./build/plasma
+python src/donut.py
+python src/plasma.py
 ```
 
-Or compile a single effect directly:
+Or install all eleven as commands:
 ```sh
-gcc src/ray_tracer.c -o ray_tracer -lm && ./ray_tracer
+pip install .
+donut
+maze_solver
 ```
 
 ### With Docker
 ```sh
 docker build -t terminal_effects .
 docker run --rm -it terminal_effects
-docker run --rm -it terminal_effects /app/build/maze_solver
+docker run --rm -it terminal_effects python src/maze_solver.py
 ```
 
 ## Test
-Each test runs one animation to the end and checks that it exits cleanly (about 80 seconds for all of them):
+Each test runs one animation for a few frames (or on a smaller board) with `time.sleep` switched off and checks what it drew. The whole suite takes well under a second:
 ```sh
-cd build
-ctest --output-on-failure
+pip install -r requirements.txt
+pytest tests
+flake8 src tests
 ```
+
+## Differences from the C versions
+- Python's `random` module produces different numbers than C's `rand()`, so the Game of Life, the Matrix rain, the fire, the starfield, the quicksort input and the maze look different from the C runs, even with the same seeds.
+- `spinning_cube` samples each face every 0.5 units instead of 0.25 to keep a smooth frame rate in CPython. At this resolution the picture is practically the same.

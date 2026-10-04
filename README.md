@@ -740,6 +740,22 @@ Screenshot | Technologie | Link
 
 </div>
 
+### Efekty terminalowe
+
+Zbiór jedenastu krótkich programów w C, które zamieniają terminal w płótno: obracający się torus 3D, przybliżanie zbioru Mandelbrota, Gra w życie Conwaya, cyfrowy deszcz z Matrixa, ogień z gry Doom, obracający się sześcian, efekt plazmy, wizualizacja sortowania szybkiego, generowanie i rozwiązywanie labiryntu, prosty ray tracer oraz gwiezdne pole w prędkości warp. Każdy efekt mieści się w jednym pliku i korzysta wyłącznie z biblioteki standardowej oraz sekwencji ANSI.
+
+Projekt ten pozwala w praktyce poznać grafikę 3D (obroty, rzutowanie perspektywiczne, bufor głębokości), podstawy oświetlenia, automaty komórkowe, algorytmy przeszukiwania grafów i sortowania, a także sterowanie terminalem za pomocą kolorów i kodów ucieczki. Każdy z programów można łatwo rozbudować, np. o obsługę klawiatury, zmianę rozmiaru okna czy nowe efekty.
+
+#### Linki
+
+<div align="center">
+
+Screenshot | Technologie | Link
+---|---|---
+| <img src="src/c/terminal_effects/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/terminal_effects)** |
+
+</div>
+
 ## 📦 Szablony projektów
 
 <div align="center">

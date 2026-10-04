@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Matrix Rain</title>
+<style>
+  body { margin: 0; background: #000; overflow: hidden; }
+  canvas { display: block; width: 100vw; height: 100vh; }
+</style>
+</head>
+<body>
+<canvas id="screen"></canvas>
+<script>
+// The Matrix "digital rain": one falling stream per column.
+const canvas = document.getElementById('screen');
+const ctx = canvas.getContext('2d');
+const SIZE = 18, TRAIL = 28, STEP = 1000 / 60;
+const RAIN = 4500, TYPE = 55, PAUSE = 400, CYCLE = 10500;  // milliseconds
+const LINES = ['Wake up, Neo...', 'The Matrix has you...', 'Follow the white rabbit.'];
+let w, h, cols, rows, glyph, head, speed;
+
+// half-width katakana with a few digits mixed in
+const randomGlyph = () => Math.random() < 0.2
+  ? String.fromCharCode(48 + Math.random() * 10)
+  : String.fromCharCode(0xff66 + Math.random() * 56);
+const newSpeed = () => 0.2 + Math.random() * 0.45;  // rows per step
+
+const resize = () => {
+  const dpr = devicePixelRatio || 1;
+  w = innerWidth;
+  h = innerHeight;
+  canvas.width = w * dpr;
+  canvas.height = h * dpr;
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.textBaseline = 'top';
+  ctx.shadowColor = '#0f0';
+  cols = Math.ceil(w / SIZE);
+  rows = Math.ceil(h / SIZE);
+  glyph = Array.from({ length: rows }, () => Array.from({ length: cols }, randomGlyph));
+  head = Array.from({ length: cols }, () => Math.random() * rows * 2 - rows);
+  speed = Array.from({ length: cols }, newSpeed);
+};
+addEventListener('resize', resize);
+resize();
+
+const step = () => {
+  for (let x = 0; x < cols; x++) {
+    head[x] += speed[x];
+    if (head[x] - TRAIL > rows) {
+      head[x] = -Math.random() * rows / 2;
+      speed[x] = newSpeed();
+    }
+    const y = Math.floor(head[x] - Math.random() * TRAIL);  // glyphs in the trail flicker
+    if (y >= 0 && y < rows) glyph[y][x] = randomGlyph();
+  }
+};
+
+const drawRain = () => {
+  ctx.font = `${SIZE - 2}px monospace`;
+  ctx.textAlign = 'center';
+  for (let d = TRAIL - 1; d >= 0; d--) {  // d = distance behind the stream's head
+    ctx.fillStyle = d ? `hsl(120, 100%, ${60 - 48 * d / TRAIL}%)` : '#fff';
+    ctx.shadowBlur = d ? 0 : 12;
+    for (let x = 0; x < cols; x++) {
+      const y = Math.floor(head[x]) - d;
+      if (y >= 0 && y < rows) ctx.fillText(glyph[y][x], x * SIZE + SIZE / 2, y * SIZE);
+    }
+  }
+  ctx.shadowBlur = 0;
+};
+
+const drawMessage = (t, blink) => {
+  const size = Math.min(40, w / 17);
+  ctx.font = `bold ${size}px monospace`;
+  ctx.textAlign = 'left';
+  ctx.fillStyle = '#3f3';
+  ctx.shadowBlur = 10;
+  let cursor = [size, size * 2];
+  LINES.forEach((line, i) => {
+    const typed = line.slice(0, Math.max(0, t / TYPE));
+    t -= line.length * TYPE + PAUSE;
+    if (!typed) return;
+    ctx.fillText(typed, size, size * (2 + i * 2));
+    cursor = [size * 1.2 + ctx.measureText(typed).width, size * (2 + i * 2)];
+  });
+  if (blink) ctx.fillRect(cursor[0], cursor[1], size * 0.6, size);
+};
+
+let last, lag = 0, clock = 0;
+const frame = now => {
+  lag += Math.min(now - (last ?? now), 250);
+  last = now;
+  for (; lag >= STEP; lag -= STEP, clock += STEP) step();
+
+  const t = clock % CYCLE;
+  ctx.clearRect(0, 0, w, h);
+  if (t < RAIN) drawRain();
+  else drawMessage(t - RAIN - 300, clock % 1000 < 500);  // typing starts after 300 ms
+  requestAnimationFrame(frame);
+};
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spinning Cube</title>
+<style>
+  body { margin: 0; background: #000; overflow: hidden; }
+  canvas { display: block; width: 100vw; height: 100vh; }
+</style>
+</head>
+<body>
+<canvas id="screen"></canvas>
+<script>
+// A spinning cube: rotation around three axes, perspective and back-face culling.
+const canvas = document.getElementById('screen');
+const ctx = canvas.getContext('2d');
+const DIST = 5;  // camera distance, in half-widths of the cube
+let w, h;
+
+// each face maps (a, b) in [-1, 1] to a point on the cube, like plot() in the C version
+const FACES = [
+  [(a, b) => [a, b, -1], [255, 40, 40]],    // front: red
+  [(a, b) => [1, b, a], [40, 255, 40]],     // right: green
+  [(a, b) => [-1, b, -a], [30, 120, 255]],  // left: blue
+  [(a, b) => [-a, b, 1], [255, 255, 40]],   // back: yellow
+  [(a, b) => [a, -1, -b], [255, 40, 255]],  // bottom: magenta
+  [(a, b) => [a, 1, b], [40, 255, 255]],    // top: cyan
+];
+const SQUARE = [[-1, -1], [1, -1], [1, 1], [-1, 1]];
+const LIGHT = [-0.4, -0.6, -0.7];  // from the top left, behind the camera
+
+const resize = () => {
+  const dpr = devicePixelRatio || 1;
+  w = innerWidth;
+  h = innerHeight;
+  canvas.width = w * dpr;
+  canvas.height = h * dpr;
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+};
+addEventListener('resize', resize);
+resize();
+
+const turn = (u, v, angle) => [
+  u * Math.cos(angle) - v * Math.sin(angle),
+  u * Math.sin(angle) + v * Math.cos(angle),
+];
+
+// rotate around the x, y and z axes, then tilt the cube toward the camera
+const rotate = ([x, y, z], t) => {
+  [y, z] = turn(y, z, t * 0.9);
+  [z, x] = turn(z, x, t * 1.3);
+  [x, y] = turn(x, y, t * 0.4);
+  [y, z] = turn(y, z, 0.5);
+  return [x, y, z];
+};
+
+const frame = now => {
+  const t = now / 1000, size = Math.min(w, h) * 0.8;
+  ctx.clearRect(0, 0, w, h);
+  ctx.lineJoin = 'round';
+  ctx.lineWidth = 2;
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
+
+  for (const [face, color] of FACES) {
+    const [nx, ny, nz] = rotate(face(0, 0), t);  // center = normal
+    if (nz > -1 / DIST) continue;  // facing away from the camera
+    const light = 0.3 + 0.7 * Math.max(0, nx * LIGHT[0] + ny * LIGHT[1] + nz * LIGHT[2]);
+
+    ctx.beginPath();
+    for (const [a, b] of SQUARE) {
+      const [x, y, z] = rotate(face(a, b), t);
+      ctx.lineTo(w / 2 + size * x / (z + DIST), h / 2 + size * y / (z + DIST));
+    }
+    ctx.closePath();
+    ctx.fillStyle = ctx.shadowColor = `rgb(${color.map(c => c * light)})`;
+    ctx.shadowBlur = 60;
+    ctx.fill();
+    ctx.shadowBlur = 0;
+    ctx.stroke();
+  }
+  requestAnimationFrame(frame);
+};
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>

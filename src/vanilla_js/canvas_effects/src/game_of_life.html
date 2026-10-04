@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Game of Life</title>
+<style>
+  body { margin: 0; background: #000; overflow: hidden; }
+  canvas { display: block; width: 100vw; height: 100vh; }
+  #hud {
+    position: fixed; left: 12px; bottom: 12px; padding: 4px 8px;
+    background: #000c; color: #ddd; font: 15px monospace;
+  }
+</style>
+</head>
+<body>
+<canvas id="screen"></canvas>
+<div id="hud"></div>
+<script>
+// Conway's Game of Life on a wrapping grid, cells colored by age.
+const canvas = document.getElementById('screen');
+const ctx = canvas.getContext('2d');
+const hud = document.getElementById('hud');
+const CELL = 10, STEP = 40, GENERATIONS = 300;  // 25 generations per second, then a new world
+// newborn cells are white, then they cool down through cyan to deep blue
+const AGE_COLORS = ['#fff', '#dff', '#aff', '#8ff', '#5ff', '#0ff',
+                    '#0df', '#0af', '#08f', '#06f', '#00f', '#00d'];
+let w, h, cols, rows, grid, gen;
+
+const seed = () => {
+  const dpr = devicePixelRatio || 1;
+  w = innerWidth;
+  h = innerHeight;
+  canvas.width = w * dpr;
+  canvas.height = h * dpr;
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  cols = Math.ceil(w / CELL);
+  rows = Math.ceil(h / CELL);
+  grid = Array.from({ length: rows }, () =>
+    Array.from({ length: cols }, () => +(Math.random() < 0.33)));
+  gen = 0;  // a cell's value is its age, 0 means dead
+};
+addEventListener('resize', seed);
+seed();
+
+const dropGlider = () => {
+  const gx = Math.floor(Math.random() * cols), gy = Math.floor(Math.random() * rows);
+  [[0, 1, 0], [0, 0, 1], [1, 1, 1]].forEach((row, i) => row.forEach((alive, j) => {
+    if (alive) grid[(gy + i) % rows][(gx + j) % cols] = 1;
+  }));
+};
+
+const step = () => {
+  grid = grid.map((row, y) => row.map((age, x) => {
+    let n = 0;
+    for (let dy = -1; dy <= 1; dy++)
+      for (let dx = -1; dx <= 1; dx++)
+        if ((dy || dx) && grid[(y + dy + rows) % rows][(x + dx + cols) % cols]) n++;
+    return n === 3 || (age && n === 2) ? age + 1 : 0;
+  }));
+  if (++gen % 25 === 0) dropGlider();  // keep the world lively
+  if (gen === GENERATIONS) seed();
+};
+
+let last, lag = 0;
+const frame = now => {
+  lag += Math.min(now - (last ?? now), 250);
+  last = now;
+  for (; lag >= STEP; lag -= STEP) step();
+
+  ctx.clearRect(0, 0, w, h);
+  let alive = 0;
+  grid.forEach((row, y) => row.forEach((age, x) => {
+    if (!age) return;
+    alive++;
+    ctx.fillStyle = AGE_COLORS[Math.min(age, AGE_COLORS.length) - 1];
+    ctx.fillRect(x * CELL, y * CELL, CELL - 1, CELL - 1);
+  }));
+  hud.textContent = `generation ${gen} | alive ${alive}`;
+  requestAnimationFrame(frame);
+};
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>

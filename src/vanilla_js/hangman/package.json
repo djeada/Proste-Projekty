@@ -1,0 +1,8 @@
+{
+  "name": "hangman",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Hangman in the browser: guess the hidden word before the figure is complete",
+  "scripts": { "test": "node --test" },
+  "license": "MIT"
+}

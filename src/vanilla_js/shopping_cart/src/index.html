@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shopping Cart</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <h1>Shopping Cart</h1>
+
+    <section>
+      <h2>Catalog</h2>
+      <table id="catalog"></table>
+    </section>
+
+    <section>
+      <h2>Your cart</h2>
+      <p id="cart-empty">Your cart is empty.</p>
+      <table id="cart" hidden></table>
+      <dl id="totals" hidden></dl>
+      <p id="cart-message" class="message" role="status"></p>
+      <form id="discount-form" class="inline">
+        <input id="code" type="text" placeholder="Discount code (try SAVE10 or FLAT5)" aria-label="Discount code">
+        <button type="submit" class="secondary">Apply code</button>
+      </form>
+      <p id="discount-message" class="message" role="status"></p>
+    </section>
+
+    <section>
+      <h2>Checkout</h2>
+      <form id="checkout-form">
+        <label>Full name <input id="name" type="text" autocomplete="name"></label>
+        <label>Delivery address <input id="address" type="text" autocomplete="street-address"></label>
+        <button type="submit">Place order</button>
+      </form>
+      <p id="checkout-message" class="message" role="status"></p>
+    </section>
+
+    <section id="summary" hidden>
+      <h2>Order summary</h2>
+      <div id="summary-body"></div>
+    </section>
+  </main>
+  <script src="shopping_cart.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

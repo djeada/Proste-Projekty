@@ -1,49 +1,41 @@
-# Quicksort, visualized: every swap is a frame.
-import random
-import sys
-import time
+# Quicksort, one frame per swap. White bars are being swapped, magenta is the pivot.
+from term import H, W, pixels, rnd, seed, show_pixels, start
 
-N, H = 48, 24
-RAINBOW = [196, 202, 208, 214, 220, 226, 190, 154, 118, 82, 46, 47,
-           48, 49, 50, 51, 45, 39, 33, 27, 21, 57, 93, 129]
+KEYS = [0xFF3030, 0xFFD030, 0x30E060, 0x30C0FF, 0xA040FF]
 
 
-class Visualizer:
+def rainbow(v):
+    p = (v - 1) * 1024 // H
+    f = p % 256
+    c1, c2 = KEYS[p // 256], KEYS[p // 256 + 1]
+    return sum(((c1 >> s & 255) * (256 - f) + (c2 >> s & 255) * f) // 256 << s for s in (0, 8, 16))
+
+
+class Sorter:
     def __init__(self, a):
-        self.a, self.compares, self.swaps = a, 0, 0
+        self.a = a
+        self.compares = self.swaps = 0
 
-    def draw(self, x1=-1, x2=-1, pivot=-1, done=0):
-        out = [f"\033[H\033[0m  quicksort | compares {self.compares:4d}"
-               f" | swaps {self.swaps:3d}\n\n"]
-        for row in range(H, 0, -1):
-            last = -1
-            for i, v in enumerate(self.a):
-                if v < row:
-                    out.append(" ")
-                    continue
-                c = (46 if i < done else 201 if i == pivot
-                     else 231 if i in (x1, x2) else RAINBOW[v - 1])
-                if c != last:
-                    out.append(f"\033[38;5;{c}m")
-                    last = c
-                out.append("█")
-            out.append("\033[0m\n")
-        sys.stdout.write("".join(out))
-        sys.stdout.flush()
+    def draw(self, i1=-1, i2=-1, pivot=-1, done=0):
+        for x, v in enumerate(self.a):
+            c = (0x40FF70 if x < done else 0xFF40FF if x == pivot
+                 else 0xFFFFFF if x in (i1, i2) else rainbow(v))
+            for y in range(H):
+                pixels[y][x] = c if y >= H - v else 0
+        show_pixels(f" quicksort: {self.compares} comparisons, {self.swaps} swaps")
 
     def swap(self, i, j, pivot):
         self.a[i], self.a[j] = self.a[j], self.a[i]
         self.swaps += 1
         self.draw(i, j, pivot)
-        time.sleep(0.045)
 
     def quicksort(self, lo, hi):
         if lo >= hi:
             return
-        p, i = self.a[hi], lo
+        pivot, i = self.a[hi], lo
         for j in range(lo, hi):
             self.compares += 1
-            if self.a[j] < p:
+            if self.a[j] < pivot:
                 self.swap(i, j, hi)
                 i += 1
         self.swap(i, hi, i)
@@ -52,17 +44,19 @@ class Visualizer:
 
 
 def main():
-    random.seed(7)
-    a = [1 + i * H // N for i in range(N)]
-    random.shuffle(a)  # Fisher-Yates shuffle
-    vis = Visualizer(a)
-    sys.stdout.write("\033[2J")
-    vis.draw()
-    time.sleep(0.6)
-    vis.quicksort(0, N - 1)
-    for done in range(1, N + 1):  # victory sweep
-        vis.draw(done=done)
-        time.sleep(0.015)
+    seed(7)
+    a = [1 + i * H // W for i in range(W)]
+    start(30)
+    while True:
+        for i in range(W - 1, 0, -1):
+            j = rnd(i + 1)
+            a[i], a[j] = a[j], a[i]
+        sorter = Sorter(a)
+        for _ in range(20):
+            sorter.draw()
+        sorter.quicksort(0, W - 1)
+        for done in range(1, W + 41):
+            sorter.draw(done=done)
 
 
 if __name__ == "__main__":

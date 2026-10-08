@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Food Ordering</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Food Ordering</h1>
+    <p>Choose dishes, add delivery details, pay and follow your order.</p>
+  </header>
+
+  <main class="layout">
+    <section class="card">
+      <h2>Menu</h2>
+      <div class="tabs" id="category-tabs"></div>
+      <ul class="dishes" id="dishes"></ul>
+    </section>
+
+    <section class="card">
+      <h2>Your order</h2>
+      <ul class="lines" id="lines"></ul>
+      <p class="total"><span>Total</span><strong id="total">$0.00</strong></p>
+
+      <div id="delivery">
+        <label class="field">Delivery address
+          <input id="address" autocomplete="street-address" placeholder="Main Street 12">
+        </label>
+        <p class="error" id="address-error"></p>
+
+        <label class="field">Phone number
+          <input id="phone" type="tel" autocomplete="tel" placeholder="+48 123 456 789">
+        </label>
+        <p class="error" id="phone-error"></p>
+
+        <fieldset>
+          <legend>Payment</legend>
+          <label><input type="radio" name="payment" value="paypal"> PayPal</label>
+          <label><input type="radio" name="payment" value="card"> Credit card</label>
+          <label><input type="radio" name="payment" value="cash"> Cash on delivery</label>
+        </fieldset>
+
+        <div id="card-box" hidden>
+          <label class="field">Card number
+            <input id="card" inputmode="numeric" autocomplete="cc-number" placeholder="4111 1111 1111 1111">
+          </label>
+          <p class="error" id="card-error"></p>
+        </div>
+
+        <button type="button" class="primary" id="place">Place order</button>
+        <p class="error" id="place-error"></p>
+      </div>
+    </section>
+
+    <section class="card status" id="status-section" hidden>
+      <h2>Order status</h2>
+      <ol class="steps" id="steps"></ol>
+      <p id="elapsed"></p>
+      <button type="button" id="new-order" hidden>Start a new order</button>
+    </section>
+  </main>
+
+  <script src="food_ordering.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

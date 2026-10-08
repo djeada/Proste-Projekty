@@ -19,7 +19,7 @@ jobs:
       - name: Find changed JS projects
         id: changes
         run: |
-          CHANGED=$(git diff --name-only origin/main...HEAD | grep '^src/vanilla_js/' | cut -d'/' -f1,2,3 | sort | uniq | xargs)
+          CHANGED=$(git diff --name-only origin/main...HEAD | grep '^src/vanilla_js/' | cut -d'/' -f1,2,3 | sort -u | while read -r d; do if [ -d "$d" ]; then echo "$d"; fi; done | xargs)
           echo "changed=$CHANGED" >> $GITHUB_OUTPUT
       - name: Print info if nothing changed
         if: steps.changes.outputs.changed == ''

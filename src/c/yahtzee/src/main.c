@@ -1,205 +1,185 @@
-#include "yahtzee.h"
+/* Terminal interface for Yahtzee. Commands are typed one per line. */
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
 
-#define ANSI_CLEAR "\033[2J\033[H"
-#define ANSI_BOLD "\033[1m"
-#define ANSI_DIM "\033[2m"
-#define ANSI_GREEN "\033[32m"
-#define ANSI_YELLOW "\033[33m"
-#define ANSI_RESET "\033[0m"
+#include "yahtzee.h"
 
-static const char *CATEGORY_NAMES[CATEGORY_COUNT] = {
-    "Ones", "Twos", "Threes", "Fours", "Fives", "Sixes",
-    "Three of a Kind", "Four of a Kind", "Full House",
-    "Small Straight", "Large Straight", "Yahtzee", "Chance"
-};
+#define LABEL_WIDTH 24
+#define CELL_WIDTH 10
 
-static int compute_category_score(int catIndex, const int dice[DICE_COUNT]) {
-    switch (catIndex) {
-        case 0: return score_upper(dice, 1);
-        case 1: return score_upper(dice, 2);
-        case 2: return score_upper(dice, 3);
-        case 3: return score_upper(dice, 4);
-        case 4: return score_upper(dice, 5);
-        case 5: return score_upper(dice, 6);
-        case 6: return score_three_of_a_kind(dice);
-        case 7: return score_four_of_a_kind(dice);
-        case 8: return score_full_house(dice);
-        case 9: return score_small_straight(dice);
-        case 10: return score_large_straight(dice);
-        case 11: return score_yahtzee(dice);
-        case 12: return score_chance(dice);
-        default: return 0;
-    }
+static int roll_face(void *context) {
+    (void)context;
+    return rand() % 6 + 1;
 }
 
-static void render_screen(const int dice[DICE_COUNT], const int held[DICE_COUNT], int turn, int rolls, int total) {
-    printf(ANSI_CLEAR);
-    printf(ANSI_BOLD "Yahtzee" ANSI_RESET "  | Turn %d/%d  | Roll %d/3  | Total: %d\n", turn + 1, CATEGORY_COUNT, rolls, total);
-    printf("----------------------------------------------\n");
-    // Indices row
-    printf("Idx : ");
-    for (int i = 0; i < DICE_COUNT; ++i) {
-        printf(" %d  ", i + 1);
+static bool read_line(char *line, size_t size) {
+    if (fgets(line, (int)size, stdin) == NULL) {
+        return false;
     }
-    printf("\n");
-    // Dice row
-    printf("Dice: ");
-    for (int i = 0; i < DICE_COUNT; ++i) {
-        if (held[i]) {
-            printf(ANSI_GREEN "[%d]* " ANSI_RESET, dice[i]);
+    line[strcspn(line, "\n")] = '\0';
+    return true;
+}
+
+static void print_dice(const Game *g) {
+    printf("Dice:  ");
+    for (int i = 0; i < NUM_DICE; i++) {
+        printf("%d:", i + 1);
+        if (g->rolls == 0) {
+            printf(" -    ");
+        } else if (g->held[i]) {
+            printf("[%d]  ", g->dice[i]);
         } else {
-            printf("[%d]  ", dice[i]);
+            printf(" %d    ", g->dice[i]);
         }
     }
     printf("\n");
-    printf(ANSI_DIM "* held (kept on reroll)" ANSI_RESET "\n\n");
-    printf("Commands: h <1-5> (toggle hold), r (reroll), " ANSI_YELLOW "s (score)" ANSI_RESET ", q (quit)\n");
 }
 
-int main() {
-    int dice[DICE_COUNT] = {0};
-    int held[DICE_COUNT] = {0};
-    int total = 0;
-    int used[CATEGORY_COUNT] = {0};
-    int scores[CATEGORY_COUNT];
-    for (int i = 0; i < CATEGORY_COUNT; ++i) scores[i] = -1;
-    srand((unsigned)time(NULL));
+/* Filled cells show the score. The current player's empty cells show what the dice would score. */
+static void print_cell(const Game *g, int player, int category) {
+    char text[16];
+    int score = g->cards[player].scores[category];
+    if (score != UNUSED) {
+        snprintf(text, sizeof text, "%d", score);
+    } else if (player == g->current && g->rolls > 0) {
+        snprintf(text, sizeof text, "(%d)", score_for(g->dice, (Category)category));
+    } else {
+        snprintf(text, sizeof text, "-");
+    }
+    printf("%*s", CELL_WIDTH, text);
+}
 
-    printf(ANSI_BOLD "Welcome to Yahtzee!" ANSI_RESET "\n");
-    printf("- Up to 3 rolls per turn.\n- Toggle holds with 'h <1-5>'.\n- 'r' to reroll, 's' to choose a scoring category, 'q' to quit.\n\n");
+static void show_screen(const Game *g, const char *message) {
+    printf("\033[H\033[2J");
+    if (game_is_over(g)) {
+        printf("Game over!\n\n");
+    } else {
+        printf("Round %d of %d - Player %d to play\n\n", g->round, NUM_ROUNDS, g->current + 1);
+    }
+    print_dice(g);
+    printf("Rolls used: %d of %d\n\n", g->rolls, MAX_ROLLS);
 
+    printf("%-*s", LABEL_WIDTH, "");
+    for (int p = 0; p < g->num_players; p++) {
+        char label[32];
+        snprintf(label, sizeof label, "Player %d", p + 1);
+        printf("%*s", CELL_WIDTH, label);
+    }
+    printf("\n");
+
+    for (int c = 0; c < NUM_CATEGORIES; c++) {
+        printf("%2d. %-*s", c + 1, LABEL_WIDTH - 4, category_name((Category)c));
+        for (int p = 0; p < g->num_players; p++) {
+            print_cell(g, p, c);
+        }
+        printf("\n");
+        if (c == SIXES) {
+            printf("    %-*s", LABEL_WIDTH - 4, "Upper bonus (63+)");
+            for (int p = 0; p < g->num_players; p++) {
+                printf("%*d", CELL_WIDTH, card_upper_bonus(&g->cards[p]));
+            }
+            printf("\n");
+        }
+    }
+    printf("    %-*s", LABEL_WIDTH - 4, "TOTAL");
+    for (int p = 0; p < g->num_players; p++) {
+        printf("%*d", CELL_WIDTH, card_total(&g->cards[p]));
+    }
+    printf("\n\n%s\n", message);
+}
+
+static int ask_number_of_players(void) {
+    char line[64];
+    while (true) {
+        printf("How many players (1-4)? ");
+        if (!read_line(line, sizeof line)) {
+            return 0;
+        }
+        long n = strtol(line, NULL, 10);
+        if (n >= 1 && n <= MAX_PLAYERS) {
+            return (int)n;
+        }
+    }
+}
+
+/* Runs one command line. Returns false when the player quits. */
+static bool run_command(Game *g, const char *line, char *message, size_t size) {
+    snprintf(message, size, "%s", "");
+    switch (line[0]) {
+        case 'r':
+            if (!game_roll(g, roll_face, NULL)) {
+                snprintf(message, size, "%s", "No rolls left. Choose a category with s <number>.");
+            }
+            return true;
+        case 'h': {
+            const char *cursor = line + 1;
+            while (true) {
+                char *end;
+                long die = strtol(cursor, &end, 10);
+                if (end == cursor) {
+                    break;
+                }
+                if (die < 1 || die > NUM_DICE) {
+                    snprintf(message, size, "%s", "Dice are numbered 1 to 5.");
+                    break;
+                }
+                if (!game_toggle_hold(g, (int)die - 1)) {
+                    snprintf(message, size, "%s", "Roll the dice first.");
+                    break;
+                }
+                cursor = end;
+            }
+            return true;
+        }
+        case 's': {
+            long category = strtol(line + 1, NULL, 10);
+            if (category < 1 || category > NUM_CATEGORIES) {
+                snprintf(message, size, "%s", "Categories are numbered 1 to 13.");
+            } else if (!game_choose(g, (Category)(category - 1))) {
+                snprintf(message, size, "%s",
+                         g->rolls == 0 ? "Roll the dice first." : "That category is already used.");
+            }
+            return true;
+        }
+        case 'q':
+            return false;
+        default:
+            snprintf(message, size, "%s", "Unknown command. Use r, h <dice>, s <category> or q.");
+            return true;
+    }
+}
+
+int main(void) {
     char line[128];
-    for (int turn = 0; turn < CATEGORY_COUNT; ++turn) {
-        // reset holds
-        for (int i = 0; i < DICE_COUNT; ++i) {
-            held[i] = 0;
-        }
+    char message[128];
 
-        // First roll happens automatically
-        roll_dice(dice, held);
-        int rolls = 1;
-
-        for (;;) {
-            render_screen(dice, held, turn, rolls, total);
-            printf("> ");
-            if (!fgets(line, sizeof line, stdin)) {
-                printf("\nInput error. Exiting.\n");
-                return 1;
-            }
-
-            // trim leading spaces
-            char *p = line;
-            while (*p == ' ' || *p == '\t') ++p;
-            if (*p == '\0' || *p == '\n') {
-                continue; // empty input
-            }
-
-            if (p[0] == 'q' || p[0] == 'Q') {
-                printf("\nQuitting...\n");
-                return 0;
-            }
-
-            if (p[0] == 'h' || p[0] == 'H') {
-                int idx = -1;
-                // try to parse an integer after h
-                if (sscanf(p + 1, "%d", &idx) == 1) {
-                    if (idx >= 1 && idx <= DICE_COUNT) {
-                        held[idx - 1] = !held[idx - 1];
-                    } else {
-                        printf("Invalid index. Use 1-%d. Press Enter...", DICE_COUNT);
-                        char *tmp = fgets(line, sizeof line, stdin);
-                        (void)tmp;
-                    }
-                }
-                // stay in the loop without rolling yet
-                continue;
-            }
-
-            if (p[0] == 'r' || p[0] == 'R') {
-                if (rolls < 3) {
-                    roll_dice(dice, held);
-                    ++rolls;
-                } else {
-                    printf("No rerolls left. Press Enter...");
-                    char *tmp = fgets(line, sizeof line, stdin);
-                    (void)tmp;
-                }
-                continue;
-            }
-
-            if (p[0] == 's' || p[0] == 'S') {
-                // Show category menu with candidate scores
-                printf(ANSI_CLEAR);
-                printf(ANSI_BOLD "Choose a category:" ANSI_RESET "\n\n");
-                for (int ci = 0; ci < CATEGORY_COUNT; ++ci) {
-                    printf("%2d) %-17s ", ci + 1, CATEGORY_NAMES[ci]);
-                    if (used[ci]) {
-                        printf(ANSI_DIM "(USED: %d)" ANSI_RESET, scores[ci]);
-                    } else {
-                        int cand = compute_category_score(ci, dice);
-                        printf("candidate: %d", cand);
-                    }
-                    printf("\n");
-                }
-                printf("\nEnter category number (1-%d), or 'b' to go back: ", CATEGORY_COUNT);
-                if (!fgets(line, sizeof line, stdin)) {
-                    printf("\nInput error. Exiting.\n");
-                    return 1;
-                }
-                // Back
-                if (line[0] == 'b' || line[0] == 'B') {
-                    continue; // back to turn UI without scoring
-                }
-                int pick = 0;
-                if (sscanf(line, "%d", &pick) == 1) {
-                    if (pick >= 1 && pick <= CATEGORY_COUNT) {
-                        int idx = pick - 1;
-                        if (used[idx]) {
-                            printf("\nCategory already used. Press Enter...");
-                            char *tmp2 = fgets(line, sizeof line, stdin);
-                            (void)tmp2;
-                            continue;
-                        }
-                        int scored = compute_category_score(idx, dice);
-                        used[idx] = 1;
-                        scores[idx] = scored;
-                        total += scored;
-                        printf("\nScored %d points in %s. Total = %d. Press Enter to continue...", scored, CATEGORY_NAMES[idx], total);
-                        char *tmp = fgets(line, sizeof line, stdin);
-                        (void)tmp;
-                        break; // end of turn
-                    } else {
-                        printf("\nInvalid category. Press Enter...");
-                        char *tmp = fgets(line, sizeof line, stdin);
-                        (void)tmp;
-                        continue;
-                    }
-                } else {
-                    printf("\nInvalid input. Press Enter...");
-                    char *tmp = fgets(line, sizeof line, stdin);
-                    (void)tmp;
-                    continue;
-                }
-            }
-
-            // Unknown command
-            printf("Unknown command. Use h <1-5>, r, s, or q. Press Enter...");
-            char *tmp = fgets(line, sizeof line, stdin);
-            (void)tmp;
-        }
+    srand((unsigned)time(NULL));
+    int players = ask_number_of_players();
+    if (players == 0) {
+        return 0;
     }
 
-    // End of game summary
-    printf(ANSI_CLEAR);
-    printf(ANSI_BOLD "Game over!" ANSI_RESET " Final total: %d\n\n", total);
-    printf(ANSI_BOLD "Score breakdown:" ANSI_RESET "\n");
-    for (int ci = 0; ci < CATEGORY_COUNT; ++ci) {
-        printf("- %-17s : %d\n", CATEGORY_NAMES[ci], scores[ci] < 0 ? 0 : scores[ci]);
+    Game game;
+    game_init(&game, players);
+    snprintf(message, sizeof message, "%s",
+             "Commands: r = roll, h 1 3 = hold dice, s 7 = score, q = quit");
+    while (!game_is_over(&game)) {
+        show_screen(&game, message);
+        printf("> ");
+        if (!read_line(line, sizeof line)) {
+            break;
+        }
+        if (!run_command(&game, line, message, sizeof message)) {
+            break;
+        }
     }
-    printf("\nThanks for playing!\n");
+    if (game_is_over(&game)) {
+        show_screen(&game, "");
+        int winner = game_winner(&game);
+        printf("Player %d wins with %d points!\n", winner + 1, card_total(&game.cards[winner]));
+    }
     return 0;
 }

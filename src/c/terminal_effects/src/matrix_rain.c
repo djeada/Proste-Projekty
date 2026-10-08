@@ -1,71 +1,41 @@
-// The Matrix "digital rain": one falling stream per column.
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
+// The "digital rain" from The Matrix: one falling stream of characters per column.
+#include <string.h>
 
-#define W 48
-#define H 26
-#define FRAMES 190
-#define TRAIL 14
+#include "term.h"
 
-static const int shade[TRAIL] = {231, 157, 120, 83, 46, 40, 40, 34, 34, 28, 28, 22, 22, 22};
+#define TRAIL 12
 
-static float new_speed(void) { return 0.3f + (rand() % 70) / 100.0f; }
+static const uint32_t shade[TRAIL] = {
+    0xeaffea, 0x9cff9c, 0x4cf04c, 0x22d022, 0x18b018, 0x149414,
+    0x107a10, 0x0c640c, 0x0a520a, 0x084208, 0x063406, 0x042804,
+};
 
-int main(void) {
-    char glyph[H][W];
-    float head[W], speed[W];
-    srand(1999);
-    for (int x = 0; x < W; x++) {
-        head[x] = -(rand() % (H * 2));
-        speed[x] = new_speed();
-        for (int y = 0; y < H; y++) glyph[y][x] = 33 + rand() % 94;
+int main(int argc, char **argv) {
+    char glyph[ROWS][COLS];
+    int head[COLS], speed[COLS];
+    seed(1999);
+    for (int x = 0; x < COLS; x++) {
+        head[x] = -rnd(ROWS * 4);
+        speed[x] = 1 + rnd(3);
+        for (int y = 0; y < ROWS; y++) glyph[y][x] = (char)(33 + rnd(94));
     }
-
-    printf("\033[2J");
-    for (int frame = 0; frame < FRAMES; frame++) {
-        int last = -1;
-        printf("\033[H");
-        for (int y = 0; y < H; y++) {
-            for (int x = 0; x < W; x++) {
-                int d = (int)head[x] - y;  // distance behind the stream's head
-                if (d < 0 || d >= TRAIL) {
-                    putchar(' ');
-                    continue;
-                }
-                if (rand() % 15 == 0) glyph[y][x] = 33 + rand() % 94;
-                if (shade[d] != last) {
-                    printf("\033[38;5;%dm", shade[d]);
-                    last = shade[d];
-                }
-                putchar(glyph[y][x]);
+    start(argc, argv, 50);
+    for (int frame = 0;; frame++) {
+        memset(text, ' ', sizeof text);
+        for (int x = 0; x < COLS; x++) {
+            if (frame % speed[x] == 0) head[x]++;
+            if (head[x] - TRAIL > ROWS) {
+                head[x] = -rnd(ROWS);
+                speed[x] = 1 + rnd(3);
             }
-            putchar('\n');
-        }
-        fflush(stdout);
-        for (int x = 0; x < W; x++) {
-            head[x] += speed[x];
-            if (head[x] - TRAIL > H) {
-                head[x] = -(rand() % H);
-                speed[x] = new_speed();
+            for (int d = 0; d < TRAIL; d++) {
+                int y = head[x] - d;
+                if (y < 0 || y >= ROWS) continue;
+                if (rnd(20) == 0) glyph[y][x] = (char)(33 + rnd(94));
+                text[y][x] = glyph[y][x];
+                ink[y][x] = shade[d];
             }
         }
-        usleep(40000);
+        show_text("");
     }
-
-    const char *lines[] = {"Wake up, Neo...", "The Matrix has you...",
-                           "Follow the white rabbit."};
-    printf("\033[2J\033[H\033[1;32m\n");
-    for (int i = 0; i < 3; i++) {
-        printf("  ");
-        for (const char *c = lines[i]; *c; c++) {
-            putchar(*c);
-            fflush(stdout);
-            usleep(70000);
-        }
-        printf("\n\n");
-        usleep(500000);
-    }
-    printf("\033[0m");
-    return 0;
 }

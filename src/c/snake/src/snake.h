@@ -1,29 +1,33 @@
+/* The rules of Snake: no input or output here. */
 #ifndef SNAKE_H
 #define SNAKE_H
 
-#include <ncurses.h>
-
-#define MAX_SNAKE_LENGTH 100
+#define SNAKE_WIDTH 20
+#define SNAKE_HEIGHT 15
+#define SNAKE_MAX_CELLS (SNAKE_WIDTH * SNAKE_HEIGHT)
 
 typedef struct {
     int x, y;
-} SnakeSegment;
+} Cell;
 
-typedef enum { RIGHT, LEFT, UP, DOWN } Direction;
+typedef enum { UP, DOWN, LEFT, RIGHT } Direction;
+
+/* Returns a random number in [0, n). Tests pass a fake one. */
+typedef int (*RandomFn)(int n);
 
 typedef struct {
-    SnakeSegment snake[MAX_SNAKE_LENGTH];
-    int snake_length;
-    int food_x, food_y;
-    int max_x, max_y;
-    Direction direction;
-    int get_new_food;
+    Cell body[SNAKE_MAX_CELLS]; /* body[0] is the head */
+    int length;
+    Direction direction;      /* the direction of the last step */
+    Direction next_direction; /* the direction of the next step */
+    Cell food;
+    int score;
     int game_over;
 } SnakeGame;
 
-void snake_init(SnakeGame *game, int max_x, int max_y);
-void snake_place_food(SnakeGame *game);
-void snake_update_direction(SnakeGame *game, int key);
-void snake_move(SnakeGame *game);
+void game_init(SnakeGame *game, RandomFn random_below);
+void game_turn(SnakeGame *game, Direction direction);
+void game_step(SnakeGame *game, RandomFn random_below);
+int game_delay_ms(const SnakeGame *game);
 
-#endif // SNAKE_H
+#endif /* SNAKE_H */

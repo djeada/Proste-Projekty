@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Notes</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <h1>Notes</h1>
+    <p>These notes live in the server's memory and are shared by everyone who opens this page.</p>
+    <form id="form">
+      <input id="text" type="text" placeholder="Write a note" maxlength="200" required>
+      <button type="submit">Add</button>
+    </form>
+    <ul id="notes"></ul>
+    <p class="about">Server info: <a href="about.json">about.json</a></p>
+  </main>
+  <script>
+    const list = document.getElementById('notes');
+    const form = document.getElementById('form');
+    const input = document.getElementById('text');
+
+    function showNote(note) {
+      const item = document.createElement('li');
+      item.textContent = note.text;
+      list.appendChild(item);
+    }
+
+    async function loadNotes() {
+      const response = await fetch('/api/notes');
+      const notes = await response.json();
+      list.textContent = '';
+      notes.forEach(showNote);
+    }
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const response = await fetch('/api/notes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain; charset=utf-8' },
+        body: input.value,
+      });
+      if (response.ok) {
+        input.value = '';
+        showNote(await response.json());
+      } else {
+        alert('The note was not saved.');
+      }
+    });
+
+    loadNotes();
+  </script>
+</body>
+</html>

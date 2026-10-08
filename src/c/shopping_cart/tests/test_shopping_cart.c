@@ -1,143 +1,149 @@
+/* Tests of the shopping cart rules. Returns 0 when all tests pass. */
 #include <assert.h>
-#include <string.h>
 #include <stdio.h>
-#include <math.h>
-#include "../src/shopping_cart.h"
+#include <string.h>
 
-void test_store_init() {
-    Store store;
-    store_init(&store);
-    assert(store.product_count == 0);
+#include "shopping_cart.h"
+
+static void test_catalog(void) {
+    assert(CATALOG_SIZE == 8);
+    assert(CATALOG[0].price_cents == 349);
+    assert(CATALOG[4].price_cents == 2499);
 }
 
-void test_store_add_product() {
-    Store store;
-    store_init(&store);
-
-    int id1 = store_add_product(&store, "Apple", 1.99, 100);
-    assert(id1 > 0);
-    assert(store.product_count == 1);
-
-    int id2 = store_add_product(&store, "Banana", 0.99, 50);
-    assert(id2 > id1);
-    assert(store.product_count == 2);
-}
-
-void test_store_find_product() {
-    Store store;
-    store_init(&store);
-
-    int id = store_add_product(&store, "Orange", 2.49, 30);
-    Product *p = store_find_product(&store, id);
-
-    assert(p != NULL);
-    assert(strcmp(p->name, "Orange") == 0);
-    assert(fabs(p->price - 2.49) < 0.001);
-    assert(p->stock == 30);
-
-    assert(store_find_product(&store, 9999) == NULL);
-}
-
-void test_cart_init() {
+static void test_add_and_subtotal(void) {
     Cart cart;
-    cart_init(&cart);
-    assert(cart.item_count == 0);
-    assert(fabs(cart.discount_percent) < 0.001);
+
+    cart_clear(&cart);
+    assert(cart_is_empty(&cart));
+    assert(cart_add(&cart, 0, 2) == CART_OK);
+    assert(cart_add(&cart, 2, 1) == CART_OK);
+    assert(cart_subtotal(&cart) == 2 * 349 + 875);
+    assert(!cart_is_empty(&cart));
 }
 
-void test_cart_add_item() {
-    Store store;
+static void test_add_rejects_bad_input(void) {
     Cart cart;
-    store_init(&store);
-    cart_init(&cart);
 
-    int id = store_add_product(&store, "Item", 10.00, 5);
-
-    assert(cart_add_item(&cart, &store, id, 2) == 1);
-    assert(cart.item_count == 1);
-    assert(cart.items[0].quantity == 2);
-
-    // Add more of same item
-    assert(cart_add_item(&cart, &store, id, 1) == 1);
-    assert(cart.item_count == 1);
-    assert(cart.items[0].quantity == 3);
-
-    // Try to exceed stock
-    assert(cart_add_item(&cart, &store, id, 10) == 0);
+    cart_clear(&cart);
+    assert(cart_add(&cart, -1, 1) == CART_BAD_PRODUCT);
+    assert(cart_add(&cart, CATALOG_SIZE, 1) == CART_BAD_PRODUCT);
+    assert(cart_add(&cart, 0, 0) == CART_BAD_QUANTITY);
+    assert(cart_add(&cart, 0, MAX_QUANTITY + 1) == CART_BAD_QUANTITY);
+    assert(cart_add(&cart, 0, MAX_QUANTITY) == CART_OK);
+    assert(cart_add(&cart, 0, 1) == CART_BAD_QUANTITY);
+    assert(cart.quantities[0] == MAX_QUANTITY);
 }
 
-void test_cart_remove_item() {
-    Store store;
+static void test_set_quantity_zero_removes(void) {
     Cart cart;
-    store_init(&store);
-    cart_init(&cart);
 
-    int id = store_add_product(&store, "Item", 10.00, 10);
-    cart_add_item(&cart, &store, id, 2);
-
-    assert(cart_remove_item(&cart, id) == 1);
-    assert(cart.item_count == 0);
-
-    // Remove non-existent
-    assert(cart_remove_item(&cart, id) == 0);
+    cart_clear(&cart);
+    cart_add(&cart, 1, 3);
+    assert(cart_set_quantity(&cart, 1, 0) == CART_OK);
+    assert(cart_is_empty(&cart));
+    assert(cart_set_quantity(&cart, 1, 100) == CART_BAD_QUANTITY);
+    assert(cart_set_quantity(&cart, 9, 1) == CART_BAD_PRODUCT);
 }
 
-void test_cart_get_total() {
-    Store store;
+static void test_percentage_discount(void) {
     Cart cart;
-    store_init(&store);
-    cart_init(&cart);
 
-    int id1 = store_add_product(&store, "A", 10.00, 10);
-    int id2 = store_add_product(&store, "B", 5.00, 10);
-
-    cart_add_item(&cart, &store, id1, 2);  // 20.00
-    cart_add_item(&cart, &store, id2, 3);  // 15.00
-
-    double total = cart_get_total(&cart, &store);
-    assert(fabs(total - 35.00) < 0.001);
+    cart_clear(&cart);
+    cart_add(&cart, 4, 1); /* 2499 */
+    cart_add(&cart, 7, 1); /* 999 */
+    assert(cart_apply_code(&cart, "save10") == CART_OK);
+    assert(cart_subtotal(&cart) == 3498);
+    assert(cart_discount(&cart) == 350);
+    assert(cart_total(&cart) == 3148);
 }
 
-void test_cart_apply_discount() {
-    Store store;
+static void test_percentage_rounds_to_cent(void) {
     Cart cart;
-    store_init(&store);
-    cart_init(&cart);
 
-    int id = store_add_product(&store, "X", 100.00, 10);
-    cart_add_item(&cart, &store, id, 1);
-
-    cart_apply_discount(&cart, 10.0);
-    double total = cart_get_total(&cart, &store);
-    assert(fabs(total - 90.00) < 0.001);
+    cart_clear(&cart);
+    cart_add(&cart, 0, 1); /* 349 cents: 10% is 34.9, rounds to 35 */
+    cart_apply_code(&cart, "SAVE10");
+    assert(cart_discount(&cart) == 35);
+    assert(cart_total(&cart) == 314);
 }
 
-void test_cart_checkout() {
-    Store store;
+static void test_fixed_discount_needs_minimum(void) {
     Cart cart;
-    store_init(&store);
-    cart_init(&cart);
 
-    int id = store_add_product(&store, "Product", 50.00, 5);
-    cart_add_item(&cart, &store, id, 3);
+    cart_clear(&cart);
+    cart_add(&cart, 0, 8); /* 2792: below the 30.00 minimum */
+    assert(cart_apply_code(&cart, "FLAT5") == CART_MIN_ORDER);
+    assert(cart.discount == NULL);
 
-    assert(cart_checkout(&cart, &store) == 1);
-    assert(cart.item_count == 0);
-
-    Product *p = store_find_product(&store, id);
-    assert(p->stock == 2);
+    cart_add(&cart, 4, 1); /* 5291: now above the minimum */
+    assert(cart_apply_code(&cart, "FLAT5") == CART_OK);
+    assert(cart_discount(&cart) == 500);
+    assert(cart_total(&cart) == 5291 - 500);
 }
 
-int main() {
-    test_store_init();
-    test_store_add_product();
-    test_store_find_product();
-    test_cart_init();
-    test_cart_add_item();
-    test_cart_remove_item();
-    test_cart_get_total();
-    test_cart_apply_discount();
-    test_cart_checkout();
-    printf("All tests passed!\n");
+static void test_discount_disappears_below_minimum(void) {
+    Cart cart;
+
+    cart_clear(&cart);
+    cart_add(&cart, 4, 2); /* 4998 */
+    cart_apply_code(&cart, "FLAT5");
+    assert(cart_discount(&cart) == 500);
+    cart_set_quantity(&cart, 4, 0);
+    assert(cart_discount(&cart) == 0);
+    assert(cart_total(&cart) == 0);
+}
+
+static void test_unknown_code_is_rejected(void) {
+    Cart cart;
+
+    cart_clear(&cart);
+    cart_add(&cart, 4, 2);
+    assert(cart_apply_code(&cart, "FREE") == CART_UNKNOWN_CODE);
+    assert(cart_apply_code(&cart, "SAVE1") == CART_UNKNOWN_CODE);
+    assert(cart.discount == NULL);
+    assert(cart_discount(&cart) == 0);
+}
+
+static void test_clear_resets_cart_and_code(void) {
+    Cart cart;
+
+    cart_clear(&cart);
+    cart_add(&cart, 4, 2);
+    cart_apply_code(&cart, "FLAT5");
+    cart_clear(&cart);
+    assert(cart_is_empty(&cart));
+    assert(cart.discount == NULL);
+    assert(cart_total(&cart) == 0);
+}
+
+static void test_validate_name(void) {
+    assert(validate_name("") == CART_BAD_NAME);
+    assert(validate_name("A") == CART_BAD_NAME);
+    assert(validate_name("1234") == CART_BAD_NAME);
+    assert(validate_name("Anna") == CART_OK);
+    assert(validate_name("Jan Kowalski") == CART_OK);
+}
+
+static void test_validate_address(void) {
+    assert(validate_address("Main St") == CART_BAD_ADDRESS);
+    assert(validate_address("12") == CART_BAD_ADDRESS);
+    assert(validate_address("10 Main Street") == CART_OK);
+}
+
+int main(void) {
+    test_catalog();
+    test_add_and_subtotal();
+    test_add_rejects_bad_input();
+    test_set_quantity_zero_removes();
+    test_percentage_discount();
+    test_percentage_rounds_to_cent();
+    test_fixed_discount_needs_minimum();
+    test_discount_disappears_below_minimum();
+    test_unknown_code_is_rejected();
+    test_clear_resets_cart_and_code();
+    test_validate_name();
+    test_validate_address();
+    puts("All shopping cart tests passed.");
     return 0;
 }

@@ -1,0 +1,10 @@
+{
+  "name": "converter",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Temperature converter: a minimal browser app with tests",
+  "scripts": {
+    "test": "node --test"
+  },
+  "license": "MIT"
+}

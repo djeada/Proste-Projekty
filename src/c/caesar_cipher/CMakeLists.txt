@@ -2,24 +2,17 @@ cmake_minimum_required(VERSION 3.10)
 project(caesar_cipher C)
 
 set(CMAKE_C_STANDARD 99)
+if(CMAKE_C_COMPILER_ID MATCHES "GNU|Clang")
+    add_compile_options(-Wall -Wextra)
+endif()
 
-add_executable(main src/main.c src/caesar.c)
+add_library(caesar_cipher_logic STATIC src/caesar_cipher.c)
+target_include_directories(caesar_cipher_logic PUBLIC src)
+
+add_executable(caesar_cipher src/main.c)
+target_link_libraries(caesar_cipher caesar_cipher_logic)
 
 enable_testing()
-add_executable(test_caesar tests/test_caesar.c src/caesar.c)
-target_include_directories(test_caesar PRIVATE src)
-add_test(NAME test_caesar COMMAND test_caesar)
-
-install(TARGETS main DESTINATION bin)
-
-find_program(CLANG_TIDY_EXE NAMES clang-tidy)
-if(CLANG_TIDY_EXE)
-    set_target_properties(main PROPERTIES C_CLANG_TIDY "clang-tidy")
-endif()
-find_program(CLANG_FORMAT_EXE NAMES clang-format)
-if(CLANG_FORMAT_EXE)
-    add_custom_target(format
-        COMMAND clang-format -i src/*.c src/*.h
-        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-    )
-endif()
+add_executable(test_caesar_cipher tests/test_caesar_cipher.c)
+target_link_libraries(test_caesar_cipher caesar_cipher_logic)
+add_test(NAME test_caesar_cipher COMMAND test_caesar_cipher)

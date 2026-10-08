@@ -1,66 +1,56 @@
-import importlib.util
-import re
-import time
+import os
+import subprocess
+import sys
 from pathlib import Path
 
 import pytest
 
 SRC = Path(__file__).resolve().parent.parent / "src"
+EFFECTS = sorted(p.stem for p in SRC.glob("*.py") if p.stem != "term")
+sys.path.insert(0, str(SRC))
 
 
-def load(name):
-    spec = importlib.util.spec_from_file_location(name, SRC / f"{name}.py")
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    return module
+def run(name, frames):
+    env = dict(os.environ, NO_SLEEP="1")
+    result = subprocess.run(
+        [sys.executable, str(SRC / f"{name}.py"), str(frames)],
+        capture_output=True, text=True, encoding="utf-8", env=env, timeout=120,
+    )
+    assert result.returncode == 0, result.stderr
+    return result.stdout
 
 
-@pytest.fixture(autouse=True)
-def no_sleep(monkeypatch):
-    monkeypatch.setattr(time, "sleep", lambda seconds: None)
+@pytest.mark.parametrize("name", EFFECTS)
+def test_effect_draws_frames_and_restores_terminal(name):
+    out = run(name, 20)
+    assert out.startswith("\033[?25l\033[2J")
+    assert out.count("\033[H") == 20
+    assert out.endswith("\033[0m\033[?25h\n")
 
 
-@pytest.mark.parametrize(
-    "name, expected",
-    [
-        ("donut", "3 frames rendered. no GPU needed."),
-        ("mandelbrot_zoom", "100 iterations"),
-        ("game_of_life", "generation   2"),
-        ("matrix_rain", "Follow the white rabbit."),
-        ("doom_fire", "fire extinguished"),
-        ("spinning_cube", "\033[38;5;196m█"),
-        ("plasma", "3 frames of plasma, zero textures"),
-        ("ray_tracer", "3 frames ray traced on the CPU"),
-        ("warp_starfield", "arrived at Alpha Centauri"),
-    ],
-)
-def test_effect_draws_frames(name, expected, capsys):
-    load(name).main(3)
-    out = capsys.readouterr().out
-    assert out.startswith(("\033[2J", "\033[1;32m[*]"))
-    assert out.count("\033[H") >= 3
-    assert expected in out
+def test_random_numbers_match_c_and_javascript():
+    import term
+
+    term.seed(1)
+    assert [term.rnd(100) for _ in range(5)] == [38, 26, 13, 83, 19]
 
 
-def test_quicksort_sorts_and_finishes_green(monkeypatch, capsys):
-    quicksort = load("quicksort_visualizer")
-    monkeypatch.setattr(quicksort, "N", 12)
-    quicksort.main()
-    frames = capsys.readouterr().out.split("\033[H")
-    assert "quicksort | compares" in frames[1]
-    rows = frames[-1].splitlines()[2:]
-    assert len(rows) == quicksort.H
-    for row in rows:  # sorted bars grow to the right and are all green
-        assert re.fullmatch(" *(\033\\[38;5;46m█+)?\033\\[0m", row)
-    assert "█" * 12 in rows[-1]
+def test_quicksort_sorts(monkeypatch):
+    import quicksort_visualizer as qs
+
+    monkeypatch.setattr(qs, "show_pixels", lambda status: None)
+    a = [5, 3, 44, 1, 3, 20, 7]
+    qs.Sorter(a).quicksort(0, len(a) - 1)
+    assert a == sorted([5, 3, 44, 1, 3, 20, 7])
 
 
-def test_maze_is_solved(monkeypatch, capsys):
-    maze = load("maze_solver")
-    monkeypatch.setattr(maze, "MW", 15)
-    monkeypatch.setattr(maze, "MH", 9)
-    maze.main()
-    out = capsys.readouterr().out
-    assert out.count("\033[H") > 10
-    assert "█" in out
-    assert "shortest path:" in out
+def test_maze_is_carved_and_solved(monkeypatch):
+    import maze_solver as ms
+
+    monkeypatch.setattr(ms, "show_pixels", lambda status: None)
+    maze = [[ms.WALL] * ms.MW for _ in range(ms.MH)]
+    ms.carve(maze)
+    rooms = [maze[y][x] for y in range(1, ms.MH, 2) for x in range(1, ms.MW, 2)]
+    assert all(v == ms.OPEN for v in rooms)
+    ms.solve(maze)
+    assert maze[ms.MH - 2][ms.MW - 2] >= ms.MW + ms.MH - 6

@@ -1,89 +1,124 @@
 #include "minesweeper.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
 
-void game_init(MinesweeperGame *game) {
-    for (int i = 0; i < BOARD_SIZE; ++i) {
-        for (int j = 0; j < BOARD_SIZE; ++j) {
-            game->board[i][j].is_mine = 0;
-            game->board[i][j].is_revealed = 0;
-            game->board[i][j].is_flagged = 0;
-            game->board[i][j].adjacent_mines = 0;
-        }
-    }
-    game->revealed_count = 0;
-    game->flagged_count = 0;
-    game->game_over = 0;
-    game->win = 0;
-    srand((unsigned)time(NULL));
-    int placed = 0;
-    while (placed < MINE_COUNT) {
-        int r = rand() % BOARD_SIZE;
-        int c = rand() % BOARD_SIZE;
-        if (!game->board[r][c].is_mine) {
-            game->board[r][c].is_mine = 1;
-            placed++;
-        }
-    }
-    for (int i = 0; i < BOARD_SIZE; ++i) {
-        for (int j = 0; j < BOARD_SIZE; ++j) {
-            if (game->board[i][j].is_mine) continue;
-            int count = 0;
-            for (int dr = -1; dr <= 1; ++dr) {
-                for (int dc = -1; dc <= 1; ++dc) {
-                    int ni = i + dr, nj = j + dc;
-                    if (ni >= 0 && ni < BOARD_SIZE && nj >= 0 && nj < BOARD_SIZE && game->board[ni][nj].is_mine) count++;
-                }
-            }
-            game->board[i][j].adjacent_mines = count;
-        }
-    }
+#include <stdlib.h>
+#include <string.h>
+
+/* xorshift32: a small generator that gives the same numbers for the same seed. */
+static unsigned int next_random(unsigned int *state) {
+    unsigned int x = *state;
+    x ^= x << 13;
+    x ^= x >> 17;
+    x ^= x << 5;
+    *state = x;
+    return x;
 }
 
-void game_reveal(MinesweeperGame *game, int row, int col) {
-    if (row < 0 || row >= BOARD_SIZE || col < 0 || col >= BOARD_SIZE) return;
-    Cell *cell = &game->board[row][col];
-    if (cell->is_revealed || cell->is_flagged) return;
-    cell->is_revealed = 1;
-    game->revealed_count++;
-    if (cell->is_mine) {
-        game->game_over = 1;
+static int in_board(const Game *game, int row, int col) {
+    return row >= 0 && row < game->rows && col >= 0 && col < game->cols;
+}
+
+static int is_near(int row, int col, int other_row, int other_col) {
+    return abs(row - other_row) <= 1 && abs(col - other_col) <= 1;
+}
+
+static int count_mines_around(const Game *game, int row, int col) {
+    int count = 0;
+    for (int dr = -1; dr <= 1; dr++) {
+        for (int dc = -1; dc <= 1; dc++) {
+            if ((dr != 0 || dc != 0) && in_board(game, row + dr, col + dc)) {
+                count += game->mine[row + dr][col + dc];
+            }
+        }
+    }
+    return count;
+}
+
+/* Places the mines at random, skipping the first clicked cell and its neighbors. */
+static void place_mines(Game *game, int safe_row, int safe_col) {
+    int placed = 0;
+    while (placed < game->mine_total) {
+        int row = (int)(next_random(&game->rng) % (unsigned int)game->rows);
+        int col = (int)(next_random(&game->rng) % (unsigned int)game->cols);
+        if (game->mine[row][col] || is_near(row, col, safe_row, safe_col)) {
+            continue;
+        }
+        game->mine[row][col] = 1;
+        placed++;
+    }
+    for (int row = 0; row < game->rows; row++) {
+        for (int col = 0; col < game->cols; col++) {
+            game->neighbors[row][col] = count_mines_around(game, row, col);
+        }
+    }
+    game->mines_placed = 1;
+}
+
+/* Opens a cell. An empty cell (no mines around) also opens its neighbors: flood fill. */
+static void reveal_cell(Game *game, int row, int col) {
+    if (!in_board(game, row, col) || game->revealed[row][col] || game->flagged[row][col]) {
         return;
     }
-    if (cell->adjacent_mines == 0) {
-        for (int dr = -1; dr <= 1; ++dr) {
-            for (int dc = -1; dc <= 1; ++dc) {
-                if (dr != 0 || dc != 0) game_reveal(game, row + dr, col + dc);
+    game->revealed[row][col] = 1;
+    game->revealed_count++;
+    if (game->neighbors[row][col] == 0) {
+        for (int dr = -1; dr <= 1; dr++) {
+            for (int dc = -1; dc <= 1; dc++) {
+                reveal_cell(game, row + dr, col + dc);
             }
         }
     }
-    if (game->revealed_count == BOARD_SIZE * BOARD_SIZE - MINE_COUNT) game->win = 1;
 }
 
-void game_flag(MinesweeperGame *game, int row, int col) {
-    if (row < 0 || row >= BOARD_SIZE || col < 0 || col >= BOARD_SIZE) return;
-    Cell *cell = &game->board[row][col];
-    if (cell->is_revealed) return;
-    cell->is_flagged = !cell->is_flagged;
-    if (cell->is_flagged) game->flagged_count++;
-    else game->flagged_count--;
+void game_start(Game *game, int rows, int cols, int mines, unsigned int seed) {
+    game->rows = rows;
+    game->cols = cols;
+    game->mine_total = mines;
+    game->mines_placed = 0;
+    game->revealed_count = 0;
+    game->flag_count = 0;
+    game->rng = seed ? seed : 1;
+    game->state = PLAYING;
+    memset(game->mine, 0, sizeof game->mine);
+    memset(game->neighbors, 0, sizeof game->neighbors);
+    memset(game->revealed, 0, sizeof game->revealed);
+    memset(game->flagged, 0, sizeof game->flagged);
 }
 
-void game_print(const MinesweeperGame *game) {
-    printf("   ");
-    for (int j = 0; j < BOARD_SIZE; ++j) printf("%2d ", j);
-    printf("\n");
-    for (int i = 0; i < BOARD_SIZE; ++i) {
-        printf("%2d ", i);
-        for (int j = 0; j < BOARD_SIZE; ++j) {
-            const Cell *cell = &game->board[i][j];
-            if (cell->is_flagged) printf(" F ");
-            else if (!cell->is_revealed) printf(" . ");
-            else if (cell->is_mine) printf(" * ");
-            else if (cell->adjacent_mines > 0) printf(" %d ", cell->adjacent_mines);
-            else printf("   ");
-        }
-        printf("\n");
+void game_reveal(Game *game, int row, int col) {
+    if (game->state != PLAYING || !in_board(game, row, col)) {
+        return;
     }
+    if (game->revealed[row][col] || game->flagged[row][col]) {
+        return;
+    }
+    if (!game->mines_placed) {
+        place_mines(game, row, col);
+    }
+    if (game->mine[row][col]) {
+        for (int r = 0; r < game->rows; r++) {
+            for (int c = 0; c < game->cols; c++) {
+                if (game->mine[r][c]) {
+                    game->revealed[r][c] = 1;
+                }
+            }
+        }
+        game->state = LOST;
+        return;
+    }
+    reveal_cell(game, row, col);
+    if (game->revealed_count == game->rows * game->cols - game->mine_total) {
+        game->state = WON;
+    }
+}
+
+void game_toggle_flag(Game *game, int row, int col) {
+    if (game->state != PLAYING || !in_board(game, row, col) || game->revealed[row][col]) {
+        return;
+    }
+    game->flagged[row][col] = !game->flagged[row][col];
+    game->flag_count += game->flagged[row][col] ? 1 : -1;
+}
+
+int game_mines_left(const Game *game) {
+    return game->mine_total - game->flag_count;
 }

@@ -1,0 +1,167 @@
+:root {
+  --bg: #f6f5f2;
+  --card: #ffffff;
+  --text: #1f2328;
+  --muted: #5c6670;
+  --accent: #2b6cb0;
+  --error: #b42318;
+  --border: #d9d6cf;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #15171a;
+    --card: #1f2227;
+    --text: #e8e6e1;
+    --muted: #9aa3ad;
+    --accent: #7fb2ea;
+    --error: #ff8a80;
+    --border: #3a3f46;
+  }
+}
+
+[hidden] {
+  display: none !important;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  line-height: 1.4;
+}
+
+main {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+h1 {
+  font-size: 1.8rem;
+}
+
+section {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+}
+
+h2 {
+  font-size: 1.15rem;
+  margin: 4px 0 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 6px 4px;
+  border-bottom: 1px solid var(--border);
+}
+
+td.num,
+th.num {
+  text-align: right;
+  white-space: nowrap;
+}
+
+input {
+  font: inherit;
+  padding: 6px 8px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--text);
+  max-width: 100%;
+}
+
+input[type="number"] {
+  width: 4.5em;
+}
+
+button {
+  font: inherit;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+}
+
+button.secondary {
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+}
+
+form {
+  margin-top: 12px;
+}
+
+form.inline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+#checkout-form {
+  display: grid;
+  gap: 8px;
+}
+
+#checkout-form label {
+  display: grid;
+  gap: 4px;
+}
+
+#checkout-form input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#totals {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4px 12px;
+  margin: 12px 0 0;
+  font-size: 1.05rem;
+}
+
+#totals dt,
+#totals dd {
+  margin: 0;
+}
+
+#totals .grand {
+  font-weight: bold;
+}
+
+.message {
+  min-height: 1.4em;
+  margin: 8px 0 0;
+  color: var(--muted);
+}
+
+.message.error {
+  color: var(--error);
+}
+
+#summary-body p {
+  margin: 4px 0;
+}
+
+@media (max-width: 480px) {
+  th.hide-small,
+  td.hide-small {
+    display: none;
+  }
+}

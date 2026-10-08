@@ -1,213 +1,204 @@
+/* Tests of the paint logic. Returns 0 when every check passes. */
 #include <assert.h>
 #include <stdio.h>
-#include <string.h>
-#include <math.h>
-#include "../src/graphics_editor.h"
 
-void test_pixel_create(void) {
-    Pixel p = pixel_create(100, 150, 200);
-    assert(p.r == 100);
-    assert(p.g == 150);
-    assert(p.b == 200);
-}
+#include "graphics_editor.h"
 
-void test_pixels_equal(void) {
-    Pixel a = pixel_create(255, 128, 64);
-    Pixel b = pixel_create(255, 128, 64);
-    Pixel c = pixel_create(0, 0, 0);
-    
-    assert(pixels_equal(a, b) == 1);
-    assert(pixels_equal(a, c) == 0);
-}
+static const Color WHITE = {255, 255, 255};
+static const Color RED = {255, 0, 0};
+static const Color BLUE = {0, 0, 255};
 
-void test_image_create(void) {
-    Image *img = image_create(100, 50);
-    assert(img != NULL);
-    assert(img->width == 100);
-    assert(img->height == 50);
-    assert(img->data != NULL);
-    image_free(img);
-}
-
-void test_image_create_invalid(void) {
-    assert(image_create(0, 50) == NULL);
-    assert(image_create(100, 0) == NULL);
-    assert(image_create(-10, 50) == NULL);
-    assert(image_create(MAX_WIDTH + 1, 50) == NULL);
-}
-
-void test_image_set_get_pixel(void) {
-    Image *img = image_create(10, 10);
-    Pixel red = pixel_create(255, 0, 0);
-    
-    assert(image_set_pixel(img, 5, 5, red) == 1);
-    Pixel p = image_get_pixel(img, 5, 5);
-    assert(p.r == 255 && p.g == 0 && p.b == 0);
-    
-    // Out of bounds
-    assert(image_set_pixel(img, 100, 100, red) == 0);
-    
-    image_free(img);
-}
-
-void test_image_fill(void) {
-    Image *img = image_create(10, 10);
-    Pixel blue = pixel_create(0, 0, 255);
-    
-    image_fill(img, blue);
-    
-    for (int y = 0; y < 10; y++) {
-        for (int x = 0; x < 10; x++) {
-            Pixel p = image_get_pixel(img, x, y);
-            assert(p.r == 0 && p.g == 0 && p.b == 255);
+static int count_color(const Canvas *canvas, Color color)
+{
+    int count = 0;
+    for (int y = 0; y < canvas->height; y++) {
+        for (int x = 0; x < canvas->width; x++) {
+            if (color_equal(canvas_get(canvas, x, y), color)) {
+                count++;
+            }
         }
     }
-    
-    image_free(img);
+    return count;
 }
 
-void test_image_copy(void) {
-    Image *src = image_create(20, 20);
-    Pixel green = pixel_create(0, 255, 0);
-    image_fill(src, green);
-    
-    Image *dst = image_copy(src);
-    assert(dst != NULL);
-    assert(dst->width == src->width);
-    assert(dst->height == src->height);
-    
-    Pixel p = image_get_pixel(dst, 10, 10);
-    assert(p.r == 0 && p.g == 255 && p.b == 0);
-    
-    image_free(src);
-    image_free(dst);
+static void test_new_canvas_is_white(void)
+{
+    Canvas canvas = canvas_create(8, 6, WHITE);
+    assert(canvas.width == 8 && canvas.height == 6);
+    assert(count_color(&canvas, WHITE) == 48);
+    canvas_destroy(&canvas);
 }
 
-void test_image_crop(void) {
-    Image *img = image_create(100, 100);
-    Pixel white = pixel_create(255, 255, 255);
-    image_fill(img, white);
-    
-    // Draw a red region
-    Pixel red = pixel_create(255, 0, 0);
-    image_fill_rect(img, 10, 10, 20, 20, red);
-    
-    Image *cropped = image_crop(img, 10, 10, 20, 20);
-    assert(cropped != NULL);
-    assert(cropped->width == 20);
-    assert(cropped->height == 20);
-    
-    Pixel p = image_get_pixel(cropped, 0, 0);
-    assert(p.r == 255 && p.g == 0 && p.b == 0);
-    
-    image_free(img);
-    image_free(cropped);
+static void test_set_and_get_ignore_borders(void)
+{
+    Canvas canvas = canvas_create(4, 4, WHITE);
+    canvas_set(&canvas, 1, 2, RED);
+    assert(color_equal(canvas_get(&canvas, 1, 2), RED));
+    canvas_set(&canvas, -1, 0, RED);
+    canvas_set(&canvas, 4, 0, RED);
+    assert(count_color(&canvas, RED) == 1);
+    assert(!canvas_inside(&canvas, 4, 0));
+    canvas_destroy(&canvas);
 }
 
-void test_image_rotate_180(void) {
-    Image *img = image_create(10, 10);
-    Pixel black = pixel_create(0, 0, 0);
-    Pixel white = pixel_create(255, 255, 255);
-    image_fill(img, black);
-    image_set_pixel(img, 0, 0, white);
-    
-    Image *rotated = image_rotate_180(img);
-    assert(rotated != NULL);
-    
-    Pixel p = image_get_pixel(rotated, 9, 9);
-    assert(p.r == 255 && p.g == 255 && p.b == 255);
-    
-    image_free(img);
-    image_free(rotated);
+static void test_horizontal_line(void)
+{
+    Canvas canvas = canvas_create(10, 10, WHITE);
+    draw_line(&canvas, 2, 5, 7, 5, 1, RED);
+    assert(color_equal(canvas_get(&canvas, 2, 5), RED));
+    assert(color_equal(canvas_get(&canvas, 7, 5), RED));
+    assert(count_color(&canvas, RED) == 6);
+    canvas_destroy(&canvas);
 }
 
-void test_image_flip_horizontal(void) {
-    Image *img = image_create(10, 10);
-    Pixel black = pixel_create(0, 0, 0);
-    Pixel white = pixel_create(255, 255, 255);
-    image_fill(img, black);
-    image_set_pixel(img, 0, 5, white);
-    
-    Image *flipped = image_flip_horizontal(img);
-    assert(flipped != NULL);
-    
-    Pixel p = image_get_pixel(flipped, 9, 5);
-    assert(p.r == 255 && p.g == 255 && p.b == 255);
-    
-    image_free(img);
-    image_free(flipped);
+static void test_diagonal_line_and_reverse(void)
+{
+    Canvas a = canvas_create(10, 10, WHITE);
+    Canvas b = canvas_create(10, 10, WHITE);
+    draw_line(&a, 0, 0, 4, 4, 1, RED);
+    draw_line(&b, 4, 4, 0, 0, 1, RED);
+    assert(count_color(&a, RED) == 5);
+    for (int i = 0; i < 5; i++) {
+        assert(color_equal(canvas_get(&a, i, i), RED));
+    }
+    assert(count_color(&b, RED) == 5);
+    assert(count_color(&a, RED) == count_color(&b, RED));
+    canvas_destroy(&a);
+    canvas_destroy(&b);
 }
 
-void test_image_draw_line(void) {
-    Image *img = image_create(20, 20);
-    Pixel black = pixel_create(0, 0, 0);
-    Pixel red = pixel_create(255, 0, 0);
-    image_fill(img, black);
-    
-    image_draw_line(img, 0, 0, 19, 19, red);
-    
-    // Diagonal line should have pixels set
-    Pixel p = image_get_pixel(img, 10, 10);
-    assert(p.r == 255);
-    
-    image_free(img);
+static void test_steep_line_has_one_pixel_per_row(void)
+{
+    Canvas canvas = canvas_create(10, 10, WHITE);
+    draw_line(&canvas, 1, 0, 3, 9, 1, RED);
+    assert(count_color(&canvas, RED) == 10);
+    for (int y = 0; y < 10; y++) {
+        int in_row = 0;
+        for (int x = 0; x < 10; x++) {
+            in_row += color_equal(canvas_get(&canvas, x, y), RED);
+        }
+        assert(in_row == 1);
+    }
+    canvas_destroy(&canvas);
 }
 
-void test_image_grayscale(void) {
-    Image *img = image_create(10, 10);
-    Pixel color = pixel_create(100, 150, 200);
-    image_fill(img, color);
-    
-    image_grayscale(img);
-    
-    Pixel p = image_get_pixel(img, 5, 5);
-    assert(p.r == p.g && p.g == p.b);
-    
-    image_free(img);
+static void test_thick_brush_is_clipped_at_border(void)
+{
+    Canvas canvas = canvas_create(5, 5, WHITE);
+    draw_line(&canvas, 0, 0, 0, 0, 3, RED);
+    assert(count_color(&canvas, RED) == 4);
+    /* A 5 x 5 brush centred on the corner keeps only its 3 x 3 part inside. */
+    draw_line(&canvas, 0, 4, 0, 4, 5, BLUE);
+    assert(count_color(&canvas, BLUE) == 9);
+    canvas_destroy(&canvas);
 }
 
-void test_image_invert(void) {
-    Image *img = image_create(10, 10);
-    Pixel color = pixel_create(100, 50, 200);
-    image_fill(img, color);
-    
-    image_invert(img);
-    
-    Pixel p = image_get_pixel(img, 5, 5);
-    assert(p.r == 155);
-    assert(p.g == 205);
-    assert(p.b == 55);
-    
-    image_free(img);
+static void test_rectangle_outline(void)
+{
+    Canvas canvas = canvas_create(10, 10, WHITE);
+    draw_rect(&canvas, 2, 2, 5, 4, 1, RED);
+    /* A 4 x 3 rectangle has 2 * (4 + 3) - 4 = 10 border pixels. */
+    assert(count_color(&canvas, RED) == 10);
+    assert(color_equal(canvas_get(&canvas, 3, 3), WHITE));
+    assert(color_equal(canvas_get(&canvas, 5, 4), RED));
+    canvas_destroy(&canvas);
 }
 
-void test_image_resize(void) {
-    Image *img = image_create(100, 100);
-    Pixel white = pixel_create(255, 255, 255);
-    image_fill(img, white);
-    
-    assert(image_resize(img, 50, 50) == 1);
-    assert(img->width == 50);
-    assert(img->height == 50);
-    
-    image_free(img);
+static void test_flood_fill_stops_at_border(void)
+{
+    /* A 5 x 5 box of red walls; the inside is 3 x 3. */
+    Canvas canvas = canvas_create(7, 7, WHITE);
+    draw_rect(&canvas, 1, 1, 5, 5, 1, RED);
+    flood_fill(&canvas, 3, 3, BLUE);
+    assert(count_color(&canvas, BLUE) == 9);
+    assert(count_color(&canvas, RED) == 16);
+    assert(color_equal(canvas_get(&canvas, 0, 0), WHITE));
+    assert(color_equal(canvas_get(&canvas, 6, 6), WHITE));
+    canvas_destroy(&canvas);
 }
 
-int main(void) {
-    test_pixel_create();
-    test_pixels_equal();
-    test_image_create();
-    test_image_create_invalid();
-    test_image_set_get_pixel();
-    test_image_fill();
-    test_image_copy();
-    test_image_crop();
-    test_image_rotate_180();
-    test_image_flip_horizontal();
-    test_image_draw_line();
-    test_image_grayscale();
-    test_image_invert();
-    test_image_resize();
-    printf("All tests passed!\n");
+static void test_flood_fill_same_color_does_nothing(void)
+{
+    Canvas canvas = canvas_create(4, 4, WHITE);
+    flood_fill(&canvas, 1, 1, WHITE);
+    assert(count_color(&canvas, WHITE) == 16);
+    flood_fill(&canvas, 9, 9, RED);
+    assert(count_color(&canvas, RED) == 0);
+    canvas_destroy(&canvas);
+}
+
+static void test_flood_fill_whole_big_canvas(void)
+{
+    /* Far deeper than any recursive fill could go on the call stack. */
+    Canvas canvas = canvas_create(320, 240, WHITE);
+    flood_fill(&canvas, 0, 0, RED);
+    assert(count_color(&canvas, RED) == 320 * 240);
+    canvas_destroy(&canvas);
+}
+
+static void test_undo_restores_previous_image(void)
+{
+    History history;
+    history_init(&history);
+    Canvas canvas = canvas_create(4, 4, WHITE);
+
+    history_push(&history, &canvas);
+    canvas_set(&canvas, 0, 0, RED);
+    assert(history_undo(&history, &canvas) == 1);
+    assert(color_equal(canvas_get(&canvas, 0, 0), WHITE));
+    assert(history_undo(&history, &canvas) == 0);
+
+    canvas_destroy(&canvas);
+    history_free(&history);
+}
+
+static void test_undo_history_drops_oldest(void)
+{
+    History history;
+    history_init(&history);
+    Canvas canvas = canvas_create(2, 2, WHITE);
+    for (int i = 0; i < HISTORY_DEPTH + 5; i++) {
+        canvas_set(&canvas, 0, 0, RED);
+        history_push(&history, &canvas);
+    }
+    assert(history.count == HISTORY_DEPTH);
+    int undone = 0;
+    while (history_undo(&history, &canvas)) {
+        undone++;
+    }
+    assert(undone == HISTORY_DEPTH);
+    canvas_destroy(&canvas);
+    history_free(&history);
+}
+
+static void test_copy_is_independent(void)
+{
+    Canvas a = canvas_create(3, 3, WHITE);
+    Canvas b = canvas_create(3, 3, WHITE);
+    canvas_set(&a, 1, 1, RED);
+    canvas_copy_into(&b, &a);
+    canvas_set(&a, 0, 0, BLUE);
+    assert(color_equal(canvas_get(&b, 1, 1), RED));
+    assert(color_equal(canvas_get(&b, 0, 0), WHITE));
+    canvas_destroy(&a);
+    canvas_destroy(&b);
+}
+
+int main(void)
+{
+    test_new_canvas_is_white();
+    test_set_and_get_ignore_borders();
+    test_horizontal_line();
+    test_diagonal_line_and_reverse();
+    test_steep_line_has_one_pixel_per_row();
+    test_thick_brush_is_clipped_at_border();
+    test_rectangle_outline();
+    test_flood_fill_stops_at_border();
+    test_flood_fill_same_color_does_nothing();
+    test_flood_fill_whole_big_canvas();
+    test_undo_restores_previous_image();
+    test_undo_history_drops_oldest();
+    test_copy_is_independent();
+    printf("All graphics_editor logic tests passed.\n");
     return 0;
 }

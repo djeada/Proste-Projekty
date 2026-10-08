@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Temperature converter</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main>
+      <h1>Temperature converter</h1>
+      <form id="form">
+        <input id="value" type="number" step="any" value="36.6" required />
+        <select id="unit">
+          <option value="C">°C</option>
+          <option value="F">°F</option>
+        </select>
+        <button type="submit">Convert</button>
+      </form>
+      <p id="result"></p>
+    </main>
+    <script src="converter.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>

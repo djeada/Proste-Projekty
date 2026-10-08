@@ -2,30 +2,20 @@ cmake_minimum_required(VERSION 3.10)
 project(fifteen_puzzle C)
 
 set(CMAKE_C_STANDARD 99)
+if(CMAKE_C_COMPILER_ID MATCHES "GNU|Clang")
+    add_compile_options(-Wall -Wextra)
+endif()
 
-add_library(fifteen_logic src/fifteen.c)
-target_include_directories(fifteen_logic PUBLIC src)
+add_library(fifteen_puzzle_logic STATIC src/fifteen_puzzle.c)
+target_include_directories(fifteen_puzzle_logic PUBLIC src)
 
-add_executable(main src/main.c)
-target_link_libraries(main fifteen_logic)
+find_package(Curses REQUIRED)
 
-# Enable testing
+add_executable(fifteen_puzzle src/main.c)
+target_include_directories(fifteen_puzzle PRIVATE ${CURSES_INCLUDE_DIR})
+target_link_libraries(fifteen_puzzle fifteen_puzzle_logic ${CURSES_LIBRARIES})
+
 enable_testing()
-add_executable(test_fifteen tests/test_fifteen.c)
-target_link_libraries(test_fifteen fifteen_logic)
-target_include_directories(test_fifteen PRIVATE src)
-add_test(NAME test_fifteen COMMAND test_fifteen)
-
-install(TARGETS main DESTINATION bin)
-
-find_program(CLANG_TIDY_EXE NAMES clang-tidy)
-if(CLANG_TIDY_EXE)
-    set_target_properties(main PROPERTIES C_CLANG_TIDY "clang-tidy")
-endif()
-find_program(CLANG_FORMAT_EXE NAMES clang-format)
-if(CLANG_FORMAT_EXE)
-    add_custom_target(format
-        COMMAND clang-format -i src/*.c src/*.h
-        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-    )
-endif()
+add_executable(test_fifteen_puzzle tests/test_fifteen_puzzle.c)
+target_link_libraries(test_fifteen_puzzle fifteen_puzzle_logic)
+add_test(NAME test_fifteen_puzzle COMMAND test_fifteen_puzzle)

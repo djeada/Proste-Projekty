@@ -1,239 +1,148 @@
+/* Battleship rules: boards, ship placement, shooting and the computer player. */
 #include "battleship.h"
-#include <stdlib.h>
-#include <string.h>
 
-static const int SHIP_LENGTHS[MAX_SHIPS] = {5,4,3,3,2};
+static const int FLEET_LENGTHS[SHIP_COUNT] = {5, 4, 3, 3, 2};
+static const int DX[4] = {1, -1, 0, 0};
+static const int DY[4] = {0, 0, 1, -1};
 
-static void clear_board(Board *b) {
-    for (int y = 0; y < BOARD_SIZE; ++y)
-        for (int x = 0; x < BOARD_SIZE; ++x)
-            b->grid[y][x] = (Cell){0,0};
+static int in_bounds(int x, int y) {
+    return x >= 0 && x < BOARD_SIZE && y >= 0 && y < BOARD_SIZE;
 }
 
-void battleship_init(BattleGame *game, int max_x, int max_y) {
-    memset(game, 0, sizeof(*game));
-    game->max_x = max_x; game->max_y = max_y;
-    clear_board(&game->player);
-    clear_board(&game->enemy);
-    for (int i = 0; i < MAX_SHIPS; ++i) {
-        game->player.ships[i] = (Ship){.pos={0,0}, .length=SHIP_LENGTHS[i], .horizontal=1, .hits=0, .placed=0};
-        game->enemy.ships[i]  = (Ship){.pos={0,0}, .length=SHIP_LENGTHS[i], .horizontal=1, .hits=0, .placed=0};
+static int ship_sunk(const Ship *ship) {
+    return ship->placed && ship->hits == ship->length;
+}
+
+void rng_seed(Rng *rng, unsigned int seed) {
+    rng->state = seed ? seed : 1u;
+}
+
+static unsigned int rng_next(Rng *rng) {
+    unsigned int x = rng->state;
+    x ^= x << 13;
+    x ^= x >> 17;
+    x ^= x << 5;
+    rng->state = x;
+    return x;
+}
+
+int rng_below(Rng *rng, int n) {
+    return (int)(rng_next(rng) % (unsigned int)n);
+}
+
+void board_reset(Board *board) {
+    for (int s = 0; s < SHIP_COUNT; ++s) {
+        board->ships[s].length = FLEET_LENGTHS[s];
+        board->ships[s].hits = 0;
+        board->ships[s].placed = 0;
     }
-    game->phase = PHASE_PLACEMENT;
-    game->cursor_x = 0; game->cursor_y = 0; game->current_ship = 0;
-    game->player_ships_remaining = MAX_SHIPS; game->enemy_ships_remaining = MAX_SHIPS;
-    snprintf(game->status, sizeof(game->status), "Place ships: WASD move, r rotate, Enter place");
-}
-
-int place_ship(Board *board, int ship_index, int x, int y, int horizontal) {
-    if (ship_index < 0 || ship_index >= MAX_SHIPS) return 0;
-    int len = board->ships[ship_index].length;
-    if (horizontal) {
-        if (x + len > BOARD_SIZE) return 0;
-        for (int i = 0; i < len; ++i) if (board->grid[y][x+i].has_ship) return 0;
-        for (int i = 0; i < len; ++i) board->grid[y][x+i].has_ship = 1;
-    } else {
-        if (y + len > BOARD_SIZE) return 0;
-        for (int i = 0; i < len; ++i) if (board->grid[y+i][x].has_ship) return 0;
-        for (int i = 0; i < len; ++i) board->grid[y+i][x].has_ship = 1;
-    }
-    board->ships[ship_index].pos.x = x; board->ships[ship_index].pos.y = y;
-    board->ships[ship_index].horizontal = horizontal; board->ships[ship_index].placed = 1; board->ships[ship_index].hits = 0;
-    return 1;
-}
-
-int fire_at(Board *board, int x, int y) {
-    if (x < 0 || x >= BOARD_SIZE || y < 0 || y >= BOARD_SIZE) return 0;
-    if (board->grid[y][x].hit) return 1; // treat repeat shots as valid no-ops
-    board->grid[y][x].hit = 1;
-    if (!board->grid[y][x].has_ship) return 1; // valid miss
-    // Mark hit on corresponding ship
-    for (int s = 0; s < MAX_SHIPS; ++s) {
-        Ship *ship = &board->ships[s];
-        if (!ship->placed) continue;
-        for (int i = 0; i < ship->length; ++i) {
-            int sx = ship->pos.x + (ship->horizontal ? i : 0);
-            int sy = ship->pos.y + (ship->horizontal ? 0 : i);
-            if (sx == x && sy == y) {
-                ship->hits++;
-                break;
-            }
-        }
-    }
-    return 1;
-}
-
-int all_ships_placed(const Board *board) {
-    for (int i = 0; i < MAX_SHIPS; ++i) if (!board->ships[i].placed) return 0;
-    return 1;
-}
-
-int is_defeated(const Board *board) {
-    for (int i = 0; i < MAX_SHIPS; ++i) {
-        const Ship *s = &board->ships[i];
-        if (!s->placed) return 0;
-        if (s->hits < s->length) return 0;
-    }
-    return 1;
-}
-
-static void random_place(Board *board) {
-    for (int s = 0; s < MAX_SHIPS; ++s) {
-        int placed = 0;
-        for (int tries = 0; tries < 100 && !placed; ++tries) {
-            int horiz = rand() % 2;
-            int x = rand() % BOARD_SIZE;
-            int y = rand() % BOARD_SIZE;
-            placed = place_ship(board, s, x, y, horiz);
+    for (int y = 0; y < BOARD_SIZE; ++y) {
+        for (int x = 0; x < BOARD_SIZE; ++x) {
+            board->ship_at[y][x] = NO_SHIP;
+            board->shot[y][x] = 0;
         }
     }
 }
 
-static int ships_remaining(const Board *board) {
-    int remain = 0;
-    for (int i = 0; i < MAX_SHIPS; ++i) {
-        const Ship *s = &board->ships[i];
-        if (s->placed && s->hits < s->length) remain++;
+int board_can_place(const Board *board, int ship, int x, int y, int horizontal) {
+    if (ship < 0 || ship >= SHIP_COUNT || board->ships[ship].placed) return 0;
+    for (int i = 0; i < board->ships[ship].length; ++i) {
+        int cx = horizontal ? x + i : x;
+        int cy = horizontal ? y : y + i;
+        if (!in_bounds(cx, cy) || board->ship_at[cy][cx] != NO_SHIP) return 0;
     }
-    return remain;
+    return 1;
 }
 
-static void enemy_random_turn(BattleGame *game) {
-    // pick random untargeted cell on player board
-    for (int tries = 0; tries < 200; ++tries) {
-        int x = rand() % BOARD_SIZE;
-        int y = rand() % BOARD_SIZE;
-        if (game->player.grid[y][x].hit) continue;
-        int hit = fire_at(&game->player, x, y);
-        snprintf(game->status, sizeof(game->status), "Enemy %s at (%d,%d)", hit ? "hit" : "miss", x, y);
+int board_place(Board *board, int ship, int x, int y, int horizontal) {
+    if (!board_can_place(board, ship, x, y, horizontal)) return 0;
+    for (int i = 0; i < board->ships[ship].length; ++i) {
+        int cx = horizontal ? x + i : x;
+        int cy = horizontal ? y : y + i;
+        board->ship_at[cy][cx] = ship;
+    }
+    board->ships[ship].placed = 1;
+    return 1;
+}
+
+static int place_one_randomly(Board *board, int ship, Rng *rng) {
+    for (int tries = 0; tries < 1000; ++tries) {
+        int x = rng_below(rng, BOARD_SIZE);
+        int y = rng_below(rng, BOARD_SIZE);
+        int horizontal = rng_below(rng, 2);
+        if (board_place(board, ship, x, y, horizontal)) return 1;
+    }
+    return 0;
+}
+
+/* Replaces the whole fleet with a random valid one. Ships may touch but not overlap. */
+void board_place_random(Board *board, Rng *rng) {
+    int placed = 0;
+    while (!placed) {
+        board_reset(board);
+        placed = 1;
+        for (int s = 0; s < SHIP_COUNT && placed; ++s) {
+            placed = place_one_randomly(board, s, rng);
+        }
+    }
+}
+
+int board_fleet_placed(const Board *board) {
+    for (int s = 0; s < SHIP_COUNT; ++s) {
+        if (!board->ships[s].placed) return 0;
+    }
+    return 1;
+}
+
+ShotResult board_fire(Board *board, int x, int y) {
+    if (!in_bounds(x, y)) return SHOT_INVALID;
+    if (board->shot[y][x]) return SHOT_REPEAT;
+    board->shot[y][x] = 1;
+    int index = board->ship_at[y][x];
+    if (index == NO_SHIP) return SHOT_MISS;
+    Ship *ship = &board->ships[index];
+    ship->hits++;
+    return ship_sunk(ship) ? SHOT_SUNK : SHOT_HIT;
+}
+
+int board_all_sunk(const Board *board) {
+    for (int s = 0; s < SHIP_COUNT; ++s) {
+        if (!ship_sunk(&board->ships[s])) return 0;
+    }
+    return 1;
+}
+
+void computer_reset(Computer *computer) {
+    computer->count = 0;
+}
+
+/* Hunt and target: random shots until a hit, then the neighbours of the hit. */
+Point computer_choose(Computer *computer, const Board *target, Rng *rng) {
+    while (computer->count > 0) {
+        Point p = computer->targets[--computer->count];
+        if (!target->shot[p.y][p.x]) return p;
+    }
+    Point unshot[BOARD_SIZE * BOARD_SIZE];
+    int n = 0;
+    for (int y = 0; y < BOARD_SIZE; ++y) {
+        for (int x = 0; x < BOARD_SIZE; ++x) {
+            if (!target->shot[y][x]) unshot[n++] = (Point){x, y};
+        }
+    }
+    return unshot[rng_below(rng, n)];
+}
+
+void computer_report(Computer *computer, const Board *target, Point at, ShotResult result) {
+    if (result == SHOT_SUNK) {
+        computer->count = 0;
         return;
     }
-}
-
-void battleship_update(BattleGame *game, int key) {
-    if (key == 'q') { game->phase = PHASE_QUIT; return; }
-
-    if (game->phase == PHASE_PLACEMENT) {
-        if (key == 'r') {
-            Ship *s = &game->player.ships[game->current_ship];
-            s->horizontal = !s->horizontal;
-        } else if (key == '\n') {
-            Ship *s = &game->player.ships[game->current_ship];
-            if (place_ship(&game->player, game->current_ship, game->cursor_x, game->cursor_y, s->horizontal)) {
-                game->current_ship++;
-                if (game->current_ship >= MAX_SHIPS) {
-                    // Auto-place enemy and switch to battle
-                    random_place(&game->enemy);
-                    game->phase = PHASE_BATTLE;
-                    snprintf(game->status, sizeof(game->status), "Battle! Enter to fire. q to quit.");
-                }
-            } else {
-                snprintf(game->status, sizeof(game->status), "Invalid placement. Try another spot.");
-            }
-        } else if (key == 'w') { if (game->cursor_y > 0) game->cursor_y--; }
-        else if (key == 's') { if (game->cursor_y < BOARD_SIZE - 1) game->cursor_y++; }
-        else if (key == 'a') { if (game->cursor_x > 0) game->cursor_x--; }
-        else if (key == 'd') { if (game->cursor_x < BOARD_SIZE - 1) game->cursor_x++; }
-    } else if (game->phase == PHASE_BATTLE) {
-        if (key == '\n') {
-            if (game->cursor_x < 0 || game->cursor_x >= BOARD_SIZE || game->cursor_y < 0 || game->cursor_y >= BOARD_SIZE) {
-                snprintf(game->status, sizeof(game->status), "Out of bounds.");
-            } else if (game->enemy.grid[game->cursor_y][game->cursor_x].hit) {
-                snprintf(game->status, sizeof(game->status), "Already targeted (%d,%d).", game->cursor_x, game->cursor_y);
-            } else {
-                if (!fire_at(&game->enemy, game->cursor_x, game->cursor_y)) return; // shouldn't happen
-                int rem = ships_remaining(&game->enemy);
-                int was_hit = game->enemy.grid[game->cursor_y][game->cursor_x].has_ship;
-                snprintf(game->status, sizeof(game->status), "%s at (%d,%d). Enemy ships left: %d", was_hit ? "Hit" : "Miss", game->cursor_x, game->cursor_y, rem);
-                if (is_defeated(&game->enemy)) {
-                    game->phase = PHASE_GAMEOVER;
-                    snprintf(game->status, sizeof(game->status), "You win! Press r to restart or q to quit.");
-                    return;
-                }
-                // Enemy responds
-                enemy_random_turn(game);
-                if (is_defeated(&game->player)) {
-                    game->phase = PHASE_GAMEOVER;
-                    snprintf(game->status, sizeof(game->status), "You lose! Press r to restart or q to quit.");
-                    return;
-                }
-            }
-        } else if (key == 'w') { if (game->cursor_y > 0) game->cursor_y--; }
-        else if (key == 's') { if (game->cursor_y < BOARD_SIZE - 1) game->cursor_y++; }
-        else if (key == 'a') { if (game->cursor_x > 0) game->cursor_x--; }
-        else if (key == 'd') { if (game->cursor_x < BOARD_SIZE - 1) game->cursor_x++; }
-    } else if (game->phase == PHASE_GAMEOVER) {
-        if (key == 'r') {
-            battleship_init(game, game->max_x, game->max_y);
+    if (result != SHOT_HIT) return;
+    for (int d = 0; d < 4; ++d) {
+        int nx = at.x + DX[d];
+        int ny = at.y + DY[d];
+        if (in_bounds(nx, ny) && !target->shot[ny][nx] && computer->count < MAX_TARGETS) {
+            computer->targets[computer->count++] = (Point){nx, ny};
         }
     }
-}
-
-static void draw_board_text(const Board *b, FILE *out, int show_ships, int cursor_x, int cursor_y) {
-    fprintf(out, "   ");
-    for (int x = 0; x < BOARD_SIZE; ++x) fprintf(out, "%d ", x);
-    fprintf(out, "\n");
-    for (int y = 0; y < BOARD_SIZE; ++y) {
-        fprintf(out, "%2d ", y);
-        for (int x = 0; x < BOARD_SIZE; ++x) {
-            char c = '.';
-            if (b->grid[y][x].hit) c = b->grid[y][x].has_ship ? 'X' : 'o';
-            else if (show_ships && b->grid[y][x].has_ship) c = '#';
-            if (x == cursor_x && y == cursor_y) fprintf(out, "[%c]", c);
-            else fprintf(out, "%c ", c);
-        }
-        fprintf(out, "\n");
-    }
-}
-
-void battleship_draw_text(const BattleGame *game, FILE *out) {
-    // Clear screen (basic ANSI) for a cleaner experience
-    fprintf(out, "\033[2J\033[H");
-    if (game->phase == PHASE_PLACEMENT) {
-        fprintf(out, "Battleship - Placement\n");
-        fprintf(out, "Ship %d/%d length %d\n", game->current_ship+1, MAX_SHIPS, game->player.ships[game->current_ship].length);
-        fprintf(out, "Controls: WASD move, r rotate, Enter place, q quit\n\n");
-        draw_board_text(&game->player, out, 1, game->cursor_x, game->cursor_y);
-    } else if (game->phase == PHASE_BATTLE) {
-        fprintf(out, "Battleship - Battle\n");
-        fprintf(out, "Controls: WASD move, Enter fire, q quit\n\n");
-        // Composite view: player and enemy boards printed in one view top-to-bottom
-        // Headers
-        fprintf(out, "Your Board%*sEnemy Board\n", 3 + BOARD_SIZE*2 + 5, "");
-        // X indices header line for both
-        fprintf(out, "   "); for (int x = 0; x < BOARD_SIZE; ++x) fprintf(out, "%d ", x);
-        fprintf(out, "%*s", 5, "");
-        fprintf(out, "   "); for (int x = 0; x < BOARD_SIZE; ++x) fprintf(out, "%d ", x);
-        fprintf(out, "\n");
-        for (int y = 0; y < BOARD_SIZE; ++y) {
-            // Player row
-            fprintf(out, "%2d ", y);
-            for (int x = 0; x < BOARD_SIZE; ++x) {
-                char c = '.';
-                if (game->player.grid[y][x].hit) c = game->player.grid[y][x].has_ship ? 'X' : 'o';
-                else if (game->player.grid[y][x].has_ship) c = '#';
-                fprintf(out, "%c ", c);
-            }
-            fprintf(out, "%*s", 5, "");
-            // Enemy row (no ship reveal)
-            fprintf(out, "%2d ", y);
-            for (int x = 0; x < BOARD_SIZE; ++x) {
-                char c = '.';
-                if (game->enemy.grid[y][x].hit) c = game->enemy.grid[y][x].has_ship ? 'X' : 'o';
-                // Indicate cursor by surrounding space markers via '>' after cell when x==cursor
-                fprintf(out, "%c ", c);
-            }
-            fprintf(out, "\n");
-        }
-        fprintf(out, "\nTarget: (%d,%d)\n", game->cursor_x, game->cursor_y);
-    } else if (game->phase == PHASE_GAMEOVER) {
-        fprintf(out, "Battleship - Game Over\n\n");
-        // final boards
-        fprintf(out, "Your Board\n");
-        draw_board_text(&game->player, out, 1, -1, -1);
-        fprintf(out, "\nEnemy Board (revealed)\n");
-        draw_board_text(&game->enemy, out, 1, -1, -1);
-        fprintf(out, "\n%s\n", game->status[0] ? game->status : "Press r to restart or q to quit.");
-    }
-    if (game->status[0] && game->phase != PHASE_GAMEOVER) fprintf(out, "\n%s\n", game->status);
 }

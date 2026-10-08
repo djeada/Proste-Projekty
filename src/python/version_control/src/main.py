@@ -1,88 +1,101 @@
+"""Command line interface of the version control tool. Works on the current directory."""
+
+import sys
+
+import version_control as vcs
+
+USAGE = """Usage: version_control <command> [argument]
+
+Commands:
+  init               create a repository in this directory
+  commit "message"   save all files as a new commit
+  log                list commits, newest first
+  status             show files changed since the last commit
+  diff [N]           show changed lines compared with commit N (default: last)
+  checkout N         restore the files of commit N
 """
-Python implementation of a simple version control system.
-"""
-from src.python.version_control.src.logic.repository import Repository
 
 
-def main() -> None:
-    repo = Repository(".")
+def parse_number(text):
+    if not text.isascii() or not text.isdigit() or int(text) < 1:
+        raise vcs.VcsError("Commit number must be a positive integer.")
+    return int(text)
 
-    print("Version Control System")
-    print("Commands: init, add <file>, commit <message>, log, checkout <id>, diff <id1> <id2>, status, quit")
-    print()
 
-    while True:
-        try:
-            user_input = input("> ").strip()
-        except (EOFError, KeyboardInterrupt):
-            print("\nGoodbye!")
-            break
+def show_log():
+    count = vcs.commit_count(".")
+    if count == 0:
+        print("No commits yet.")
+    for number in range(count, 0, -1):
+        stamp, message = vcs.commit_info(".", number)
+        print(f"#{number:<4} {vcs.format_time(stamp)}  {message}")
 
-        if not user_input:
-            continue
 
-        parts = user_input.split(maxsplit=1)
-        command = parts[0].lower()
+def show_status():
+    count = vcs.commit_count(".")
+    base = vcs.load_commit(".", count) if count else {}
+    print("No commits yet." if count == 0 else f"Changes since commit #{count}:")
+    found = vcs.changes(base, vcs.read_directory("."))
+    if not found:
+        print("  nothing changed")
+    for kind, name in found:
+        print(f"  {kind:<10} {name}")
 
-        if command == "quit" or command == "q":
-            print("Goodbye!")
-            break
-        elif command == "init":
-            if repo.init():
-                print("Initialized empty repository.")
-            else:
-                print("Repository already initialized.")
-        elif command == "add":
-            if len(parts) < 2:
-                print("Usage: add <filepath>")
-            else:
-                filepath = parts[1]
-                if repo.add_file(filepath):
-                    print(f"Added: {filepath}")
-                else:
-                    print(f"Could not add: {filepath}")
-        elif command == "commit":
-            if len(parts) < 2:
-                print("Usage: commit <message>")
-            else:
-                message = parts[1]
-                commit_id = repo.commit(message)
-                if commit_id > 0:
-                    print(f"Created commit #{commit_id}: {message}")
-                else:
-                    print("Could not create commit. Is the repository initialized?")
-        elif command == "log":
-            print(repo.log())
-        elif command == "checkout":
-            if len(parts) < 2:
-                print("Usage: checkout <commit_id>")
-            else:
-                try:
-                    commit_id = int(parts[1])
-                    if repo.checkout(commit_id):
-                        print(f"Checked out commit #{commit_id}")
-                    else:
-                        print("Could not checkout. Invalid commit ID?")
-                except ValueError:
-                    print("Please enter a valid commit ID")
-        elif command == "diff":
-            if len(parts) < 2:
-                print("Usage: diff <commit_id1> <commit_id2>")
-            else:
-                try:
-                    ids = parts[1].split()
-                    if len(ids) >= 2:
-                        id1, id2 = int(ids[0]), int(ids[1])
-                        print(repo.diff(id1, id2))
-                    else:
-                        print("Usage: diff <commit_id1> <commit_id2>")
-                except ValueError:
-                    print("Please enter valid commit IDs")
-        elif command == "status":
-            print(repo.status())
-        else:
-            print(f"Unknown command: {command}")
-            print("Commands: init, add <file>, commit <message>, log, checkout <id>, diff <id1> <id2>, status, quit")
+
+def show_diff(params):
+    count = vcs.commit_count(".")
+    if count == 0:
+        raise vcs.VcsError("No commits yet.")
+    number = parse_number(params[0]) if params else count
+    if number > count:
+        raise vcs.VcsError(f"There is no commit #{number}.")
+
+    base = vcs.load_commit(".", number)
+    current = vcs.read_directory(".")
+    found = vcs.changes(base, current)
+    if not found:
+        print(f"No changes since commit #{number}.")
+    for kind, name in found:
+        old_lines = [] if kind == "added" else vcs.split_lines(base[name])
+        new_lines = [] if kind == "deleted" else vcs.split_lines(current[name])
+        print(f"== {name} ({kind})")
+        for tag, line in vcs.diff_lines(old_lines, new_lines):
+            if tag != " ":
+                print(tag + line)
+
+
+def run(args):
+    command, params = args[0], args[1:]
+    if command == "init" and not params:
+        vcs.init(".")
+        print(f"Initialized empty repository in ./{vcs.VCS_DIR}")
+    elif command == "commit" and len(params) == 1:
+        print(f"Created commit #{vcs.commit('.', params[0])}")
+    elif command == "log" and not params:
+        show_log()
+    elif command == "status" and not params:
+        show_status()
+    elif command == "diff" and len(params) <= 1:
+        show_diff(params)
+    elif command == "checkout" and len(params) == 1:
+        number = parse_number(params[0])
+        vcs.checkout(".", number)
+        print(f"Restored the files of commit #{number}")
+    else:
+        print(USAGE, end="")
+        return 1
+    return 0
+
+
+def main():
+    if len(sys.argv) < 2:
+        print(USAGE, end="")
+        sys.exit(1)
+    try:
+        sys.exit(run(sys.argv[1:]))
+    except vcs.VcsError as error:
+        print(error)
+        sys.exit(1)
 
 
 if __name__ == "__main__":

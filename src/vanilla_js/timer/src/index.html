@@ -3,25 +3,29 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Timer</title>
+    <title>Stopwatch</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="container">
+    <main class="container">
       <h1>Stopwatch</h1>
-      <div id="display" class="display">00:00:00.000</div>
-      <div class="controls">
-        <button id="start" class="btn start-btn">Start</button>
-        <button id="stop" class="btn stop-btn" disabled>Stop</button>
-        <button id="reset" class="btn reset-btn">Reset</button>
-        <button id="lap" class="btn lap-btn" disabled>Lap</button>
+      <div id="display" class="display">00:00.000</div>
+      <p id="message" class="message" aria-live="polite"></p>
+      <div class="buttons">
+        <button id="start">Start</button>
+        <button id="lap" disabled>Lap</button>
+        <button id="reset">Reset</button>
+        <button id="save" disabled>Save laps</button>
       </div>
-      <div id="laps" class="laps">
-        <h3>Lap Times</h3>
-        <ul id="lap-list"></ul>
-      </div>
-    </div>
-    <script src="app.js"></script>
+      <fieldset id="countdown-settings" class="settings">
+        <label><input type="checkbox" id="countdown" /> Countdown</label>
+        <label>min <input type="number" id="minutes" min="0" max="999" value="1" /></label>
+        <label>sec <input type="number" id="seconds" min="0" max="59" value="0" /></label>
+      </fieldset>
+      <ol id="laps" class="laps"></ol>
+      <p class="hint">Keys: s start/stop, l lap, r reset</p>
+    </main>
+    <script src="timer.js"></script>
+    <script src="main.js"></script>
   </body>
 </html>

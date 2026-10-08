@@ -1,74 +1,70 @@
-import unittest
-import sys
-import os
-
-sys.path.insert(
-    0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../src/logic"))
-)
-from messenger import (
-    MessengerServer,
-    MessengerClient,
-    Connection,
-    create_socket,
-    DEFAULT_PORT,
-    MAX_MESSAGE_LENGTH,
-    MAX_USERNAME_LENGTH,
-)
+"""Tests of the chat rules: parsing, nicknames, line splitting and formatting."""
+from messenger import (MAX_LINE, format_chat, format_join, format_leave, format_list, format_rename,
+                       parse_line, parse_port, split_lines, valid_nick)
 
 
-class TestMessengerConstants(unittest.TestCase):
-    def test_default_port(self):
-        self.assertEqual(DEFAULT_PORT, 8888)
-
-    def test_max_message_length(self):
-        self.assertEqual(MAX_MESSAGE_LENGTH, 1024)
-
-    def test_max_username_length(self):
-        self.assertEqual(MAX_USERNAME_LENGTH, 32)
+def test_chat_is_stripped():
+    assert parse_line('  hello   there ') == ('chat', 'hello   there')
 
 
-class TestMessengerServer(unittest.TestCase):
-    def test_server_initialization(self):
-        server = MessengerServer()
-        self.assertEqual(server.port, DEFAULT_PORT)
-        self.assertFalse(server.running)
-        self.assertEqual(len(server.clients), 0)
-
-    def test_server_custom_port(self):
-        server = MessengerServer(port=9999)
-        self.assertEqual(server.port, 9999)
+def test_blank_line_is_empty():
+    assert parse_line('   ') == ('empty', '')
 
 
-class TestMessengerClient(unittest.TestCase):
-    def test_client_initialization(self):
-        client = MessengerClient()
-        self.assertEqual(client.host, "localhost")
-        self.assertEqual(client.port, DEFAULT_PORT)
-        self.assertFalse(client.connected)
-
-    def test_client_custom_host_port(self):
-        client = MessengerClient(host="example.com", port=9999)
-        self.assertEqual(client.host, "example.com")
-        self.assertEqual(client.port, 9999)
-
-    def test_set_username(self):
-        client = MessengerClient()
-        client.set_username("testuser")
-        self.assertEqual(client.username, "testuser")
-
-    def test_username_truncation(self):
-        client = MessengerClient()
-        long_name = "a" * 50
-        client.set_username(long_name)
-        self.assertEqual(len(client.username), MAX_USERNAME_LENGTH)
+def test_commands():
+    assert parse_line('/nick  Alice ') == ('nick', 'Alice')
+    assert parse_line('/nick') == ('nick', '')
+    assert parse_line('/list') == ('list', '')
+    assert parse_line('/quit') == ('quit', '')
 
 
-class TestCreateSocket(unittest.TestCase):
-    def test_create_socket(self):
-        sock = create_socket()
-        self.assertIsNotNone(sock)
-        sock.close()
+def test_unknown_commands_are_not_chat():
+    assert parse_line('/nickname Bob')[0] == 'unknown'
+    assert parse_line('/help')[0] == 'unknown'
 
 
-if __name__ == "__main__":
-    unittest.main()
+def test_valid_nick():
+    assert valid_nick('Alice')
+    assert valid_nick('a_b-1')
+    assert valid_nick('0123456789abcdef')  # exactly 16 characters
+    assert not valid_nick('')
+    assert not valid_nick('a b')
+    assert not valid_nick('0123456789abcdefg')
+    assert not valid_nick('<script>')
+
+
+def test_parse_port():
+    assert parse_port('8888') == 8888
+    assert parse_port('65535') == 65535
+    assert parse_port('0') is None
+    assert parse_port('65536') is None
+    assert parse_port('80a') is None
+    assert parse_port('') is None
+
+
+def test_split_lines_keeps_unfinished_rest():
+    lines, rest = split_lines('one\r\ntwo\npart')
+    assert lines == ['one', 'two']
+    assert rest == 'part'
+
+
+def test_split_lines_cuts_very_long_line():
+    lines, rest = split_lines('x' * MAX_LINE)
+    assert lines == ['x' * MAX_LINE]
+    assert rest == ''
+
+
+def test_format_chat_fits_line_limit():
+    assert format_chat('Alice', 'hi') == '<Alice> hi'
+    assert len(format_chat('Alice', 'x' * MAX_LINE)) == MAX_LINE - 1
+
+
+def test_format_notices():
+    assert format_join('Bob') == '* Bob joined'
+    assert format_leave('Bob') == '* Bob left'
+    assert format_rename('Bob', 'Carl') == '* Bob is now known as Carl'
+
+
+def test_format_list():
+    assert format_list(['Alice', 'Bob']) == '* Online: Alice, Bob'
+    assert format_list([]) == '* Nobody is online'

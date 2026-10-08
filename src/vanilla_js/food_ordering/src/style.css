@@ -1,0 +1,267 @@
+:root {
+  --bg: #f6f3ee;
+  --card: #ffffff;
+  --text: #2b2622;
+  --muted: #7a7068;
+  --accent: #d9622b;
+  --accent-text: #ffffff;
+  --border: #e4ddd4;
+  --done: #3a9a5b;
+  --error: #c0392b;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1d1b19;
+    --card: #2a2724;
+    --text: #f1ebe4;
+    --muted: #a39a90;
+    --accent: #f08a50;
+    --accent-text: #1d1b19;
+    --border: #3d3832;
+    --done: #5cc27f;
+    --error: #ff7a6b;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #1d1b19;
+  --card: #2a2724;
+  --text: #f1ebe4;
+  --muted: #a39a90;
+  --accent: #f08a50;
+  --accent-text: #1d1b19;
+  --border: #3d3832;
+  --done: #5cc27f;
+  --error: #ff7a6b;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0 16px 32px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.4;
+}
+
+header {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 24px 0 8px;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+header p {
+  margin: 4px 0 0;
+  color: var(--muted);
+}
+
+.layout {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 20px;
+}
+
+.card h2 {
+  margin: 0 0 12px;
+  font-size: 1.2rem;
+}
+
+.status {
+  grid-column: 1 / -1;
+}
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.tab.active {
+  background: var(--accent);
+  color: var(--accent-text);
+}
+
+ul,
+ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.dishes li,
+.lines li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.dishes li div:first-child {
+  flex: 1;
+}
+
+.dishes p {
+  margin: 2px 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.dish-side {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.lines .name {
+  flex: 1;
+}
+
+.price {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.quantity {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.empty {
+  color: var(--muted);
+  padding: 10px 0;
+}
+
+.total {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.2rem;
+  margin: 12px 0 16px;
+}
+
+button {
+  font: inherit;
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+  color: var(--text);
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+button.primary,
+#new-order {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-text);
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+button.remove {
+  color: var(--error);
+}
+
+#delivery label.field {
+  display: block;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+input[type="text"],
+#delivery input:not([type="radio"]) {
+  display: block;
+  width: 100%;
+  margin-top: 4px;
+  padding: 8px 10px;
+  font: inherit;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text);
+}
+
+fieldset {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin: 0 0 12px;
+  padding: 8px 12px;
+}
+
+fieldset label {
+  display: block;
+  font-weight: normal;
+  padding: 4px 0;
+}
+
+.error {
+  min-height: 1.2em;
+  margin: -6px 0 8px;
+  color: var(--error);
+  font-size: 0.9rem;
+}
+
+.steps {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.steps li {
+  flex: 1;
+  text-align: center;
+  padding: 10px 6px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--muted);
+}
+
+.steps li.done {
+  color: var(--done);
+  border-color: var(--done);
+}
+
+.steps li.current {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-text);
+  font-weight: 600;
+}
+
+@media (max-width: 720px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .steps {
+    flex-direction: column;
+  }
+}

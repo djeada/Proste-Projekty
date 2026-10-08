@@ -1,80 +1,114 @@
 #include "snake.h"
-#include <stdlib.h>
+
 #include <string.h>
 
-void snake_init(SnakeGame *game, int max_x, int max_y) {
-    game->max_x = max_x;
-    game->max_y = max_y;
-    game->snake_length = 1;
-    game->snake[0].x = max_x / 2;
-    game->snake[0].y = max_y / 2;
-    game->direction = RIGHT;
-    game->get_new_food = 1;
-    game->game_over = 0;
+static int is_occupied(const SnakeGame *game, int x, int y) {
+    for (int i = 0; i < game->length; i++) {
+        if (game->body[i].x == x && game->body[i].y == y) {
+            return 1;
+        }
+    }
+    return 0;
 }
 
-void snake_place_food(SnakeGame *game) {
-    game->food_x = (rand() % (game->max_x - 2)) + 1;
-    game->food_y = (rand() % (game->max_y - 2)) + 1;
-    game->get_new_food = 0;
+static int is_outside(int x, int y) {
+    return x < 0 || x >= SNAKE_WIDTH || y < 0 || y >= SNAKE_HEIGHT;
 }
 
-void snake_update_direction(SnakeGame *game, int key) {
-    switch (key) {
-        case KEY_RIGHT:
-            if (game->direction != LEFT) game->direction = RIGHT;
-            break;
-        case KEY_LEFT:
-            if (game->direction != RIGHT) game->direction = LEFT;
-            break;
-        case KEY_UP:
-            if (game->direction != DOWN) game->direction = UP;
-            break;
-        case KEY_DOWN:
-            if (game->direction != UP) game->direction = DOWN;
-            break;
+static Direction opposite(Direction direction) {
+    switch (direction) {
+        case UP:
+            return DOWN;
+        case DOWN:
+            return UP;
+        case LEFT:
+            return RIGHT;
         default:
-            break;
+            return LEFT;
     }
 }
 
-void snake_move(SnakeGame *game) {
-    SnakeSegment new_head = game->snake[0];
+/* Puts food on the n-th free cell, where n is chosen by random_below. */
+static void place_food(SnakeGame *game, RandomFn random_below) {
+    int free_cells = SNAKE_MAX_CELLS - game->length;
+    if (free_cells == 0) {
+        game->game_over = 1; /* the board is full */
+        return;
+    }
+    int choice = random_below(free_cells);
+    for (int y = 0; y < SNAKE_HEIGHT; y++) {
+        for (int x = 0; x < SNAKE_WIDTH; x++) {
+            if (is_occupied(game, x, y)) {
+                continue;
+            }
+            if (choice == 0) {
+                game->food.x = x;
+                game->food.y = y;
+                return;
+            }
+            choice--;
+        }
+    }
+}
+
+void game_init(SnakeGame *game, RandomFn random_below) {
+    memset(game, 0, sizeof *game);
+    game->body[0].x = SNAKE_WIDTH / 2;
+    game->body[0].y = SNAKE_HEIGHT / 2;
+    game->length = 1;
+    game->direction = RIGHT;
+    game->next_direction = RIGHT;
+    place_food(game, random_below);
+}
+
+/* A turn is ignored if it would reverse the last step, so the snake never runs into its neck. */
+void game_turn(SnakeGame *game, Direction direction) {
+    if (direction != opposite(game->direction)) {
+        game->next_direction = direction;
+    }
+}
+
+void game_step(SnakeGame *game, RandomFn random_below) {
+    if (game->game_over) {
+        return;
+    }
+    game->direction = game->next_direction;
+
+    Cell head = game->body[0];
     switch (game->direction) {
-        case RIGHT:
-            new_head.x++;
-            break;
-        case LEFT:
-            new_head.x--;
-            break;
         case UP:
-            new_head.y--;
+            head.y--;
             break;
         case DOWN:
-            new_head.y++;
+            head.y++;
+            break;
+        case LEFT:
+            head.x--;
+            break;
+        case RIGHT:
+            head.x++;
             break;
     }
-
-    // Check for self collision
-    for (int i = 1; i < game->snake_length; i++) {
-        if (game->snake[i].x == new_head.x && game->snake[i].y == new_head.y) {
-            game->game_over = 1;
-        }
-    }
-
-    // Check for wall collision
-    if (new_head.x >= game->max_x || new_head.x < 0 || new_head.y >= game->max_y || new_head.y < 0) {
+    if (is_outside(head.x, head.y) || is_occupied(game, head.x, head.y)) {
         game->game_over = 1;
-    } else {
-        memmove(&game->snake[1], &game->snake[0], sizeof(SnakeSegment) * (game->snake_length - 1));
-        game->snake[0] = new_head;
+        return;
     }
 
-    if (game->snake[0].x == game->food_x && game->snake[0].y == game->food_y) {
-        game->get_new_food = 1;
-        if (game->snake_length < MAX_SNAKE_LENGTH) {
-            game->snake[game->snake_length] = game->snake[game->snake_length - 1];
-            game->snake_length++;
-        }
+    int eats = head.x == game->food.x && head.y == game->food.y;
+    /* Without eating, the tail leaves its cell; when eating, nothing leaves. */
+    int moving = eats ? game->length : game->length - 1;
+    memmove(&game->body[1], &game->body[0], moving * sizeof(Cell));
+    game->body[0] = head;
+
+    if (eats) {
+        game->length++;
+        game->score += 10;
+        place_food(game, random_below);
     }
+}
+
+/* Starts at 150 ms per step and gets 5 ms faster per segment, but never faster than 60 ms. */
+int game_delay_ms(const SnakeGame *game) {
+    int delay = 150 - 5 * (game->length - 1);
+    return delay < 60 ? 60 : delay;
 }

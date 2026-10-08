@@ -1,57 +1,64 @@
+/* Logic of a small git-like tool: snapshots, commits and line diffs. */
 #ifndef VERSION_CONTROL_H
 #define VERSION_CONTROL_H
 
+#include <stddef.h>
 #include <time.h>
 
-#define MAX_PATH_LENGTH 256
-#define MAX_MESSAGE_LENGTH 256
-#define MAX_COMMITS 100
-#define MAX_FILES 50
-#define MAX_FILE_SIZE 65536
+#define VCS_DIR ".vcs"
+#define MESSAGE_SIZE 256
 
+/* A file name and its contents. */
 typedef struct {
-    char path[MAX_PATH_LENGTH];
-    char *content;
+    char *name;
+    unsigned char *data;
     size_t size;
-} FileSnapshot;
+} File;
+
+/* A set of files, sorted by name. */
+typedef struct {
+    File *files;
+    size_t count;
+} Snapshot;
+
+typedef enum { CHANGE_ADDED, CHANGE_MODIFIED, CHANGE_DELETED } ChangeKind;
 
 typedef struct {
-    int id;
-    char message[MAX_MESSAGE_LENGTH];
-    time_t timestamp;
-    FileSnapshot files[MAX_FILES];
-    int file_count;
-} Commit;
+    ChangeKind kind;
+    const char *name;
+} Change;
+
+/* tag is ' ' (same line), '-' (only in the old file) or '+' (only in the new file). */
+typedef struct {
+    char tag;
+    const unsigned char *text;
+    size_t length;
+} DiffLine;
 
 typedef struct {
-    char repo_path[MAX_PATH_LENGTH];
-    Commit commits[MAX_COMMITS];
-    int commit_count;
-    int initialized;
-} Repository;
+    int number;
+    time_t time;
+    char message[MESSAGE_SIZE];
+} CommitInfo;
 
-// Repository management
-int repo_init(Repository *repo, const char *path);
-void repo_free(Repository *repo);
-int repo_is_initialized(const Repository *repo);
+/* Repository. All functions take the directory that holds the .vcs folder. */
+int repo_exists(const char *dir);
+int repo_init(const char *dir);
+int repo_commit_count(const char *dir);
+int repo_commit(const char *dir, const char *message);
+int repo_info(const char *dir, int number, CommitInfo *info);
+int repo_load_commit(const char *dir, int number, Snapshot *snap);
+int repo_checkout(const char *dir, int number);
 
-// Commit operations
-int repo_commit(Repository *repo, const char *message);
-int repo_get_commit(const Repository *repo, int commit_id, Commit *commit);
-int repo_get_commit_count(const Repository *repo);
+/* Snapshots */
+int snapshot_load_dir(const char *dir, Snapshot *snap);
+void snapshot_free(Snapshot *snap);
+const File *snapshot_find(const Snapshot *snap, const char *name);
+size_t snapshot_changes(const Snapshot *base, const Snapshot *current, Change *out);
 
-// History operations
-void repo_log(const Repository *repo);
-int repo_checkout(Repository *repo, int commit_id);
-int repo_diff(const Repository *repo, int commit_id1, int commit_id2);
+/* Line diff (longest common subsequence). Free *lines with free(). */
+int diff_file(const File *old_file, const File *new_file, DiffLine **lines, size_t *count);
 
-// File tracking
-int repo_add_file(Repository *repo, const char *filepath);
-int repo_status(const Repository *repo);
+void format_time(time_t when, char *buffer, size_t size);
 
-// Utility functions
-char *read_file_content(const char *filepath, size_t *size);
-int write_file_content(const char *filepath, const char *content, size_t size);
-char *format_time(time_t timestamp);
-
-#endif // VERSION_CONTROL_H
+#endif

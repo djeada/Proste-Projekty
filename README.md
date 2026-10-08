@@ -34,6 +34,7 @@
   - [🛡️ Obsługa błędów](#️-obsługa-błędów)
   - [🗂️ Struktury danych](#️-struktury-danych)
   - [🧪 Testy](#-testy)
+- [🏗️ Jak zorganizować projekt](#️-jak-zorganizować-projekt)
 - [🎮 Lista projektów programistycznych](#-lista-projektów-programistycznych)
 - [📦 Szablony projektów](#-szablony-projektów)
 - [📚 Dodatkowe materiały](#-dodatkowe-materiały)
@@ -374,6 +375,166 @@ Aby efektywnie zarządzać projektem, warto stosować się do następujących za
 * Oprócz testów jednostkowych warto stosować *testy integracyjne i akceptacyjne*, które sprawdzają współdziałanie modułów i zgodność z wymaganiami; przykładem jest test pełnego procesu rejestracji użytkownika w aplikacji webowej.
 * Unikanie użycia *assert* w kodzie produkcyjnym zmniejsza ryzyko niepożądanego przerwania działania programu, a ich stosowanie poza testami prowadzi do niekontrolowanych awarii; przykładem jest zastąpienie `assert balance >= 0` walidacją z obsługą wyjątku.
 
+## 🏗️ Jak zorganizować projekt
+
+<div align="center">
+
+**Jedna budowa dla każdego projektu i każdego języka**
+
+*Gdy poznasz ją w jednym projekcie, odnajdziesz się w każdym kolejnym*
+
+</div>
+
+Dobre praktyki z poprzedniej sekcji mówią, jak pisać pojedyncze funkcje i klasy. Ta sekcja dotyczy całości: jak podzielić program na pliki, gdzie umieścić testy, co powinno znaleźć się w repozytorium, a co nie. Wszystkie projekty w katalogu [`src/`](src/) są zbudowane według tych samych zasad, a [szablony](#-szablony-projektów) pozwalają od nich zacząć.
+
+### 🧩 Logika osobno, interfejs osobno
+
+Każdy program składa się z dwóch części:
+
+* **Logika** to zasady programu: dane (np. plansza 4×4 w grze 2048) i funkcje, które je zmieniają (np. przesunięcie kafelków w lewo). Funkcje logiki dostają argumenty i zwracają wynik. Nie czytają z klawiatury, nic nie wypisują i nie rysują.
+* **Interfejs** to wszystko, co łączy program z człowiekiem: odczyt klawiszy i kliknięć, wypisywanie tekstu, rysowanie w terminalu, w oknie albo na stronie.
+
+Program działa w pętli: interfejs odczytuje akcję użytkownika → logika zmienia stan → interfejs rysuje nowy stan.
+
+Taki podział daje trzy korzyści:
+
+* **Testy są proste.** Funkcję `move(board, direction)` można wywołać w teście i porównać wynik z oczekiwaną planszą. Nie trzeba udawać naciskania klawiszy.
+* **Interfejs można wymienić.** Te same zasady gry mogą działać w terminalu, w oknie i w przeglądarce. Właśnie dlatego projekty w tym repozytorium łatwo porównywać między językami.
+* **Kod jest czytelny.** Zasady gry nie giną między instrukcjami rysowania.
+
+Sygnały, że logika i interfejs są wymieszane: `printf` albo `print` w funkcji sprawdzającej wygraną, zasady gry wewnątrz obsługi kliknięcia, zmienne globalne używane w każdym pliku.
+
+### 📁 Struktura katalogów
+
+Każdy projekt ma osobny katalog dla każdego języka, o tej samej nazwie: `src/c/snake`, `src/python/snake`, `src/vanilla_js/snake`.
+
+<table>
+<tr><th>C</th><th>Python</th><th>JavaScript</th></tr>
+<tr>
+<td>
+
+```
+snake/
+├── CMakeLists.txt
+├── README.md
+├── screenshot.png
+├── src/
+│   ├── snake.h
+│   ├── snake.c
+│   └── main.c
+└── tests/
+    └── test_snake.c
+```
+
+</td>
+<td>
+
+```
+snake/
+├── README.md
+├── screenshot.png
+├── requirements.txt
+├── pyproject.toml
+├── src/
+│   ├── snake.py
+│   └── main.py
+└── tests/
+    └── test_snake.py
+```
+
+</td>
+<td>
+
+```
+snake/
+├── README.md
+├── screenshot.png
+├── package.json
+├── src/
+│   ├── index.html
+│   ├── style.css
+│   ├── snake.js
+│   └── main.js
+└── tests/
+    └── snake.test.js
+```
+
+</td>
+</tr>
+</table>
+
+| Element | C | Python | JavaScript |
+|---|---|---|---|
+| Logika | `src/snake.c` i nagłówek `src/snake.h` | `src/snake.py` | `src/snake.js` |
+| Interfejs | `src/main.c` (terminal, ncurses, SDL) | `src/main.py` (terminal, tkinter, pygame) | `src/main.js`, `src/index.html`, `src/style.css` (przeglądarka) albo sam `src/main.js` (program dla Node.js) |
+| Testy | `tests/test_snake.c` z `assert()`, uruchamiane przez CTest | `tests/test_snake.py`, pytest | `tests/snake.test.js`, wbudowany `node:test` |
+| Konfiguracja | `CMakeLists.txt`: jak zbudować program i testy | `requirements.txt`: potrzebne biblioteki; `pyproject.toml`: ustawienia pytest | `package.json`: nazwa projektu i polecenie `npm test` |
+| Uruchomienie | `cmake -S . -B build && cmake --build build && ./build/snake` | `python3 src/main.py` | otwórz `src/index.html` |
+| Testy | `cd build && ctest` | `pytest` | `npm test` |
+| Nie dodawaj do repozytorium | `build/` | `__pycache__/`, `.venv/` | `node_modules/` |
+
+Kilka zasad, które za tym stoją:
+
+* **Kod w `src/`, testy w `tests/`.** Od razu widać, co jest programem, a co go sprawdza.
+* **Plik nagłówkowy w C** (`snake.h`) to spis tego, co moduł udostępnia innym plikom: deklaracje funkcji i typów. Implementacja jest w `snake.c`. W Pythonie i JavaScripcie nie ma nagłówków: moduł udostępnia wszystko, co zdefiniuje (Python) albo co wyeksportuje (`module.exports` w JavaScripcie).
+* **Program w przeglądarce** wczytuje skrypty zwykłymi znacznikami `<script>`: najpierw logikę, potem `main.js`. Dzięki temu stronę można otworzyć dwuklikiem, bez serwera.
+* **Pliki konfiguracyjne** (`.editorconfig`, `.clang-format`, `.flake8`, `.gitignore`) ustalają wcięcia, styl kodu i listę plików, których Git ma nie śledzić. Są małe, a oszczędzają wielu sporów i przypadkowych commitów.
+* **Pliki generowane** (skompilowane programy, katalog `build/`, `__pycache__`, `node_modules`) nie trafiają do repozytorium, bo każdy może je odtworzyć jednym poleceniem.
+
+### 🏷️ Nazewnictwo
+
+* Katalogi i pliki nazywamy małymi literami z podkreśleniami (`snake_case`): `fifteen_puzzle`, `test_fifteen_puzzle.c`. Nazwa nie może zaczynać się od cyfry (`game_2048`, a nie `2048`), bo w Pythonie nazwa pliku staje się nazwą modułu, a moduł `2048` nie dałby się zaimportować.
+* Każdy język ma swoją konwencję dla kodu i warto się jej trzymać: w C i Pythonie `snake_case` (`move_left`), w JavaScripcie `camelCase` (`moveLeft`), stałe wielkimi literami (`BOARD_SIZE`).
+* Program wykonywalny nazywa się tak jak projekt (`./build/snake`, a nie `./build/main`).
+
+### 🧪 Co testować
+
+* **Testuj logikę, nie interfejs.** Zasady, przypadki brzegowe (pusta plansza, pełna plansza, ruch poza planszę), wygraną i przegraną, odrzucanie błędnych danych.
+* **Testy muszą działać same.** Bez klawiatury, bez okna, bez internetu. Jeśli logika używa losowości, pozwól przekazać jej ziarno albo gotowe wartości, żeby wynik był powtarzalny.
+* **Testy mają być szybkie**, żeby uruchamiać je po każdej zmianie. Cały zestaw powinien trwać sekundy.
+* Nazwa testu mówi, co sprawdza: `test_merging_tiles_adds_score` zamiast `test2`.
+
+### ✂️ Prostota
+
+Mały projekt ma być mały. Oto najczęstsze oznaki przekombinowania:
+
+* pakiety i katalogi z jednym krótkim plikiem w każdym (`logic/`, `utils/`, `gui/`),
+* klasa „konfiguracji” dla trzech stałych,
+* funkcje, które tylko przekazują wywołanie dalej,
+* kod „na przyszłość”, którego nic nie używa,
+* komentarze powtarzające kod (`i += 1  # zwiększ i o 1`).
+
+Dobra orientacja dla prostej gry: logika 50–200 linii, interfejs 50–250 linii. Komentarz wyjaśnia, *dlaczego* coś jest zrobione w ten sposób. *Co* robi kod, mają mówić nazwy funkcji i zmiennych. Jedno zdanie na początku pliku o jego roli wystarczy.
+
+### 📝 README i zrzut ekranu
+
+Każdy projekt ma plik `README.md` z sekcjami: opis, zrzut ekranu, funkcje, sposób użycia, **jak to działa**, struktura plików, wymagania, uruchomienie, testy, porównanie z wersjami w innych językach i pomysły na rozbudowę. Szczegóły i wskazówki są w [szablonie README](dodatkowe_materialy/szablon_readme.md). Zrzut ekranu (`screenshot.png`) pokazuje program w trakcie działania, a nie pusty ekran startowy.
+
+### 🔀 Jeden projekt, trzy języki
+
+Ten sam projekt w C, Pythonie i JavaScripcie ma te same funkcje i zasady, więc różnice wynikają tylko z języka:
+
+| | C | Python | JavaScript |
+|---|---|---|---|
+| Uruchomienie | kompilacja do pliku wykonywalnego, potem uruchomienie | interpreter wykonuje kod od razu | przeglądarka albo Node.js wykonują kod od razu |
+| Pamięć | ręczna: tablice o stałym rozmiarze, `malloc` i `free` | automatyczna | automatyczna |
+| Typy | deklarowane jawnie (`int`, `double`, `struct`) | dynamiczne | dynamiczne |
+| Struktury danych | tablice i `struct`, resztę piszesz sam | listy, słowniki, zbiory, krotki | tablice, obiekty, `Map`, `Set` |
+| Interfejs | terminal, ncurses, SDL | terminal, tkinter, pygame | strona HTML z obsługą zdarzeń, terminal w Node.js |
+| Pętla programu | własna pętla `while` | własna pętla albo pętla zdarzeń tkintera | przeglądarka wywołuje funkcje przy zdarzeniach (klik, klawisz, `requestAnimationFrame`) |
+| Szybkość | najszybszy | w obliczeniach kilkadziesiąt razy wolniejszy od C | kilka razy wolniejszy od C, dużo szybszy od Pythona dzięki kompilacji w trakcie działania (JIT) |
+
+Każde README projektu kończy się porównaniem trzech wersji: rodzaj interfejsu, liczba linii logiki i interfejsu, liczba testów i najciekawsze różnice. Najdokładniejsze porównanie, łącznie z pomiarem szybkości, ma projekt [Efekty terminalowe](#efekty-terminalowe).
+
+### 🚀 Nowy projekt krok po kroku
+
+1. **Skopiuj szablon** dla wybranego języka z sekcji [Szablony projektów](#-szablony-projektów).
+2. **Spisz zasady**: co program ma robić, jakie są reguły, kiedy się kończy. Pomoże [szablon specyfikacji](dodatkowe_materialy/szablon_specyfikacji.md).
+3. **Napisz logikę i testy do niej.** Uruchamiaj testy po każdej zmianie.
+4. **Dopisz interfejs**, który tylko woła funkcje logiki i pokazuje ich wynik.
+5. **Uzupełnij README i zrób zrzut ekranu.**
+6. **Commituj małymi krokami** z opisem, co i dlaczego się zmieniło.
+
 ## 🎮 Lista projektów programistycznych
 
 <div align="center">
@@ -386,11 +547,19 @@ Aby efektywnie zarządzać projektem, warto stosować się do następujących za
 
 Celem tej sekcji jest zainspirowanie i motywowanie czytelników do aktywnego uczestnictwa w nauce programowania poprzez praktyczne realizowanie różnorodnych projektów. Projekty te różnią się tematyką i stopniem trudności, co pozwala każdemu znaleźć coś dla siebie.
 
+Każdy projekt istnieje w trzech wersjach: w C, Pythonie i JavaScripcie, z tymi samymi funkcjami, z testami i z własnym README po angielsku, które krok po kroku wyjaśnia, jak program działa. Wszystkie są zbudowane według zasad z sekcji [Jak zorganizować projekt](#️-jak-zorganizować-projekt). Tabela przy każdym projekcie pokazuje rodzaj interfejsu oraz liczbę niepustych linii logiki (zasad programu) i interfejsu w każdej wersji, a zdanie pod nią opisuje najciekawszą różnicę między językami.
+
 ### Szubienica
 
-Projekt gry "Szubienica" polega na odgadywaniu słów. Komputer losowo wybiera słowo z przygotowanej listy, a następnie wyświetla na ekranie serie kresek (_), odpowiadających literom w wybranym słowie. Gracz ma ograniczoną liczbę prób (np. 10) na odgadnięcie całego słowa. W każdej turze gracz wybiera literę. Jeżeli litera jest w słowie, odpowiednie kreski są zastępowane przez tę literę. Jeśli litera nie występuje w słowie, liczba dostępnych prób gracza zmniejsza się o jedną. Gracz wygrywa, jeśli odgadnie wszystkie litery przed wyczerpaniem wszystkich szans.
+Komputer losuje słowo z wbudowanej listy 20 angielskich słów w czterech kategoriach i pokazuje je jako rząd podkreśleń. Gracz zgaduje litery: trafiona litera odsłania wszystkie swoje wystąpienia, a każda pomyłka dorysowuje kolejną część wisielca. Po sześciu pomyłkach gra się kończy. Projekt uczy przechowywania stanu gry (słowo, odgadnięte litery, liczba prób), sprawdzania danych od użytkownika i oddzielania zasad gry od interfejsu.
 
-Projekt ten pozwala na ćwiczenie podstawowych umiejętności programowania, takich jak operacje na łańcuchach znaków, kontrola przepływu programu oraz prosty algorytm losowania. Dodatkowo, można rozbudować grę o różne funkcjonalności, jak np. różne poziomy trudności, podpowiedzi czy graficzne reprezentacje postępów gracza.
+| | C | Python | JavaScript |
+|---|---|---|---|
+| Interfejs | terminal | okno tkinter | przeglądarka |
+| Linie logiki | 93 | 58 | 46 |
+| Linie interfejsu | 108 | 92 | 53 |
+
+Wisielec jest rysowany na trzy sposoby: znakami ASCII w terminalu, na płótnie `Canvas` w tkinterze i jako SVG w przeglądarce. W C odgadnięte litery to tablica 26 wartości logicznych, w Pythonie zbiór (`set`).
 
 #### Linki
 
@@ -398,15 +567,23 @@ Projekt ten pozwala na ćwiczenie podstawowych umiejętności programowania, tak
 
 Screenshot | Technologie | Link
 ---|---|---
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/hangman)** |
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/hangman)** |
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/hangman)** |
- 
+| <img src="src/c/hangman/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/hangman)** |
+| <img src="src/python/hangman/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/hangman)** |
+| <img src="src/vanilla_js/hangman/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/hangman)** |
+
 </div>
 
 ### Szyfr Cezara
 
-Projekt Szyfru Cezara to aplikacja umożliwiająca szyfrowanie i deszyfrowanie tekstu przy użyciu jednej z najstarszych znanych metod kryptografii. Interfejs graficzny zawiera pole tekstowe, w którym użytkownik wpisuje tekst do zaszyfrowania lub odszyfrowania. Po wpisaniu tekstu, użytkownik wybiera opcję szyfrowania lub deszyfrowania i podaje wartość klucza przesunięcia, która określa, o ile pozycji w alfabecie przesunąć każdą literę tekstu. Przetworzony tekst jest następnie wyświetlany w interfejsie. Szyfr Cezara jest prostym przykładem szyfru podstawieniowego i jest świetnym sposobem na zrozumienie podstaw kryptografii.
+Program szyfruje i odszyfrowuje tekst, przesuwając każdą literę o stałą liczbę miejsc w alfabecie. Klucz może być dowolną liczbą całkowitą, także ujemną lub większą niż 26. Wielkość liter zostaje zachowana, a inne znaki pozostają bez zmian. Funkcja łamania szyfru sprawdza wszystkie 26 kluczy i wybiera ten, przy którym tekst najbardziej przypomina angielski według częstości liter. Projekt uczy reszty z dzielenia, pracy ze znakami i podstaw kryptografii.
+
+| | C | Python | JavaScript |
+|---|---|---|---|
+| Interfejs | argumenty wiersza poleceń | okno tkinter | przeglądarka |
+| Linie logiki | 70 | 30 | 52 |
+| Linie interfejsu | 62 | 60 | 34 |
+
+W C i JavaScripcie wynik `%` dla liczby ujemnej jest ujemny, więc klucz trzeba poprawić wzorem `((k % 26) + 26) % 26`. W Pythonie `%` od razu daje wynik od 0 do 25. Wersja w przeglądarce przelicza wynik przy każdym naciśnięciu klawisza.
 
 #### Linki
 
@@ -414,31 +591,47 @@ Projekt Szyfru Cezara to aplikacja umożliwiająca szyfrowanie i deszyfrowanie t
 
 Screenshot | Technologie | Link
 ---|---|---
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/caesar_cipher)** |
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/caesar_cipher)** |
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/caesar_cipher)** |
- 
+| <img src="src/c/caesar_cipher/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/caesar_cipher)** |
+| <img src="src/python/caesar_cipher/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/caesar_cipher)** |
+| <img src="src/vanilla_js/caesar_cipher/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/caesar_cipher)** |
+
 </div>
 
 ### Kalkulator
 
-Kalkulator to podstawowy projekt, który pomaga w zrozumieniu obsługi interfejsu użytkownika i podstawowych operacji arytmetycznych. Aplikacja pozwala na wykonanie podstawowych operacji matematycznych, takich jak dodawanie, odejmowanie, mnożenie i dzielenie. Interfejs graficzny jest intuicyjny, z przyciskami numerycznymi do wprowadzania liczb oraz przyciskami funkcyjnymi do wyboru operacji. Kalkulator obsługuje zarówno liczby całkowite, jak i zmiennoprzecinkowe, a także wyświetla komunikaty ostrzegawcze w przypadku błędów, takich jak dzielenie przez zero. Ten projekt jest doskonałym sposobem na naukę podstaw obsługi zdarzeń i logiki programistycznej.
+Kalkulator oblicza wyrażenia takie jak `2 + 3 * (4 - 1)`: obsługuje cztery działania, nawiasy, minus przed liczbą, ułamki dziesiętne i kolejność działań, a błędy (dzielenie przez zero, niedomknięty nawias, nieznany znak) zgłasza czytelnym komunikatem. Wyrażenie analizuje parser zstępujący oparty na trzech regułach gramatyki: wyrażenie, składnik i czynnik. Projekt uczy rekurencji, analizy tekstu i tego, dlaczego nie należy używać `eval` do obliczania danych od użytkownika.
+
+| | C | Python | JavaScript |
+|---|---|---|---|
+| Interfejs | terminal (REPL) | okno tkinter | przeglądarka |
+| Linie logiki | 221 | 105 | 111 |
+| Linie interfejsu | 31 | 77 | 52 |
+
+Ten sam parser istnieje we wszystkich trzech językach. W C funkcje zwracają kod błędu, a komunikat trafia do bufora, w Pythonie i JavaScripcie błąd jest wyjątkiem, który sam wraca w górę stosu wywołań.
 
 #### Linki
 
 <div align="center">
- 
+
 Screenshot | Technologie | Link
 ---|---|---
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/calculator)** |
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/calculator)** |
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/calculator)** |
- 
+| <img src="src/c/calculator/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/calculator)** |
+| <img src="src/python/calculator/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/calculator)** |
+| <img src="src/vanilla_js/calculator/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/calculator)** |
+
 </div>
 
 ### Lista zadań
 
-Projekt listy zadań to aplikacja do zarządzania zadaniami, która umożliwia użytkownikom tworzenie, edycję, usuwanie oraz sortowanie zadań według różnych kryteriów. Można ustawić priorytety, daty wykonania oraz kategorie dla zadań. Aplikacja umożliwia także dodawanie załączników do zadań, co pozwala na lepsze zorganizowanie pracy. Wszystkie informacje o zadaniach są przechowywane w bazie danych, co ułatwia ich zarządzanie. Aplikacja może również wysyłać powiadomienia o zbliżających się terminach. Ten projekt jest doskonały do nauki pracy z bazami danych, interfejsami użytkownika i systemami powiadamiania.
+Aplikacja do zarządzania zadaniami: każde zadanie ma tytuł, priorytet, opcjonalny termin i kategorię. Zadania można dodawać, edytować, usuwać i oznaczać jako wykonane, a lista jest sortowana według statusu, terminu i priorytetu, filtrowana według kategorii lub statusu, a zaległe zadania są wyróżnione. Wersje w C i Pythonie zapisują zadania w zwykłym pliku tekstowym, a wersja w przeglądarce w `localStorage`. Projekt uczy walidacji dat, sortowania według kilku kryteriów i zapisywania danych w prostym formacie bez bazy danych.
+
+| | C | Python | JavaScript |
+|---|---|---|---|
+| Interfejs | polecenia w terminalu | polecenia w terminalu | przeglądarka |
+| Linie logiki | 239 | 76 | 79 |
+| Linie interfejsu | 273 | 136 | 180 |
+
+Wersje w C i Pythonie używają tego samego pliku `tasks.txt` (jedno zadanie w wierszu, pola oddzielone tabulatorem), więc mogą pracować na tych samych danych. JavaScript zapisuje dane jako JSON.
 
 #### Linki
 
@@ -446,15 +639,23 @@ Projekt listy zadań to aplikacja do zarządzania zadaniami, która umożliwia u
 
 Screenshot | Technologie | Link
 ---|---|---
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/todo)** |
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/todo)** |
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/todo_list)** |
+| <img src="src/c/todo/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/todo)** |
+| <img src="src/python/todo/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/todo)** |
+| <img src="src/vanilla_js/todo/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/todo)** |
 
 </div>
 
 ### Pogoda
 
-Projekt aplikacji pogodowej umożliwia użytkownikom sprawdzanie aktualnej pogody oraz prognozy na najbliższe dni dla wybranej lokalizacji. Użytkownik może wprowadzić nazwę miasta lub kod pocztowy, by otrzymać dane takie jak temperatura, wilgotność powietrza, prędkość wiatru, ciśnienie atmosferyczne oraz godziny wschodu i zachodu słońca. Aplikacja zawiera także mapę z zaznaczonymi danymi pogodowymi dla danego regionu. Informacje pogodowe są pobierane z zewnętrznego API, a interfejs użytkownika jest prosty i intuicyjny. Projekt ten pozwala na naukę korzystania z zewnętrznych API, przetwarzania i wyświetlania danych, a także podstaw pracy z mapami.
+Program pokazuje aktualną pogodę i prognozę na trzy dni dla podanego miasta lub kodu pocztowego: temperaturę, temperaturę odczuwalną, wilgotność, wiatr, ciśnienie oraz godziny wschodu i zachodu słońca. Dane pobiera z darmowego serwisu wttr.in, który nie wymaga klucza API. Projekt uczy budowania adresów URL z kodowaniem znaków, odczytu danych JSON i obsługi błędów sieci.
+
+| | C | Python | JavaScript |
+|---|---|---|---|
+| Interfejs | terminal (`curl`) | terminal | terminal (Node.js) |
+| Linie logiki | 181 | 77 | 62 |
+| Linie interfejsu | 100 | 33 | 50 |
+
+Python i JavaScript mają w bibliotece standardowej pobieranie stron i parser JSON. W C odpowiedź pobiera program `curl`, a potrzebne wartości są wyszukiwane w tekście ręcznie, co dobrze pokazuje, ile pracy wykonują biblioteki.
 
 #### Linki
 
@@ -462,15 +663,23 @@ Projekt aplikacji pogodowej umożliwia użytkownikom sprawdzanie aktualnej pogod
 
 Screenshot | Technologie | Link
 ---|---|---
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/weather)** |
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/weather)** |
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/weather)** |
+| <img src="src/c/weather/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/weather)** |
+| <img src="src/python/weather/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/weather)** |
+| <img src="src/vanilla_js/weather/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/weather)** |
 
 </div>
 
 ### Stoper
 
-Stoper to prosta aplikacja do odmierzania czasu z dokładnością do milisekund. Posiada funkcjonalności takie jak start, stop, reset oraz możliwość ustawienia czasu, po którym stoper zatrzyma się automatycznie. Użytkownik może wybrać preferowany format wyświetlania czasu i zapisywać wyniki do pliku tekstowego. Interfejs graficzny składa się z przycisków do kontroli stopera oraz wyświetlacza czasu. Jest to doskonały projekt dla początkujących programistów, aby zrozumieć obsługę zdarzeń i pracę z czasem.
+Stoper z dokładnością do milisekund: start, zatrzymanie, wznowienie, reset i zapisywanie okrążeń, a do tego minutnik, który sam zatrzymuje się na zerze. Okrążenia można zapisać do pliku tekstowego. Czas jest mierzony zegarem monotonicznym, którego nie psuje zmiana godziny w systemie. Stan stopera zależy tylko od podanych chwil czasu, dzięki czemu testy nie muszą czekać. Projekt uczy pracy z czasem i obsługi zdarzeń.
+
+| | C | Python | JavaScript |
+|---|---|---|---|
+| Interfejs | terminal | okno tkinter | przeglądarka |
+| Linie logiki | 136 | 73 | 75 |
+| Linie interfejsu | 199 | 105 | 102 |
+
+Terminal w C trzeba przełączyć w tryb odczytu pojedynczych klawiszy i samemu przerysowywać ekran. W tkinterze i przeglądarce odświeżanie zapewnia pętla zdarzeń (`after`, `requestAnimationFrame`).
 
 #### Linki
 
@@ -478,15 +687,23 @@ Stoper to prosta aplikacja do odmierzania czasu z dokładnością do milisekund.
 
 Screenshot | Technologie | Link
 ---|---|---
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/timer)** |
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/timer)** |
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/timer)** |
+| <img src="src/c/timer/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/timer)** |
+| <img src="src/python/timer/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/timer)** |
+| <img src="src/vanilla_js/timer/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/timer)** |
 
 </div>
 
 ### Statki
 
-Gra w statki to klasyczna gra polegająca na umieszczaniu floty na planszy i próbie zatopienia statków przeciwnika. Gracz ustawia swoje statki na planszy, podczas gdy pozycje statków komputera są losowane. Gracze na zmianę wybierają pola, które próbują trafic. Gra oferuje możliwość grania przeciwko komputerowi lub drugiemu graczowi. Projekt ten jest doskonałym ćwiczeniem w programowaniu gier, algorytmach losowania oraz obsłudze zdarzeń użytkownika.
+Gra w statki z komputerem na dwóch planszach 10×10 z klasyczną flotą (5, 4, 3, 3, 2). Gracz ustawia statki sam lub losowo, a potem strzela na zmianę z komputerem. Komputer używa strategii „szukaj i dobijaj”: strzela losowo, a po trafieniu sprawdza sąsiednie pola, dopóki nie zatopi statku. Projekt uczy pracy z tablicami dwuwymiarowymi, sprawdzania poprawności ustawienia i prostej sztucznej inteligencji.
+
+| | C | Python | JavaScript |
+|---|---|---|---|
+| Interfejs | terminal (ncurses) | okno tkinter | przeglądarka |
+| Linie logiki | 180 | 89 | 119 |
+| Linie interfejsu | 210 | 134 | 150 |
+
+Logika plansz i strzałów jest taka sama we wszystkich wersjach. Różni się sposób wyboru pola: w terminalu kursorem sterowanym strzałkami, w oknie i przeglądarce kliknięciem.
 
 #### Linki
 
@@ -494,15 +711,23 @@ Gra w statki to klasyczna gra polegająca na umieszczaniu floty na planszy i pr�
 
 Screenshot | Technologie | Link
 ---|---|---
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/battleship)** |
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/battleship)** |
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/battleship)** |
+| <img src="src/c/battleship/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/battleship)** |
+| <img src="src/python/battleship/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/battleship)** |
+| <img src="src/vanilla_js/battleship/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/battleship)** |
 
 </div>
 
 ### Kółko i krzyżyk
 
-Kółko i krzyżyk to klasyczna gra, która może być realizowana w trybie dwóch graczy lub przeciwko komputerowi. Gracze na zmianę umieszczają swoje symbole (kółko lub krzyżyk) na planszy 3x3. Wygrywa ten, kto pierwszy ustawi trzy swoje symbole w linii. W trybie gry z komputerem, gracz rywalizuje z algorytmem AI. Projekt ten jest świetny do nauki podstaw logiki gier, algorytmów AI i obsługi interfejsu użytkownika.
+Klasyczna gra na planszy 3×3 dla dwóch osób albo przeciwko komputerowi. Komputer korzysta z algorytmu minimax: sprawdza wszystkie możliwe dalsze ruchy i wybiera najlepszy, więc nigdy nie przegrywa. Program wykrywa wygraną i remis, podświetla zwycięską linię i liczy wyniki kolejnych rund. Projekt uczy rekurencji i tego, jak komputer przewiduje ruchy na wiele kroków naprzód.
+
+| | C | Python | JavaScript |
+|---|---|---|---|
+| Interfejs | terminal (ncurses) | okno tkinter | przeglądarka |
+| Linie logiki | 142 | 53 | 82 |
+| Linie interfejsu | 163 | 73 | 68 |
+
+W C plansza jest małą strukturą kopiowaną przy każdym wywołaniu minimaksu, bez alokacji pamięci. W Pythonie i JavaScripcie każda sprawdzana pozycja to nowa lista lub tablica.
 
 #### Linki
 
@@ -510,31 +735,47 @@ Kółko i krzyżyk to klasyczna gra, która może być realizowana w trybie dwó
 
 Screenshot | Technologie | Link
 ---|---|---
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/tic_tac_toe)** |
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/tic_tac_toe)** |
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/tic_tac_toe)** |
+| <img src="src/c/tic_tac_toe/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/tic_tac_toe)** |
+| <img src="src/python/tic_tac_toe/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/tic_tac_toe)** |
+| <img src="src/vanilla_js/tic_tac_toe/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/tic_tac_toe)** |
 
 </div>
 
 ### Saper
 
-Saper to klasyczna gra logiczna, w której zadaniem gracza jest odkrywanie pól na planszy bez detonowania min. Każde pole może zawierać minę lub liczbę wskazującą, ile min sąsiaduje z tym polem. Gracze używają tych liczb, aby bezpiecznie odkrywać kolejne pola. Gracz może także oznaczać pola, na których podejrzewa obecność miny, flagą. Gra kończy się wygraną, gdy wszystkie pola niezawierające min zostaną odkryte. Saper to doskonałe ćwiczenie w logice i strategicznym myśleniu, a także w obsłudze zdarzeń myszy i zarządzaniu stanem gry.
+Saper w trzech poziomach trudności (9×9, 16×16 i 16×30). Liczby na odkrytych polach mówią, ile min leży wokół, a podejrzane pola można oznaczyć flagą. Pierwsze odkryte pole nigdy nie jest miną, bo miny są rozmieszczane dopiero po pierwszym ruchu. Odkrycie pola bez sąsiednich min otwiera cały pusty obszar algorytmem wypełniania (flood fill). Projekt uczy przeszukiwania planszy, obsługi myszy i zarządzania stanem gry.
+
+| | C | Python | JavaScript |
+|---|---|---|---|
+| Interfejs | terminal | okno tkinter | przeglądarka |
+| Linie logiki | 142 | 75 | 100 |
+| Linie interfejsu | 118 | 87 | 88 |
+
+Wszystkie trzy wersje mają te same zasady i te same 13 testów. Wersja w C przyjmuje polecenia tekstowe (`r 3 4`, `f 3 4`), a wersje graficzne obsługują lewy i prawy przycisk myszy.
 
 #### Linki
- 
+
 <div align="center">
 
 Screenshot | Technologie | Link
 ---|---|---
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/minesweeper)** |
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/minesweeper)** |
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/minesweeper)** |
+| <img src="src/c/minesweeper/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/minesweeper)** |
+| <img src="src/python/minesweeper/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/minesweeper)** |
+| <img src="src/vanilla_js/minesweeper/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/minesweeper)** |
 
 </div>
 
 ### 2048
 
-2048 to popularna gra logiczna polegająca na łączeniu kafelków z takimi samymi numerami na planszy 4x4. Celem gry jest utworzenie kafelka z liczbą 2048. Gracz przesuwa kafelki w jednym z czterech kierunków, a gdy dwa kafelki o tym samym numerze zderzają się, łączą się w jeden o wartości będącej sumą połączonych kafelków. Po każdym ruchu pojawia się nowy kafelek o wartości 2 lub 4. Gra kończy się, gdy nie ma już możliwości wykonania ruchu lub gracz uzyska kafelek 2048. Projekt 2048 pozwala na naukę programowania animacji, obsługi zdarzeń klawiatury i algorytmów łączenia elementów.
+Gra logiczna na planszy 4×4: każdy ruch przesuwa wszystkie kafelki w jednym kierunku, a dwa kafelki o tej samej wartości łączą się w jeden o podwójnej wartości. Po każdym ruchu, który coś zmienił, pojawia się nowy kafelek 2 lub 4. Celem jest kafelek 2048. Projekt pokazuje sprytny trik: wystarczy jedna funkcja przesuwająca wiersz w lewo, a pozostałe kierunki uzyskuje się, czytając planszę w innej kolejności.
+
+| | C | Python | JavaScript |
+|---|---|---|---|
+| Interfejs | terminal (kolory ANSI) | okno tkinter | przeglądarka |
+| Linie logiki | 139 | 87 | 107 |
+| Linie interfejsu | 116 | 79 | 56 |
+
+Najkrótszy kod ma Python, bo listy i `zip` dobrze opisują wiersze i kolumny. W C plansza to tablica o stałym rozmiarze, a losowość jest przekazywana jako wskaźnik do funkcji, żeby testy mogły ją podmienić.
 
 #### Linki
 
@@ -542,15 +783,23 @@ Screenshot | Technologie | Link
 
 Screenshot | Technologie | Link
 ---|---|---
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/2048)** |
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/game_2048)** |
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/2048)** |
+| <img src="src/c/game_2048/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/game_2048)** |
+| <img src="src/python/game_2048/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/game_2048)** |
+| <img src="src/vanilla_js/game_2048/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/game_2048)** |
 
 </div>
 
 ### Apokalipsa Zombie
 
-Apokalipsa Zombie to gra akcji, w której celem gracza jest przetrwanie fal atakujących zombie. Z każdą falą, zombie stają się liczniejsze i silniejsze. Gracz musi wykorzystać różnorodne rodzaje broni i bonusy, aby przetrwać i zdobywać punkty. Gra zawiera różne poziomy trudności i umożliwia zdobywanie ulepszeń broni oraz bonusów, takich jak dodatkowe życie czy zwiększenie prędkości. Ten projekt może być interesującym wyzwaniem w zakresie tworzenia gier akcji, z naciskiem na algorytmy sterowania przeciwnikami, detekcję kolizji i zarządzanie zasobami gracza.
+Gra akcji z widokiem z góry: gracz porusza się po planszy i strzela do zombie, które wychodzą z krawędzi i idą w jego stronę. Każda fala ma więcej i szybszych przeciwników, dotknięcie zombie odbiera zdrowie, a apteczki je przywracają. Cała logika jest jedną funkcją, która aktualizuje świat gry o upływ czasu, więc testy mogą symulować rozgrywkę bez ekranu. Projekt uczy pętli gry, wykrywania kolizji i sterowania przeciwnikami.
+
+| | C | Python | JavaScript |
+|---|---|---|---|
+| Interfejs | terminal (ncurses) | okno pygame | przeglądarka (canvas) |
+| Linie logiki | 291 | 202 | 224 |
+| Linie interfejsu | 155 | 138 | 218 |
+
+Wersja w terminalu strzela w kierunku ostatniego ruchu, a wersje graficzne w stronę kursora myszy. Ruch jest liczony na podstawie czasu, który upłynął, dzięki czemu gra działa tak samo szybko na każdym komputerze.
 
 #### Linki
 
@@ -558,31 +807,47 @@ Apokalipsa Zombie to gra akcji, w której celem gracza jest przetrwanie fal atak
 
 Screenshot | Technologie | Link
 ---|---|---
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/zombie_apocalypse)** |
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/zombie_apocalypse)** |
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/zombie_apocalypse)** |
+| <img src="src/c/zombie_apocalypse/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/zombie_apocalypse)** |
+| <img src="src/python/zombie_apocalypse/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/zombie_apocalypse)** |
+| <img src="src/vanilla_js/zombie_apocalypse/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/zombie_apocalypse)** |
 
 </div>
 
 ### Piętnastka
 
-Piętnastka to klasyczna gra logiczna, w której celem jest ułożenie 15 kwadratów z numerami w kolejności rosnącej na planszy 4x4, zostawiając jedno puste pole, które umożliwia przesuwanie kwadratów. Gracz przesuwa kwadraty wokół pustego pola, aby uzyskać prawidłowe ułożenie. Gra ta jest świetnym ćwiczeniem w algorytmach układania i myślenia przestrzennego. Dodatkowo, implementacja interfejsu użytkownika dla tej gry może pomóc w zrozumieniu obsługi zdarzeń dotykowych lub myszy oraz animacji.
+Układanka 4×4 z piętnastoma numerowanymi kafelkami i jednym pustym polem. Gracz przesuwa kafelki strzałkami lub kliknięciem, a program liczy ruchy i ogłasza wygraną. Plansza jest tasowana losowymi poprawnymi ruchami z ułożonego stanu, więc zawsze da się ją rozwiązać. README wyjaśnia też regułę parzystości, która decyduje, które ustawienia są rozwiązywalne. Projekt uczy przechowywania planszy w tablicy i sprawdzania ruchów przy krawędziach.
+
+| | C | Python | JavaScript |
+|---|---|---|---|
+| Interfejs | terminal (ncurses) | okno tkinter | przeglądarka |
+| Linie logiki | 112 | 45 | 64 |
+| Linie interfejsu | 68 | 60 | 38 |
+
+Reguły, nazwy funkcji i testy są takie same, a różni się tylko obsługa wejścia: terminal musi przełączyć się w tryb odczytu klawiszy strzałek, a tkinter i przeglądarka dostarczają gotowe zdarzenia klawiatury i myszy.
 
 #### Linki
- 
+
 <div align="center">
 
 Screenshot | Technologie | Link
 ---|---|---
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/fifteen_puzzle)** |
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/fifteen_puzzle)** |
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/fifteen_puzzle)** |
+| <img src="src/c/fifteen_puzzle/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/fifteen_puzzle)** |
+| <img src="src/python/fifteen_puzzle/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/fifteen_puzzle)** |
+| <img src="src/vanilla_js/fifteen_puzzle/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/fifteen_puzzle)** |
 
 </div>
 
 ### Kości
 
-Kości to gra towarzyska, w której gracze rzucają zestawem pięciu kości, starając się uzyskać różne kombinacje przedstawione w tabeli punktacji. Gracz może rzucić kośćmi do trzech razy w swojej turze, aby uzyskać jedną z kombinacji, a następnie zapisuje wynik w swojej tabeli punktów. Kombinacje mogą być użyte tylko raz przez każdego gracza, a na koniec gry zwycięża osoba z najwyższą sumą punktów. Projekt ten jest doskonały do nauki obsługi losowości, zdarzeń i logicznego myślenia, a także oferuje możliwość tworzenia interfejsu użytkownika dla gier planszowych.
+Gra w kości Yahtzee dla 1–4 graczy. W każdej turze gracz rzuca pięcioma kośćmi do trzech razy, zostawiając wybrane kości między rzutami, a potem wpisuje wynik do jednej z 13 kategorii (np. full, mały i duży strit, Yahtzee). Za 63 punkty w górnej części karty jest premia 35 punktów. Program pokazuje, ile punktów dałyby obecne kości w każdej wolnej kategorii. Projekt uczy obsługi losowości i liczenia kombinacji.
+
+| | C | Python | JavaScript |
+|---|---|---|---|
+| Interfejs | terminal | okno tkinter | przeglądarka |
+| Linie logiki | 212 | 107 | 139 |
+| Linie interfejsu | 171 | 121 | 110 |
+
+Funkcje punktujące są niemal identyczne we wszystkich językach. Python opisuje je najkrócej dzięki zliczaniu elementów i operacjom na zbiorach; wersja w Pythonie zmalała z około 1500 do 230 linii.
 
 #### Linki
 
@@ -590,15 +855,23 @@ Kości to gra towarzyska, w której gracze rzucają zestawem pięciu kości, sta
 
 Screenshot | Technologie | Link
 ---|---|---
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/yahtzee)** |
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/yahtzee)** |
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/yahtzee)** |
+| <img src="src/c/yahtzee/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/yahtzee)** |
+| <img src="src/python/yahtzee/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/yahtzee)** |
+| <img src="src/vanilla_js/yahtzee/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/yahtzee)** |
 
 </div>
 
 ### Kurka wodna
 
-Kurka wodna to dynamiczna gra, w której gracze muszą "ustrzelić" kurki pojawiające się i przelatujące przez ekran, klikając na nie myszką, zanim przekroczą przeciwną stronę ekranu. Z każdą falą, pojawia się więcej kurek, a gra staje się trudniejsza. Projekt ten oferuje wspaniałą okazję do nauki programowania gier zręcznościowych, w tym obsługi zdarzeń myszy, animacji, zarządzania poziomami trudności i implementacji dynamicznych tła oraz elementów graficznych.
+Kaczki przelatują przez niebo, falując w górę i w dół, a gracz próbuje je zestrzelić: kliknięciem myszy albo, w terminalu, celownikiem przesuwanym strzałkami. Każda fala ma więcej i szybszych kaczek, a każda kaczka, która ucieknie, zabiera jedno z trzech żyć. Grafika jest rysowana z prostych kształtów, bez plików z obrazkami. Projekt uczy animacji zależnej od czasu, wykrywania trafień i poziomów trudności.
+
+| | C | Python | JavaScript |
+|---|---|---|---|
+| Interfejs | terminal (ncurses) | okno pygame | przeglądarka (canvas) |
+| Linie logiki | 140 | 103 | 114 |
+| Linie interfejsu | 137 | 103 | 156 |
+
+Wszystkie trzy wersje używają tego samego generatora liczb losowych i tych samych stałych, więc przy tym samym ziarnie wylatują te same kaczki. Różni się tylko rysowanie: znaki w terminalu, pygame i canvas.
 
 #### Linki
 
@@ -606,15 +879,23 @@ Kurka wodna to dynamiczna gra, w której gracze muszą "ustrzelić" kurki pojawi
 
 Screenshot | Technologie | Link
 ---|---|---
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/shooting_ducks)** |
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/shooting_ducks)** |
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/shooting_ducks)** |
+| <img src="src/c/shooting_ducks/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/shooting_ducks)** |
+| <img src="src/python/shooting_ducks/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/shooting_ducks)** |
+| <img src="src/vanilla_js/shooting_ducks/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/shooting_ducks)** |
 
 </div>
 
 ### Wąż
 
-W grze Wąż gracz steruje wężem poruszającym się po prostokątnej planszy. Cel gry polega na zjadaniu pojawiających się na planszy elementów, co powoduje wydłużanie węża i zdobywanie punktów. Gra staje się trudniejsza w miarę wzrostu węża, ponieważ gracz musi unikać uderzenia głową węża w jego własne ciało. Gra ta jest klasycznym przykładem prostych gier zręcznościowych i świetnie nadaje się do nauki podstaw programowania gier, w tym obsługi ruchu, kolizji oraz zarządzania stanem gry.
+Klasyczny Wąż: gracz steruje wężem, zbiera jedzenie, żeby rosnąć i zdobywać punkty, i przegrywa po uderzeniu w ścianę lub własny ogon. Wąż nie może zawrócić w miejscu i przyspiesza w miarę wzrostu. Ciało węża jest listą pól, a jeden krok gry to dodanie nowej głowy i usunięcie ogona (chyba że wąż właśnie zjadł). Projekt uczy pętli gry, wykrywania kolizji i zarządzania stanem.
+
+| | C | Python | JavaScript |
+|---|---|---|---|
+| Interfejs | terminal (ncurses) | okno pygame | przeglądarka (canvas) |
+| Linie logiki | 128 | 55 | 79 |
+| Linie interfejsu | 121 | 75 | 74 |
+
+W C wąż jest tablicą o stałym rozmiarze, a czas i klawisze obsługuje program sam. Pygame i przeglądarka dostarczają gotowy zegar i zdarzenia klawiatury.
 
 #### Linki
 
@@ -622,15 +903,23 @@ W grze Wąż gracz steruje wężem poruszającym się po prostokątnej planszy. 
 
 Screenshot | Technologie | Link
 ---|---|---
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/snake)** |
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/snake)** |
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/snake)** |
+| <img src="src/c/snake/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/snake)** |
+| <img src="src/python/snake/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/snake)** |
+| <img src="src/vanilla_js/snake/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/snake)** |
 
 </div>
 
 ### Edytor tekstowy
 
-Projekt edytora tekstu oferuje możliwość tworzenia, edytowania i zapisywania tekstów. Użytkownik może również formatować tekst, zmieniając czcionkę, styl i rozmiar, a także dodawać pogrubienie, kursywę i podkreślenie. Jest to doskonałe ćwiczenie w obsłudze zdarzeń klawiatury, interfejsu użytkownika oraz podstawowych technik formatowania tekstu. Może również obejmować funkcjonalności takie jak wybór kolorów tekstu, listy punktowane czy wstawianie obrazów.
+Edytor zwykłego tekstu: otwieranie, edycja i zapisywanie plików, wyszukiwanie z przechodzeniem do kolejnych wystąpień, pasek stanu z numerem wiersza i kolumny oraz liczbą słów, a także ostrzeżenie przed utratą niezapisanych zmian. Formatowanie (pogrubienie, kursywa) jest pominięte, żeby wszystkie wersje robiły to samo. Projekt uczy obsługi klawiatury, plików i struktur danych przechowujących tekst.
+
+| | C | Python | JavaScript |
+|---|---|---|---|
+| Interfejs | terminal (ncurses) | okno tkinter | przeglądarka |
+| Linie logiki | 335 | 22 | 35 |
+| Linie interfejsu | 355 | 156 | 157 |
+
+Najciekawsza jest wersja w C: sam edytor jest tu zaimplementowany od podstaw, jako tablica wierszy z kursorem, wstawianiem, dzieleniem i łączeniem wierszy oraz przewijaniem. Python i przeglądarka mają gotowe pole tekstowe, więc ich logika to wyszukiwanie, liczenie i pozycje kursora.
 
 #### Linki
 
@@ -638,15 +927,23 @@ Projekt edytora tekstu oferuje możliwość tworzenia, edytowania i zapisywania 
 
 Screenshot | Technologie | Link
 ---|---|---
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/text_editor)** |
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/text_editor)** |
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/text_editor)** |
+| <img src="src/c/text_editor/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/text_editor)** |
+| <img src="src/python/text_editor/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/text_editor)** |
+| <img src="src/vanilla_js/text_editor/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/text_editor)** |
 
 </div>
 
 ### Obróbka grafiki
 
-Program do obróbki grafiki umożliwia importowanie, wyświetlanie oraz edycję obrazów w formatach PNG i JPG. Użytkownik może korzystać z różnych narzędzi, takich jak rotacja, przycinanie, rozciąganie, zmiana koloru, gumka, zaznaczanie i pędzel. Projekt ten jest doskonałą okazją do nauki obsługi plików graficznych, implementacji narzędzi edycyjnych oraz podstaw grafiki komputerowej. Można również rozszerzyć projekt o bardziej zaawansowane funkcje, takie jak warstwy, filtry czy efekty specjalne.
+Mały program do rysowania na płótnie z pikseli: pędzel w trzech rozmiarach, gumka, linia, prostokąt, wypełnianie obszaru, pipeta, paleta 12 kolorów i cofanie zmian. Obraz można zapisać i otworzyć. Program pokazuje podstawowe algorytmy grafiki: linię Bresenhama, która wybiera piksele bez liczb zmiennoprzecinkowych, i wypełnianie obszaru z jawnym stosem zamiast rekurencji.
+
+| | C | Python | JavaScript |
+|---|---|---|---|
+| Interfejs | okno SDL2 | okno tkinter | przeglądarka (canvas) |
+| Linie logiki | 212 | 86 | 130 |
+| Linie interfejsu | 389 | 187 | 249 |
+
+C zapisuje obrazy w formacie BMP, bo tylko ten obsługuje sam SDL2, a każdą kopię płótna do cofania musi ręcznie zwolnić. Python zapisuje PNG przez tkinter, a przeglądarka pobiera PNG jako plik.
 
 #### Linki
 
@@ -654,15 +951,23 @@ Program do obróbki grafiki umożliwia importowanie, wyświetlanie oraz edycję 
 
 Screenshot | Technologie | Link
 ---|---|---
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/graphics_editor)** |
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/graphics_editor)** |
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/graphics_editor)** |
+| <img src="src/c/graphics_editor/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/graphics_editor)** |
+| <img src="src/python/graphics_editor/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/graphics_editor)** |
+| <img src="src/vanilla_js/graphics_editor/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/graphics_editor)** |
 
 </div>
 
 ### System kontroli wersji
 
-Projekt systemu kontroli wersji oferuje podstawową funkcjonalność zarządzania wersjami projektu. Pozwala użytkownikowi na zapisywanie bieżącego stanu projektu i przeglądanie historii zapisów. Dzięki temu można łatwo przywracać wcześniejsze wersje projektu lub cofać wprowadzone zmiany. Jest to doskonałe ćwiczenie w zakresie zarządzania plikami, obsługi systemów plików oraz podstaw algorytmów związanych z kontrolą wersji.
+Małe narzędzie w stylu gita działające w bieżącym katalogu: `init` tworzy repozytorium, `commit` zapisuje kopię plików z opisem, `log` pokazuje historię, `status` zmienione pliki, `diff` zmienione wiersze, a `checkout` przywraca wybraną wersję. Różnice między wierszami są liczone metodą najdłuższego wspólnego podciągu (LCS). Projekt uczy pracy z plikami i katalogami oraz klasycznego algorytmu programowania dynamicznego.
+
+| | C | Python | JavaScript |
+|---|---|---|---|
+| Interfejs | wiersz poleceń | wiersz poleceń | wiersz poleceń (Node.js) |
+| Linie logiki | 397 | 107 | 158 |
+| Linie interfejsu | 210 | 83 | 110 |
+
+Wszystkie trzy wersje zapisują repozytorium w tym samym formacie, więc repozytorium utworzone jedną można obsługiwać pozostałymi. W C ręczne zarządzanie pamięcią sprawia, że logika jest kilka razy dłuższa.
 
 #### Linki
 
@@ -670,15 +975,23 @@ Projekt systemu kontroli wersji oferuje podstawową funkcjonalność zarządzani
 
 Screenshot | Technologie | Link
 ---|---|---
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/version_control)** |
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/version_control)** |
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/version_control)** |
+| <img src="src/c/version_control/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/version_control)** |
+| <img src="src/python/version_control/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/version_control)** |
+| <img src="src/vanilla_js/version_control/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/version_control)** |
 
 </div>
 
 ### Serwer HTTP
 
-Projekt serwera HTTP polega na stworzeniu serwera, który nasłuchuje na żądania HTTP wysyłane do adresu URL, np. http://127.0.0.1:8000/, i zwraca odpowiedzi. Serwer może obsługiwać różne typy żądań, takie jak GET, POST, PUT i DELETE. W przypadku żądania GET, serwer może zwracać strony HTML, obrazy, pliki JSON lub inne typy plików. Serwer może być także połączony z bazą danych, umożliwiając tworzenie dynamicznych aplikacji internetowych z funkcjami odczytu i zapisu danych. Projekt ten jest doskonałym wprowadzeniem do programowania serwerowego, sieci i protokołów HTTP.
+Serwer nasłuchuje na `http://127.0.0.1:8000/` i udostępnia pliki z katalogu `public/` z odpowiednim typem MIME, a do tego proste API notatek (`GET`, `POST`, `PUT`, `DELETE` pod `/api/notes`) z poprawnymi kodami odpowiedzi. Ścieżki wychodzące poza katalog są odrzucane. Strona demonstracyjna dodaje i wyświetla notatki przez `fetch()`. Projekt pokazuje, że HTTP to zwykły tekst wysyłany przez gniazdo sieciowe.
+
+| | C | Python | JavaScript |
+|---|---|---|---|
+| Interfejs | gniazda POSIX | moduł `socket` | moduł `http` (Node.js) |
+| Linie logiki | 424 | 159 | 133 |
+| Linie interfejsu | 119 | 62 | 35 |
+
+W C i Pythonie serwer sam czyta i składa żądania HTTP na gniazdach, więc protokół jest widoczny w kodzie. W Node.js moduł `http` robi to za nas i zostaje sama logika.
 
 #### Linki
 
@@ -686,15 +999,23 @@ Projekt serwera HTTP polega na stworzeniu serwera, który nasłuchuje na żądan
 
 Screenshot | Technologie | Link
 ---|---|---
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/http_server)** |
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/http_server)** |
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/http_server)** |
+| <img src="src/c/http_server/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/http_server)** |
+| <img src="src/python/http_server/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/http_server)** |
+| <img src="src/vanilla_js/http_server/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/http_server)** |
 
 </div>
 
 ### Koszyk z zakupami
 
-Projekt koszyka z zakupami to aplikacja e-commerce, która umożliwia użytkownikowi dodawanie produktów do koszyka, usuwanie ich oraz zmianę ich ilości. Aplikacja umożliwia również stosowanie kodów rabatowych i prowadzenie przez proces zakupowy. Produkty są prezentowane w atrakcyjny sposób, z obrazkami i informacjami o cenach. Projekt ten pozwala na naukę tworzenia interfejsów użytkownika, zarządzania stanem aplikacji oraz integracji z systemami płatności i bazami danych.
+Symulacja sklepu internetowego: katalog ośmiu produktów, koszyk z możliwością zmiany ilości i usuwania pozycji, dwa rodzaje kodów rabatowych oraz zamówienie z imieniem i adresem. Wszystkie kwoty są przechowywane w groszach jako liczby całkowite, bo liczby zmiennoprzecinkowe nie zapisują dokładnie wartości takich jak 0,10. Projekt uczy zarządzania stanem aplikacji i walidacji danych.
+
+| | C | Python | JavaScript |
+|---|---|---|---|
+| Interfejs | menu w terminalu | menu w terminalu | przeglądarka |
+| Linie logiki | 163 | 81 | 90 |
+| Linie interfejsu | 265 | 130 | 205 |
+
+C zwraca kody błędów i pracuje na tablicach o stałym rozmiarze, a Python i JavaScript używają klas, obiektów i wyjątków. Wersja w przeglądarce reaguje na kliknięcia zamiast czytać kolejne polecenia.
 
 #### Linki
 
@@ -702,15 +1023,23 @@ Projekt koszyka z zakupami to aplikacja e-commerce, która umożliwia użytkowni
 
 Screenshot | Technologie | Link
 ---|---|---
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/shopping_cart)** |
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/shopping_cart)** |
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/shopping_cart)** |
+| <img src="src/c/shopping_cart/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/shopping_cart)** |
+| <img src="src/python/shopping_cart/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/shopping_cart)** |
+| <img src="src/vanilla_js/shopping_cart/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/shopping_cart)** |
 
 </div>
 
 ### Zamawianie jedzenia
 
-Aplikacja do zamawiania jedzenia pozwala użytkownikom przeglądać menu z dostępnymi daniami, wraz z ich zdjęciami, cenami, opisami i kategoriami. Po wybraniu posiłku, użytkownik podaje adres dostawy i wybiera formę płatności - PayPal, karta kredytowa lub gotówka przy odbiorze. Aplikacja może również zawierać funkcję śledzenia statusu zamówienia w czasie rzeczywistym. Jest to kompleksowy projekt, który łączy w sobie zarządzanie bazą danych, interfejs użytkownika, obsługę płatności oraz integrację z zewnętrznymi usługami dostarczania.
+Aplikacja do zamawiania jedzenia: menu w kategoriach, zamówienie z ilościami, adres i telefon do dostawy oraz płatność przez PayPal, kartą lub gotówką przy odbiorze. Numer karty jest sprawdzany algorytmem Luhna, a po złożeniu zamówienia jego status przechodzi kolejno przez etapy od przyjęcia do dostarczenia. Projekt uczy walidacji danych, obliczeń na pieniądzach i modelowania stanu zamówienia.
+
+| | C | Python | JavaScript |
+|---|---|---|---|
+| Interfejs | menu w terminalu | menu w terminalu | przeglądarka |
+| Linie logiki | 314 | 152 | 140 |
+| Linie interfejsu | 237 | 168 | 158 |
+
+Wersja w C ma teksty o stałej długości i sprawdza rozmiar przed każdym kopiowaniem. Python opisuje te same reguły klasami danych i typami wyliczeniowymi, a JavaScript dodaje stronę, która reaguje na kliknięcia.
 
 #### Linki
 
@@ -718,15 +1047,23 @@ Aplikacja do zamawiania jedzenia pozwala użytkownikom przeglądać menu z dost�
 
 Screenshot | Technologie | Link
 ---|---|---
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/food_ordering)** |
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/food_ordering)** |
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/food_ordering)** |
+| <img src="src/c/food_ordering/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/food_ordering)** |
+| <img src="src/python/food_ordering/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/food_ordering)** |
+| <img src="src/vanilla_js/food_ordering/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/food_ordering)** |
 
 </div>
 
 ### Komunikator internetowy
 
-Komunikator internetowy to aplikacja umożliwiająca komunikację tekstową, przesyłanie plików i wideorozmowy między użytkownikami. W prostszej wersji, użytkownicy mogą komunikować się w sieci LAN, a w bardziej zaawansowanej wersji - z dowolnym miejscem na świecie przez internet. Funkcje takie jak tworzenie kont, zarządzanie listą kontaktów i szyfrowanie komunikacji mogą zostać dodane, by zwiększyć funkcjonalność i bezpieczeństwo. Projekt ten oferuje praktyczne doświadczenie w pracy z sieciami, protokołami komunikacyjnymi oraz zabezpieczeniami danych.
+Czat tekstowy dla sieci lokalnej: jeden program działa jako serwer, a kolejne jako klienci łączący się przez TCP z wybranym pseudonimem. Serwer przekazuje każdą wiadomość pozostałym klientom i ogłasza dołączenie, wyjście i zmianę pseudonimu, a polecenia `/nick`, `/list` i `/quit` pokazują prosty protokół tekstowy. Projekt uczy programowania sieciowego i pętli zdarzeń.
+
+| | C | Python | JavaScript |
+|---|---|---|---|
+| Interfejs | terminal, gniazda POSIX | terminal, `selectors` | terminal (Node.js `net`) |
+| Linie logiki | 167 | 43 | 68 |
+| Linie interfejsu | 308 | 143 | 166 |
+
+Wszystkie trzy wersje mówią tym samym protokołem, więc serwer w jednym języku obsłuży klientów w innym. W C trzeba samemu obsłużyć gniazda, listę klientów i bufory, w Node.js wszystko jest sterowane zdarzeniami.
 
 #### Linki
 
@@ -734,17 +1071,94 @@ Komunikator internetowy to aplikacja umożliwiająca komunikację tekstową, prz
 
 Screenshot | Technologie | Link
 ---|---|---
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/messenger)** |
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/messenger)** |
-| ![screenshot](https://placehold.co/320x200?text=Screenshot) | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/messenger)** |
+| <img src="src/c/messenger/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/messenger)** |
+| <img src="src/python/messenger/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/messenger)** |
+| <img src="src/vanilla_js/messenger/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/messenger)** |
 
 </div>
 
-### Efekty wizualne
+### Efekty terminalowe
 
-Zbiór jedenastu krótkich programów, które zamieniają ekran w płótno: obracający się torus 3D, przybliżanie zbioru Mandelbrota, Gra w życie Conwaya, cyfrowy deszcz z Matrixa, ogień z gry Doom, obracający się sześcian, efekt plazmy, wizualizacja sortowania szybkiego, generowanie i rozwiązywanie labiryntu, prosty ray tracer oraz gwiezdne pole w prędkości warp. Każdy efekt mieści się w jednym pliku. Wersje w C i Pythonie działają w terminalu i korzystają wyłącznie z biblioteki standardowej oraz sekwencji ANSI, a wersja w JavaScripcie rysuje te same efekty na elemencie `<canvas>` w przeglądarce, w pełnej rozdzielczości.
+Trzynaście małych programów, które zamieniają terminal w ekran: grafika 3D, fraktale, symulacje i algorytmy, które można oglądać w ruchu. Każdy efekt to jeden krótki plik, który da się przeczytać za jednym podejściem. Programy korzystają wyłącznie z biblioteki standardowej i sekwencji ANSI, bez żadnych zewnętrznych bibliotek. To dobry zestaw na start: zamiast jednego dużego projektu dostajesz wiele małych, a każdy z nich uczy czegoś innego.
 
-Projekt ten pozwala w praktyce poznać grafikę 3D (obroty, rzutowanie perspektywiczne, bufor głębokości), podstawy oświetlenia, automaty komórkowe, algorytmy przeszukiwania grafów i sortowania, a także sterowanie terminalem za pomocą kolorów i kodów ucieczki. Każdy z programów można łatwo rozbudować, np. o obsługę klawiatury, zmianę rozmiaru okna czy nowe efekty.
+Wszystkie efekty napisano w trzech językach: C, Pythonie i JavaScripcie (Node.js). Wszystkie trzy wersje wypisują **dokładnie te same klatki, bajt w bajt**, więc można je porównywać linijka po linijce.
+
+<div align="center">
+<img src="src/c/terminal_effects/screenshot.png" width="900" />
+</div>
+
+#### Lista efektów
+
+| Efekt | Co widać | Czego się nauczysz | Poziom |
+|---|---|---|---|
+| `donut` | Obracający się torus (pączek) narysowany znakami ASCII | Powierzchnie parametryczne, obroty, rzutowanie perspektywiczne, bufor głębokości, oświetlenie z wektorów normalnych | ★★★ |
+| `mandelbrot_zoom` | Prawie 12 000-krotne przybliżenie zbioru Mandelbrota | Liczby zespolone, algorytm czasu ucieczki, palety kolorów | ★★ |
+| `fire` | Płomienie unoszące się z żarzących się węgli | Uśrednianie sąsiadów (rozmycie), palety | ★ |
+| `plasma` | Płynące tęczowe kolory | Fale sinusoidalne, mieszanie kolorów RGB | ★ |
+| `ray_tracer` | Błyszcząca kula nad szachownicą | Wektory, przecięcie promienia z kulą i płaszczyzną, cienie, odbicia, rekurencja | ★★★ |
+| `matrix_rain` | Spadający zielony kod z filmu *Matrix* | Stan przechowywany osobno dla każdej kolumny, gradienty kolorów | ★ |
+| `game_of_life` | Gra w życie Conwaya, komórki kolorowane według wieku | Automaty komórkowe, podwójne buforowanie, plansza zawijana na brzegach | ★ |
+| `maze_solver` | Labirynt drążony na żywo, a potem rozwiązywany | Przeszukiwanie w głąb ze stosem, przeszukiwanie wszerz z kolejką, odtwarzanie ścieżki | ★★ |
+| `quicksort_visualizer` | Sortowanie szybkie 64 słupków, jedna klatka na zamianę | Rekurencja, podział Lomuto, tasowanie Fishera–Yatesa | ★★ |
+| `spinning_cube` | Oświetlony sześcian obracający się wokół trzech osi | Obroty w 3D, bufor głębokości, oświetlenie | ★★ |
+| `warp_starfield` | Lot przez gwiazdy z coraz większą prędkością | Dzielenie perspektywiczne (x / z), smugi ruchu | ★ |
+| `fireworks` | Rakiety rozpryskujące się w spadające iskry | Cząsteczki, prędkość, grawitacja, opór powietrza, zanikające ślady | ★★ |
+| `langtons_ant` | Mrówka, której dwie reguły budują „autostradę” | Proste reguły dające złożone zachowanie | ★ |
+
+#### Jak to działa?
+
+**Rysowanie w terminalu.** Terminal rozumie specjalne ciągi bajtów zaczynające się od znaku ucieczki (`\033`). Efektom wystarczy kilka z nich: `\033[2J` czyści ekran, `\033[H` przenosi kursor do lewego górnego rogu, `\033[?25l` i `\033[?25h` ukrywają i pokazują kursor, `\033[38;2;R;G;Bm` i `\033[48;2;R;G;Bm` ustawiają kolor tekstu i tła w RGB, a `\033[0m` przywraca domyślne kolory. Każda klatka zaczyna się od `\033[H` i nadpisuje poprzednią, zamiast czyścić ekran, dzięki czemu obraz nie mruga. Cała klatka jest najpierw budowana, a potem wypisywana za jednym razem.
+
+**Kwadratowe piksele z półbloków.** Komórka terminala jest mniej więcej dwa razy wyższa niż szersza. Znak `▀` (górna połówka bloku) ma górną część w kolorze tekstu, a dolną w kolorze tła, więc jedna komórka pokazuje dwa kwadratowe piksele. Obszar 64×22 znaków staje się płótnem 64×44 pikseli.
+
+**Wspólny moduł `term`.** Kod obsługujący terminal jest w jednym małym module, a pliki z efektami zawierają tylko swój algorytm. Moduł udostępnia płótno pikseli `pixels[y][x]` (kolory zapisane jako `0xRRGGBB`), płótno tekstowe `text`/`ink`, funkcje `show_pixels` i `show_text`, które rysują klatkę z linią statusu, oraz generator liczb losowych `seed`/`rnd`. Pilnuje też tempa animacji: odejmuje od opóźnienia czas liczenia klatki, więc efekt działa z tą samą prędkością, dopóki komputer nadąża. Po naciśnięciu Ctrl+C przywraca kursor i kolory. Liczba podana po nazwie programu (np. `./donut 100`) kończy animację po tylu klatkach, a zmienna środowiskowa `NO_SLEEP=1` wyłącza czekanie między klatkami (korzystają z niej testy i pomiar szybkości).
+
+**Te same klatki w trzech językach.** Żeby trzy wersje wypisywały identyczne bajty, przestrzegają kilku zasad:
+
+- Każda wersja ma **własny generator liczb losowych**, ten sam w każdym języku: `state = state × 1103515245 + 12345 (mod 2³²)`, a `rnd(n)` zwraca bity 16–31 tej liczby modulo `n`. Wbudowane `rand()`, `random` i `Math.random` dają różne liczby.
+- Wszystkie obliczenia używają **64-bitowych liczb zmiennoprzecinkowych** IEEE 754 (`double` w C). Dodawanie, mnożenie, dzielenie i pierwiastek są zaokrąglane dokładnie, więc dają te same bity w każdym języku. Kompilator C dostaje flagę `-ffp-contract=off`, żeby nie łączył `a * b + c` w jedną instrukcję z innym zaokrągleniem.
+- **Zaokrąglanie jest takie samo:** `(int)x` w C, `int(x)` w Pythonie i `Math.trunc(x)` w JavaScripcie obcinają część ułamkową w stronę zera. Dzielenie całkowite jest wykonywane tylko na liczbach nieujemnych, dla których `/` w C, `//` w Pythonie i `Math.floor(a / b)` dają ten sam wynik.
+- W C kolejność obliczania argumentów funkcji nie jest określona, dlatego liczby losowe nigdy nie są losowane dwa razy w jednym wywołaniu funkcji.
+
+Skrypt [`scripts/compare-terminal-effects.sh`](scripts/compare-terminal-effects.sh) uruchamia każdy efekt we wszystkich trzech językach, sprawdza, czy wyniki są identyczne, i mierzy szybkość.
+
+#### Porównanie języków
+
+Wyniki skryptu dla 300 klatek na procesorze Intel i7-12700KF (gcc 13 z `-O3`, CPython 3.12, Node.js 24). Linie to niepuste linie kodu. Czas to średnia na klatkę i zawiera uruchomienie programu, więc wyniki trochę się wahają.
+
+| Efekt | Linie C | Linie Python | Linie JS | C ms/klatkę | Python ms/klatkę | JS ms/klatkę |
+|---|---:|---:|---:|---:|---:|---:|
+| donut | 34 | 32 | 33 | 0,4 | 14 | 0,9 |
+| mandelbrot_zoom | 38 | 31 | 34 | 0,7 | 19,5 | 3,8 |
+| fire | 30 | 29 | 30 | 0,1 | 0,5 | 0,2 |
+| plasma | 21 | 22 | 23 | 0,4 | 2,2 | 0,6 |
+| ray_tracer | 55 | 69 | 56 | 0,2 | 9,1 | 0,7 |
+| matrix_rain | 37 | 39 | 36 | <0,1 | 0,3 | 0,2 |
+| game_of_life | 42 | 37 | 37 | 0,1 | 1,4 | 0,3 |
+| maze_solver | 89 | 81 | 85 | 0,1 | 0,6 | 0,2 |
+| quicksort_visualizer | 54 | 51 | 50 | 0,2 | 0,6 | 0,3 |
+| spinning_cube | 55 | 49 | 51 | 0,1 | 4,5 | 0,3 |
+| warp_starfield | 42 | 38 | 37 | 0,1 | 0,7 | 0,2 |
+| fireworks | 60 | 55 | 57 | 0,1 | 0,7 | 0,2 |
+| langtons_ant | 28 | 22 | 23 | 0,1 | 0,3 | 0,2 |
+| moduł `term` | 96 | 72 | 62 | | | |
+
+**Szybkość.** C jest najszybsze. JavaScript jest około 1,5–5 razy wolniejszy, bo silnik V8 w trakcie działania kompiluje często wykonywane pętle do kodu maszynowego. CPython interpretuje kod bajtowy i każdą liczbę trzyma w osobnym obiekcie, więc jest 5–45 razy wolniejszy od C, najbardziej przy intensywnych obliczeniach (`donut`, `mandelbrot_zoom`, `ray_tracer`). Większość efektów ma 30 ms na klatkę, więc wszystkie trzy wersje nadążają, ale `donut` i `mandelbrot_zoom` w Pythonie zużywają połowę tego czasu lub więcej.
+
+**Długość kodu.** Wszystkie trzy wersje mają niemal tyle samo linii, bo większość kodu to sam algorytm. Python jest zwykle najkrótszy (krotki, `for … else`, brak nawiasów klamrowych), ale jego ray tracer jest najdłuższy, bo klasa wektora definiuje każdy operator jako osobną metodę. C wymaga deklaracji typów i tablic o stałym rozmiarze, a JavaScript słów `const`/`let` i przedrostków `Math.`.
+
+| Zagadnienie | C | Python | JavaScript |
+|---|---|---|---|
+| Liczby | jawnie wybrane `int`, `uint32_t`, `double` | liczby całkowite dowolnej wielkości, `float` | jeden typ `number` (double), operacje bitowe na 32 bitach |
+| Dzielenie całkowite | `/` obcina | `//` zaokrągla w dół | `Math.floor(a / b)` |
+| Tablice | statyczne tablice o stałym rozmiarze | listy list | tablice tablic, `fill`, `Array.from` |
+| Wektory (ray tracer) | `struct` przekazywany przez wartość | klasa z `__add__`, `__mul__`… | zwykłe obiekty i funkcje strzałkowe |
+| Czekanie między klatkami | `nanosleep` wstrzymuje program | `time.sleep` wstrzymuje program | `await` na timerze, `await` na najwyższym poziomie modułu |
+| Rekurencja, która rysuje (quicksort) | zwykła rekurencja | zwykła rekurencja | każda funkcja po drodze musi być `async` i wywoływana z `await` |
+| Ctrl+C | obsługa sygnału ustawia flagę, `atexit` przywraca terminal | obsługa sygnału zgłasza `SystemExit`, `atexit` przywraca terminal | `process.on('SIGINT')` kończy program, zdarzenie `exit` przywraca terminal |
+| Budowanie | kompilacja przez CMake lub `cc` | brak | brak |
+
+Każdy katalog projektu ma własny plik README (po angielsku) z opisem każdego efektu krok po kroku, instrukcją uruchomienia i testów oraz pomysłami na rozbudowę: inne algorytmy sortowania lub generowania labiryntu, sterowanie klawiaturą, dopasowanie do rozmiaru terminala czy zupełnie nowe efekty.
 
 #### Linki
 
@@ -754,7 +1168,7 @@ Screenshot | Technologie | Link
 ---|---|---
 | <img src="src/c/terminal_effects/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/c.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/c/terminal_effects)** |
 | <img src="src/python/terminal_effects/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/python.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/python/terminal_effects)** |
-| <img src="src/vanilla_js/canvas_effects/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/canvas_effects)** |
+| <img src="src/vanilla_js/terminal_effects/screenshot.png" width="320" /> | <img src="https://img.icons8.com/color/344/javascript--v1.png" height="50" /> | **[Link](https://github.com/djeada/Proste-Projekty/tree/main/src/vanilla_js/terminal_effects)** |
 
 </div>
 
@@ -766,32 +1180,26 @@ Screenshot | Technologie | Link
 
 </div>
 
-Poniżej znajdziesz gotowe szablony z sensowną strukturą, konfiguracją narzędzi i krótkim README po polsku:
+Szablony to najmniejsze kompletne projekty zbudowane według zasad z sekcji [Jak zorganizować projekt](#️-jak-zorganizować-projekt). Każdy zawiera ten sam przykład, przelicznik temperatur, z logiką oddzieloną od interfejsu, testami i automatycznym sprawdzaniem na GitHubie (GitHub Actions). README każdego szablonu jest po polsku i wyjaśnia rolę każdego pliku.
 
 <div align="center">
 
-Szablon | Technologia | Zastosowanie | Link
+Szablon | Interfejs | Testy | Link
 ---|---|---|---
-Vanilla JavaScript | Frontend | Proste aplikacje webowe bez frameworka | [Link](dodatkowe_materialy/szablony_projektow/vanilla_javascript/)
-C z CMake | C | Projekty z testami i automatyzacją builda | [Link](dodatkowe_materialy/szablony_projektow/c_cmake/)
-Python (setup.py + Nuitka) | Python | Aplikacje CLI z opcją kompilacji binarnej | [Link](dodatkowe_materialy/szablony_projektow/python_setup_py/)
+C z CMake | program w terminalu | `assert()` + CTest, sprawdzanie formatowania clang-format | [Link](dodatkowe_materialy/szablony_projektow/c/)
+Python | program w terminalu | pytest, sprawdzanie stylu flake8 | [Link](dodatkowe_materialy/szablony_projektow/python/)
+JavaScript | strona w przeglądarce, bez frameworków i pakietów npm | wbudowany `node:test` | [Link](dodatkowe_materialy/szablony_projektow/vanilla_js/)
 
 </div>
 
-Każdy szablon zawiera:
-- Opis po polsku i minimalny README startowy
-- Przykładową strukturę katalogów
-- Konfigurację narzędzi do testowania, lintowania, formatowania i deploymentu
-- Przykładowe pliki konfiguracyjne oraz workflow CI
-
 Szybki start:
 1. Skopiuj katalog szablonu do nowego repozytorium lub folderu projektu.
-2. Zmień nazwę projektu w README oraz plikach konfiguracyjnych.
-3. Zainstaluj zależności i uruchom testy zgodnie z instrukcją w README szablonu.
+2. Zmień nazwę `converter` na nazwę swojego projektu w plikach i ich zawartości.
+3. Uruchom testy zgodnie z README szablonu, a potem zastąp przykład własną logiką, testami i interfejsem.
 
-**Uwaga:**
-- README w szablonach jest po polsku, aby ułatwić start osobom początkującym.
-- Właściwe projekty w katalogu [`src/`](src/) mają dokumentację i kod po angielsku, by były bardziej dostępne globalnie.
+Do tego dwa szablony dokumentów: [szablon README](dodatkowe_materialy/szablon_readme.md) z opisem, co wpisać w każdej sekcji, oraz [szablon specyfikacji](dodatkowe_materialy/szablon_specyfikacji.md) do spisania zasad projektu przed rozpoczęciem pracy.
+
+**Uwaga:** szablony i ich README są po polsku, żeby ułatwić start. Właściwe projekty w katalogu [`src/`](src/) mają kod i README po angielsku, żeby można je było dołączyć gdziekolwiek.
 
 ## 📚 Dodatkowe materiały
 

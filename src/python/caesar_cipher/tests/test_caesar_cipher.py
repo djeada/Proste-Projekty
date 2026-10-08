@@ -1,39 +1,44 @@
-import unittest
-import sys
-import os
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src/logic')))
-from caesar_cipher import caesar_encrypt, caesar_decrypt
+from caesar_cipher import crack, decrypt, encrypt, shift_char
 
-class TestCaesarCipher(unittest.TestCase):
-    def test_encrypt_basic(self):
-        self.assertEqual(caesar_encrypt('abc', 1), 'bcd')
-        self.assertEqual(caesar_encrypt('xyz', 2), 'zab')
-        self.assertEqual(caesar_encrypt('ABC', 3), 'DEF')
+SENTENCE = "The quick brown fox jumps over the lazy dog and then runs away into the forest."
 
-    def test_decrypt_basic(self):
-        self.assertEqual(caesar_decrypt('bcd', 1), 'abc')
-        self.assertEqual(caesar_decrypt('zab', 2), 'xyz')
-        self.assertEqual(caesar_decrypt('DEF', 3), 'ABC')
 
-    def test_non_alpha(self):
-        self.assertEqual(caesar_encrypt('a! b? c.', 1), 'b! c? d.')
-        self.assertEqual(caesar_decrypt('b! c? d.', 1), 'a! b? c.')
+def test_shift_char_moves_letters():
+    assert shift_char("a", 3) == "d"
+    assert shift_char("z", 1) == "a"
+    assert shift_char("Z", 1) == "A"
+    assert shift_char("a", -1) == "z"
 
-    def test_mixed_case(self):
-        self.assertEqual(caesar_encrypt('AbC xYz', 2), 'CdE zAb')
-        self.assertEqual(caesar_decrypt('CdE zAb', 2), 'AbC xYz')
 
-    def test_negative_key(self):
-        self.assertEqual(caesar_encrypt('abc', -1), 'zab')
-        self.assertEqual(caesar_decrypt('zab', -1), 'abc')
+def test_encrypt_keeps_case_and_other_characters():
+    assert encrypt("Hello, World!", 3) == "Khoor, Zruog!"
+    assert encrypt("123 .,?", 5) == "123 .,?"
+    assert encrypt("zażółć", 1) == "abżółć"
+    assert encrypt("ąęśćżźłóń", 7) == "ąęśćżźłóń"
 
-    def test_large_key(self):
-        self.assertEqual(caesar_encrypt('abc', 27), 'bcd')
-        self.assertEqual(caesar_decrypt('bcd', 27), 'abc')
 
-    def test_empty(self):
-        self.assertEqual(caesar_encrypt('', 5), '')
-        self.assertEqual(caesar_decrypt('', 5), '')
+def test_negative_and_large_keys():
+    assert encrypt("abc", -1) == "zab"
+    assert encrypt("abc", 26) == "abc"
+    assert encrypt("abc", 27) == "bcd"
+    assert encrypt("abc", 52) == "abc"
+    assert encrypt("abc", -27) == "zab"
 
-if __name__ == '__main__':
-    unittest.main()
+
+def test_decrypt_reverses_encrypt():
+    assert decrypt("Khoor, Zruog!", 3) == "Hello, World!"
+
+
+def test_round_trip_for_many_keys():
+    for key in (-30, -3, 0, 1, 7, 25, 52, 100):
+        assert decrypt(encrypt(SENTENCE, key), key) == SENTENCE
+
+
+def test_crack_finds_key_and_text():
+    key, plain_text = crack(encrypt(SENTENCE, 7))
+    assert key == 7
+    assert plain_text == SENTENCE
+
+
+def test_crack_without_letters_returns_text_unchanged():
+    assert crack("1234 !?") == (0, "1234 !?")

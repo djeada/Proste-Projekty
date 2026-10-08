@@ -1,0 +1,13 @@
+{
+  "name": "weather",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Command-line weather report from wttr.in, with plain Node.js 18+ and no dependencies",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node --test"
+  },
+  "license": "MIT"
+}

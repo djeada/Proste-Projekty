@@ -1,46 +1,43 @@
-"""
-Python implementation of a weather information application.
-"""
-from src.python.weather.src.logic.weather import WeatherService
+"""User interface: asks for a city, downloads its weather from wttr.in and prints the report."""
+
+import sys
+import urllib.error
+import urllib.request
+
+from weather import build_url, format_report, parse_weather
+
+TIMEOUT_SECONDS = 10
+
+
+def ask_city() -> str:
+    if len(sys.argv) > 1:
+        return " ".join(sys.argv[1:]).strip()
+    try:
+        return input("City or postal code: ").strip()
+    except EOFError:
+        return ""
+
+
+def fetch(city: str) -> str:
+    with urllib.request.urlopen(build_url(city), timeout=TIMEOUT_SECONDS) as response:
+        return response.read().decode("utf-8")
 
 
 def main() -> None:
-    service = WeatherService()
-
-    print("Weather Information Application")
-    print(f"Available cities: {service.list_cities()}")
-    print("Commands: weather <city>, list, quit")
-    print()
-
-    while True:
-        try:
-            user_input = input("> ").strip()
-        except (EOFError, KeyboardInterrupt):
-            print("\nGoodbye!")
-            break
-
-        if not user_input:
-            continue
-
-        parts = user_input.split(maxsplit=1)
-        command = parts[0].lower()
-
-        if command == "quit" or command == "q":
-            print("Goodbye!")
-            break
-        elif command == "list" or command == "ls":
-            print(f"Available cities: {service.list_cities()}")
-        elif command == "weather" or command == "w":
-            if len(parts) < 2:
-                print("Usage: weather <city>")
-            else:
-                city = parts[1]
-                info = service.get_weather(city)
-                print(info.to_string())
-        else:
-            # Assume it's a city name
-            info = service.get_weather(user_input)
-            print(info.to_string())
+    city = ask_city()
+    if not city:
+        sys.exit("Please enter a city name or postal code.")
+    try:
+        text = fetch(city)
+    except urllib.error.HTTPError as error:  # wttr.in answers HTTP 500 for unknown places
+        sys.exit(f"City not found: {city} (HTTP {error.code})")
+    except OSError as error:  # no network, DNS failure, timeout
+        sys.exit(f"Network error: could not reach wttr.in ({error})")
+    try:
+        weather = parse_weather(text)
+    except ValueError:
+        sys.exit(f"Empty or unexpected response from wttr.in for: {city}")
+    print(format_report(weather, city))
 
 
 if __name__ == "__main__":

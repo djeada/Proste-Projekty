@@ -13,11 +13,11 @@ jobs:
         with:
           fetch-depth: 0
       - name: Install dependencies
-        run: sudo apt-get update && sudo apt-get install -y cmake clang-tidy clang-format
+        run: sudo apt-get update && sudo apt-get install -y cmake clang-tidy clang-format libncurses-dev libsdl2-dev
       - name: Find changed C projects
         id: changes
         run: |
-          CHANGED=$(git diff --name-only origin/main...HEAD | grep '^src/c/' | cut -d'/' -f1,2,3 | sort | uniq | xargs)
+          CHANGED=$(git diff --name-only origin/main...HEAD | grep '^src/c/' | cut -d'/' -f1,2,3 | sort -u | while read -r d; do if [ -d "$d" ]; then echo "$d"; fi; done | xargs)
           echo "changed=$CHANGED" >> $GITHUB_OUTPUT
       - name: Print info if nothing changed
         if: steps.changes.outputs.changed == ''

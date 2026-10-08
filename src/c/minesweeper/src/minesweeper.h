@@ -1,27 +1,37 @@
+/* Minesweeper rules: mines, numbers, reveal with flood fill, flags. No input or output. */
 #ifndef MINESWEEPER_H
 #define MINESWEEPER_H
 
-#define BOARD_SIZE 8
-#define MINE_COUNT 10
+#define MAX_ROWS 16
+#define MAX_COLS 30
+
+typedef enum { PLAYING, WON, LOST } GameState;
 
 typedef struct {
-    int is_mine;
-    int is_revealed;
-    int is_flagged;
-    int adjacent_mines;
-} Cell;
-
-typedef struct {
-    Cell board[BOARD_SIZE][BOARD_SIZE];
+    int rows;
+    int cols;
+    int mine_total;
+    int mines_placed;
+    int mine[MAX_ROWS][MAX_COLS];
+    int neighbors[MAX_ROWS][MAX_COLS];
+    int revealed[MAX_ROWS][MAX_COLS];
+    int flagged[MAX_ROWS][MAX_COLS];
     int revealed_count;
-    int flagged_count;
-    int game_over;
-    int win;
-} MinesweeperGame;
+    int flag_count;
+    unsigned int rng;
+    GameState state;
+} Game;
 
-void game_init(MinesweeperGame *game);
-void game_reveal(MinesweeperGame *game, int row, int col);
-void game_flag(MinesweeperGame *game, int row, int col);
-void game_print(const MinesweeperGame *game);
+/* Starts a game with no mines yet; the seed makes the mine layout repeatable. */
+void game_start(Game *game, int rows, int cols, int mines, unsigned int seed);
 
-#endif // MINESWEEPER_H
+/* Reveals a cell. The first reveal places the mines, never on that cell or its neighbors. */
+void game_reveal(Game *game, int row, int col);
+
+/* Puts a flag on a hidden cell or removes it. */
+void game_toggle_flag(Game *game, int row, int col);
+
+/* Number of mines minus number of flags (can be negative). */
+int game_mines_left(const Game *game);
+
+#endif /* MINESWEEPER_H */

@@ -3,36 +3,42 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Calculator</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="container">
-      <h1>Calculator</h1>
-      <div class="calculator">
-        <input type="text" id="display" value="0" readonly />
-        <div class="buttons">
-          <button class="btn clear" id="clear">C</button>
-          <button class="btn operator" id="divide">&divide;</button>
-          <button class="btn operator" id="multiply">&times;</button>
-          <button class="btn operator" id="minus">&minus;</button>
-          <button class="btn number" id="7">7</button>
-          <button class="btn number" id="8">8</button>
-          <button class="btn number" id="9">9</button>
-          <button class="btn operator" id="plus">&plus;</button>
-          <button class="btn number" id="4">4</button>
-          <button class="btn number" id="5">5</button>
-          <button class="btn number" id="6">6</button>
-          <button class="btn equal" id="equal">=</button>
-          <button class="btn number" id="1">1</button>
-          <button class="btn number" id="2">2</button>
-          <button class="btn number" id="3">3</button>
-          <button class="btn number zero" id="0">0</button>
-          <button class="btn number" id=".">.</button>
-        </div>
+    <main class="calculator">
+      <div id="history" class="history"></div>
+      <div id="display" class="display">0</div>
+      <div id="status" class="status" role="alert"></div>
+      <div class="buttons">
+        <button data-key="(">(</button>
+        <button data-key=")">)</button>
+        <button data-key="Backspace">Del</button>
+        <button data-key="C" class="clear">C</button>
+
+        <button data-key="7">7</button>
+        <button data-key="8">8</button>
+        <button data-key="9">9</button>
+        <button data-key="/" class="operator">&divide;</button>
+
+        <button data-key="4">4</button>
+        <button data-key="5">5</button>
+        <button data-key="6">6</button>
+        <button data-key="*" class="operator">&times;</button>
+
+        <button data-key="1">1</button>
+        <button data-key="2">2</button>
+        <button data-key="3">3</button>
+        <button data-key="-" class="operator">-</button>
+
+        <button data-key="0">0</button>
+        <button data-key=".">.</button>
+        <button data-key="=" class="equals">=</button>
+        <button data-key="+" class="operator">+</button>
       </div>
-    </div>
-    <script src="app.js"></script>
+    </main>
+    <script src="calculator.js"></script>
+    <script src="main.js"></script>
   </body>
 </html>

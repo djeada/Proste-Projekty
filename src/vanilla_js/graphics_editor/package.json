@@ -1,0 +1,10 @@
+{
+  "name": "graphics-editor",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A small paint program in the browser: brush, line, rectangle, flood fill, undo and PNG files.",
+  "scripts": {
+    "test": "node --test"
+  },
+  "license": "MIT"
+}

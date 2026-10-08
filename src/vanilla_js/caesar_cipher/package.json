@@ -1,0 +1,10 @@
+{
+  "name": "caesar-cipher",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Caesar cipher in the browser: encrypt, decrypt and crack text",
+  "scripts": {
+    "test": "node --test"
+  },
+  "license": "MIT"
+}

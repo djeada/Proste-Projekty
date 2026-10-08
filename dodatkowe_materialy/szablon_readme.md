@@ -1,92 +1,72 @@
-# Tytuł projektu
+# Szablon pliku README
 
-![Build Status](link_do_badge_ci)
-![Licencja](link_do_badge_licencji)
+README to pierwsza rzecz, którą widzi osoba otwierająca projekt. Powinien w kilka minut odpowiedzieć na trzy pytania: **co to jest**, **jak to uruchomić** i **jak to działa**. Poniżej jest szablon z opisem, co wpisać w każdej sekcji.
 
-## Spis treści
-- [Opis ogólny](#opis-ogólny)
-- [Zrzuty ekranu](#zrzuty-ekranu)
-- [Wymagania](#wymagania)
-- [Instalacja](#instalacja)
-- [Użycie](#użycie)
-- [Funkcje](#funkcje)
-- [Możliwe ulepszenia](#możliwe-ulepszenia)
-- [Współpraca](#współpraca)
-- [Przykładowe komendy](#przykładowe-komendy)
-- [FAQ](#faq)
-- [Kontakt](#kontakt)
-- [Inspiracje](#inspiracje)
-- [Licencja](#licencja)
-- [Wersjonowanie](#wersjonowanie)
+W tym repozytorium README projektów piszemy po angielsku, żeby można je było dołączyć do projektu w dowolnym miejscu. Nazwy sekcji są podane w nawiasach. Gotowe przykłady: [Terminal Effects (C)](../src/c/terminal_effects/README.md) i README w każdym katalogu w [`src/`](../src/).
 
-## Opis ogólny
-Projekt jest innowacyjnym rozwiązaniem [krótki opis celu projektu], mającym na celu [cel projektu]. Zastosowanie: [branża/obszar]. Główne korzyści: [wymień].
+---
 
-## Zrzuty ekranu
-Załącz tu zrzuty ekranu prezentujące kluczowe funkcjonalności i interfejs użytkownika.
+```markdown
+# Nazwa projektu (język)
 
-## Wymagania
-- Oprogramowanie: [np. Node.js, Python]
-- Sprzęt: [np. min. 4GB RAM]
-- System: [np. Windows/Linux/macOS]
+Dwa, trzy zdania: co to jest i co robi.
 
-## Instalacja
-1. Sklonuj repozytorium:
-    ```bash
-    git clone [adres URL repozytorium]
-    ```
-2. Przejdź do folderu projektu:
-    ```bash
-    cd [folder projektu]
-    ```
-3. Zainstaluj zależności:
-    ```bash
-    [np. npm install, pip install -r requirements.txt]
-    ```
-4. Uruchom aplikację:
-    ```bash
-    [np. npm start, python app.py]
-    ```
+![Screenshot](screenshot.png)
 
-## Użycie
-- [Opis pierwszej funkcji lub kroku użytkowania]
-- [Opis kolejnych funkcji lub kroków]
+## Funkcje (Features)
 
-## Funkcje
-- [Pierwsza kluczowa funkcja]
-- [Druga kluczowa funkcja]
-- [Więcej funkcji]
+- najważniejsze możliwości programu, po jednej w punkcie
 
-## Możliwe ulepszenia
-- [Pomysł na ulepszenie]
-- [Kolejny pomysł]
+## Jak używać (How to play / How to use)
 
-## Współpraca
-- Testowanie i zgłaszanie błędów
-- Rozwijanie nowych funkcji
-- Ulepszanie dokumentacji
-- Pull requesty i zgłoszenia (issues) mile widziane!
+Sterowanie, polecenia, przykładowa sesja. Najlepiej konkretny przykład:
+wpisujesz X, program odpowiada Y.
 
-## Przykładowe komendy
-- Budowanie: `npm run build`
-- Testowanie: `npm test`
-- Lintowanie: `npm run lint`
+## Jak to działa (How it works)
 
-## FAQ
-**Pytanie:** Jak uruchomić projekt na Windows?  
-**Odpowiedź:** [odpowiedź]
+Najważniejsza sekcja dla osoby, która się uczy. Opisz:
+- jakie dane przechowuje program i w jakich strukturach (tablica 4×4, słownik, lista obiektów),
+- zasady lub algorytm krok po kroku (np. jak przesuwają się kafelki w 2048),
+- jak działa pętla programu: odczyt wejścia → zmiana stanu → rysowanie,
+- wszystko, co nie jest oczywiste, z nazwami funkcji i plików.
 
-**Pytanie:** Jak zgłosić błąd?  
-**Odpowiedź:** Otwórz issue na GitHubie.
+## Struktura projektu (Project layout)
 
-## Kontakt
-Imię Nazwisko – [email@example.com] – [link do profilu]
+    src/
+      game.c      logika gry
+      main.c      interfejs w terminalu
+    tests/
+      test_game.c testy logiki
 
-## Inspiracje
-- [Link do inspiracji lub podobnych projektów]
+Każdy plik z jednym zdaniem: do czego służy.
 
-## Licencja
-Projekt dostępny na [Licencji MIT](https://github.com/djeada/Proste-Projekty/blob/main/LICENSE). Brak gwarancji.
+## Wymagania (Requirements)
 
-## Wersjonowanie
-Projekt korzysta z [SemVer](https://semver.org/lang/pl/) do zarządzania wersjami.
+Kompilator / interpreter i jego wersja, biblioteki, system operacyjny.
+
+## Uruchamianie (Run)
+
+Dokładne polecenia, które można skopiować i wkleić.
+
+## Testy (Test)
+
+Polecenie uruchamiające testy i jedno zdanie o tym, co sprawdzają.
+
+## Porównanie z innymi wersjami (Comparison with the other versions)
+
+Linki do wersji w innych językach i tabela: rodzaj interfejsu, liczba linii
+logiki i interfejsu, liczba testów. Do tego kilka zdań o najciekawszych różnicach.
+
+## Pomysły na rozbudowę (Ideas for extensions)
+
+3–5 pomysłów dla osoby, która chce rozwinąć projekt.
+```
+
+---
+
+## Wskazówki
+
+- **Zrzut ekranu** pokazuje program w trakcie działania (rozgrywka, wypełniona lista), a nie pusty ekran startowy.
+- **Polecenia** testuj przed wpisaniem do README: skopiuj je do czystego terminala i sprawdź, czy działają.
+- **Krótko i konkretnie.** Bez ogólników w stylu „innowacyjne rozwiązanie”. Każde zdanie ma coś wyjaśniać.
+- **Aktualność.** Gdy zmieniasz kod, popraw README w tym samym commicie.

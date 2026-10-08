@@ -1,0 +1,10 @@
+{
+  "name": "messenger",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A simple LAN text chat over TCP: one server and many clients",
+  "scripts": {
+    "test": "node --test"
+  },
+  "license": "MIT"
+}

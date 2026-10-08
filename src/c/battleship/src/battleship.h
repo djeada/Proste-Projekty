@@ -1,51 +1,60 @@
+/* Battleship rules: boards, ship placement, shooting and the computer player. */
 #ifndef BATTLESHIP_H
 #define BATTLESHIP_H
 
-#include <stdio.h>
-
 #define BOARD_SIZE 10
-#define MAX_SHIPS 5
+#define SHIP_COUNT 5
+#define NO_SHIP (-1)
+#define MAX_TARGETS 100
 
-typedef enum { PHASE_PLACEMENT, PHASE_BATTLE, PHASE_GAMEOVER, PHASE_QUIT } Phase;
-
-typedef struct { int x, y; } Point;
+typedef enum {
+    SHOT_INVALID,
+    SHOT_REPEAT, /* this cell was already shot */
+    SHOT_MISS,
+    SHOT_HIT,
+    SHOT_SUNK
+} ShotResult;
 
 typedef struct {
-    Point pos; // top-left of ship
+    int x;
+    int y;
+} Point;
+
+/* A small xorshift random source, so tests can use a fixed seed. */
+typedef struct {
+    unsigned int state;
+} Rng;
+
+typedef struct {
     int length;
-    int horizontal; // 1 = horizontal, 0 = vertical
     int hits;
-    int placed; // 1 when placed
+    int placed;
 } Ship;
 
 typedef struct {
-    int has_ship; // 1 if a ship occupies this tile
-    int hit;      // 1 if fired upon
-} Cell;
-
-typedef struct {
-    Cell grid[BOARD_SIZE][BOARD_SIZE];
-    Ship ships[MAX_SHIPS];
+    Ship ships[SHIP_COUNT];
+    int ship_at[BOARD_SIZE][BOARD_SIZE]; /* index of the ship on a cell, or NO_SHIP */
+    int shot[BOARD_SIZE][BOARD_SIZE];
 } Board;
 
 typedef struct {
-    Board player;
-    Board enemy;
-    Phase phase;
-    int cursor_x, cursor_y;
-    int current_ship; // index during placement
-    int enemy_ships_remaining;
-    int player_ships_remaining;
-    int max_x, max_y;
-    char status[128];
-} BattleGame;
+    Point targets[MAX_TARGETS]; /* stack of cells next to hits */
+    int count;
+} Computer;
 
-void battleship_init(BattleGame *game, int max_x, int max_y);
-int place_ship(Board *board, int ship_index, int x, int y, int horizontal);
-int fire_at(Board *board, int x, int y);
-int all_ships_placed(const Board *board);
-int is_defeated(const Board *board);
-void battleship_update(BattleGame *game, int key);
-void battleship_draw_text(const BattleGame *game, FILE *out);
+void rng_seed(Rng *rng, unsigned int seed);
+int rng_below(Rng *rng, int n);
 
-#endif // BATTLESHIP_H
+void board_reset(Board *board);
+int board_can_place(const Board *board, int ship, int x, int y, int horizontal);
+int board_place(Board *board, int ship, int x, int y, int horizontal);
+void board_place_random(Board *board, Rng *rng);
+int board_fleet_placed(const Board *board);
+ShotResult board_fire(Board *board, int x, int y);
+int board_all_sunk(const Board *board);
+
+void computer_reset(Computer *computer);
+Point computer_choose(Computer *computer, const Board *target, Rng *rng);
+void computer_report(Computer *computer, const Board *target, Point at, ShotResult result);
+
+#endif

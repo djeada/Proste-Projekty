@@ -1,0 +1,10 @@
+{
+  "name": "version-control",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A tiny git-like version control tool for the current directory",
+  "scripts": {
+    "test": "node --test"
+  },
+  "license": "MIT"
+}

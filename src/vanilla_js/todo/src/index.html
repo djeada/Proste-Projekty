@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Todo List</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <h1>Todo List</h1>
+
+    <form id="task-form" class="task-form">
+      <input id="title" type="text" placeholder="What needs doing?" required aria-label="Title">
+      <input id="due" type="date" aria-label="Due date">
+      <select id="priority" aria-label="Priority">
+        <option value="low">Low</option>
+        <option value="medium" selected>Medium</option>
+        <option value="high">High</option>
+      </select>
+      <input id="category" type="text" placeholder="Category" aria-label="Category">
+      <button id="save-button" type="submit">Add task</button>
+      <button id="cancel-button" type="button" hidden>Cancel</button>
+    </form>
+    <p id="message" class="message" role="alert"></p>
+
+    <div class="filters">
+      <label>Category
+        <select id="filter-category"><option value="">All categories</option></select>
+      </label>
+      <label>Show
+        <select id="filter-status">
+          <option value="all">All</option>
+          <option value="active">Active</option>
+          <option value="done">Done</option>
+        </select>
+      </label>
+    </div>
+
+    <ul id="task-list" class="task-list"></ul>
+    <p id="empty" class="empty" hidden>No tasks here.</p>
+  </main>
+
+  <script src="todo.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

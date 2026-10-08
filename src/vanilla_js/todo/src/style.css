@@ -1,0 +1,219 @@
+:root {
+  --bg: #f5f6f8;
+  --card: #ffffff;
+  --text: #1d2330;
+  --muted: #6b7280;
+  --line: #dde1e7;
+  --accent: #2563eb;
+  --high: #b91c1c;
+  --medium: #b45309;
+  --low: #15803d;
+  --overdue-bg: #fef2f2;
+  --overdue-line: #dc2626;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #14171f;
+    --card: #1e232e;
+    --text: #e6e9ef;
+    --muted: #9aa3b2;
+    --line: #2f3645;
+    --accent: #60a5fa;
+    --high: #f87171;
+    --medium: #fbbf24;
+    --low: #4ade80;
+    --overdue-bg: #3a1d21;
+    --overdue-line: #ef4444;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 16px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+main {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+h1 {
+  font-size: 1.8rem;
+  margin: 8px 0 16px;
+}
+
+button,
+input,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+input,
+select {
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--card);
+  min-width: 0;
+}
+
+button {
+  padding: 8px 14px;
+  border: 1px solid var(--accent);
+  border-radius: 6px;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+}
+
+button.secondary {
+  background: transparent;
+  color: var(--accent);
+}
+
+button[hidden],
+[hidden] {
+  display: none;
+}
+
+.task-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.task-form #title {
+  flex: 1 1 100%;
+}
+
+.task-form #due,
+.task-form #priority,
+.task-form #category {
+  flex: 1 1 140px;
+}
+
+.message {
+  min-height: 1.2em;
+  margin: 8px 0;
+  color: var(--high);
+  font-size: 0.9rem;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 8px 0 12px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.filters label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.task-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.task {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.task.overdue {
+  background: var(--overdue-bg);
+  border-color: var(--overdue-line);
+}
+
+.task.done .title {
+  text-decoration: line-through;
+  color: var(--muted);
+}
+
+.task-main {
+  min-width: 0;
+}
+
+.title {
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.priority-high { color: var(--high); font-weight: 600; }
+.priority-medium { color: var(--medium); font-weight: 600; }
+.priority-low { color: var(--low); font-weight: 600; }
+
+.overdue-badge {
+  color: var(--overdue-line);
+  font-weight: 700;
+}
+
+.actions {
+  display: flex;
+  gap: 6px;
+}
+
+.actions button {
+  padding: 4px 10px;
+  font-size: 0.85rem;
+}
+
+.actions .delete {
+  border-color: var(--overdue-line);
+  background: transparent;
+  color: var(--overdue-line);
+}
+
+.task input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  accent-color: var(--accent);
+}
+
+.empty {
+  color: var(--muted);
+  text-align: center;
+  padding: 24px 0;
+}
+
+@media (max-width: 520px) {
+  .task {
+    grid-template-columns: auto 1fr;
+  }
+
+  .actions {
+    grid-column: 2;
+  }
+}

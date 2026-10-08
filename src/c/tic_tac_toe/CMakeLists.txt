@@ -2,24 +2,20 @@ cmake_minimum_required(VERSION 3.10)
 project(tic_tac_toe C)
 
 set(CMAKE_C_STANDARD 99)
+if(CMAKE_C_COMPILER_ID MATCHES "GNU|Clang")
+    add_compile_options(-Wall -Wextra)
+endif()
 
-add_executable(main src/main.c src/tic_tac_toe.c)
+find_package(Curses REQUIRED)
+
+add_library(tic_tac_toe_logic STATIC src/tic_tac_toe.c)
+target_include_directories(tic_tac_toe_logic PUBLIC src)
+
+add_executable(tic_tac_toe src/main.c)
+target_include_directories(tic_tac_toe PRIVATE ${CURSES_INCLUDE_DIRS})
+target_link_libraries(tic_tac_toe tic_tac_toe_logic ${CURSES_LIBRARIES})
 
 enable_testing()
-add_executable(test_tic_tac_toe tests/test_tic_tac_toe.c src/tic_tac_toe.c)
-target_include_directories(test_tic_tac_toe PRIVATE src)
+add_executable(test_tic_tac_toe tests/test_tic_tac_toe.c)
+target_link_libraries(test_tic_tac_toe tic_tac_toe_logic)
 add_test(NAME test_tic_tac_toe COMMAND test_tic_tac_toe)
-
-install(TARGETS main DESTINATION bin)
-
-find_program(CLANG_TIDY_EXE NAMES clang-tidy)
-if(CLANG_TIDY_EXE)
-    set_target_properties(main PROPERTIES C_CLANG_TIDY "clang-tidy")
-endif()
-find_program(CLANG_FORMAT_EXE NAMES clang-format)
-if(CLANG_FORMAT_EXE)
-    add_custom_target(format
-        COMMAND clang-format -i src/*.c src/*.h
-        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-    )
-endif()

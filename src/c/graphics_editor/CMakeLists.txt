@@ -2,34 +2,19 @@ cmake_minimum_required(VERSION 3.10)
 project(graphics_editor C)
 
 set(CMAKE_C_STANDARD 99)
+if(CMAKE_C_COMPILER_ID MATCHES "GNU|Clang")
+    add_compile_options(-Wall -Wextra)
+endif()
 
-# Find SDL2
-find_package(PkgConfig REQUIRED)
-pkg_check_modules(SDL2 REQUIRED sdl2)
+find_package(SDL2 REQUIRED)
 
-# Main executable with SDL2 GUI
-add_executable(main src/main.c src/graphics_editor.c)
-target_include_directories(main PRIVATE ${SDL2_INCLUDE_DIRS})
-target_link_libraries(main ${SDL2_LIBRARIES} m)
-target_compile_options(main PRIVATE ${SDL2_CFLAGS_OTHER})
+add_library(graphics_editor_logic STATIC src/graphics_editor.c)
+target_include_directories(graphics_editor_logic PUBLIC src)
 
-# Unit tests (no SDL2 dependency - tests image logic only)
+add_executable(graphics_editor src/main.c)
+target_link_libraries(graphics_editor graphics_editor_logic SDL2::SDL2)
+
 enable_testing()
-add_executable(test_graphics_editor tests/test_graphics_editor.c src/graphics_editor.c)
-target_include_directories(test_graphics_editor PRIVATE src)
-target_link_libraries(test_graphics_editor m)
+add_executable(test_graphics_editor tests/test_graphics_editor.c)
+target_link_libraries(test_graphics_editor graphics_editor_logic)
 add_test(NAME test_graphics_editor COMMAND test_graphics_editor)
-
-install(TARGETS main DESTINATION bin)
-
-find_program(CLANG_TIDY_EXE NAMES clang-tidy)
-if(CLANG_TIDY_EXE)
-    set_target_properties(main PROPERTIES C_CLANG_TIDY "clang-tidy")
-endif()
-find_program(CLANG_FORMAT_EXE NAMES clang-format)
-if(CLANG_FORMAT_EXE)
-    add_custom_target(format
-        COMMAND clang-format -i src/*.c src/*.h
-        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-    )
-endif()

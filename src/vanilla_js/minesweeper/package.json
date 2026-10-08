@@ -1,0 +1,10 @@
+{
+  "name": "minesweeper",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Classic Minesweeper in the browser with three levels, flags, a timer and first-click safety",
+  "scripts": {
+    "test": "node --test"
+  },
+  "license": "MIT"
+}

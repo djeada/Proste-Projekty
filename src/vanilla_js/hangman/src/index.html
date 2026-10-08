@@ -3,19 +3,39 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Hangman</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="container">
-      <h1>Hangman</h1>
-      <div id="word-display" class="word-display"></div>
-      <div id="message" class="message"></div>
-      <div id="attempts" class="attempts">Attempts left: <span id="attempts-count">10</span></div>
-      <div id="keyboard" class="keyboard"></div>
-      <button id="new-game" class="new-game-btn">New Game</button>
-    </div>
-    <script src="app.js"></script>
+    <main class="game">
+      <svg class="gallows" viewBox="0 0 200 240" aria-label="Hangman drawing">
+        <g class="frame">
+          <line x1="20" y1="230" x2="180" y2="230" />
+          <line x1="50" y1="230" x2="50" y2="20" />
+          <line x1="50" y1="20" x2="130" y2="20" />
+          <line x1="130" y1="20" x2="130" y2="50" />
+        </g>
+        <g class="figure">
+          <circle data-stage="1" cx="130" cy="70" r="20" />
+          <line data-stage="2" x1="130" y1="90" x2="130" y2="150" />
+          <line data-stage="3" x1="130" y1="110" x2="100" y2="130" />
+          <line data-stage="4" x1="130" y1="110" x2="160" y2="130" />
+          <line data-stage="5" x1="130" y1="150" x2="105" y2="190" />
+          <line data-stage="6" x1="130" y1="150" x2="155" y2="190" />
+        </g>
+      </svg>
+
+      <div class="info">
+        <p id="category" class="category"></p>
+        <p id="word" class="word"></p>
+        <p id="misses"></p>
+        <p id="guessed"></p>
+        <p id="message" class="message" aria-live="polite"></p>
+        <div id="keyboard" class="keyboard"></div>
+        <button id="new-game" class="new-game" type="button">New game</button>
+      </div>
+    </main>
+    <script src="hangman.js"></script>
+    <script src="main.js"></script>
   </body>
 </html>

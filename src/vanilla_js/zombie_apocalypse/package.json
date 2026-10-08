@@ -1,0 +1,10 @@
+{
+  "name": "zombie-apocalypse",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A small top-down zombie survival game drawn on a canvas",
+  "scripts": {
+    "test": "node --test"
+  },
+  "license": "MIT"
+}

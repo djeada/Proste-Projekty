@@ -1,79 +1,98 @@
+/* Tests of the expression logic. Returns 0 when all tests pass. */
+#include "calculator.h"
+
 #include <assert.h>
-#include <stdio.h>
 #include <math.h>
-#include "../src/parser.h"
+#include <stdio.h>
+#include <string.h>
 
-void test_add() {
-    int error;
-    assert(fabs(parse_and_eval("2+3", &error) - 5.0) < 1e-6 && error == 0);
+static void check_value(const char *text, double expected)
+{
+    char error[128];
+    double result = 0;
+
+    assert(calc_evaluate(text, &result, error, sizeof error) == 0);
+    assert(fabs(result - expected) < 1e-9);
 }
 
-void test_subtract() {
-    int error;
-    assert(fabs(parse_and_eval("5-2", &error) - 3.0) < 1e-6 && error == 0);
+static void check_error(const char *text, const char *message)
+{
+    char error[128];
+    double result = 0;
+
+    assert(calc_evaluate(text, &result, error, sizeof error) == -1);
+    assert(strcmp(error, message) == 0);
 }
 
-void test_multiply() {
-    int error;
-    assert(fabs(parse_and_eval("2*3", &error) - 6.0) < 1e-6 && error == 0);
+static void test_precedence(void)
+{
+    check_value("2 + 3 * 4", 14);
+    check_value("2 + 3 * (4 - 1)", 11);
+    check_value("10 - 4 - 3", 3);
+    check_value("8 / 4 / 2", 1);
+    check_value("2 * 3 + 4 / 2", 8);
 }
 
-void test_divide() {
-    int error;
-    assert(fabs(parse_and_eval("6/2", &error) - 3.0) < 1e-6 && error == 0);
-    parse_and_eval("1/0", &error);
-    assert(error == 2); // Division by zero error
+static void test_parentheses(void)
+{
+    check_value("(1 + 2) * (3 + 4)", 21);
+    check_value("((2))", 2);
+    check_value("-(2 + 3)", -5);
 }
 
-void test_invalid_operator() {
-    int error;
-    // Test invalid characters/expressions
-    parse_and_eval("2@3", &error);
-    assert(error != 0);
+static void test_unary_minus(void)
+{
+    check_value("-5 + 2", -3);
+    check_value("2 * -3", -6);
+    check_value("--4", 4);
+    check_value("2 - -3", 5);
 }
 
-void test_parser_basic() {
-    int error;
-    assert(fabs(parse_and_eval("2+3", &error) - 5.0) < 1e-6 && error == 0);
-    assert(fabs(parse_and_eval("2*3+4", &error) - 10.0) < 1e-6 && error == 0);
-    assert(fabs(parse_and_eval("2*(3+4)", &error) - 14.0) < 1e-6 && error == 0);
-    assert(fabs(parse_and_eval("6/2", &error) - 3.0) < 1e-6 && error == 0);
-    assert(fabs(parse_and_eval("6/0", &error)) < 1e-6 && error == 2);
+static void test_decimals(void)
+{
+    check_value("0.1 + 0.2", 0.3);
+    check_value(".5 * 4", 2);
+    check_value("3. + 1", 4);
+    check_value("7.5 / 2.5", 3);
 }
 
-void test_parser_unary_and_power() {
-    int error;
-    assert(fabs(parse_and_eval("-5+2", &error) - (-3.0)) < 1e-6 && error == 0);
-    assert(fabs(parse_and_eval("2^3", &error) - 8.0) < 1e-6 && error == 0);
-    assert(fabs(parse_and_eval("-2^2", &error) - (-4.0)) < 1e-6 && error == 0); // if implemented as -(2^2)
+static void test_whitespace(void)
+{
+    check_value("  1+2\t", 3);
 }
 
-void test_parser_parentheses() {
-    int error;
-    assert(fabs(parse_and_eval("(2+3)*4", &error) - 20.0) < 1e-6 && error == 0);
-    assert(fabs(parse_and_eval("2+(3*4)", &error) - 14.0) < 1e-6 && error == 0);
+static void test_errors(void)
+{
+    char huge[400];
+
+    check_error("", "Empty expression");
+    check_error("   ", "Empty expression");
+    check_error("1 / 0", "Division by zero");
+    check_error("1 / (2 - 2)", "Division by zero");
+    check_error("(1 + 2", "Unbalanced parentheses");
+    check_error("(1 + (2)", "Unbalanced parentheses");
+    check_error("1 + 2)", "Unbalanced parentheses");
+    check_error("2 $ 3", "Unexpected character '$' at position 3");
+    check_error("1e5", "Unexpected character 'e' at position 2");
+    check_error("2 +", "Unexpected end of expression");
+    check_error("2 3", "Unexpected '3' at position 3");
+    check_error("* 2", "Unexpected '*' at position 1");
+    check_error("()", "Unexpected ')' at position 2");
+    check_error("1.2.3", "Unexpected '.' at position 4");
+
+    memset(huge, '9', sizeof huge - 1);
+    huge[sizeof huge - 1] = '\0';
+    check_error(huge, "Result is out of range");
 }
 
-void test_parser_errors() {
-    int error;
-    parse_and_eval("2+", &error);
-    assert(error != 0);
-    parse_and_eval("abc", &error);
-    assert(error != 0);
-    parse_and_eval("2/(1-1)", &error);
-    assert(error == 2);
-}
-
-int main() {
-    test_add();
-    test_subtract();
-    test_multiply();
-    test_divide();
-    test_invalid_operator();
-    test_parser_basic();
-    test_parser_unary_and_power();
-    test_parser_parentheses();
-    test_parser_errors();
-    printf("All tests passed!\n");
+int main(void)
+{
+    test_precedence();
+    test_parentheses();
+    test_unary_minus();
+    test_decimals();
+    test_whitespace();
+    test_errors();
+    printf("All calculator tests passed.\n");
     return 0;
 }

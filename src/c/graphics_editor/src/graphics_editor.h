@@ -1,71 +1,46 @@
+/* The paint logic: canvas pixels, drawing primitives and the undo history. No SDL here. */
 #ifndef GRAPHICS_EDITOR_H
 #define GRAPHICS_EDITOR_H
 
 #include <stdint.h>
 
-#define MAX_WIDTH 1024
-#define MAX_HEIGHT 1024
-#define MAX_FILENAME 256
+#define HISTORY_DEPTH 20
 
 typedef struct {
     uint8_t r;
     uint8_t g;
     uint8_t b;
-} Pixel;
+} Color;
 
+/* Pixels are stored row by row: pixel (x, y) is pixels[y * width + x]. */
 typedef struct {
-    Pixel *data;
     int width;
     int height;
-    char filename[MAX_FILENAME];
-    int modified;
-} Image;
+    Color *pixels;
+} Canvas;
 
+/* Snapshots of the canvas, oldest first. */
 typedef struct {
-    int x;
-    int y;
-    int width;
-    int height;
-} Selection;
+    Canvas snapshots[HISTORY_DEPTH];
+    int count;
+} History;
 
-// Image management
-Image *image_create(int width, int height);
-void image_free(Image *img);
-Image *image_copy(const Image *src);
-int image_set_pixel(Image *img, int x, int y, Pixel color);
-Pixel image_get_pixel(const Image *img, int x, int y);
-void image_fill(Image *img, Pixel color);
+Canvas canvas_create(int width, int height, Color fill);
+void canvas_destroy(Canvas *canvas);
+void canvas_copy_into(Canvas *dst, const Canvas *src);
+int canvas_inside(const Canvas *canvas, int x, int y);
+Color canvas_get(const Canvas *canvas, int x, int y);
+void canvas_set(Canvas *canvas, int x, int y, Color color);
+void canvas_clear(Canvas *canvas, Color color);
+int color_equal(Color a, Color b);
 
-// Basic operations
-int image_resize(Image *img, int new_width, int new_height);
-Image *image_crop(const Image *img, int x, int y, int width, int height);
-Image *image_rotate_90(const Image *img);
-Image *image_rotate_180(const Image *img);
-Image *image_flip_horizontal(const Image *img);
-Image *image_flip_vertical(const Image *img);
+void draw_line(Canvas *canvas, int x0, int y0, int x1, int y1, int width, Color color);
+void draw_rect(Canvas *canvas, int x0, int y0, int x1, int y1, int width, Color color);
+void flood_fill(Canvas *canvas, int x, int y, Color color);
 
-// Drawing tools
-void image_draw_pixel(Image *img, int x, int y, Pixel color);
-void image_draw_line(Image *img, int x1, int y1, int x2, int y2, Pixel color);
-void image_draw_rect(Image *img, int x, int y, int width, int height, Pixel color);
-void image_fill_rect(Image *img, int x, int y, int width, int height, Pixel color);
-void image_draw_circle(Image *img, int cx, int cy, int radius, Pixel color);
-void image_fill_circle(Image *img, int cx, int cy, int radius, Pixel color);
-void image_bucket_fill(Image *img, int x, int y, Pixel new_color);
+void history_init(History *history);
+void history_push(History *history, const Canvas *canvas);
+int history_undo(History *history, Canvas *canvas);
+void history_free(History *history);
 
-// Filters and effects
-void image_grayscale(Image *img);
-void image_invert(Image *img);
-void image_brightness(Image *img, int delta);
-void image_contrast(Image *img, float factor);
-
-// File operations (PPM format for simplicity)
-int image_save_ppm(const Image *img, const char *filename);
-Image *image_load_ppm(const char *filename);
-
-// Utility
-Pixel pixel_create(uint8_t r, uint8_t g, uint8_t b);
-int pixels_equal(Pixel a, Pixel b);
-void image_print_ascii(const Image *img);
-
-#endif // GRAPHICS_EDITOR_H
+#endif /* GRAPHICS_EDITOR_H */

@@ -2,30 +2,18 @@ cmake_minimum_required(VERSION 3.10)
 project(weather C)
 
 set(CMAKE_C_STANDARD 99)
+if(CMAKE_C_COMPILER_ID MATCHES "GNU|Clang")
+    add_compile_options(-Wall -Wextra)
+endif()
 
-add_library(weather_logic src/weather.c)
+add_library(weather_logic STATIC src/weather.c)
 target_include_directories(weather_logic PUBLIC src)
 
-add_executable(main src/main.c)
-target_link_libraries(main weather_logic)
+add_executable(weather src/main.c)
+target_link_libraries(weather weather_logic)
 
-# Enable testing
 enable_testing()
 add_executable(test_weather tests/test_weather.c)
 target_link_libraries(test_weather weather_logic)
-target_include_directories(test_weather PRIVATE src)
+target_compile_definitions(test_weather PRIVATE SAMPLE_JSON="${CMAKE_CURRENT_SOURCE_DIR}/tests/warszawa.json")
 add_test(NAME test_weather COMMAND test_weather)
-
-install(TARGETS main DESTINATION bin)
-
-find_program(CLANG_TIDY_EXE NAMES clang-tidy)
-if(CLANG_TIDY_EXE)
-    set_target_properties(main PROPERTIES C_CLANG_TIDY "clang-tidy")
-endif()
-find_program(CLANG_FORMAT_EXE NAMES clang-format)
-if(CLANG_FORMAT_EXE)
-    add_custom_target(format
-        COMMAND clang-format -i src/*.c src/*.h
-        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-    )
-endif()

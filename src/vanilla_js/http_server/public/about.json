@@ -1,0 +1,5 @@
+{
+  "name": "http_server demo",
+  "description": "A small HTTP/1.1 server with static files and a notes API",
+  "api": ["GET /api/notes", "POST /api/notes", "PUT /api/notes/<id>", "DELETE /api/notes/<id>"]
+}

@@ -1,0 +1,10 @@
+{
+  "name": "todo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A todo list with priorities, due dates and categories, saved in the browser",
+  "scripts": {
+    "test": "node --test"
+  },
+  "license": "MIT"
+}

@@ -1,190 +1,132 @@
+/* Shopping cart rules. Products are identified by their index in CATALOG. */
 #include "shopping_cart.h"
-#include <stdio.h>
+
+#include <ctype.h>
 #include <string.h>
 
-static int next_product_id = 1;
+const Product CATALOG[CATALOG_SIZE] = {
+    {"Notebook", "Stationery", 349},
+    {"Pen set", "Stationery", 1290},
+    {"Coffee mug", "Kitchen", 875},
+    {"Water bottle", "Kitchen", 1120},
+    {"Desk lamp", "Home", 2499},
+    {"T-shirt", "Clothing", 1500},
+    {"Running socks", "Clothing", 650},
+    {"Paperback novel", "Books", 999},
+};
 
-void store_init(Store *store) {
-    store->product_count = 0;
-}
+const DiscountCode DISCOUNT_CODES[DISCOUNT_CODE_COUNT] = {
+    {"SAVE10", 10, 0, 0},
+    {"FLAT5", 0, 500, 3000},
+};
 
-int store_add_product(Store *store, const char *name, double price, int stock) {
-    if (store->product_count >= MAX_PRODUCTS) {
-        return 0;
-    }
-    Product *p = &store->products[store->product_count];
-    p->id = next_product_id++;
-    strncpy(p->name, name, MAX_NAME_LENGTH - 1);
-    p->name[MAX_NAME_LENGTH - 1] = '\0';
-    p->price = price;
-    p->stock = stock;
-    store->product_count++;
-    return p->id;
-}
-
-Product *store_find_product(Store *store, int id) {
-    for (int i = 0; i < store->product_count; i++) {
-        if (store->products[i].id == id) {
-            return &store->products[i];
-        }
-    }
-    return NULL;
-}
-
-void store_list_products(const Store *store) {
-    printf("\n%-4s %-30s %10s %8s\n", "ID", "Product", "Price", "Stock");
-    printf("------------------------------------------------------\n");
-    for (int i = 0; i < store->product_count; i++) {
-        const Product *p = &store->products[i];
-        printf("%-4d %-30s %10.2f %8d\n", p->id, p->name, p->price, p->stock);
-    }
-    printf("\n");
-}
-
-void cart_init(Cart *cart) {
-    cart->item_count = 0;
-    cart->discount_percent = 0.0;
-}
-
-int cart_add_item(Cart *cart, Store *store, int product_id, int quantity) {
-    if (quantity <= 0) {
-        return 0;
-    }
-
-    Product *product = store_find_product(store, product_id);
-    if (!product || product->stock < quantity) {
-        return 0;
-    }
-
-    // Check if already in cart
-    for (int i = 0; i < cart->item_count; i++) {
-        if (cart->items[i].product_id == product_id) {
-            if (product->stock < cart->items[i].quantity + quantity) {
-                return 0;
-            }
-            cart->items[i].quantity += quantity;
-            return 1;
-        }
-    }
-
-    if (cart->item_count >= MAX_CART_ITEMS) {
-        return 0;
-    }
-
-    cart->items[cart->item_count].product_id = product_id;
-    cart->items[cart->item_count].quantity = quantity;
-    cart->item_count++;
-    return 1;
-}
-
-int cart_remove_item(Cart *cart, int product_id) {
-    for (int i = 0; i < cart->item_count; i++) {
-        if (cart->items[i].product_id == product_id) {
-            // Shift items
-            for (int j = i; j < cart->item_count - 1; j++) {
-                cart->items[j] = cart->items[j + 1];
-            }
-            cart->item_count--;
-            return 1;
-        }
-    }
-    return 0;
-}
-
-int cart_update_quantity(Cart *cart, Store *store, int product_id, int quantity) {
-    if (quantity <= 0) {
-        return cart_remove_item(cart, product_id);
-    }
-
-    Product *product = store_find_product(store, product_id);
-    if (!product || product->stock < quantity) {
-        return 0;
-    }
-
-    for (int i = 0; i < cart->item_count; i++) {
-        if (cart->items[i].product_id == product_id) {
-            cart->items[i].quantity = quantity;
-            return 1;
-        }
-    }
-    return 0;
-}
-
-double cart_get_total(const Cart *cart, const Store *store) {
-    double total = 0.0;
-    for (int i = 0; i < cart->item_count; i++) {
-        const Product *p = NULL;
-        for (int j = 0; j < store->product_count; j++) {
-            if (store->products[j].id == cart->items[i].product_id) {
-                p = &store->products[j];
-                break;
-            }
-        }
-        if (p) {
-            total += p->price * cart->items[i].quantity;
-        }
-    }
-    double discount = total * cart->discount_percent / 100.0;
-    return total - discount;
-}
-
-void cart_apply_discount(Cart *cart, double percent) {
-    if (percent >= 0 && percent <= 100) {
-        cart->discount_percent = percent;
-    }
-}
-
-void cart_print(const Cart *cart, const Store *store) {
-    if (cart->item_count == 0) {
-        printf("\nCart is empty.\n\n");
-        return;
-    }
-
-    printf("\n%-30s %10s %8s %12s\n", "Product", "Price", "Qty", "Subtotal");
-    printf("--------------------------------------------------------------\n");
-
-    double total = 0.0;
-    for (int i = 0; i < cart->item_count; i++) {
-        const Product *p = NULL;
-        for (int j = 0; j < store->product_count; j++) {
-            if (store->products[j].id == cart->items[i].product_id) {
-                p = &store->products[j];
-                break;
-            }
-        }
-        if (p) {
-            double subtotal = p->price * cart->items[i].quantity;
-            printf("%-30s %10.2f %8d %12.2f\n", p->name, p->price,
-                   cart->items[i].quantity, subtotal);
-            total += subtotal;
-        }
-    }
-
-    printf("--------------------------------------------------------------\n");
-    printf("%50s %12.2f\n", "Subtotal:", total);
-    if (cart->discount_percent > 0) {
-        double discount = total * cart->discount_percent / 100.0;
-        printf("%50s %12.2f\n", "Discount:", -discount);
-        printf("%50s %12.2f\n", "Total:", total - discount);
-    }
-    printf("\n");
-}
-
-int cart_checkout(Cart *cart, Store *store) {
-    for (int i = 0; i < cart->item_count; i++) {
-        Product *p = store_find_product(store, cart->items[i].product_id);
-        if (!p || p->stock < cart->items[i].quantity) {
+static int equal_ignore_case(const char *a, const char *b) {
+    for (; *a != '\0' && *b != '\0'; a++, b++) {
+        if (toupper((unsigned char)*a) != toupper((unsigned char)*b)) {
             return 0;
         }
     }
+    return *a == *b;
+}
 
-    for (int i = 0; i < cart->item_count; i++) {
-        Product *p = store_find_product(store, cart->items[i].product_id);
-        if (p) {
-            p->stock -= cart->items[i].quantity;
+void cart_clear(Cart *cart) {
+    memset(cart, 0, sizeof *cart);
+}
+
+CartResult cart_add(Cart *cart, int product, int quantity) {
+    if (product < 0 || product >= CATALOG_SIZE) {
+        return CART_BAD_PRODUCT;
+    }
+    if (quantity < 1 || cart->quantities[product] + quantity > MAX_QUANTITY) {
+        return CART_BAD_QUANTITY;
+    }
+    cart->quantities[product] += quantity;
+    return CART_OK;
+}
+
+CartResult cart_set_quantity(Cart *cart, int product, int quantity) {
+    if (product < 0 || product >= CATALOG_SIZE) {
+        return CART_BAD_PRODUCT;
+    }
+    if (quantity < 0 || quantity > MAX_QUANTITY) {
+        return CART_BAD_QUANTITY;
+    }
+    cart->quantities[product] = quantity;
+    return CART_OK;
+}
+
+CartResult cart_apply_code(Cart *cart, const char *code) {
+    for (int i = 0; i < DISCOUNT_CODE_COUNT; i++) {
+        const DiscountCode *candidate = &DISCOUNT_CODES[i];
+        if (!equal_ignore_case(code, candidate->code)) {
+            continue;
+        }
+        if (cart_subtotal(cart) < candidate->min_order_cents) {
+            return CART_MIN_ORDER;
+        }
+        cart->discount = candidate;
+        return CART_OK;
+    }
+    return CART_UNKNOWN_CODE;
+}
+
+int cart_is_empty(const Cart *cart) {
+    for (int i = 0; i < CATALOG_SIZE; i++) {
+        if (cart->quantities[i] > 0) {
+            return 0;
         }
     }
-
-    cart_init(cart);
     return 1;
+}
+
+int cart_subtotal(const Cart *cart) {
+    int sum = 0;
+    for (int i = 0; i < CATALOG_SIZE; i++) {
+        sum += CATALOG[i].price_cents * cart->quantities[i];
+    }
+    return sum;
+}
+
+int cart_discount(const Cart *cart) {
+    const DiscountCode *code = cart->discount;
+    int subtotal = cart_subtotal(cart);
+    if (code == NULL || subtotal < code->min_order_cents) {
+        return 0;
+    }
+    if (code->percent > 0) {
+        return (subtotal * code->percent + 50) / 100; /* rounded to the nearest cent */
+    }
+    return code->amount_cents < subtotal ? code->amount_cents : subtotal;
+}
+
+int cart_total(const Cart *cart) {
+    return cart_subtotal(cart) - cart_discount(cart);
+}
+
+CartResult validate_name(const char *name) {
+    size_t length = strlen(name);
+    int has_letter = 0;
+    if (length < 2 || length > 40) {
+        return CART_BAD_NAME;
+    }
+    for (size_t i = 0; i < length; i++) {
+        if (isalpha((unsigned char)name[i])) {
+            has_letter = 1;
+        }
+    }
+    return has_letter ? CART_OK : CART_BAD_NAME;
+}
+
+CartResult validate_address(const char *address) {
+    size_t length = strlen(address);
+    int has_digit = 0;
+    if (length < 5 || length > 80) {
+        return CART_BAD_ADDRESS;
+    }
+    for (size_t i = 0; i < length; i++) {
+        if (isdigit((unsigned char)address[i])) {
+            has_digit = 1;
+        }
+    }
+    return has_digit ? CART_OK : CART_BAD_ADDRESS;
 }

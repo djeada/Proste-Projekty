@@ -1,0 +1,8 @@
+{
+  "name": "calculator",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A calculator page with a recursive-descent expression parser",
+  "scripts": { "test": "node --test" },
+  "license": "MIT"
+}

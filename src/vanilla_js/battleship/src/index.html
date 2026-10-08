@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Battleship</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <h1>Battleship</h1>
+    <p id="message" role="status"></p>
+    <p id="result" class="result"></p>
+    <div class="boards">
+      <section>
+        <h2>Your fleet</h2>
+        <div id="own-board" class="board"></div>
+      </section>
+      <section>
+        <h2>Computer's waters</h2>
+        <div id="enemy-board" class="board"></div>
+      </section>
+    </div>
+    <div class="controls">
+      <button id="rotate" type="button">Orientation</button>
+      <button id="random" type="button">Random fleet</button>
+      <button id="new-game" type="button">New game</button>
+    </div>
+    <p class="help">Place your ships by clicking your board (the preview shows where the ship would go).
+      Then click the computer's board to fire. Ships may touch but not overlap.</p>
+  </main>
+  <script src="battleship.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

@@ -1,106 +1,144 @@
-# Version Control
+# Version Control (Python)
 
-## About the Project
+A tiny git-like version control tool. It works on the current directory: `init` creates a hidden `.vcs/` folder, `commit` saves a copy of all regular files as a numbered commit, and `log`, `status`, `diff` and `checkout` let you see the history and go back to an earlier version.
 
-Python implementation of a simple version control system for file tracking.
-
-## Requirements
-
-To run this project locally you will need:
-
-* Python 3.8+
-
-No additional libraries or packages are needed!
-
-## Installation
-
-1. Download the code repository from GitHub:
-
-```Bash
-git clone https://github.com/djeada/Proste-Projekty.git
-```
-
-2. Navigate to the appropriate directory:
-
-```Bash
-cd Proste-Projekty/src/python/version_control
-```
-
-3. Start the app:
-
-```Bash
-python src/main.py
-```
+![Screenshot](screenshot.png)
 
 ## Features
+- Create a repository in any directory with `init`
+- Save all files of the directory as a numbered commit with a one-line message
+- List the commits, newest first
+- Show which files were added, modified or deleted since the last commit
+- Show the changed lines of each file compared with any commit
+- Restore the files of any earlier commit
 
-* Initialize a repository.
-* Commit file snapshots.
-* View commit history.
-* Checkout previous versions.
-* Compare different commits.
+## How to use
+Run the program inside the directory you want to version. Every command works on the current directory.
 
-## Possible improvements
+| Command | What it does |
+|---|---|
+| `version_control init` | create the `.vcs/` folder |
+| `version_control commit "message"` | save all files as a new commit (the message must be one line) |
+| `version_control log` | list the commits, newest first |
+| `version_control status` | list the files added, modified or deleted since the last commit |
+| `version_control diff [N]` | show the removed (`-`) and added (`+`) lines of each changed file, compared with commit N (default: the last commit) |
+| `version_control checkout N` | write the files of commit N back into the directory |
 
-Some of the ideas include:
+In this README `version_control` stands for `python3 /path/to/src/main.py`.
 
-* Add branching support.
-* Add merge functionality.
-* Add diff visualization.
-* Add remote repository support.
-
-## Development
-
-For development, testing and deployment the following tools are used:
-
-- Docker
-- Python 3.10+
-- pip
-
-### Local development
-
-1. Install dependencies:
-
-```sh
-pip install .[dev]
+### Example session
+```
+$ version_control init
+Initialized empty repository in ./.vcs
+$ version_control commit "first draft"
+Created commit #1
+$ version_control commit "bread and a call"
+Created commit #2
+$ version_control log
+#2    2026-10-08 21:47:16  bread and a call
+#1    2026-10-08 21:47:16  first draft
+$ version_control status
+Changes since commit #2:
+  modified   notes.txt
+$ version_control diff
+== notes.txt (modified)
+-Buy milk
++Buy oat milk
+-Call Anna
++Call Anna before Friday
 ```
 
-2. Run linters and tests:
+## How it works
 
-```sh
-flake8 src/ tests/
-black --check src/ tests/
-pytest
+### Repository format
+The format is the same in the C, Python and JavaScript versions, so a repository created by one version can be used by the others.
+
+```
+.vcs/
+└── commits/
+    ├── 1/
+    │   ├── meta            line 1: time of the commit (Unix seconds), line 2: the message
+    │   └── files/
+    │       └── notes.txt   byte-for-byte copy of the file at commit time
+    └── 2/
+        ├── meta
+        └── files/
+            ├── notes.txt
+            └── plans.txt
 ```
 
-### Build binary
+- Commits are numbered 1, 2, 3, ... without gaps. Commit N exists when `commits/N/meta` exists.
+- Only regular files directly inside the directory are saved. Subdirectories and `.vcs` are ignored.
+- A message must be one line and shorter than 255 bytes.
 
-To build a standalone binary of the application, use Nuitka:
+### Commit, log, status and checkout
+- `commit` reads every regular file of the directory and copies it to `commits/N/files/`, where N is the number of commits plus one. Then it writes `meta`.
+- `log` reads the `meta` file of every commit and prints them in reverse order.
+- `status` compares the current files with the last commit by name and contents. A file is *added* if the commit does not have it, *modified* if the bytes differ, and *deleted* if the commit has it but the directory does not.
+- `checkout N` writes the files of commit N into the directory, overwriting files with the same name. It never deletes files, so files that are not in commit N stay. Changes that were not committed to those files are lost, so run `status` first.
 
-```sh
-nuitka --standalone --onefile src/main.py -o app.bin
-```
+### Diff algorithm
+The `diff` command compares lines, using a longest common subsequence (LCS):
 
-### Docker deployment
+1. Each file is split into lines. The `\n` is not part of a line, and a last line without `\n` still counts.
+2. A table `lcs[i][j]` is filled from the end: it holds the number of lines in the longest sequence that the old lines from `i` and the new lines from `j` have in common. A common line adds 1 to the cell diagonally below and to the right. A different line takes the larger of the cell below and the cell to the right.
+3. The table is walked from the start. A line that is equal in both files is common and is not printed. Otherwise the walk removes an old line (`-`) or adds a new line (`+`), choosing the step that keeps the longer common sequence.
 
-To deploy the application using Docker, build and run the Docker image:
+The table needs one cell for every pair of lines, so very large files are slow and use a lot of memory. A change that only adds or removes the final newline is not shown. The comparison decodes files as UTF-8, so `diff` is meant for text files.
 
-```sh
-docker build -t version-control-app .
-docker run -it version-control-app
-```
-
-## Directory structure
-
+### Project layout
 ```
 version_control/
 ├── src/
-│   ├── main.py
-│   └── logic/
-│       └── repository.py
+│   ├── version_control.py   logic: snapshots, commits, checkout, LCS diff (no printing)
+│   └── main.py              command line interface: parses arguments and prints
 ├── tests/
-│   └── test_repository.py
-├── setup.py
-├── Dockerfile
+│   └── test_version_control.py   tests of the logic in a temporary directory
+├── pyproject.toml           pytest settings
+├── requirements.txt         pytest
+├── .flake8                  flake8 settings (line length 120)
+├── .editorconfig            editor settings
+├── screenshot.png
 └── README.md
 ```
+
+### How the program is structured
+`main.py` reads the command and its arguments, calls one function from the logic and prints the result. The logic never prints, so the tests can check its results directly. Errors are raised as `VcsError` and shown as a message, and the program exits with status 1.
+
+## Requirements
+- Python 3.8 or newer (standard library only)
+- pytest, only for the tests
+
+## Run
+```sh
+cd /path/to/your/project
+python3 /path/to/version_control/src/main.py init
+python3 /path/to/version_control/src/main.py commit "first draft"
+```
+
+## Test
+```sh
+cd src/python/version_control
+pip install -r requirements.txt
+pytest
+```
+
+## Comparison with the other versions
+- [C version](../../c/version_control)
+- [JavaScript version](../../vanilla_js/version_control)
+
+| | C | Python | JavaScript |
+|---|---|---|---|
+| Interface | command line | command line | command line (Node.js) |
+| Lines of logic | 397 | 107 | 158 |
+| Lines of interface | 210 | 83 | 110 |
+| Tests | 9 | 12 | 12 |
+
+Python keeps each snapshot as a dictionary from file name to bytes, so there is no manual memory handling, and the LCS table is a list of lists. The C version needs the same data as arrays of structures that the program frees by hand. Python can use `os.scandir`, `sorted` and `bytes` comparison directly, and the logic raises exceptions for errors, which makes the code shorter than the C version. The whole tool is still about 100 lines of logic, and the diff is written as the same LCS table as in the other versions.
+
+## Ideas for extensions
+- Refuse `checkout` when there are uncommitted changes, unless a flag forces it
+- Store each file once by its hash, so unchanged files are not copied again
+- Add an ignore list (like `.gitignore`) for files that should not be saved
+- Show a few unchanged lines around each change in `diff`
+- Add `diff N M` to compare two commits

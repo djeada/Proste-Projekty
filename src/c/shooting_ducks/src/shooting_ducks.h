@@ -1,51 +1,50 @@
+/* Rules of Shooting Ducks: spawning, movement, hits, escapes and waves. */
 #ifndef SHOOTING_DUCKS_H
 #define SHOOTING_DUCKS_H
 
-#include <ncurses.h>
+#include <stdint.h>
 
-#define MAX_DUCKS 32
-#define MAX_SHOTS 16
-#define CROSSHAIR_START_HEALTH 3
-#define BASE_DUCKS 6
-#define DUCKS_PER_LEVEL 4
+#define FIELD_WIDTH 100.0
+#define FIELD_HEIGHT 40.0
+#define DUCK_HALF_WIDTH 5.0
+#define DUCK_HALF_HEIGHT 3.0
+#define START_LIVES 3
+#define POINTS_PER_HIT 10
+#define WAVE_BREAK_SECONDS 2.0
+#define MAX_DUCKS 64
 
-// Directions for duck drift
-typedef enum { DIR_LEFT, DIR_RIGHT, DIR_UP, DIR_DOWN, DIR_NONE } Direction;
+/* Linear congruential generator: the same numbers in every language version. */
+typedef struct {
+    uint32_t state;
+} Rng;
 
 typedef struct {
-    int x, y;
-    int health;
-} Crosshair;
-
-typedef struct {
-    int x, y;
-    int alive;
-    Direction dir;
+    double x, y;   /* centre of the duck */
+    double base_y; /* height the duck bobs around */
+    double speed;  /* positive flies right, negative flies left */
+    double age;    /* seconds since the duck appeared */
+    double phase;  /* bobbing phase */
 } Duck;
 
 typedef struct {
-    int x, y;
-    int active;
-} Shot;
-
-typedef struct {
-    Crosshair crosshair;
     Duck ducks[MAX_DUCKS];
     int duck_count;
-    Shot shots[MAX_SHOTS];
-    int max_x, max_y;
-    int game_over;
-    int wave_cleared;
-    int level;
+    Rng rng;
+    int wave;
     int score;
-    int tick;
-    int duck_move_period;
-    int paused;
-} DuckGame;
+    int lives;
+    int ducks_to_spawn;
+    double spawn_timer;
+    double break_timer; /* above zero while the "wave cleared" pause runs */
+    int game_over;
+} Game;
 
-void duck_game_init(DuckGame *game, int max_x, int max_y);
-void duck_game_update(DuckGame *game, int key);
-void duck_game_draw(const DuckGame *game);
-void duck_game_next_level(DuckGame *game);
+void rng_seed(Rng *rng, uint32_t seed);
+double rng_next(Rng *rng); /* a number in [0, 1) */
 
-#endif // SHOOTING_DUCKS_H
+void game_init(Game *game, uint32_t seed);
+void game_update(Game *game, double dt);
+int game_shoot(Game *game, double x, double y); /* returns 1 on a hit */
+int ducks_in_wave(int wave);
+
+#endif

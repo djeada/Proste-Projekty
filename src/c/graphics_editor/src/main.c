@@ -1,821 +1,420 @@
-/**
- * Graphics Editor - SDL2 GUI Implementation
- *
- * A full-featured graphical paint application with mouse-based drawing,
- * multiple tools, color selection, and image manipulation.
- *
- * Controls:
- *   Mouse: Draw with selected tool
- *   1-5: Select tools (Pencil, Line, Rectangle, Circle, Fill)
- *   C: Open color picker
- *   N: New image
- *   S: Save image (PPM)
- *   L: Load image (PPM)
- *   G: Convert to grayscale
- *   I: Invert colors
- *   R: Rotate 90 degrees
- *   H: Flip horizontal
- *   V: Flip vertical
- *   Delete/Backspace: Clear canvas
- *   Escape: Exit
- */
-
-#include <SDL2/SDL.h>
+/* The SDL2 window: the canvas (shown at 2x), a tool panel and keyboard shortcuts. */
+#include <SDL.h>
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+
 #include "graphics_editor.h"
 
-/* Window and canvas dimensions */
-#define WINDOW_WIDTH 1024
-#define WINDOW_HEIGHT 768
-#define TOOLBAR_HEIGHT 60
-#define CANVAS_WIDTH 800
-#define CANVAS_HEIGHT 600
-#define COLOR_PALETTE_SIZE 40
-#define TOOL_BUTTON_SIZE 50
+#define CANVAS_W 320
+#define CANVAS_H 240
+#define SCALE 2
+#define PANEL_X (CANVAS_W * SCALE)
+#define PANEL_W 120
+#define WINDOW_W (PANEL_X + PANEL_W)
+#define WINDOW_H (CANVAS_H * SCALE)
+#define DEFAULT_FILE "drawing.bmp"
 
-/* Drawing tools enumeration */
-typedef enum {
-    TOOL_PENCIL = 0,
-    TOOL_LINE,
-    TOOL_RECTANGLE,
-    TOOL_CIRCLE,
-    TOOL_FILL,
-    TOOL_COUNT
-} Tool;
+enum Tool { TOOL_BRUSH, TOOL_ERASER, TOOL_LINE, TOOL_RECT, TOOL_FILL, TOOL_PICKER, TOOL_COUNT };
 
-/* Button structure for UI elements */
 typedef struct {
-    SDL_Rect rect;
-    SDL_Color color;
-    SDL_Color hover_color;
-    int is_hovered;
-    int is_selected;
-    const char *label;
-} Button;
-
-/* Color palette preset colors */
-static const SDL_Color palette_colors[] = {
-    {0, 0, 0, 255},       /* Black */
-    {255, 255, 255, 255}, /* White */
-    {255, 0, 0, 255},     /* Red */
-    {0, 255, 0, 255},     /* Green */
-    {0, 0, 255, 255},     /* Blue */
-    {255, 255, 0, 255},   /* Yellow */
-    {255, 0, 255, 255},   /* Magenta */
-    {0, 255, 255, 255},   /* Cyan */
-    {255, 128, 0, 255},   /* Orange */
-    {128, 0, 255, 255},   /* Purple */
-    {255, 192, 203, 255}, /* Pink */
-    {165, 42, 42, 255},   /* Brown */
-    {128, 128, 128, 255}, /* Gray */
-    {192, 192, 192, 255}, /* Light Gray */
-    {0, 128, 0, 255},     /* Dark Green */
-    {0, 0, 128, 255},     /* Navy */
-};
-#define PALETTE_COUNT (sizeof(palette_colors) / sizeof(palette_colors[0]))
-
-/* Application state */
-typedef struct {
-    SDL_Window *window;
-    SDL_Renderer *renderer;
-    SDL_Texture *canvas_texture;
-    Image *image;
-    Pixel current_color;
-    Tool current_tool;
-    int is_drawing;
-    int start_x;
-    int start_y;
+    Canvas canvas;
+    Canvas preview; /* the canvas with the line or rectangle being dragged drawn on it */
+    History history;
+    enum Tool tool;
+    int width; /* brush width in pixels: 1, 3 or 5 */
+    Color color;
+    int drawing;
     int last_x;
     int last_y;
-    int canvas_offset_x;
-    int canvas_offset_y;
-    Button tool_buttons[TOOL_COUNT];
-    Button color_buttons[PALETTE_COUNT];
-    Button current_color_display;
-    int running;
-} AppState;
+    int start_x;
+    int start_y;
+    const char *path;
+} Editor;
 
-/* Tool names for display */
-static const char *tool_names[] = {"Pencil", "Line", "Rect", "Circle", "Fill"};
+static const Color WHITE = {255, 255, 255};
+static const Color PALETTE[12] = {
+    {0, 0, 0},       {255, 255, 255}, {128, 128, 128}, {160, 0, 0},
+    {255, 0, 0},     {255, 128, 0},   {255, 230, 0},   {0, 160, 0},
+    {0, 220, 120},   {0, 120, 255},   {120, 0, 255},   {255, 0, 200},
+};
+static const int BRUSH_WIDTHS[3] = {1, 3, 5};
 
-/* Function prototypes */
-static int init_sdl(AppState *app);
-static void cleanup_sdl(AppState *app);
-static void init_ui(AppState *app);
-static void handle_events(AppState *app);
-static void render(AppState *app);
-static void update_canvas_texture(AppState *app);
-static void draw_toolbar(AppState *app);
-static void draw_button(AppState *app, Button *btn);
-static int point_in_rect(int x, int y, SDL_Rect *rect);
-static void handle_canvas_click(AppState *app, int x, int y);
-static void handle_canvas_drag(AppState *app, int x, int y);
-static void handle_canvas_release(AppState *app, int x, int y);
-static void handle_tool_click(AppState *app, int tool_index);
-static void handle_color_click(AppState *app, int color_index);
-static void new_image(AppState *app);
-static void clear_canvas(AppState *app);
-static void save_image_dialog(AppState *app);
-static void load_image_dialog(AppState *app);
-
-/**
- * Initialize SDL2 and create window/renderer
- */
-static int init_sdl(AppState *app) {
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-        fprintf(stderr, "SDL initialization failed: %s\n", SDL_GetError());
-        return 0;
-    }
-
-    app->window = SDL_CreateWindow("Graphics Editor",
-                                   SDL_WINDOWPOS_CENTERED,
-                                   SDL_WINDOWPOS_CENTERED,
-                                   WINDOW_WIDTH, WINDOW_HEIGHT,
-                                   SDL_WINDOW_SHOWN);
-    if (!app->window) {
-        fprintf(stderr, "Window creation failed: %s\n", SDL_GetError());
-        return 0;
-    }
-
-    app->renderer = SDL_CreateRenderer(app->window, -1,
-                                       SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-    if (!app->renderer) {
-        fprintf(stderr, "Renderer creation failed: %s\n", SDL_GetError());
-        return 0;
-    }
-
-    /* Create canvas texture */
-    app->canvas_texture = SDL_CreateTexture(app->renderer,
-                                            SDL_PIXELFORMAT_RGB24,
-                                            SDL_TEXTUREACCESS_STREAMING,
-                                            CANVAS_WIDTH, CANVAS_HEIGHT);
-    if (!app->canvas_texture) {
-        fprintf(stderr, "Texture creation failed: %s\n", SDL_GetError());
-        return 0;
-    }
-
-    return 1;
+/* Panel layout, relative to the window. */
+static SDL_Rect tool_button(int index)
+{
+    SDL_Rect rect = {PANEL_X + 4 + (index % 2) * 56, 8 + (index / 2) * 42, 52, 36};
+    return rect;
 }
 
-/**
- * Clean up SDL resources
- */
-static void cleanup_sdl(AppState *app) {
-    if (app->canvas_texture) SDL_DestroyTexture(app->canvas_texture);
-    if (app->renderer) SDL_DestroyRenderer(app->renderer);
-    if (app->window) SDL_DestroyWindow(app->window);
-    image_free(app->image);
-    SDL_Quit();
+static SDL_Rect size_button(int index)
+{
+    SDL_Rect rect = {PANEL_X + 4 + index * 38, 140, 32, 32};
+    return rect;
 }
 
-/**
- * Initialize UI elements (buttons, layout)
- */
-static void init_ui(AppState *app) {
-    int x_offset = 10;
-
-    /* Initialize tool buttons */
-    for (int i = 0; i < TOOL_COUNT; i++) {
-        app->tool_buttons[i].rect.x = x_offset + i * (TOOL_BUTTON_SIZE + 5);
-        app->tool_buttons[i].rect.y = 5;
-        app->tool_buttons[i].rect.w = TOOL_BUTTON_SIZE;
-        app->tool_buttons[i].rect.h = TOOL_BUTTON_SIZE;
-        app->tool_buttons[i].color = (SDL_Color){200, 200, 200, 255};
-        app->tool_buttons[i].hover_color = (SDL_Color){170, 170, 170, 255};
-        app->tool_buttons[i].is_hovered = 0;
-        app->tool_buttons[i].is_selected = (i == 0);
-        app->tool_buttons[i].label = tool_names[i];
-    }
-
-    /* Initialize color palette buttons */
-    x_offset = 300;
-    for (int i = 0; i < (int)PALETTE_COUNT; i++) {
-        int row = i / 8;
-        int col = i % 8;
-        app->color_buttons[i].rect.x = x_offset + col * 25;
-        app->color_buttons[i].rect.y = 5 + row * 25;
-        app->color_buttons[i].rect.w = 22;
-        app->color_buttons[i].rect.h = 22;
-        app->color_buttons[i].color = palette_colors[i];
-        app->color_buttons[i].hover_color = palette_colors[i];
-        app->color_buttons[i].is_hovered = 0;
-        app->color_buttons[i].is_selected = 0;
-        app->color_buttons[i].label = NULL;
-    }
-
-    /* Current color display */
-    app->current_color_display.rect.x = 520;
-    app->current_color_display.rect.y = 10;
-    app->current_color_display.rect.w = 40;
-    app->current_color_display.rect.h = 40;
-
-    /* Calculate canvas position (centered horizontally, below toolbar) */
-    app->canvas_offset_x = (WINDOW_WIDTH - CANVAS_WIDTH) / 2;
-    app->canvas_offset_y = TOOLBAR_HEIGHT + 10;
+static SDL_Rect swatch_button(int index)
+{
+    SDL_Rect rect = {PANEL_X + 4 + (index % 3) * 38, 190 + (index / 3) * 34, 30, 26};
+    return rect;
 }
 
-/**
- * Check if point is inside rectangle
- */
-static int point_in_rect(int x, int y, SDL_Rect *rect) {
-    return x >= rect->x && x < rect->x + rect->w && y >= rect->y && y < rect->y + rect->h;
+static SDL_Rect clear_button(void)
+{
+    SDL_Rect rect = {PANEL_X + 4, 340, 112, 32};
+    return rect;
 }
 
-/**
- * Handle SDL events
- */
-static void handle_events(AppState *app) {
-    SDL_Event event;
-    while (SDL_PollEvent(&event)) {
-        switch (event.type) {
-            case SDL_QUIT:
-                app->running = 0;
-                break;
-
-            case SDL_KEYDOWN:
-                switch (event.key.keysym.sym) {
-                    case SDLK_ESCAPE:
-                        app->running = 0;
-                        break;
-                    case SDLK_1:
-                        handle_tool_click(app, TOOL_PENCIL);
-                        break;
-                    case SDLK_2:
-                        handle_tool_click(app, TOOL_LINE);
-                        break;
-                    case SDLK_3:
-                        handle_tool_click(app, TOOL_RECTANGLE);
-                        break;
-                    case SDLK_4:
-                        handle_tool_click(app, TOOL_CIRCLE);
-                        break;
-                    case SDLK_5:
-                        handle_tool_click(app, TOOL_FILL);
-                        break;
-                    case SDLK_n:
-                        new_image(app);
-                        break;
-                    case SDLK_s:
-                        save_image_dialog(app);
-                        break;
-                    case SDLK_l:
-                        load_image_dialog(app);
-                        break;
-                    case SDLK_g:
-                        image_grayscale(app->image);
-                        update_canvas_texture(app);
-                        break;
-                    case SDLK_i:
-                        image_invert(app->image);
-                        update_canvas_texture(app);
-                        break;
-                    case SDLK_r:
-                        {
-                            Image *rotated = image_rotate_90(app->image);
-                            if (rotated) {
-                                image_free(app->image);
-                                app->image = rotated;
-                                update_canvas_texture(app);
-                            }
-                        }
-                        break;
-                    case SDLK_h:
-                        {
-                            Image *flipped = image_flip_horizontal(app->image);
-                            if (flipped) {
-                                image_free(app->image);
-                                app->image = flipped;
-                                update_canvas_texture(app);
-                            }
-                        }
-                        break;
-                    case SDLK_v:
-                        {
-                            Image *flipped = image_flip_vertical(app->image);
-                            if (flipped) {
-                                image_free(app->image);
-                                app->image = flipped;
-                                update_canvas_texture(app);
-                            }
-                        }
-                        break;
-                    case SDLK_DELETE:
-                    case SDLK_BACKSPACE:
-                        clear_canvas(app);
-                        break;
-                    default:
-                        break;
-                }
-                break;
-
-            case SDL_MOUSEBUTTONDOWN:
-                if (event.button.button == SDL_BUTTON_LEFT) {
-                    int mx = event.button.x;
-                    int my = event.button.y;
-
-                    /* Check tool buttons */
-                    for (int i = 0; i < TOOL_COUNT; i++) {
-                        if (point_in_rect(mx, my, &app->tool_buttons[i].rect)) {
-                            handle_tool_click(app, i);
-                            break;
-                        }
-                    }
-
-                    /* Check color buttons */
-                    for (int i = 0; i < (int)PALETTE_COUNT; i++) {
-                        if (point_in_rect(mx, my, &app->color_buttons[i].rect)) {
-                            handle_color_click(app, i);
-                            break;
-                        }
-                    }
-
-                    /* Check canvas */
-                    SDL_Rect canvas_rect = {app->canvas_offset_x, app->canvas_offset_y,
-                                            CANVAS_WIDTH, CANVAS_HEIGHT};
-                    if (point_in_rect(mx, my, &canvas_rect)) {
-                        int cx = mx - app->canvas_offset_x;
-                        int cy = my - app->canvas_offset_y;
-                        handle_canvas_click(app, cx, cy);
-                    }
-                }
-                break;
-
-            case SDL_MOUSEBUTTONUP:
-                if (event.button.button == SDL_BUTTON_LEFT && app->is_drawing) {
-                    int mx = event.button.x;
-                    int my = event.button.y;
-                    int cx = mx - app->canvas_offset_x;
-                    int cy = my - app->canvas_offset_y;
-                    handle_canvas_release(app, cx, cy);
-                }
-                break;
-
-            case SDL_MOUSEMOTION:
-                {
-                    int mx = event.motion.x;
-                    int my = event.motion.y;
-
-                    /* Update hover state for tool buttons */
-                    for (int i = 0; i < TOOL_COUNT; i++) {
-                        app->tool_buttons[i].is_hovered =
-                            point_in_rect(mx, my, &app->tool_buttons[i].rect);
-                    }
-
-                    /* Update hover state for color buttons */
-                    for (int i = 0; i < (int)PALETTE_COUNT; i++) {
-                        app->color_buttons[i].is_hovered =
-                            point_in_rect(mx, my, &app->color_buttons[i].rect);
-                    }
-
-                    /* Handle drawing drag */
-                    if (app->is_drawing) {
-                        SDL_Rect canvas_rect = {app->canvas_offset_x, app->canvas_offset_y,
-                                                CANVAS_WIDTH, CANVAS_HEIGHT};
-                        if (point_in_rect(mx, my, &canvas_rect)) {
-                            int cx = mx - app->canvas_offset_x;
-                            int cy = my - app->canvas_offset_y;
-                            handle_canvas_drag(app, cx, cy);
-                        }
-                    }
-                }
-                break;
+static void to_pixels(const Canvas *canvas, void *pixels, int pitch)
+{
+    for (int y = 0; y < canvas->height; y++) {
+        uint32_t *row = (uint32_t *)((uint8_t *)pixels + y * pitch);
+        for (int x = 0; x < canvas->width; x++) {
+            Color c = canvas->pixels[y * canvas->width + x];
+            row[x] = ((uint32_t)c.r << 16) | ((uint32_t)c.g << 8) | c.b;
         }
     }
 }
 
-/**
- * Handle click on canvas
- */
-static void handle_canvas_click(AppState *app, int x, int y) {
-    if (x < 0 || x >= app->image->width || y < 0 || y >= app->image->height) {
+static void save_bmp(const Editor *editor)
+{
+    SDL_Surface *surface = SDL_CreateRGBSurface(0, CANVAS_W, CANVAS_H, 32, 0x00FF0000,
+                                                0x0000FF00, 0x000000FF, 0);
+    if (surface == NULL) {
+        fprintf(stderr, "%s\n", SDL_GetError());
         return;
     }
+    SDL_LockSurface(surface);
+    to_pixels(&editor->canvas, surface->pixels, surface->pitch);
+    SDL_UnlockSurface(surface);
+    if (SDL_SaveBMP(surface, editor->path) != 0) {
+        fprintf(stderr, "Cannot save %s: %s\n", editor->path, SDL_GetError());
+    }
+    SDL_FreeSurface(surface);
+}
 
-    app->is_drawing = 1;
-    app->start_x = x;
-    app->start_y = y;
-    app->last_x = x;
-    app->last_y = y;
+/* Missing or broken files are reported and the canvas is left as it was. */
+static void open_bmp(Editor *editor)
+{
+    SDL_Surface *loaded = SDL_LoadBMP(editor->path);
+    if (loaded == NULL) {
+        fprintf(stderr, "Cannot open %s: %s\n", editor->path, SDL_GetError());
+        return;
+    }
+    SDL_Surface *surface = SDL_ConvertSurfaceFormat(loaded, SDL_PIXELFORMAT_RGB888, 0);
+    SDL_FreeSurface(loaded);
+    if (surface == NULL) {
+        fprintf(stderr, "%s\n", SDL_GetError());
+        return;
+    }
+    history_push(&editor->history, &editor->canvas);
+    canvas_clear(&editor->canvas, WHITE);
+    SDL_LockSurface(surface);
+    for (int y = 0; y < surface->h && y < CANVAS_H; y++) {
+        uint32_t *row = (uint32_t *)((uint8_t *)surface->pixels + y * surface->pitch);
+        for (int x = 0; x < surface->w && x < CANVAS_W; x++) {
+            Color c = {(uint8_t)(row[x] >> 16), (uint8_t)(row[x] >> 8), (uint8_t)row[x]};
+            canvas_set(&editor->canvas, x, y, c);
+        }
+    }
+    SDL_UnlockSurface(surface);
+    SDL_FreeSurface(surface);
+}
 
-    switch (app->current_tool) {
-        case TOOL_PENCIL:
-            image_draw_pixel(app->image, x, y, app->current_color);
-            update_canvas_texture(app);
-            break;
-        case TOOL_FILL:
-            image_bucket_fill(app->image, x, y, app->current_color);
-            update_canvas_texture(app);
-            app->is_drawing = 0;
-            break;
-        default:
-            break;
+static int is_shape_tool(enum Tool tool)
+{
+    return tool == TOOL_LINE || tool == TOOL_RECT;
+}
+
+static void draw_shape(Canvas *canvas, enum Tool tool, const Editor *editor, int x, int y)
+{
+    if (tool == TOOL_LINE) {
+        draw_line(canvas, editor->start_x, editor->start_y, x, y, editor->width, editor->color);
+    } else {
+        draw_rect(canvas, editor->start_x, editor->start_y, x, y, editor->width, editor->color);
     }
 }
 
-/**
- * Handle mouse drag on canvas
- */
-static void handle_canvas_drag(AppState *app, int x, int y) {
-    if (x < 0) x = 0;
-    if (y < 0) y = 0;
-    if (x >= app->image->width) x = app->image->width - 1;
-    if (y >= app->image->height) y = app->image->height - 1;
+static Color stroke_color(const Editor *editor)
+{
+    return editor->tool == TOOL_ERASER ? WHITE : editor->color;
+}
 
-    if (app->current_tool == TOOL_PENCIL) {
-        image_draw_line(app->image, app->last_x, app->last_y, x, y, app->current_color);
-        update_canvas_texture(app);
-        app->last_x = x;
-        app->last_y = y;
+static void press_canvas(Editor *editor, int x, int y)
+{
+    if (editor->tool == TOOL_PICKER) {
+        if (canvas_inside(&editor->canvas, x, y)) {
+            editor->color = canvas_get(&editor->canvas, x, y);
+        }
+        return;
+    }
+    history_push(&editor->history, &editor->canvas);
+    editor->drawing = 1;
+    editor->start_x = editor->last_x = x;
+    editor->start_y = editor->last_y = y;
+    if (editor->tool == TOOL_FILL) {
+        flood_fill(&editor->canvas, x, y, editor->color);
+        editor->drawing = 0;
+    } else if (editor->tool == TOOL_BRUSH || editor->tool == TOOL_ERASER) {
+        draw_line(&editor->canvas, x, y, x, y, editor->width, stroke_color(editor));
+    } else {
+        canvas_copy_into(&editor->preview, &editor->canvas);
     }
 }
 
-/**
- * Handle mouse release on canvas
- */
-static void handle_canvas_release(AppState *app, int x, int y) {
-    if (!app->is_drawing) return;
-
-    if (x < 0) x = 0;
-    if (y < 0) y = 0;
-    if (x >= app->image->width) x = app->image->width - 1;
-    if (y >= app->image->height) y = app->image->height - 1;
-
-    switch (app->current_tool) {
-        case TOOL_LINE:
-            image_draw_line(app->image, app->start_x, app->start_y, x, y, app->current_color);
-            break;
-        case TOOL_RECTANGLE:
-            {
-                int rx = app->start_x < x ? app->start_x : x;
-                int ry = app->start_y < y ? app->start_y : y;
-                int rw = abs(x - app->start_x);
-                int rh = abs(y - app->start_y);
-                if (rw > 0 && rh > 0) {
-                    image_draw_rect(app->image, rx, ry, rw, rh, app->current_color);
-                }
-            }
-            break;
-        case TOOL_CIRCLE:
-            {
-                int dx = x - app->start_x;
-                int dy = y - app->start_y;
-                int radius = (int)SDL_sqrt((double)(dx * dx + dy * dy));
-                if (radius > 0) {
-                    image_draw_circle(app->image, app->start_x, app->start_y, radius,
-                                      app->current_color);
-                }
-            }
-            break;
-        default:
-            break;
+static void move_canvas(Editor *editor, int x, int y)
+{
+    if (!editor->drawing) {
+        return;
     }
-
-    update_canvas_texture(app);
-    app->is_drawing = 0;
+    if (editor->tool == TOOL_BRUSH || editor->tool == TOOL_ERASER) {
+        draw_line(&editor->canvas, editor->last_x, editor->last_y, x, y, editor->width,
+                  stroke_color(editor));
+    } else {
+        canvas_copy_into(&editor->preview, &editor->canvas);
+        draw_shape(&editor->preview, editor->tool, editor, x, y);
+    }
+    editor->last_x = x;
+    editor->last_y = y;
 }
 
-/**
- * Handle tool selection
- */
-static void handle_tool_click(AppState *app, int tool_index) {
+static void release_canvas(Editor *editor)
+{
+    if (editor->drawing && is_shape_tool(editor->tool)) {
+        draw_shape(&editor->canvas, editor->tool, editor, editor->last_x, editor->last_y);
+    }
+    editor->drawing = 0;
+}
+
+static void press_panel(Editor *editor, int x, int y)
+{
+    SDL_Point point = {x, y};
     for (int i = 0; i < TOOL_COUNT; i++) {
-        app->tool_buttons[i].is_selected = (i == tool_index);
+        SDL_Rect rect = tool_button(i);
+        if (SDL_PointInRect(&point, &rect)) {
+            editor->tool = (enum Tool)i;
+        }
     }
-    app->current_tool = (Tool)tool_index;
-}
-
-/**
- * Handle color selection from palette
- */
-static void handle_color_click(AppState *app, int color_index) {
-    SDL_Color c = palette_colors[color_index];
-    app->current_color = pixel_create(c.r, c.g, c.b);
-}
-
-/**
- * Create a new blank image
- */
-static void new_image(AppState *app) {
-    image_free(app->image);
-    app->image = image_create(CANVAS_WIDTH, CANVAS_HEIGHT);
-    if (app->image) {
-        Pixel white = {255, 255, 255};
-        image_fill(app->image, white);
-        update_canvas_texture(app);
+    for (int i = 0; i < 3; i++) {
+        SDL_Rect rect = size_button(i);
+        if (SDL_PointInRect(&point, &rect)) {
+            editor->width = BRUSH_WIDTHS[i];
+        }
+    }
+    for (int i = 0; i < 12; i++) {
+        SDL_Rect rect = swatch_button(i);
+        if (SDL_PointInRect(&point, &rect)) {
+            editor->color = PALETTE[i];
+        }
+    }
+    SDL_Rect clear = clear_button();
+    if (SDL_PointInRect(&point, &clear)) {
+        history_push(&editor->history, &editor->canvas);
+        canvas_clear(&editor->canvas, WHITE);
     }
 }
 
-/**
- * Clear the canvas to white
- */
-static void clear_canvas(AppState *app) {
-    Pixel white = {255, 255, 255};
-    image_fill(app->image, white);
-    update_canvas_texture(app);
-}
-
-/**
- * Save image to file.
- * Note: Currently uses hardcoded filename for simplicity.
- * A proper file dialog would require platform-specific code or additional libraries.
- * TODO: Consider using tinyfiledialogs or similar for cross-platform file dialogs.
- */
-static void save_image_dialog(AppState *app) {
-    const char *filename = "output.ppm";
-    if (image_save_ppm(app->image, filename)) {
-        printf("Image saved to %s\n", filename);
-    } else {
-        printf("Failed to save image\n");
+/* Ctrl+key shortcuts and single-key tool shortcuts. */
+static void press_key(Editor *editor, SDL_Keycode key, int ctrl)
+{
+    if (ctrl) {
+        if (key == SDLK_z) {
+            history_undo(&editor->history, &editor->canvas);
+        } else if (key == SDLK_s) {
+            save_bmp(editor);
+        } else if (key == SDLK_o) {
+            open_bmp(editor);
+        }
+        return;
+    }
+    switch (key) {
+    case SDLK_b: editor->tool = TOOL_BRUSH; break;
+    case SDLK_e: editor->tool = TOOL_ERASER; break;
+    case SDLK_l: editor->tool = TOOL_LINE; break;
+    case SDLK_r: editor->tool = TOOL_RECT; break;
+    case SDLK_f: editor->tool = TOOL_FILL; break;
+    case SDLK_p: editor->tool = TOOL_PICKER; break;
+    case SDLK_1: editor->width = BRUSH_WIDTHS[0]; break;
+    case SDLK_2: editor->width = BRUSH_WIDTHS[1]; break;
+    case SDLK_3: editor->width = BRUSH_WIDTHS[2]; break;
+    case SDLK_n:
+        history_push(&editor->history, &editor->canvas);
+        canvas_clear(&editor->canvas, WHITE);
+        break;
+    default: break;
     }
 }
 
-/**
- * Load image from file.
- * Note: Currently uses hardcoded filename for simplicity.
- * A proper file dialog would require platform-specific code or additional libraries.
- * TODO: Consider using tinyfiledialogs or similar for cross-platform file dialogs.
- */
-static void load_image_dialog(AppState *app) {
-    const char *filename = "output.ppm";
-    Image *loaded = image_load_ppm(filename);
-    if (loaded) {
-        image_free(app->image);
-        app->image = loaded;
-        update_canvas_texture(app);
-        printf("Image loaded from %s\n", filename);
-    } else {
-        printf("Failed to load image from %s\n", filename);
+static void draw_outline(SDL_Renderer *renderer, SDL_Rect rect, int r, int g, int b)
+{
+    SDL_SetRenderDrawColor(renderer, (Uint8)r, (Uint8)g, (Uint8)b, 255);
+    SDL_RenderDrawRect(renderer, &rect);
+}
+
+static void draw_button(SDL_Renderer *renderer, SDL_Rect rect, int selected)
+{
+    SDL_SetRenderDrawColor(renderer, selected ? 255 : 200, selected ? 220 : 200,
+                           selected ? 120 : 200, 255);
+    SDL_RenderFillRect(renderer, &rect);
+    draw_outline(renderer, rect, 60, 60, 60);
+}
+
+/* Each tool icon is drawn from a few rectangles and lines inside its button. */
+static void draw_tool_icon(SDL_Renderer *renderer, SDL_Rect r, enum Tool tool)
+{
+    int x = r.x + 10, y = r.y + 6, w = r.w - 20, h = r.h - 12;
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    switch (tool) {
+    case TOOL_BRUSH:
+        for (int d = 0; d < 3; d++) {
+            SDL_RenderDrawLine(renderer, x + d, y + h, x + w + d, y + d);
+        }
+        break;
+    case TOOL_ERASER: {
+        SDL_Rect eraser = {x, y, w, h};
+        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+        SDL_RenderFillRect(renderer, &eraser);
+        draw_outline(renderer, eraser, 0, 0, 0);
+        break;
+    }
+    case TOOL_LINE:
+        SDL_RenderDrawLine(renderer, x, y + h, x + w, y);
+        break;
+    case TOOL_RECT:
+        draw_outline(renderer, (SDL_Rect){x, y, w, h}, 0, 0, 0);
+        break;
+    case TOOL_FILL: {
+        SDL_Rect fill = {x, y + h / 2, w, h / 2};
+        SDL_RenderFillRect(renderer, &fill);
+        SDL_RenderDrawLine(renderer, x + w / 2, y, x + w / 2, y + h / 2);
+        break;
+    }
+    case TOOL_PICKER:
+        SDL_RenderFillRect(renderer, &(SDL_Rect){x, y + h - 4, 5, 5});
+        SDL_RenderDrawLine(renderer, x + 4, y + h - 4, x + w, y);
+        break;
+    default:
+        break;
     }
 }
 
-/**
- * Update SDL texture from image data
- */
-static void update_canvas_texture(AppState *app) {
-    if (!app->image || !app->canvas_texture) return;
+static void draw_panel(SDL_Renderer *renderer, const Editor *editor)
+{
+    SDL_SetRenderDrawColor(renderer, 235, 235, 235, 255);
+    SDL_Rect panel = {PANEL_X, 0, PANEL_W, WINDOW_H};
+    SDL_RenderFillRect(renderer, &panel);
 
+    for (int i = 0; i < TOOL_COUNT; i++) {
+        SDL_Rect rect = tool_button(i);
+        draw_button(renderer, rect, editor->tool == (enum Tool)i);
+        draw_tool_icon(renderer, rect, (enum Tool)i);
+    }
+    for (int i = 0; i < 3; i++) {
+        SDL_Rect rect = size_button(i);
+        draw_button(renderer, rect, editor->width == BRUSH_WIDTHS[i]);
+        int side = 3 + 4 * i;
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+        SDL_Rect dot = {rect.x + (rect.w - side) / 2, rect.y + (rect.h - side) / 2, side, side};
+        SDL_RenderFillRect(renderer, &dot);
+    }
+    for (int i = 0; i < 12; i++) {
+        SDL_Rect rect = swatch_button(i);
+        Color c = PALETTE[i];
+        SDL_SetRenderDrawColor(renderer, c.r, c.g, c.b, 255);
+        SDL_RenderFillRect(renderer, &rect);
+        int selected = c.r == editor->color.r && c.g == editor->color.g && c.b == editor->color.b;
+        draw_outline(renderer, rect, selected ? 0 : 90, selected ? 0 : 90, selected ? 0 : 90);
+    }
+    SDL_Rect clear = clear_button();
+    draw_button(renderer, clear, 0);
+    SDL_SetRenderDrawColor(renderer, 160, 0, 0, 255);
+    int cx = clear.x + clear.w / 2, cy = clear.y + clear.h / 2;
+    SDL_RenderDrawLine(renderer, cx - 8, cy - 8, cx + 8, cy + 8);
+    SDL_RenderDrawLine(renderer, cx + 8, cy - 8, cx - 8, cy + 8);
+}
+
+static void render(SDL_Renderer *renderer, SDL_Texture *texture, const Editor *editor)
+{
+    const Canvas *view = editor->drawing && is_shape_tool(editor->tool) ? &editor->preview
+                                                                        : &editor->canvas;
     void *pixels;
     int pitch;
+    SDL_LockTexture(texture, NULL, &pixels, &pitch);
+    to_pixels(view, pixels, pitch);
+    SDL_UnlockTexture(texture);
 
-    if (SDL_LockTexture(app->canvas_texture, NULL, &pixels, &pitch) == 0) {
-        uint8_t *dst = (uint8_t *)pixels;
+    SDL_SetRenderDrawColor(renderer, 200, 200, 200, 255);
+    SDL_RenderClear(renderer);
+    SDL_Rect canvas_rect = {0, 0, CANVAS_W * SCALE, CANVAS_H * SCALE};
+    SDL_RenderCopy(renderer, texture, NULL, &canvas_rect);
+    draw_panel(renderer, editor);
+    SDL_RenderPresent(renderer);
+}
 
-        for (int y = 0; y < app->image->height && y < CANVAS_HEIGHT; y++) {
-            for (int x = 0; x < app->image->width && x < CANVAS_WIDTH; x++) {
-                Pixel p = image_get_pixel(app->image, x, y);
-                int idx = y * pitch + x * 3;
-                dst[idx] = p.r;
-                dst[idx + 1] = p.g;
-                dst[idx + 2] = p.b;
+int main(int argc, char *argv[])
+{
+    if (SDL_Init(SDL_INIT_VIDEO) != 0) {
+        fprintf(stderr, "SDL_Init failed: %s\n", SDL_GetError());
+        return 1;
+    }
+    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "0");
+    SDL_Window *window = SDL_CreateWindow("Graphics editor", SDL_WINDOWPOS_CENTERED,
+                                          SDL_WINDOWPOS_CENTERED, WINDOW_W, WINDOW_H, 0);
+    SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE);
+    SDL_Texture *texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGB888,
+                                             SDL_TEXTUREACCESS_STREAMING, CANVAS_W, CANVAS_H);
+
+    Editor editor = {0};
+    editor.canvas = canvas_create(CANVAS_W, CANVAS_H, WHITE);
+    editor.preview = canvas_create(CANVAS_W, CANVAS_H, WHITE);
+    history_init(&editor.history);
+    editor.tool = TOOL_BRUSH;
+    editor.width = BRUSH_WIDTHS[0];
+    editor.color = PALETTE[0];
+    editor.path = argc > 1 ? argv[1] : DEFAULT_FILE;
+    if (argc > 1) {
+        open_bmp(&editor);
+    }
+
+    int running = 1;
+    SDL_Event event;
+    render(renderer, texture, &editor);
+    while (running && SDL_WaitEvent(&event)) {
+        switch (event.type) {
+        case SDL_QUIT:
+            running = 0;
+            break;
+        case SDL_MOUSEBUTTONDOWN:
+            if (event.button.button != SDL_BUTTON_LEFT) {
+                break;
             }
+            if (event.button.x >= PANEL_X) {
+                press_panel(&editor, event.button.x, event.button.y);
+            } else {
+                press_canvas(&editor, event.button.x / SCALE, event.button.y / SCALE);
+            }
+            break;
+        case SDL_MOUSEMOTION:
+            move_canvas(&editor, event.motion.x / SCALE, event.motion.y / SCALE);
+            break;
+        case SDL_MOUSEBUTTONUP:
+            if (event.button.button == SDL_BUTTON_LEFT) {
+                release_canvas(&editor);
+            }
+            break;
+        case SDL_KEYDOWN:
+            press_key(&editor, event.key.keysym.sym, event.key.keysym.mod & KMOD_CTRL);
+            break;
+        default:
+            break;
         }
-
-        SDL_UnlockTexture(app->canvas_texture);
-    }
-}
-
-/**
- * Draw a button
- */
-static void draw_button(AppState *app, Button *btn) {
-    SDL_Color c;
-    if (btn->is_selected) {
-        c = (SDL_Color){100, 150, 255, 255};
-    } else if (btn->is_hovered) {
-        c = btn->hover_color;
-    } else {
-        c = btn->color;
+        render(renderer, texture, &editor);
     }
 
-    SDL_SetRenderDrawColor(app->renderer, c.r, c.g, c.b, c.a);
-    SDL_RenderFillRect(app->renderer, &btn->rect);
-
-    /* Draw border */
-    SDL_SetRenderDrawColor(app->renderer, 50, 50, 50, 255);
-    SDL_RenderDrawRect(app->renderer, &btn->rect);
-}
-
-/**
- * Draw the toolbar
- */
-static void draw_toolbar(AppState *app) {
-    /* Toolbar background */
-    SDL_Rect toolbar_rect = {0, 0, WINDOW_WIDTH, TOOLBAR_HEIGHT};
-    SDL_SetRenderDrawColor(app->renderer, 240, 240, 240, 255);
-    SDL_RenderFillRect(app->renderer, &toolbar_rect);
-
-    /* Toolbar border */
-    SDL_SetRenderDrawColor(app->renderer, 180, 180, 180, 255);
-    SDL_RenderDrawLine(app->renderer, 0, TOOLBAR_HEIGHT, WINDOW_WIDTH, TOOLBAR_HEIGHT);
-
-    /* Draw tool buttons */
-    for (int i = 0; i < TOOL_COUNT; i++) {
-        draw_button(app, &app->tool_buttons[i]);
-
-        /* Draw simple tool icons */
-        SDL_SetRenderDrawColor(app->renderer, 50, 50, 50, 255);
-        int cx = app->tool_buttons[i].rect.x + TOOL_BUTTON_SIZE / 2;
-        int cy = app->tool_buttons[i].rect.y + TOOL_BUTTON_SIZE / 2;
-
-        switch (i) {
-            case TOOL_PENCIL:
-                /* Pencil icon - diagonal line */
-                SDL_RenderDrawLine(app->renderer, cx - 10, cy + 10, cx + 10, cy - 10);
-                SDL_RenderDrawLine(app->renderer, cx - 9, cy + 10, cx + 11, cy - 10);
-                break;
-            case TOOL_LINE:
-                /* Line icon */
-                SDL_RenderDrawLine(app->renderer, cx - 12, cy + 8, cx + 12, cy - 8);
-                SDL_RenderDrawLine(app->renderer, cx - 12, cy + 9, cx + 12, cy - 7);
-                break;
-            case TOOL_RECTANGLE:
-                {
-                    /* Rectangle icon */
-                    SDL_Rect icon = {cx - 12, cy - 8, 24, 16};
-                    SDL_RenderDrawRect(app->renderer, &icon);
-                }
-                break;
-            case TOOL_CIRCLE:
-                /* Circle icon (approximated with lines) */
-                for (int angle = 0; angle < 360; angle += 15) {
-                    double rad1 = angle * 3.14159 / 180.0;
-                    double rad2 = (angle + 15) * 3.14159 / 180.0;
-                    int x1 = cx + (int)(10 * SDL_cos(rad1));
-                    int y1 = cy + (int)(10 * SDL_sin(rad1));
-                    int x2 = cx + (int)(10 * SDL_cos(rad2));
-                    int y2 = cy + (int)(10 * SDL_sin(rad2));
-                    SDL_RenderDrawLine(app->renderer, x1, y1, x2, y2);
-                }
-                break;
-            case TOOL_FILL:
-                /* Fill bucket icon - simple bucket shape */
-                SDL_RenderDrawLine(app->renderer, cx - 8, cy - 8, cx + 8, cy - 8);
-                SDL_RenderDrawLine(app->renderer, cx - 10, cy - 6, cx - 10, cy + 8);
-                SDL_RenderDrawLine(app->renderer, cx + 10, cy - 6, cx + 10, cy + 8);
-                SDL_RenderDrawLine(app->renderer, cx - 10, cy + 8, cx + 10, cy + 8);
-                SDL_RenderDrawLine(app->renderer, cx - 8, cy - 8, cx - 10, cy - 6);
-                SDL_RenderDrawLine(app->renderer, cx + 8, cy - 8, cx + 10, cy - 6);
-                break;
-        }
-    }
-
-    /* Draw color palette */
-    for (int i = 0; i < (int)PALETTE_COUNT; i++) {
-        draw_button(app, &app->color_buttons[i]);
-    }
-
-    /* Draw current color display */
-    SDL_Rect color_display = app->current_color_display.rect;
-    SDL_SetRenderDrawColor(app->renderer, app->current_color.r, app->current_color.g,
-                           app->current_color.b, 255);
-    SDL_RenderFillRect(app->renderer, &color_display);
-    SDL_SetRenderDrawColor(app->renderer, 0, 0, 0, 255);
-    SDL_RenderDrawRect(app->renderer, &color_display);
-
-    /* Draw status text area */
-    SDL_Rect status_rect = {580, 10, 200, 40};
-    SDL_SetRenderDrawColor(app->renderer, 255, 255, 255, 255);
-    SDL_RenderFillRect(app->renderer, &status_rect);
-    SDL_SetRenderDrawColor(app->renderer, 180, 180, 180, 255);
-    SDL_RenderDrawRect(app->renderer, &status_rect);
-
-    /* Draw keyboard shortcuts hint area */
-    SDL_Rect hint_rect = {800, 10, 210, 40};
-    SDL_SetRenderDrawColor(app->renderer, 250, 250, 220, 255);
-    SDL_RenderFillRect(app->renderer, &hint_rect);
-    SDL_SetRenderDrawColor(app->renderer, 180, 180, 180, 255);
-    SDL_RenderDrawRect(app->renderer, &hint_rect);
-}
-
-/**
- * Render the application
- */
-static void render(AppState *app) {
-    /* Clear background */
-    SDL_SetRenderDrawColor(app->renderer, 128, 128, 128, 255);
-    SDL_RenderClear(app->renderer);
-
-    /* Draw toolbar */
-    draw_toolbar(app);
-
-    /* Draw canvas background (checkerboard for transparency) */
-    SDL_Rect canvas_bg = {app->canvas_offset_x - 2, app->canvas_offset_y - 2,
-                          CANVAS_WIDTH + 4, CANVAS_HEIGHT + 4};
-    SDL_SetRenderDrawColor(app->renderer, 255, 255, 255, 255);
-    SDL_RenderFillRect(app->renderer, &canvas_bg);
-
-    /* Draw canvas border */
-    SDL_SetRenderDrawColor(app->renderer, 100, 100, 100, 255);
-    SDL_RenderDrawRect(app->renderer, &canvas_bg);
-
-    /* Draw canvas content */
-    SDL_Rect canvas_rect = {app->canvas_offset_x, app->canvas_offset_y,
-                            app->image->width, app->image->height};
-    SDL_RenderCopy(app->renderer, app->canvas_texture, NULL, &canvas_rect);
-
-    /* Draw preview for shape tools while dragging */
-    if (app->is_drawing && app->current_tool != TOOL_PENCIL && app->current_tool != TOOL_FILL) {
-        int mx, my;
-        SDL_GetMouseState(&mx, &my);
-        int x = mx - app->canvas_offset_x;
-        int y = my - app->canvas_offset_y;
-
-        SDL_SetRenderDrawColor(app->renderer, app->current_color.r, app->current_color.g,
-                               app->current_color.b, 200);
-
-        switch (app->current_tool) {
-            case TOOL_LINE:
-                SDL_RenderDrawLine(app->renderer, app->start_x + app->canvas_offset_x,
-                                   app->start_y + app->canvas_offset_y,
-                                   mx, my);
-                break;
-            case TOOL_RECTANGLE:
-                {
-                    int rx = (app->start_x < x ? app->start_x : x) + app->canvas_offset_x;
-                    int ry = (app->start_y < y ? app->start_y : y) + app->canvas_offset_y;
-                    int rw = abs(x - app->start_x);
-                    int rh = abs(y - app->start_y);
-                    SDL_Rect preview = {rx, ry, rw, rh};
-                    SDL_RenderDrawRect(app->renderer, &preview);
-                }
-                break;
-            case TOOL_CIRCLE:
-                {
-                    int dx = x - app->start_x;
-                    int dy = y - app->start_y;
-                    int radius = (int)SDL_sqrt((double)(dx * dx + dy * dy));
-                    int cx = app->start_x + app->canvas_offset_x;
-                    int cy = app->start_y + app->canvas_offset_y;
-                    for (int angle = 0; angle < 360; angle += 5) {
-                        double rad1 = angle * 3.14159 / 180.0;
-                        double rad2 = (angle + 5) * 3.14159 / 180.0;
-                        int x1 = cx + (int)(radius * SDL_cos(rad1));
-                        int y1 = cy + (int)(radius * SDL_sin(rad1));
-                        int x2 = cx + (int)(radius * SDL_cos(rad2));
-                        int y2 = cy + (int)(radius * SDL_sin(rad2));
-                        SDL_RenderDrawLine(app->renderer, x1, y1, x2, y2);
-                    }
-                }
-                break;
-            default:
-                break;
-        }
-    }
-
-    SDL_RenderPresent(app->renderer);
-}
-
-/**
- * Main entry point
- */
-int main(int argc, char *argv[]) {
-    (void)argc;
-    (void)argv;
-
-    AppState app = {0};
-    app.current_color = pixel_create(0, 0, 0);
-    app.current_tool = TOOL_PENCIL;
-    app.running = 1;
-
-    if (!init_sdl(&app)) {
-        cleanup_sdl(&app);
-        return 1;
-    }
-
-    init_ui(&app);
-
-    /* Create initial blank image */
-    app.image = image_create(CANVAS_WIDTH, CANVAS_HEIGHT);
-    if (!app.image) {
-        fprintf(stderr, "Failed to create image\n");
-        cleanup_sdl(&app);
-        return 1;
-    }
-
-    /* Fill with white */
-    Pixel white = {255, 255, 255};
-    image_fill(app.image, white);
-    update_canvas_texture(&app);
-
-    printf("Graphics Editor started!\n");
-    printf("Controls:\n");
-    printf("  1-5: Select tools (Pencil, Line, Rectangle, Circle, Fill)\n");
-    printf("  N: New image, S: Save, L: Load\n");
-    printf("  G: Grayscale, I: Invert, R: Rotate, H/V: Flip\n");
-    printf("  Delete/Backspace: Clear canvas\n");
-    printf("  Escape: Exit\n");
-
-    /* Main loop */
-    while (app.running) {
-        handle_events(&app);
-        render(&app);
-        SDL_Delay(16); /* ~60 FPS */
-    }
-
-    cleanup_sdl(&app);
-    printf("Goodbye!\n");
-
+    history_free(&editor.history);
+    canvas_destroy(&editor.canvas);
+    canvas_destroy(&editor.preview);
+    SDL_DestroyTexture(texture);
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
+    SDL_Quit();
     return 0;
 }

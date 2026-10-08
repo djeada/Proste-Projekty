@@ -15,11 +15,11 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.x'
+          python-version: '3.12'
       - name: Find changed Python projects
         id: changes
         run: |
-          CHANGED=$(git diff --name-only origin/main...HEAD | grep '^src/python/' | cut -d'/' -f1,2,3 | sort | uniq | xargs)
+          CHANGED=$(git diff --name-only origin/main...HEAD | grep '^src/python/' | cut -d'/' -f1,2,3 | sort -u | while read -r d; do if [ -d "$d" ]; then echo "$d"; fi; done | xargs)
           echo "changed=$CHANGED" >> $GITHUB_OUTPUT
       - name: Print info if nothing changed
         if: steps.changes.outputs.changed == ''

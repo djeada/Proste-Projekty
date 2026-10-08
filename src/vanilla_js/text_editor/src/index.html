@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Text editor</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="toolbar">
+    <button id="new-button" type="button">New</button>
+    <button id="open-button" type="button">Open</button>
+    <button id="save-button" type="button">Save</button>
+    <button id="find-button" type="button">Find</button>
+    <button id="goto-button" type="button">Go to line</button>
+    <input id="file-input" type="file" hidden>
+  </header>
+  <textarea id="editor" spellcheck="false" aria-label="Text"></textarea>
+  <footer id="status-bar"></footer>
+  <script src="text_editor.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

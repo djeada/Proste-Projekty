@@ -1,0 +1,103 @@
+:root {
+  --water: #3a7ca5;
+  --ship: #adb5bd;
+  --miss: #e9ecef;
+  --hit: #e63946;
+  --sunk: #9d0208;
+  --ok: #2a9d8f;
+  --bad: #c1121f;
+  --text: #212529;
+  --page: #f8f9fa;
+}
+
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--text);
+  font-family: system-ui, sans-serif;
+}
+
+main {
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 1rem;
+  text-align: center;
+}
+
+h1 {
+  margin: 0.5rem 0;
+}
+
+#message {
+  margin: 0.5rem 0;
+}
+
+.result {
+  margin: 0.5rem 0;
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+.boards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.boards section {
+  flex: 0 1 26rem;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: 1.2rem repeat(10, minmax(0, 1fr));
+  gap: 2px;
+  align-items: center;
+}
+
+.board span {
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.cell {
+  aspect-ratio: 1;
+  min-width: 0;
+  padding: 0;
+  border: 1px solid #adb5bd;
+  border-radius: 3px;
+  background: var(--water);
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.cell.ship { background: var(--ship); }
+.cell.miss { background: var(--miss); color: var(--water); }
+.cell.hit { background: var(--hit); }
+.cell.sunk { background: var(--sunk); }
+.cell.preview-ok { outline: 3px solid var(--ok); outline-offset: -3px; }
+.cell.preview-bad { outline: 3px solid var(--bad); outline-offset: -3px; }
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+button {
+  font: inherit;
+  padding: 0.4rem 0.9rem;
+  border: 1px solid #6c757d;
+  border-radius: 4px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.help {
+  font-size: 0.9rem;
+  color: #495057;
+}

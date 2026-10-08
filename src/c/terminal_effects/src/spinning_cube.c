@@ -1,68 +1,63 @@
-// A spinning cube rasterized with a z-buffer, one color per face.
+// A cube spinning around three axes. A z-buffer keeps the nearest face on top,
+// and faces turned towards the viewer are lit brighter.
 #include <math.h>
-#include <stdio.h>
 #include <string.h>
-#include <unistd.h>
 
-#define W 48
-#define H 26
-#define FRAMES 200
+#include "term.h"
 
-static float sA, cA, sB, cB, sC, cC;
-static float zbuf[W * H];
-static int cell[W * H];
+typedef struct {
+    double x, y, z;
+} vec;
 
-static void plot(float i, float j, float k, int color) {
-    // rotate the point around the x, y and z axes
-    float x = j * sA * sB * cC - k * cA * sB * cC + j * cA * sC + k * sA * sC + i * cB * cC;
-    float y = j * cA * cC + k * sA * cC - j * sA * sB * sC + k * cA * sB * sC - i * cB * sC;
-    float z = k * cA * cB - j * sA * cB + i * sB + 60;
-    float ooz = 1 / z;
-    int xp = (int)(W / 2 + 24 * ooz * x * 2.2f);
-    int yp = (int)(H / 2 + 24 * ooz * y);
-    int idx = xp + yp * W;
-    if (xp >= 0 && xp < W && yp >= 0 && yp < H && ooz > zbuf[idx]) {
-        zbuf[idx] = ooz;
-        cell[idx] = color;
+static const uint32_t face_color[6] = {0xff4060, 0x40e070, 0x4080ff, 0xffd040, 0xe050ff, 0x40e0ff};
+static const double normal[6][3] = {{0, 0, -1}, {1, 0, 0}, {-1, 0, 0}, {0, 0, 1}, {0, -1, 0}, {0, 1, 0}};
+
+static double zbuf[H][W];
+static double sA, cA, sB, cB, sC, cC;
+
+static vec rotate(double i, double j, double k) {
+    return (vec){j * sA * sB * cC - k * cA * sB * cC + j * cA * sC + k * sA * sC + i * cB * cC,
+                 j * cA * cC + k * sA * cC - j * sA * sB * sC + k * cA * sB * sC - i * cB * sC,
+                 k * cA * cB - j * sA * cB + i * sB};
+}
+
+static void plot(double i, double j, double k, uint32_t color) {
+    vec p = rotate(i, j, k);
+    double ooz = 1 / (p.z + 60);
+    int px = W / 2 + (int)(60 * ooz * p.x), py = H / 2 + (int)(60 * ooz * p.y);
+    if (px >= 0 && px < W && py >= 0 && py < H && ooz > zbuf[py][px]) {
+        zbuf[py][px] = ooz;
+        pixels[py][px] = color;
     }
 }
 
-int main(void) {
-    const float s = 10;
-    float A = 0, B = 0, C = 0;
-    printf("\033[2J");
-    for (int frame = 0; frame < FRAMES; frame++) {
-        sA = sinf(A), cA = cosf(A), sB = sinf(B), cB = cosf(B), sC = sinf(C), cC = cosf(C);
-        memset(zbuf, 0, sizeof zbuf);
-        memset(cell, 0, sizeof cell);
-        for (float a = -s; a < s; a += 0.25f)
-            for (float b = -s; b < s; b += 0.25f) {
-                plot(a, b, -s, 196);   // front: red
-                plot(s, b, a, 46);     // right: green
-                plot(-s, b, -a, 33);   // left: blue
-                plot(-a, b, s, 226);   // back: yellow
-                plot(a, -s, -b, 201);  // bottom: magenta
-                plot(a, s, b, 51);     // top: cyan
-            }
+static uint32_t lit(int face) {
+    double light = 0.3 + 0.7 * fmax(0, -rotate(normal[face][0], normal[face][1], normal[face][2]).z);
+    uint32_t c = face_color[face], out = 0;
+    for (int s = 0; s <= 16; s += 8) out |= (uint32_t)((c >> s & 255) * light) << s;
+    return out;
+}
 
-        int last = -1;
-        printf("\033[H");
-        for (int k = 0; k < W * H; k++) {
-            if (!cell[k]) {
-                putchar(' ');
-            } else {
-                if (cell[k] != last) {
-                    printf("\033[38;5;%dm", cell[k]);
-                    last = cell[k];
-                }
-                fputs("█", stdout);
+int main(int argc, char **argv) {
+    double A = 0, B = 0, C = 0;
+    start(argc, argv, 30);
+    for (;;) {
+        sA = sin(A), cA = cos(A), sB = sin(B), cB = cos(B), sC = sin(C), cC = cos(C);
+        memset(zbuf, 0, sizeof zbuf);
+        memset(pixels, 0, sizeof pixels);
+        uint32_t color[6];
+        for (int f = 0; f < 6; f++) color[f] = lit(f);
+        for (int u = 0; u < 40; u++)
+            for (int v = 0; v < 40; v++) {
+                double a = -10 + u * 0.5, b = -10 + v * 0.5;
+                plot(a, b, -10, color[0]);
+                plot(10, b, a, color[1]);
+                plot(-10, b, -a, color[2]);
+                plot(-a, b, 10, color[3]);
+                plot(a, -10, -b, color[4]);
+                plot(a, 10, b, color[5]);
             }
-            if (k % W == W - 1) putchar('\n');
-        }
-        printf("\033[0m");
-        fflush(stdout);
-        A += 0.05f, B += 0.05f, C += 0.01f;
-        usleep(30000);
+        show_pixels("");
+        A += 0.05, B += 0.05, C += 0.01;
     }
-    return 0;
 }

@@ -1,18 +1,34 @@
+/* Terminal interface: reads one expression per line and prints its value until "quit". */
+#include "calculator.h"
+
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-#include "parser.h"
-#include "repl.h"
 
-int main(int argc, char *argv[]) {
-    if (argc > 1 && (strcmp(argv[1], "--help") == 0 || strcmp(argv[1], "-h") == 0)) {
-        printf("C Calculator - Interactive expression calculator\n");
-        printf("Supports: +, -, *, /, ^, parentheses, unary operators\n");
-        printf("Examples: 3.5 * 2, (2+3)*4, 2^3, -5+2\n");
-        printf("Type 'exit' or 'quit' to exit\n");
-        return 0;
+int main(void)
+{
+    char line[1024];
+    char error[128];
+    double result;
+
+    printf("Calculator. Type an expression, or 'quit' to exit.\n");
+    for (;;) {
+        printf("> ");
+        fflush(stdout);
+        if (fgets(line, sizeof line, stdin) == NULL) {
+            break;
+        }
+        line[strcspn(line, "\r\n")] = '\0';
+        if (strcmp(line, "quit") == 0) {
+            break;
+        }
+        if (line[0] == '\0') {
+            continue;
+        }
+        if (calc_evaluate(line, &result, error, sizeof error) == 0) {
+            printf("%.10g\n", result);
+        } else {
+            printf("Error: %s\n", error);
+        }
     }
-
-    calculator_repl();
     return 0;
 }

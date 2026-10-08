@@ -1,0 +1,10 @@
+{
+  "name": "text-editor",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A plain-text editor in the browser: open, edit, find and save a file",
+  "scripts": {
+    "test": "node --test"
+  },
+  "license": "MIT"
+}

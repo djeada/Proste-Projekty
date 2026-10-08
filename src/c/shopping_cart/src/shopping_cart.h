@@ -1,45 +1,54 @@
+/* Shopping cart rules: catalog, quantities, discount codes, totals and validation. No I/O here. */
 #ifndef SHOPPING_CART_H
 #define SHOPPING_CART_H
 
-#define MAX_PRODUCTS 100
-#define MAX_CART_ITEMS 50
-#define MAX_NAME_LENGTH 64
+#include <stddef.h>
 
+#define CATALOG_SIZE 8
+#define DISCOUNT_CODE_COUNT 2
+#define MAX_QUANTITY 99
+
+/* All money is in integer cents: 0.10 cannot be stored exactly in a float. */
 typedef struct {
-    int id;
-    char name[MAX_NAME_LENGTH];
-    double price;
-    int stock;
+    const char *name;
+    const char *category;
+    int price_cents;
 } Product;
 
 typedef struct {
-    int product_id;
-    int quantity;
-} CartItem;
+    const char *code;
+    int percent;      /* percentage discount, or 0 */
+    int amount_cents; /* fixed discount, used when percent is 0 */
+    int min_order_cents;
+} DiscountCode;
 
 typedef struct {
-    CartItem items[MAX_CART_ITEMS];
-    int item_count;
-    double discount_percent;
+    int quantities[CATALOG_SIZE]; /* quantity of CATALOG[i] in the cart */
+    const DiscountCode *discount; /* applied code, or NULL */
 } Cart;
 
-typedef struct {
-    Product products[MAX_PRODUCTS];
-    int product_count;
-} Store;
+typedef enum {
+    CART_OK,
+    CART_BAD_PRODUCT,
+    CART_BAD_QUANTITY,
+    CART_UNKNOWN_CODE,
+    CART_MIN_ORDER,
+    CART_BAD_NAME,
+    CART_BAD_ADDRESS
+} CartResult;
 
-void store_init(Store *store);
-int store_add_product(Store *store, const char *name, double price, int stock);
-Product *store_find_product(Store *store, int id);
-void store_list_products(const Store *store);
+extern const Product CATALOG[CATALOG_SIZE];
+extern const DiscountCode DISCOUNT_CODES[DISCOUNT_CODE_COUNT];
 
-void cart_init(Cart *cart);
-int cart_add_item(Cart *cart, Store *store, int product_id, int quantity);
-int cart_remove_item(Cart *cart, int product_id);
-int cart_update_quantity(Cart *cart, Store *store, int product_id, int quantity);
-double cart_get_total(const Cart *cart, const Store *store);
-void cart_apply_discount(Cart *cart, double percent);
-void cart_print(const Cart *cart, const Store *store);
-int cart_checkout(Cart *cart, Store *store);
+void cart_clear(Cart *cart);
+CartResult cart_add(Cart *cart, int product, int quantity);
+CartResult cart_set_quantity(Cart *cart, int product, int quantity);
+CartResult cart_apply_code(Cart *cart, const char *code);
+int cart_is_empty(const Cart *cart);
+int cart_subtotal(const Cart *cart);
+int cart_discount(const Cart *cart);
+int cart_total(const Cart *cart);
+CartResult validate_name(const char *name);
+CartResult validate_address(const char *address);
 
-#endif // SHOPPING_CART_H
+#endif /* SHOPPING_CART_H */

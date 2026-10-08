@@ -1,0 +1,14 @@
+{
+  "name": "terminal-effects",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Thirteen classic graphics effects drawn in the terminal with plain Node.js",
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node --test"
+  },
+  "license": "MIT"
+}

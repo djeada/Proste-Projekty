@@ -1,0 +1,10 @@
+{
+  "name": "game-2048",
+  "version": "1.0.0",
+  "private": true,
+  "description": "The 2048 sliding-tile puzzle in the browser, with plain JavaScript and no dependencies",
+  "scripts": {
+    "test": "node --test"
+  },
+  "license": "MIT"
+}

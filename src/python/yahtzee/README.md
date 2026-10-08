@@ -1,69 +1,98 @@
-# Yahtzee
+# Yahtzee (Python)
 
-## About the Project
+Yahtzee is a dice game for 1 to 4 players who take turns on one computer. In each turn you roll five dice up to three times, hold the dice you like between rolls, and then write the result into one free category of your score card. This version is a window built with tkinter, the standard Python GUI library.
 
-Desktop version of the popular dice game Yahtzee. The game is played by rolling five dice and scoring the roll in one of thirteen categories. The player with the highest score wins.
+The same game is also written in [C](../../c/yahtzee) (terminal) and [JavaScript](../../vanilla_js/yahtzee) (browser page).
 
-## Screenshots
+![Screenshot](screenshot.png)
 
-![yahtzee](https://user-images.githubusercontent.com/37275728/194823845-3aea219e-10d3-4d09-bc36-0832e7e0a8f8.gif)
+## Features
+
+- 1 to 4 players, taking turns, 13 rounds
+- Up to three rolls per turn, holding any dice between rolls
+- The 13 standard categories: Ones to Sixes, Three of a Kind, Four of a Kind, Full House (25), Small Straight (30), Large Straight (40), Yahtzee (50) and Chance
+- The score card shows, in brackets, what the current dice would score in every free category
+- Upper bonus: 35 points when the upper section reaches 63
+- The winner is shown at the end
+- Not included: the optional Yahtzee bonus and joker rules
+
+## How to play
+
+When the program starts, choose the number of players (1 to 4).
+
+1. Press **Roll** to roll all five dice.
+2. Click a die to hold it (held dice turn gold). Click it again to release it.
+3. Press **Roll** again to roll the dice that are not held. You have three rolls in total.
+4. Click a category row on the score card, then press **Score selected row**. The turn ends and the next player starts.
+
+The score card shows what the current dice would score in each free category in brackets, for the player whose turn it is. Filled cells are fixed. The game ends after 13 rounds and shows the winner.
+
+## How it works
+
+The game is split into two files:
+
+- `src/yahtzee.py` contains the rules. It does not import tkinter and does not print or read input, so the tests can run it.
+- `src/main.py` contains the window: the dice buttons, the roll button and the score card.
+
+**Data.** A `Game` object keeps one card per player. A card is a list of 13 values, where `None` means the category is still free. The object also keeps the five dice, which of them are held, the number of rolls in this turn, the current player and the round.
+
+**Scoring.** `score_for(dice, category)` counts the faces with `dice.count(face)`. The upper categories add up the dice showing their face. Three and Four of a Kind add all dice when there are enough equal faces. Full House needs exactly three of one face and two of another. The straights use sets: a small straight is any run of four faces, and a large straight is any run of five. Yahtzee needs five equal dice. Chance adds all dice.
+
+**Turn flow.** `Game.roll(face)` rolls the dice that are not held. It takes a function `face()` that returns a number from 1 to 6, so the tests can pass fixed values. `Game.toggle_hold(die)` works only after the first roll. `Game.choose(category)` writes the score, resets the dice and moves to the next player. When the last player has finished, the round number goes up. `Game.is_over` is true after round 13.
+
+**Window loop.** tkinter calls the handler functions when a button is pressed. Each handler changes the `Game` object and then calls `refresh()`, which updates the status text, the dice and the table. The `main()` function asks for the number of players and starts `mainloop()`.
+
+## Project layout
+
+```
+requirements.txt        packages needed for the tests (pytest)
+pyproject.toml          pytest settings: look for modules in src/
+.flake8                 style checker settings (line length 120)
+.editorconfig           indentation and line endings for editors
+src/yahtzee.py          the rules: scoring, turns, rounds, upper bonus, winner
+src/main.py             the tkinter window
+tests/test_yahtzee.py   tests of the rules with fixed dice
+```
 
 ## Requirements
 
-To run this project locally you will need:
+- Python 3.8 or newer
+- tkinter (included with most Python installers; on Linux install the `python3-tk` package)
+- pytest, only for the tests
 
-* Python 3.8+
+## Run
 
-No additional libraries or packagaes are needed!
-
-## Installation
-
-1. Download the code repository from GitHub: 
-    
-```Bash
-git clone https://github.com/djeada/Proste-Projekty.git
+```
+python3 src/main.py
 ```
 
-2. Navigate to the appropriate directory:
+## Test
 
-```Bash
-cd Proste-Projekty/src/python/yahtzee
+```
+pip install -r requirements.txt
+pytest
 ```
 
-3. Start the app:
+The tests check the score of each category with a table of dice, the upper bonus threshold, the totals, holding and rolling limits, the turn order, the rule that a category is used once, a full game of 13 rounds, and the winner. The 24 tests include 15 cases in one table-driven test.
 
-```Bash
-python src/main.py
-```
+## Comparison with the other versions
 
-## Gameplay
+- [C](../../c/yahtzee)
+- [Python](../../python/yahtzee) (this version)
+- [JavaScript](../../vanilla_js/yahtzee)
 
-* There are at least 2 players in the game.
-* The game is based on turns. Each turn consists of maximum 3 rolls of the dice.
-* The player can choose which dice to roll again and which to keep.
-* If the dice fit the category, the player can choose to score the roll in that category.
-* If the dice don't fit any category, the player can cross out one of the categories.
-* The game ends when all categories are scored or crossed out.
-* The player with the highest score wins.
+| | C | Python | JavaScript |
+|---|---|---|---|
+| Interface | terminal (stdin/stdout) | tkinter window | browser page |
+| Lines of logic | 212 (159 + 53 header) | 107 | 139 |
+| Lines of interface | 171 | 121 | 110 (+ 45 HTML) |
+| Tests | 10 | 24 | 10 |
 
-Categories:
+Python is the shortest version of the rules, because lists, `None` and `set` comparisons express the scoring directly, and `Game` is one class. The window code is also short: tkinter's `Treeview` shows the score card, and the handlers only call the game and refresh the widgets. The C version has to lay out the table with `printf` widths and keep everything in structs. The JavaScript version is the same design again, but it does not use classes, so the rules are plain functions that change a plain object.
 
-* Ones: Get as many ones as possible.
-* Twos: Get as many twos as possible.
-* Threes: Get as many threes as possible.
-* Fours: Get as many fours as possible.
-* Fives: Get as many fives as possible.
-* Sixes: Get as many sixes as possible.
-* Three of a kind: Get three dice with the same number. Points are the sum all dice (not just the three of a kind).
-* Four of a kind: Get four dice with the same number. Points are the sum all dice (not just the four of a kind).
-* Full house: Get three of a kind and a pair, e.g. 1,1,3,3,3 or 3,3,3,6,6. Scores 25 points.
-* Small straight: Get four sequential dice, 1,2,3,4 or 2,3,4,5 or 3,4,5,6. Scores 30 points.
-* Large straight: Get five sequential dice, 1,2,3,4,5 or 2,3,4,5,6. Scores 40 points.
-* Chance: You can put anything into chance, it's basically like a garbage can when you don't have anything else you can use the dice for. The score is simply the sum of the dice.
-* YAHTZEE: Five of a kind. Scores 50 points. You can optionally get multiple Yahtzees, see below for details.
+## Ideas for extensions
 
-## UI elements
-
-
-## Possible improvements
-
+- Add the optional Yahtzee bonus (100 points per extra Yahtzee) and the joker rules.
+- Ask for the player names in a dialog.
+- Save the game to a JSON file and load it later.
+- Add a dice roll animation with `after()` calls.

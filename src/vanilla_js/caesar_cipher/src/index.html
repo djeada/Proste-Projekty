@@ -2,44 +2,37 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Caesar Cipher</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="container">
+    <main>
       <h1>Caesar Cipher</h1>
-      
-      <div class="input-group">
-        <label for="message">Message:</label>
-        <textarea id="message" placeholder="Enter your message here..."></textarea>
-      </div>
-      
+
+      <label for="message">Text</label>
+      <textarea id="message" rows="5" placeholder="Type or paste text here"></textarea>
+
       <div class="controls">
-        <div class="input-group">
-          <label for="key">Shift (Key):</label>
-          <input type="number" id="key" value="3" min="0" max="25" />
-        </div>
-        
-        <div class="input-group">
-          <label for="mode">Mode:</label>
-          <select id="mode">
-            <option value="encrypt">Encrypt</option>
-            <option value="decrypt">Decrypt</option>
-          </select>
-        </div>
+        <label for="key">Key</label>
+        <input id="key" type="number" step="1" value="3" />
+
+        <fieldset>
+          <legend>Mode</legend>
+          <label><input type="radio" name="mode" id="mode-encrypt" value="encrypt" checked /> Encrypt</label>
+          <label><input type="radio" name="mode" id="mode-decrypt" value="decrypt" /> Decrypt</label>
+        </fieldset>
+
+        <button id="crack" type="button">Crack</button>
       </div>
-      
-      <button id="run" class="run-btn">Run</button>
-      
-      <div class="input-group">
-        <label for="result">Result:</label>
-        <textarea id="result" readonly placeholder="Result will appear here..."></textarea>
-      </div>
-      
-      <button id="copy" class="copy-btn">Copy to Clipboard</button>
-    </div>
-    <script src="app.js"></script>
+
+      <label for="result">Result</label>
+      <textarea id="result" rows="5" readonly></textarea>
+
+      <p id="status" role="status"></p>
+    </main>
+
+    <script src="caesar_cipher.js"></script>
+    <script src="main.js"></script>
   </body>
 </html>

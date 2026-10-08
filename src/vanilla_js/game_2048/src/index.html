@@ -3,34 +3,27 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>2048</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="container">
-      <div class="header">
+    <main class="container">
+      <header class="header">
         <h1>2048</h1>
-        <div class="scores">
-          <div class="score-box">
-            <div class="score-label">Score</div>
-            <div id="score" class="score-value">0</div>
-          </div>
-          <div class="score-box">
-            <div class="score-label">Best</div>
-            <div id="best" class="score-value">0</div>
-          </div>
+        <div class="score-box">
+          <span class="score-label">Score</span>
+          <span id="score" class="score-value">0</span>
         </div>
-      </div>
-      
+      </header>
+
       <div id="board" class="board"></div>
-      
-      <div id="message" class="message"></div>
-      
-      <button id="new-game" class="new-game-btn">New Game</button>
-      
-      <p class="instructions">Use arrow keys to move tiles. Combine tiles with the same number to reach 2048!</p>
-    </div>
-    <script src="app.js"></script>
+      <p id="message" class="message"></p>
+
+      <button id="new-game" class="new-game">New game</button>
+      <p class="help">Arrows or W A S D: move. R: restart. C: keep playing after 2048.</p>
+    </main>
+
+    <script src="game_2048.js"></script>
+    <script src="main.js"></script>
   </body>
 </html>

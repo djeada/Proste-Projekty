@@ -1,0 +1,10 @@
+{
+  "name": "tic-tac-toe",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Tic-tac-toe in the browser: two players or against a minimax computer",
+  "scripts": {
+    "test": "node --test"
+  },
+  "license": "MIT"
+}

@@ -1,0 +1,10 @@
+{
+  "name": "battleship",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Battleship in the browser: place your fleet and play against the computer.",
+  "scripts": {
+    "test": "node --test"
+  },
+  "license": "MIT"
+}

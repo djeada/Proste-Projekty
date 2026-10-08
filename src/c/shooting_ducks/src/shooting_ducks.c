@@ -1,141 +1,115 @@
+/* Rules of Shooting Ducks: spawning, movement, hits, escapes and waves. */
 #include "shooting_ducks.h"
-#include <stdlib.h>
+
+#include <math.h>
 #include <string.h>
 
-static void spawn_ducks(DuckGame *game) {
-    int target = BASE_DUCKS + (game->level - 1) * DUCKS_PER_LEVEL;
-    if (target > MAX_DUCKS) target = MAX_DUCKS;
-    for (int i = 0; i < MAX_DUCKS; ++i) {
-        game->ducks[i].x = rand() % game->max_x;
-        game->ducks[i].y = rand() % game->max_y;
-        game->ducks[i].alive = (i < target) ? 1 : 0;
-        game->ducks[i].dir = DIR_RIGHT;
-    }
-    game->duck_count = target;
+#define BOB_AMPLITUDE 1.5
+#define BOB_SPEED 2.0
+#define TWO_PI 6.283185307179586
+
+void rng_seed(Rng *rng, uint32_t seed) { rng->state = seed; }
+
+double rng_next(Rng *rng) {
+    rng->state = rng->state * 1664525u + 1013904223u;
+    return rng->state / 4294967296.0;
 }
 
-void duck_game_init(DuckGame *game, int max_x, int max_y) {
-    memset(game, 0, sizeof(DuckGame));
-    game->max_x = max_x;
-    game->max_y = max_y;
-    game->crosshair.x = max_x / 2;
-    game->crosshair.y = max_y / 2;
-    game->crosshair.health = CROSSHAIR_START_HEALTH;
-    game->level = 1;
-    spawn_ducks(game);
-    for (int i = 0; i < MAX_SHOTS; ++i) game->shots[i].active = 0;
-    game->game_over = 0;
-    game->wave_cleared = 0;
-    game->score = 0;
-    game->tick = 0;
-    game->duck_move_period = 3;
-    game->paused = 0;
+int ducks_in_wave(int wave) { return 3 + 2 * wave; }
+
+static double spawn_interval(int wave) {
+    double interval = 2.0 - 0.15 * wave;
+    return interval < 0.5 ? 0.5 : interval;
 }
 
-static void move_crosshair(Crosshair *c, int key, int max_x, int max_y) {
-    switch (key) {
-        case KEY_UP:
-        case 'w': if (c->y > 0) c->y--; break;
-        case KEY_DOWN:
-        case 's': if (c->y < max_y - 1) c->y++; break;
-        case KEY_LEFT:
-        case 'a': if (c->x > 0) c->x--; break;
-        case KEY_RIGHT:
-        case 'd': if (c->x < max_x - 1) c->x++; break;
-        default: break;
-    }
+static void start_wave(Game *game, int wave) {
+    game->wave = wave;
+    game->ducks_to_spawn = ducks_in_wave(wave);
+    game->spawn_timer = 0.0;
+    game->break_timer = 0.0;
 }
 
-static void fire_shot(DuckGame *game) {
-    for (int i = 0; i < MAX_SHOTS; ++i) {
-        if (!game->shots[i].active) {
-            game->shots[i].x = game->crosshair.x;
-            game->shots[i].y = game->crosshair.y;
-            game->shots[i].active = 1;
-            break;
+static void spawn_duck(Game *game) {
+    Duck *duck = &game->ducks[game->duck_count++];
+    int flies_right = rng_next(&game->rng) < 0.5;
+    double speed = (5.0 + 1.5 * game->wave) * (0.8 + 0.4 * rng_next(&game->rng));
+    duck->base_y = 5.0 + 22.0 * rng_next(&game->rng);
+    duck->phase = TWO_PI * rng_next(&game->rng);
+    duck->speed = flies_right ? speed : -speed;
+    duck->x = flies_right ? -DUCK_HALF_WIDTH : FIELD_WIDTH + DUCK_HALF_WIDTH;
+    duck->y = duck->base_y;
+    duck->age = 0.0;
+}
+
+static int has_escaped(const Duck *duck) {
+    return (duck->speed > 0 && duck->x - DUCK_HALF_WIDTH > FIELD_WIDTH) ||
+           (duck->speed < 0 && duck->x + DUCK_HALF_WIDTH < 0);
+}
+
+void game_init(Game *game, uint32_t seed) {
+    memset(game, 0, sizeof(*game));
+    rng_seed(&game->rng, seed == 0 ? 1 : seed);
+    game->lives = START_LIVES;
+    start_wave(game, 1);
+}
+
+static void move_ducks(Game *game, double dt) {
+    int kept = 0, escaped = 0;
+    for (int i = 0; i < game->duck_count; ++i) {
+        Duck duck = game->ducks[i];
+        duck.x += duck.speed * dt;
+        duck.age += dt;
+        duck.y = duck.base_y + BOB_AMPLITUDE * sin(BOB_SPEED * duck.age + duck.phase);
+        if (has_escaped(&duck)) {
+            escaped++;
+        } else {
+            game->ducks[kept++] = duck;
         }
     }
-}
-
-static void update_shots(DuckGame *game) {
-    // Shots are instant-hit at crosshair; deactivate after processing
-    for (int i = 0; i < MAX_SHOTS; ++i) {
-        if (!game->shots[i].active) continue;
-        for (int j = 0; j < MAX_DUCKS; ++j) {
-            if (game->ducks[j].alive && game->ducks[j].x == game->shots[i].x && game->ducks[j].y == game->shots[i].y) {
-                game->ducks[j].alive = 0;
-                game->score += 10;
-            }
-        }
-        game->shots[i].active = 0;
+    game->duck_count = kept;
+    game->lives -= escaped;
+    if (game->lives <= 0) {
+        game->lives = 0;
+        game->game_over = 1;
     }
 }
 
-static void update_ducks(DuckGame *game) {
-    if (game->duck_move_period <= 0) game->duck_move_period = 1;
-    if ((game->tick % game->duck_move_period) != 0) return;
-    for (int i = 0; i < MAX_DUCKS; ++i) {
-        if (!game->ducks[i].alive) continue;
-        if (game->ducks[i].dir == DIR_RIGHT) game->ducks[i].x++;
-        else if (game->ducks[i].dir == DIR_LEFT) game->ducks[i].x--;
-        if (game->ducks[i].x < 0) game->ducks[i].x = game->max_x - 1;
-        if (game->ducks[i].x >= game->max_x) game->ducks[i].x = 0;
-    }
-}
-
-void duck_game_update(DuckGame *game, int key) {
+void game_update(Game *game, double dt) {
     if (game->game_over) return;
 
-    if (key == 'r') { duck_game_init(game, game->max_x, game->max_y); return; }
-    if (key == 'p') { game->paused = !game->paused; }
-
-    if (game->wave_cleared) {
-        if (key == 'n') duck_game_next_level(game);
+    if (game->break_timer > 0) {
+        game->break_timer -= dt;
+        if (game->break_timer <= 0) start_wave(game, game->wave + 1);
         return;
     }
 
-    if (game->paused) return;
+    move_ducks(game, dt);
+    if (game->game_over) return;
 
-    switch (key) {
-        case KEY_UP: case 'w':
-        case KEY_DOWN: case 's':
-        case KEY_LEFT: case 'a':
-        case KEY_RIGHT: case 'd':
-            move_crosshair(&game->crosshair, key, game->max_x, game->max_y);
-            break;
-        case ' ': fire_shot(game); break;
-        default: break;
+    if (game->ducks_to_spawn > 0) {
+        game->spawn_timer -= dt;
+        if (game->spawn_timer <= 0 && game->duck_count < MAX_DUCKS) {
+            spawn_duck(game);
+            game->ducks_to_spawn--;
+            game->spawn_timer = spawn_interval(game->wave);
+        }
     }
 
-    update_shots(game);
-    update_ducks(game);
-    game->tick++;
-
-    int any_alive = 0;
-    for (int i = 0; i < MAX_DUCKS; ++i) if (game->ducks[i].alive) { any_alive = 1; break; }
-    if (!any_alive) { game->wave_cleared = 1; game->score += 100; }
+    if (game->ducks_to_spawn == 0 && game->duck_count == 0) {
+        game->break_timer = WAVE_BREAK_SECONDS;
+    }
 }
 
-void duck_game_draw(const DuckGame *game) {
-    // crosshair
-    mvprintw(game->crosshair.y, game->crosshair.x, "+");
-    // ducks
-    for (int i = 0; i < MAX_DUCKS; ++i) if (game->ducks[i].alive) mvprintw(game->ducks[i].y, game->ducks[i].x, "D");
-    // HUD
-    int alive = 0; for (int i = 0; i < MAX_DUCKS; ++i) if (game->ducks[i].alive) alive++;
-    mvprintw(0, 0, "HP:%d  Lvl:%d  Score:%d  Ducks:%d/%d  Speed:%d", game->crosshair.health, game->level, game->score, alive, game->duck_count, game->duck_move_period);
-    mvprintw(1, 0, "Move: WASD/Arrows  Shoot: Space  Pause: p  Restart: r");
-    if (game->wave_cleared) mvprintw(2, 0, "Wave cleared! Press 'n' for next level.");
-    if (game->paused && !game->wave_cleared) mvprintw(2, 0, "Paused. Press 'p' to resume.");
-}
-
-void duck_game_next_level(DuckGame *game) {
-    if (!game->wave_cleared) return;
-    game->level++;
-    if (game->duck_move_period > 1) game->duck_move_period--;
-    spawn_ducks(game);
-    game->crosshair.x = game->max_x / 2;
-    game->crosshair.y = game->max_y / 2;
-    for (int i = 0; i < MAX_SHOTS; ++i) game->shots[i].active = 0;
-    game->wave_cleared = 0;
+int game_shoot(Game *game, double x, double y) {
+    if (game->game_over) return 0;
+    for (int i = 0; i < game->duck_count; ++i) {
+        Duck *duck = &game->ducks[i];
+        if (fabs(x - duck->x) <= DUCK_HALF_WIDTH && fabs(y - duck->y) <= DUCK_HALF_HEIGHT) {
+            memmove(duck, duck + 1, (size_t)(game->duck_count - i - 1) * sizeof(Duck));
+            game->duck_count--;
+            game->score += POINTS_PER_HIT;
+            return 1;
+        }
+    }
+    return 0;
 }

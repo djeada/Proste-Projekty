@@ -1,0 +1,10 @@
+{
+  "name": "fifteen-puzzle",
+  "version": "1.0.0",
+  "private": true,
+  "description": "The fifteen puzzle in the browser: click or use the arrow keys to slide the tiles.",
+  "scripts": {
+    "test": "node --test"
+  },
+  "license": "MIT"
+}

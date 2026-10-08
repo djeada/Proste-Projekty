@@ -1,93 +1,70 @@
+/* Food ordering rules: menu, order, validation, card check and order status. No input or output here. */
 #ifndef FOOD_ORDERING_H
 #define FOOD_ORDERING_H
 
-#define MAX_NAME_LENGTH 64
-#define MAX_DESCRIPTION_LENGTH 256
-#define MAX_ADDRESS_LENGTH 256
-#define MAX_MENU_ITEMS 50
-#define MAX_ORDER_ITEMS 20
-#define MAX_CATEGORIES 10
+#include <stdbool.h>
+
+#define MENU_SIZE 10
+#define MAX_QUANTITY 20
+#define MAX_ADDRESS_LEN 100
+#define MAX_PHONE_LEN 16 /* an optional '+' and up to 15 digits */
+#define STATUS_STEP_SECONDS 3
 
 typedef enum {
-    CATEGORY_APPETIZER,
-    CATEGORY_MAIN_COURSE,
+    CATEGORY_STARTER,
+    CATEGORY_MAIN,
     CATEGORY_DESSERT,
-    CATEGORY_BEVERAGE,
-    CATEGORY_OTHER
-} FoodCategory;
-
-typedef enum {
-    PAYMENT_CASH,
-    PAYMENT_CARD,
-    PAYMENT_PAYPAL
-} PaymentMethod;
-
-typedef enum {
-    STATUS_PENDING,
-    STATUS_CONFIRMED,
-    STATUS_PREPARING,
-    STATUS_OUT_FOR_DELIVERY,
-    STATUS_DELIVERED,
-    STATUS_CANCELLED
-} OrderStatus;
+    CATEGORY_DRINK,
+    CATEGORY_COUNT
+} Category;
 
 typedef struct {
     int id;
-    char name[MAX_NAME_LENGTH];
-    char description[MAX_DESCRIPTION_LENGTH];
-    double price;
-    FoodCategory category;
-    int available;
-} MenuItem;
+    const char *name;
+    const char *description;
+    int price_cents;
+    Category category;
+} Dish;
+
+typedef enum { PAYMENT_NONE, PAYMENT_PAYPAL, PAYMENT_CARD, PAYMENT_CASH } Payment;
+
+typedef enum { STATUS_RECEIVED, STATUS_PREPARING, STATUS_ON_THE_WAY, STATUS_DELIVERED } Status;
 
 typedef struct {
-    int menu_item_id;
+    int dish_id;
     int quantity;
-} OrderItem;
+} OrderLine;
 
 typedef struct {
-    int id;
-    OrderItem items[MAX_ORDER_ITEMS];
-    int item_count;
-    char delivery_address[MAX_ADDRESS_LENGTH];
-    PaymentMethod payment_method;
-    OrderStatus status;
-    double total;
+    OrderLine lines[MENU_SIZE];
+    int line_count;
+    char address[MAX_ADDRESS_LEN + 1];
+    char phone[MAX_PHONE_LEN + 1];
+    Payment payment;
+    char card_last4[5];
+    bool placed;
+    long long placed_at;
 } Order;
 
-typedef struct {
-    MenuItem items[MAX_MENU_ITEMS];
-    int item_count;
-} Menu;
+extern const Dish menu[MENU_SIZE];
 
-typedef struct {
-    Order orders[100];
-    int order_count;
-    int next_order_id;
-} OrderSystem;
+const Dish *dish_find(int id);
+const char *category_name(Category category);
+const char *payment_name(Payment payment);
+const char *status_name(Status status);
 
-// Menu functions
-void menu_init(Menu *menu);
-int menu_add_item(Menu *menu, const char *name, const char *description, 
-                  double price, FoodCategory category);
-MenuItem *menu_find_item(Menu *menu, int id);
-void menu_display(const Menu *menu);
-void menu_display_by_category(const Menu *menu, FoodCategory category);
-const char *category_to_string(FoodCategory category);
+void order_init(Order *order);
+bool order_set_quantity(Order *order, int dish_id, int quantity); /* 0 removes the dish */
+bool order_add_dish(Order *order, int dish_id, int quantity);
+int order_quantity(const Order *order, int dish_id);
+int order_total_cents(const Order *order);
+bool order_set_address(Order *order, const char *address);
+bool order_set_phone(Order *order, const char *phone);
+bool order_set_payment(Order *order, Payment payment); /* PayPal or cash; cards use order_set_card */
+bool order_set_card(Order *order, const char *number);
+const char *order_place(Order *order, long long now); /* NULL on success, otherwise the reason */
+Status order_status_at(long long elapsed_seconds);
 
-// Order functions
-void order_system_init(OrderSystem *system);
-int order_create(OrderSystem *system);
-int order_add_item(OrderSystem *system, int order_id, int menu_item_id, int quantity);
-int order_remove_item(OrderSystem *system, int order_id, int menu_item_id);
-int order_set_address(OrderSystem *system, int order_id, const char *address);
-int order_set_payment(OrderSystem *system, int order_id, PaymentMethod method);
-double order_calculate_total(OrderSystem *system, int order_id, const Menu *menu);
-int order_confirm(OrderSystem *system, int order_id);
-int order_update_status(OrderSystem *system, int order_id, OrderStatus status);
-Order *order_find(OrderSystem *system, int order_id);
-void order_display(const Order *order, const Menu *menu);
-const char *status_to_string(OrderStatus status);
-const char *payment_to_string(PaymentMethod method);
+bool luhn_is_valid(const char *number);
 
-#endif // FOOD_ORDERING_H
+#endif

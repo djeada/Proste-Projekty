@@ -1,43 +1,35 @@
-# Deep zoom into the Mandelbrot set's "seahorse valley".
-import sys
-import time
+# Zooms into the Mandelbrot set near the "seahorse valley".
+from term import H, W, pixels, show_pixels, start
 
-W, H = 48, 26
-FRAMES = 160
-PALETTE = [21, 27, 33, 39, 45, 51, 87, 123, 159, 195, 231, 229, 227,
-           226, 220, 214, 208, 202, 196, 199, 201, 165, 129, 93, 57]
-CENTER = complex(-0.743643887037151, 0.131825904205330)
+PALETTE = [
+    0x000764, 0x02308C, 0x0A5BB4, 0x2085D2, 0x4CB0E6, 0x8BD6F2, 0xD2F0F7, 0xFFF7C8,
+    0xFFE07A, 0xFFB52E, 0xF4800C, 0xD94F07, 0xA82808, 0x7A1240, 0x4A0A6E, 0x1E0368,
+]
 
 
-def main(frames=FRAMES):
-    scale = 3.2
-    sys.stdout.write("\033[2J")
-    for frame in range(frames):
-        max_iter, last = 100 + frame * 6, -1
-        out = ["\033[H"]
+def main():
+    cx, cy = -0.743643887037151, 0.131825904205330
+    scale = 3.0
+    frame = 0
+    start(30)
+    while True:
+        max_iter = 60 + frame * 3
         for y in range(H):
             for x in range(W):
-                re = (x - W / 2) * scale / W
-                im = (y - H / 2) * scale * 1.25 / H
-                c = CENTER + complex(re, im)
-                z, it = 0j, 0
-                while abs(z) < 2 and it < max_iter:
-                    z = z * z + c
+                re = cx + (x - W / 2) * scale / W
+                im = cy + (y - H / 2) * scale / W
+                zr = zi = 0.0
+                it = 0
+                while zr * zr + zi * zi < 4 and it < max_iter:
+                    zr, zi = zr * zr - zi * zi + re, 2 * zr * zi + im
                     it += 1
-                if it == max_iter:
-                    out.append(" ")
-                    continue
-                color = PALETTE[(it + frame // 2) % len(PALETTE)]
-                if color != last:
-                    out.append(f"\033[38;5;{color}m")
-                    last = color
-                out.append("█")
-            out.append("\n")
-        out.append(f"\033[0m  zoom {3.2 / scale:.0f}x  |  {max_iter} iterations\n")
-        sys.stdout.write("".join(out))
-        sys.stdout.flush()
-        scale *= 0.94
-        time.sleep(0.03)
+                pixels[y][x] = 0 if it == max_iter else PALETTE[(it + frame) % 16]
+        show_pixels(f" zoom {int(3 / scale)}x, {max_iter} iterations")
+        scale *= 0.93
+        frame += 1
+        if frame == 130:
+            frame = 0
+            scale = 3.0
 
 
 if __name__ == "__main__":

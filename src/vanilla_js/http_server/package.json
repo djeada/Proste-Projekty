@@ -1,0 +1,11 @@
+{
+  "name": "http-server",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A small HTTP/1.1 server with static files and a notes API",
+  "scripts": {
+    "start": "node src/main.js",
+    "test": "node --test"
+  },
+  "license": "MIT"
+}

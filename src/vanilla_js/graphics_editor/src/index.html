@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Graphics editor</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="editor">
+    <canvas id="paint" width="320" height="240" title="Drag to draw"></canvas>
+    <aside class="toolbar">
+      <div class="tools">
+        <button data-tool="brush" title="Brush (B)">Brush</button>
+        <button data-tool="eraser" title="Eraser (E)">Eraser</button>
+        <button data-tool="line" title="Line (L)">Line</button>
+        <button data-tool="rect" title="Rectangle (R)">Rect</button>
+        <button data-tool="fill" title="Fill (F)">Fill</button>
+        <button data-tool="picker" title="Color picker (P)">Pick</button>
+      </div>
+      <div class="sizes">
+        <button data-width="1" title="Brush size 1 (key 1)">1px</button>
+        <button data-width="3" title="Brush size 3 (key 2)">3px</button>
+        <button data-width="5" title="Brush size 5 (key 3)">5px</button>
+      </div>
+      <div id="palette" class="palette"></div>
+      <div id="current-color" class="current" title="Current color"></div>
+      <div class="actions">
+        <button id="undo" title="Undo (Ctrl+Z)">Undo</button>
+        <button id="clear" title="Clear canvas (N)">Clear</button>
+        <button id="open" title="Open image (Ctrl+O)">Open</button>
+        <button id="save" title="Save PNG (Ctrl+S)">Save</button>
+      </div>
+      <input id="file-input" type="file" accept="image/*" hidden>
+    </aside>
+  </main>
+  <script src="graphics_editor.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

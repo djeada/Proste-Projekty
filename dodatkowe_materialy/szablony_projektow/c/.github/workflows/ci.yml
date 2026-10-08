@@ -1,0 +1,17 @@
+name: CI
+on:
+  push:
+  pull_request:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install tools
+        run: sudo apt-get update && sudo apt-get install -y cmake clang-format
+      - name: Build
+        run: cmake -S . -B build && cmake --build build
+      - name: Test
+        run: cd build && ctest --output-on-failure
+      - name: Check formatting
+        run: clang-format --dry-run --Werror src/*.c src/*.h tests/*.c

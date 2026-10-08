@@ -2,30 +2,17 @@ cmake_minimum_required(VERSION 3.10)
 project(yahtzee C)
 
 set(CMAKE_C_STANDARD 99)
+if(CMAKE_C_COMPILER_ID MATCHES "GNU|Clang")
+    add_compile_options(-Wall -Wextra)
+endif()
 
-add_library(yahtzee_logic src/yahtzee.c)
+add_library(yahtzee_logic STATIC src/yahtzee.c)
 target_include_directories(yahtzee_logic PUBLIC src)
 
-add_executable(main src/main.c)
-target_link_libraries(main yahtzee_logic)
+add_executable(yahtzee src/main.c)
+target_link_libraries(yahtzee yahtzee_logic)
 
-# Enable testing
 enable_testing()
 add_executable(test_yahtzee tests/test_yahtzee.c)
 target_link_libraries(test_yahtzee yahtzee_logic)
-target_include_directories(test_yahtzee PRIVATE src)
 add_test(NAME test_yahtzee COMMAND test_yahtzee)
-
-install(TARGETS main DESTINATION bin)
-
-find_program(CLANG_TIDY_EXE NAMES clang-tidy)
-if(CLANG_TIDY_EXE)
-    set_target_properties(main PROPERTIES C_CLANG_TIDY "clang-tidy")
-endif()
-find_program(CLANG_FORMAT_EXE NAMES clang-format)
-if(CLANG_FORMAT_EXE)
-    add_custom_target(format
-        COMMAND clang-format -i src/*.c src/*.h
-        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-    )
-endif()

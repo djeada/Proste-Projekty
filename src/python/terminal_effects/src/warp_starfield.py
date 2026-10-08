@@ -1,61 +1,46 @@
-# 3D starfield accelerating to warp speed, with motion streaks.
-import random
-import sys
-import time
+# Flying through a 3D starfield: the faster we go, the longer the streaks.
+from term import H, W, pixels, rnd, seed, show_pixels, start
 
-W, H = 48, 26
-STARS = 260
-FRAMES = 210
-GLYPHS = "@*+."  # from near to far
-COLORS = [231, 195, 153, 244]
+STARS = 300
 
 
 def spawn(z):
-    return random.uniform(-1, 1), random.uniform(-1, 1), z
+    x = (rnd(2001) - 1000) / 1000
+    y = (rnd(2001) - 1000) / 1000
+    return [x, y, z]
 
 
-def put(cells, x, y, z, ch, color):
-    px = int(W // 2 + x / z * W * 0.35)
-    py = int(H // 2 + y / z * W * 0.35 / 2.3)
-    if 0 <= px < W and 0 <= py < H and z <= cells[py][px][0]:
-        cells[py][px] = (z, ch, color)
+def put(bright, x, y, z, b):
+    px, py = W // 2 + int(x / z * 26), H // 2 + int(y / z * 26)
+    if 0 <= px < W and 0 <= py < H and b > bright[py][px]:
+        bright[py][px] = b
 
 
-def main(frames=FRAMES):
-    random.seed(42)
-    stars = [spawn(random.uniform(0.05, 1.05)) for _ in range(STARS)]
-
-    sys.stdout.write("\033[2J")
-    for frame in range(frames):
-        p = frame / frames
-        speed = 0.004 + 0.035 * p * p
-        cells = [[(1e9, " ", 0)] * W for _ in range(H)]  # (depth, glyph, color)
-
-        for i, (x, y, z) in enumerate(stars):
-            z -= speed
-            if z < 0.02:
-                x, y, z = spawn(1.05)
-            stars[i] = (x, y, z)
-            trail = int(speed * 400)  # streaks grow with speed
+def main():
+    seed(42)
+    stars = [spawn(0.05 + rnd(1000) / 1000) for _ in range(STARS)]
+    start(30)
+    frame = 0
+    while True:
+        p = frame / 150 if frame < 150 else (300 - frame) / 150
+        speed = 0.003 + 0.03 * p * p
+        trail = int(speed * 300)
+        bright = [[0] * W for _ in range(H)]
+        for i, star in enumerate(stars):
+            star[2] -= speed
+            if star[2] < 0.02:
+                star = stars[i] = spawn(1.05)
+            x, y, z = star
+            b = int((1.1 - z) * 230)
             for k in range(trail, 0, -1):
-                put(cells, x, y, z + k * speed * 0.6, ".", 240 + k % 4)
-            band = min(int(z * 4), 3)
-            put(cells, x, y, z, GLYPHS[band], COLORS[band])
-
-        last = -1
-        out = ["\033[H"]
-        for row in cells:
-            for _, ch, color in row:
-                if ch != " " and color != last:
-                    out.append(f"\033[38;5;{color}m")
-                    last = color
-                out.append(ch)
-            out.append("\n")
-        out.append(f"\033[0m  warp factor {1 + 8.9 * p * p:.1f}\n")
-        sys.stdout.write("".join(out))
-        sys.stdout.flush()
-        time.sleep(0.03)
-    print("\033[2J\033[H\n\033[1;36m  [+] arrived at Alpha Centauri\033[0m")
+                put(bright, x, y, z + k * speed * 0.6, b // (k + 1))
+            put(bright, x, y, z, b)
+        for y in range(H):
+            for x in range(W):
+                b = bright[y][x]
+                pixels[y][x] = (b * 3 // 4) << 16 | (b * 7 // 8) << 8 | b
+        show_pixels(f" warp factor {1 + int(p * 8)}")
+        frame = (frame + 1) % 300
 
 
 if __name__ == "__main__":

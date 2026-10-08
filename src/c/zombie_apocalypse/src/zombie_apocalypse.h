@@ -1,107 +1,68 @@
+/* Rules of Zombie Apocalypse. The world is WORLD_WIDTH x WORLD_HEIGHT units, one unit per terminal cell. */
 #ifndef ZOMBIE_APOCALYPSE_H
 #define ZOMBIE_APOCALYPSE_H
 
-#include <ncurses.h>
+#include <stdint.h>
 
-#define MAX_ZOMBIES 32
-#define MAX_BULLETS 16
-#define MAX_PARTICLES 64
-#define PLAYER_START_HEALTH 5
-// Progressive spawn settings
-#define BASE_ZOMBIES 6
-#define ZOMBIES_PER_LEVEL 4
+#define WORLD_WIDTH 60
+#define WORLD_HEIGHT 20
+#define MAX_ZOMBIES 64
+#define MAX_BULLETS 64
+#define MAX_PICKUPS 2
 
-// Visual effect durations (in ticks)
-#define DAMAGE_FLASH_DURATION 4
-#define EXPLOSION_DURATION 6
-#define LEVEL_TRANSITION_DURATION 15
-
-// Game area margins for HUD
-#define HUD_HEIGHT 4
-#define BORDER_WIDTH 1
-
-// Color pairs
-#define COLOR_PLAYER 1
-#define COLOR_ZOMBIE 2
-#define COLOR_BULLET 3
-#define COLOR_HUD 4
-#define COLOR_BORDER 5
-#define COLOR_HEALTH_HIGH 6
-#define COLOR_HEALTH_MED 7
-#define COLOR_HEALTH_LOW 8
-#define COLOR_EXPLOSION 9
-#define COLOR_WAVE_CLEAR 10
-#define COLOR_GAME_OVER 11
-#define COLOR_PARTICLE 12
-#define COLOR_TITLE 13
-
-// Directions
-typedef enum { DIR_UP, DIR_DOWN, DIR_LEFT, DIR_RIGHT, DIR_NONE } Direction;
-
-// Particle types for visual effects
-typedef enum {
-    PARTICLE_NONE,
-    PARTICLE_EXPLOSION,
-    PARTICLE_SPARK,
-    PARTICLE_DEBRIS
-} ParticleType;
+#define MAX_HEALTH 100
+#define PLAYER_SPEED 7.0
+#define TOUCH_DISTANCE 1.0 /* player and zombies have radius 0.5 */
+#define ZOMBIE_DAMAGE 10
+#define KILL_SCORE 10
+#define BULLET_SPEED 18.0
+#define BULLET_HIT_DISTANCE 0.6
+#define SHOT_COOLDOWN 0.25
+#define PICKUP_HEAL 25
+#define PICKUP_INTERVAL 12.0
+#define WAVE_BREAK 3.0
 
 typedef struct {
-    int x, y;
-    int health;
-    int invincible_ticks; // brief invincibility after damage
-} Player;
+    double x, y;
+} Vec2;
 
 typedef struct {
-    int x, y;
-    int alive;
-    int death_anim; // ticks remaining for death animation
-} Zombie;
-
-typedef struct {
-    int x, y;
-    Direction dir;
-    int active;
-    int trail_tick; // for bullet trail effect
+    Vec2 pos;
+    Vec2 vel;
 } Bullet;
 
+/* What the player asks for in one step. move and aim are directions; zero means "no direction". */
 typedef struct {
-    int x, y;
-    ParticleType type;
-    int lifetime;
-    char symbol;
-    int color_pair;
-} Particle;
+    Vec2 move;
+    Vec2 aim;
+    int fire;
+} Input;
 
 typedef struct {
-    Player player;
-    Zombie zombies[MAX_ZOMBIES];
+    Vec2 player;
+    Vec2 facing; /* direction of the last movement, used when aim is zero */
+    int health;
+    Vec2 zombies[MAX_ZOMBIES];
     int zombie_count;
     Bullet bullets[MAX_BULLETS];
-    Particle particles[MAX_PARTICLES];
-    int max_x, max_y;
-    int game_area_x, game_area_y; // top-left of playable area
-    int game_area_w, game_area_h; // playable area size
-    int game_over; // 1 when player dies
-    int wave_cleared; // 1 when all zombies are dead
-    int level; // starts at 1
+    int bullet_count;
+    Vec2 pickups[MAX_PICKUPS];
+    int pickup_count;
+    int wave;
+    int to_spawn; /* zombies of this wave that are not on the field yet */
     int score;
-    int high_score;
-    int tick; // global tick for timing
-    int zombie_move_period; // lower = faster zombies
-    Direction last_dir; // last movement direction (for shooting)
-    int paused; // 1 when paused
-    // Visual effects state
-    int damage_flash; // ticks remaining for damage flash
-    int level_transition; // ticks remaining for level transition effect
-    int screen_shake; // ticks remaining for screen shake
-    int shake_offset_x, shake_offset_y; // current shake offset
-} ZombieGame;
+    int game_over;
+    double spawn_timer;
+    double wave_delay; /* seconds left before the next wave; 0 while a wave is running */
+    double pickup_timer;
+    double shot_cooldown;
+    uint32_t rng;
+} Game;
 
-void zombie_game_init(ZombieGame *game, int max_x, int max_y);
-void zombie_game_update(ZombieGame *game, int key);
-void zombie_game_draw(const ZombieGame *game);
-void zombie_game_next_level(ZombieGame *game);
-void zombie_game_init_colors(void);
+void game_init(Game *game, uint32_t seed);
+void game_update(Game *game, const Input *input, double dt);
+double game_random(Game *game); /* next number in [0, 1) */
+int game_wave_size(int wave);
+double game_zombie_speed(int wave);
 
-#endif // ZOMBIE_APOCALYPSE_H
+#endif /* ZOMBIE_APOCALYPSE_H */

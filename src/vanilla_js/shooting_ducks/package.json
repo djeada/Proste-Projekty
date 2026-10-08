@@ -1,0 +1,8 @@
+{
+  "name": "shooting-ducks",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Shooting Ducks: shoot the ducks flying across a canvas sky, in waves.",
+  "scripts": { "test": "node --test" },
+  "license": "MIT"
+}

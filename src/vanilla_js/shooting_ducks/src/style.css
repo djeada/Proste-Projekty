@@ -1,0 +1,50 @@
+:root {
+  --page-bg: #f4f6f8;
+  --text: #1d2630;
+  --muted: #5b6876;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --page-bg: #151a20;
+    --text: #e6ebf0;
+    --muted: #9aa6b2;
+  }
+}
+
+:root[data-theme="dark"] {
+  --page-bg: #151a20;
+  --text: #e6ebf0;
+  --muted: #9aa6b2;
+}
+
+body {
+  margin: 0;
+  padding: 16px;
+  background: var(--page-bg);
+  color: var(--text);
+  font-family: system-ui, sans-serif;
+  text-align: center;
+}
+
+h1 {
+  margin: 8px 0 12px;
+  font-size: 1.6rem;
+}
+
+canvas {
+  display: block;
+  width: 100%;
+  max-width: 800px;
+  height: auto;
+  margin: 0 auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  cursor: crosshair;
+  touch-action: manipulation;
+}
+
+.hint {
+  color: var(--muted);
+  font-size: 0.95rem;
+}

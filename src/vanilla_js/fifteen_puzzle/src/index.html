@@ -1,26 +1,21 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Fifteen Puzzle</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <div class="container">
-      <h1>Fifteen Puzzle</h1>
-      
-      <div class="info">
-        <span>Moves: <span id="moves">0</span></span>
-      </div>
-      
-      <div id="board" class="board"></div>
-      
-      <div id="message" class="message"></div>
-      
-      <button id="new-game" class="new-game-btn">New Game</button>
-    </div>
-    <script src="app.js"></script>
-  </body>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fifteen Puzzle</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <h1>Fifteen Puzzle</h1>
+    <div id="board" class="board"></div>
+    <p id="moves" class="moves">Moves: 0</p>
+    <p id="message" class="message"></p>
+    <button id="new-game" type="button">New game</button>
+    <p class="hint">Click a tile next to the gap, or use the arrow keys.</p>
+  </main>
+  <script src="fifteen_puzzle.js"></script>
+  <script src="main.js"></script>
+</body>
 </html>

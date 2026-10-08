@@ -1,0 +1,85 @@
+body {
+  margin: 0;
+  padding: 16px;
+  background: #c8c8c8;
+  font-family: system-ui, sans-serif;
+}
+
+.editor {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+#paint {
+  width: 640px;
+  height: 480px;
+  image-rendering: pixelated;
+  background: #ffffff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  cursor: crosshair;
+}
+
+.toolbar {
+  width: 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 6px;
+  box-sizing: border-box;
+  background: #ebebeb;
+}
+
+.toolbar button {
+  font: inherit;
+  font-size: 13px;
+  padding: 6px 0;
+  border: 1px solid #444;
+  background: #ffffff;
+  cursor: pointer;
+}
+
+.toolbar button.active {
+  background: #ffdc78;
+  font-weight: bold;
+}
+
+.tools,
+.sizes,
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+}
+
+.sizes {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.actions button {
+  grid-column: span 1;
+}
+
+.palette {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+}
+
+.palette button {
+  height: 26px;
+  border: 1px solid #555;
+  cursor: pointer;
+  padding: 0;
+}
+
+.palette button.active {
+  outline: 3px solid #000;
+  outline-offset: 1px;
+}
+
+.current {
+  height: 16px;
+  border: 1px solid #444;
+}
